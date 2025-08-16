@@ -4,16 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Innovakit</title>
-  <!-- Usa el CDN oficial de Tailwind para pruebas/prototipos -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://kit.fontawesome.com/a2e0e9c6b1.js" crossorigin="anonymous"></script>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-  <!-- Header -->
-  <header class="bg-white shadow-md p-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold">
-      <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span></h1>
+  <!-- Header: SIEMPRE VISIBLE -->
+  <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-20">
+    <div class="flex items-center">
+      <img src="Logo.png" alt="Logo Innovakit" class="h-10 mr-2">
+      <h1 class="text-2xl font-bold">
+        <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
+      </h1>
+    </div>
     <nav class="space-x-4">
       <a href="#mision" class="hover:text-blue-600">Misión</a>
       <a href="#vision" class="hover:text-blue-600">Visión</a>
@@ -22,101 +25,108 @@
     </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center p-16">
-    <h2 class="text-4xl font-bold mb-4">Bienvenido a Innovakit</h2>
-    <p class="text-lg">Kits de electrónica y soluciones innovadoras para aprender y crear</p>
-    <a href="#productos" class="mt-6 inline-block bg-white text-blue-600 px-6 py-2 rounded-lg shadow hover:bg-gray-200 font-semibold">Ver Productos</a>
-  </section>
+  <!-- CONTENIDO PRINCIPAL -->
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center p-16">
+      <h2 class="text-4xl font-bold mb-4">Bienvenido a Innovakit</h2>
+      <p class="text-lg">Kits de electrónica y soluciones innovadoras para aprender y crear</p>
+      <a href="#productos" class="mt-6 inline-block bg-white text-blue-600 px-6 py-2 rounded-lg shadow hover:bg-gray-200 font-semibold">Ver Productos</a>
+    </section>
 
-  <!-- Misión -->
-  <section id="mision" class="p-12 bg-gray-100 text-center">
-    <i class="fas fa-bullseye text-4xl text-green-600 mb-4"></i>
-    <h3 class="text-2xl font-bold mb-2">Nuestra Misión</h3>
-    <p class="max-w-2xl mx-auto">Ofrecer kits de electrónica accesibles y prácticos que impulsen el aprendizaje, la creatividad y la innovación en estudiantes, entusiastas y emprendedores.</p>
-  </section>
+    <!-- Misión -->
+    <section id="mision" class="p-12 bg-gray-100 text-center">
+      <i class="fas fa-bullseye text-4xl text-green-600 mb-4"></i>
+      <h3 class="text-2xl font-bold mb-2">Nuestra Misión</h3>
+      <p class="max-w-2xl mx-auto">Ofrecer kits de electrónica accesibles y prácticos que impulsen el aprendizaje, la creatividad y la innovación en estudiantes, entusiastas y emprendedores.</p>
+    </section>
 
-  <!-- Visión -->
-  <section id="vision" class="p-12 text-center">
-    <i class="fas fa-lightbulb text-4xl text-yellow-500 mb-4"></i>
-    <h3 class="text-2xl font-bold mb-2">Nuestra Visión</h3>
-    <p class="max-w-2xl mx-auto">Convertirnos en referentes en kits educativos y soluciones electrónicas en Paraguay, fomentando el desarrollo tecnológico y la formación práctica de nuevas generaciones.</p>
-  </section>
+    <!-- Visión -->
+    <section id="vision" class="p-12 text-center">
+      <i class="fas fa-lightbulb text-4xl text-yellow-500 mb-4"></i>
+      <h3 class="text-2xl font-bold mb-2">Nuestra Visión</h3>
+      <p class="max-w-2xl mx-auto">Convertirnos en referentes en kits educativos y soluciones electrónicas en Paraguay, fomentando el desarrollo tecnológico y la formación práctica de nuevas generaciones.</p>
+    </section>
 
-  <!-- Productos -->
-  <section id="productos" class="p-12 bg-gray-100">
-    <h3 class="text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
-    <div class="grid md:grid-cols-3 gap-6">
-      <!-- Producto 1 -->
-      <div class="bg-white rounded-xl shadow p-4 text-center">
-        <img src="Logo.png" alt="Producto 1" class="mx-auto mb-4 rounded-lg">
-        <h4 class="text-xl font-bold mb-2">Kit de Electrónica Básico</h4>
-        <p class="mb-4">Incluye componentes esenciales para aprender electrónica desde cero.</p>
-       <button onclick="verProducto(1)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
+    <!-- Productos -->
+    <section id="productos" class="p-12 bg-gray-100">
+      <h3 class="text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Producto 1 -->
+        <div class="bg-white rounded-xl shadow p-4 text-center">
+          <img src="Logo.png" alt="Producto 1" class="mx-auto mb-4 rounded-lg">
+          <h4 class="text-xl font-bold mb-2">Kit de Electrónica Básico</h4>
+          <p class="mb-4">Incluye componentes esenciales para aprender electrónica desde cero.</p>
+          <button onclick="verProductosKit(1)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
+        </div>
+        <!-- Producto 2 -->
+        <div class="bg-white rounded-xl shadow p-4 text-center">
+          <img src="Logo.png" alt="Producto 2" class="mx-auto mb-4 rounded-lg">
+          <h4 class="text-xl font-bold mb-2">Kit de Arduino</h4>
+          <p class="mb-4">Perfecto para programadores y creadores que quieran comenzar con proyectos prácticos.</p>
+          <button onclick="verProductosKit(2)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
+        </div>
+        <!-- Producto 3 -->
+        <div class="bg-white rounded-xl shadow p-4 text-center">
+          <img src="Logo.png" alt="Producto 3" class="mx-auto mb-4 rounded-lg">
+          <h4 class="text-xl font-bold mb-2">Kit Maker</h4>
+          <p class="mb-4">Componentes avanzados para proyectos más complejos y creativos.</p>
+          <button onclick="verProductosKit(3)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
+        </div>
       </div>
-      <!-- Producto 2 -->
-      <div class="bg-white rounded-xl shadow p-4 text-center">
-        <img src="Logo.png" alt="Producto 2" class="mx-auto mb-4 rounded-lg">
-        <h4 class="text-xl font-bold mb-2">Kit de Arduino</h4>
-        <p class="mb-4">Perfecto para programadores y creadores que quieran comenzar con proyectos prácticos.</p>
-        <button onclick="verProducto(2)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="p-12 text-center">
+      <h3 class="text-3xl font-bold mb-6">Contáctanos</h3>
+      <p class="mb-4">¿Tienes dudas o quieres más información? Escríbenos directamente.</p>
+      <a href="https://wa.me/595972292392" target="_blank" class="inline-block bg-green-500 text-white px-6 py-3 rounded-lg shadow hover:bg-green-600"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a>
+      <div class="mt-6 flex justify-center space-x-4">
+        <a href="#" class="text-blue-600 text-2xl"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="text-pink-500 text-2xl"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="text-blue-400 text-2xl"><i class="fab fa-twitter"></i></a>
       </div>
-      <!-- Producto 3 -->
-      <div class="bg-white rounded-xl shadow p-4 text-center">
-        <img src="Logo.png" alt="Producto 3" class="mx-auto mb-4 rounded-lg">
-        <h4 class="text-xl font-bold mb-2">Kit Maker</h4>
-        <p class="mb-4">Componentes avanzados para proyectos más complejos y creativos.</p>
-        <button onclick="verProducto(3)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
-      </div>
+    </section>
+  </main>
+
+  <!-- Vista de productos individuales (oculta al inicio) -->
+  <section id="vista-productoskit" class="hidden p-12 bg-gray-100 min-h-screen">
+    <div id="productoskit-content"></div>
+    <div class="mt-8 flex justify-center">
+      <button onclick="volverAlInicio()" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">Volver al inicio</button>
     </div>
   </section>
 
-  <!-- Contacto -->
-  <section id="contacto" class="p-12 text-center">
-    <h3 class="text-3xl font-bold mb-6">Contáctanos</h3>
-    <p class="mb-4">¿Tienes dudas o quieres más información? Escríbenos directamente.</p>
-    <a href="https://wa.me/595972292392" target="_blank" class="inline-block bg-green-500 text-white px-6 py-3 rounded-lg shadow hover:bg-green-600"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a>
-    <div class="mt-6 flex justify-center space-x-4">
-      <a href="#" class="text-blue-600 text-2xl"><i class="fab fa-facebook"></i></a>
-      <a href="#" class="text-pink-500 text-2xl"><i class="fab fa-instagram"></i></a>
-      <a href="#" class="text-blue-400 text-2xl"><i class="fab fa-twitter"></i></a>
-    </div>
-  </section>
-<!-- Vista de producto individual (inicialmente oculta) -->
-<section id="vista-producto" class="hidden p-12 flex flex-col items-center bg-gray-100 min-h-screen">
-  <!-- Aquí el contenido se llenará dinámicamente -->
-</section>
   <!-- Footer -->
   <footer class="bg-gray-800 text-white text-center p-4">
     <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
   </footer>
-<script>
-  // Aquí defines cada producto (puedes agregar más campos/fotos a futuro)
-  const productos = [
-    {
-      titulo: "Kit de Electrónica Básico",
-      img: "Logo.png",
-      desc: "Incluye componentes esenciales para aprender electrónica desde cero.",
-      // Puedes agregar más detalles aquí
-    },
-    {
-      titulo: "Kit de Electrónica Make",
-      img: "Logo.png",
-      desc: "Perfecto para programadores y creadores que quieran comenzar con proyectos prácticos.",
-    },
-    {
-      titulo: "Kit de Robótica Accebot",
-      img: "Logo.png",
-      desc: "Componentes avanzados para proyectos más complejos y creativos.",
-    }
-  ];
 
-  function verProducto(idx) {
-    // Oculta todas las secciones menos el header y la vista de producto
-    document.querySelectorAll('section:not(#vista-producto)').forEach(sec => sec.classList.add('hidden'));
-    document.getElementById('vista-producto').classList.remove('hidden');
-    // Llena la vista con la info del producto correspondiente
-   const productos = productosKits[idx-1];
+  <script>
+    // --- Aquí defines todos los productos de cada kit (vacíos o de ejemplo) ---
+    const productosKits = [
+      // Kit 1: Electrónica Básico (21 productos)
+      [
+        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
+        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
+        // ...agrega hasta 21 productos
+      ],
+      // Kit 2: Arduino (6 productos)
+      [
+        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
+        // ...agrega hasta 6 productos
+      ],
+      // Kit 3: Maker (17 productos)
+      [
+        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
+        // ...agrega hasta 17 productos
+      ]
+    ];
+
+    function verProductosKit(idx) {
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('vista-productoskit').classList.remove('hidden');
+      const productos = productosKits[idx-1];
       let html = `<h3 class="text-3xl font-bold text-center mb-8">Productos del kit</h3><div class="grid md:grid-cols-3 gap-6">`;
       productos.forEach((p, i) => {
         const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio})`);
@@ -133,37 +143,16 @@
           </div>
         `;
       });
-        html += `</div>`;
+      html += `</div>`;
       document.getElementById('productoskit-content').innerHTML = html;
       window.scrollTo({top:0, behavior:'smooth'});
     }
 
-  function volverAlInicio() {
-    // Muestra todas las secciones menos la vista de producto
-    document.querySelectorAll('section:not(#vista-producto)').forEach(sec => sec.classList.remove('hidden'));
-    document.getElementById('vista-producto').classList.add('hidden');
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
-    
-  // --- Aquí defines todos los productos de cada kit (vacíos o de ejemplo) ---
-const productosKits = [
-  // Kit 1: Electrónica Básico (21 productos)
-  [
-    { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-    { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-    // ...agrega hasta 21 productos
-  ],
-  // Kit 2: Arduino (6 productos)
-  [
-    { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-    // ...agrega hasta 6 productos
-  ],
-  // Kit 3: Maker (17 productos)
-  [
-    { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-    // ...agrega hasta 17 productos
-  ]
-];
-</script>
+    function volverAlInicio() {
+      document.getElementById('main-content').style.display = '';
+      document.getElementById('vista-productoskit').classList.add('hidden');
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  </script>
 </body>
 </html>
