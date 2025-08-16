@@ -28,59 +28,59 @@
   <!-- CONTENIDO PRINCIPAL -->
   <main id="main-content">
     <!-- Hero -->
-    <section class="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center p-16">
-      <h2 class="text-4xl font-bold mb-4">Bienvenido a Innovakit</h2>
-      <p class="text-lg">Kits de electrónica y soluciones innovadoras para aprender y crear</p>
-      <a href="#productos" class="mt-6 inline-block bg-white text-blue-600 px-6 py-2 rounded-lg shadow hover:bg-gray-200 font-semibold">Ver Productos</a>
+    <section class="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center p-10 sm:p-16">
+      <h2 class="text-2xl sm:text-4xl font-bold mb-4">Bienvenido a Innovakit</h2>
+      <p class="text-base sm:text-lg">Kits de electrónica y soluciones innovadoras para aprender y crear</p>
+      <a href="#productos" class="mt-6 inline-block bg-white text-blue-600 px-4 py-2 sm:px-6 sm:py-2 rounded-lg shadow hover:bg-gray-200 font-semibold">Ver Productos</a>
     </section>
 
     <!-- Misión -->
-    <section id="mision" class="p-12 bg-gray-100 text-center">
+    <section id="mision" class="p-6 sm:p-12 bg-gray-100 text-center">
       <i class="fas fa-bullseye text-4xl text-green-600 mb-4"></i>
-      <h3 class="text-2xl font-bold mb-2">Nuestra Misión</h3>
-      <p class="max-w-2xl mx-auto">Ofrecer kits de electrónica accesibles y prácticos que impulsen el aprendizaje, la creatividad y la innovación en estudiantes, entusiastas y emprendedores.</p>
+      <h3 class="text-xl sm:text-2xl font-bold mb-2">Nuestra Misión</h3>
+      <p class="max-w-2xl mx-auto text-base sm:text-lg">Ofrecer kits de electrónica accesibles y prácticos que impulsen el aprendizaje, la creatividad y la innovación en estudiantes, entusiastas y emprendedores.</p>
     </section>
 
     <!-- Visión -->
-    <section id="vision" class="p-12 text-center">
+    <section id="vision" class="p-6 sm:p-12 text-center">
       <i class="fas fa-lightbulb text-4xl text-yellow-500 mb-4"></i>
-      <h3 class="text-2xl font-bold mb-2">Nuestra Visión</h3>
-      <p class="max-w-2xl mx-auto">Convertirnos en referentes en kits educativos y soluciones electrónicas en Paraguay, fomentando el desarrollo tecnológico y la formación práctica de nuevas generaciones.</p>
+      <h3 class="text-xl sm:text-2xl font-bold mb-2">Nuestra Visión</h3>
+      <p class="max-w-2xl mx-auto text-base sm:text-lg">Convertirnos en referentes en kits educativos y soluciones electrónicas en Paraguay, fomentando el desarrollo tecnológico y la formación práctica de nuevas generaciones.</p>
     </section>
 
     <!-- Productos -->
-    <section id="productos" class="p-12 bg-gray-100">
-      <h3 class="text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
-      <div class="grid md:grid-cols-3 gap-6">
+    <section id="productos" class="p-6 sm:p-12 bg-gray-100">
+      <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <!-- Producto 1 -->
-        <div class="bg-white rounded-xl shadow p-4 text-center">
-          <img src="Logo.png" alt="Producto 1" class="mx-auto mb-4 rounded-lg">
-          <h4 class="text-xl font-bold mb-2">Kit de Electrónica Básico</h4>
-          <p class="mb-4">Incluye componentes esenciales para aprender electrónica desde cero.</p>
-          <button onclick="verProductosKit(1)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
+        <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
+          <img src="Logo.png" alt="Producto 1" class="w-32 h-32 object-contain mb-4 rounded-lg">
+          <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">Kit de Electrónica Básico</h4>
+          <p class="mb-4 text-center text-sm sm:text-base">Incluye componentes esenciales para aprender electrónica desde cero.</p>
+          <button onclick="verProductosKit(1)" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto">Ver más</button>
         </div>
         <!-- Producto 2 -->
-        <div class="bg-white rounded-xl shadow p-4 text-center">
-          <img src="Logo.png" alt="Producto 2" class="mx-auto mb-4 rounded-lg">
-          <h4 class="text-xl font-bold mb-2">Kit de Arduino</h4>
-          <p class="mb-4">Perfecto para programadores y creadores que quieran comenzar con proyectos prácticos.</p>
-          <button onclick="verProductosKit(2)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
+        <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
+          <img src="Logo.png" alt="Producto 2" class="w-32 h-32 object-contain mb-4 rounded-lg">
+          <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">Kit de Arduino</h4>
+          <p class="mb-4 text-center text-sm sm:text-base">Perfecto para programadores y creadores que quieran comenzar con proyectos prácticos.</p>
+          <button onclick="verProductosKit(2)" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto">Ver más</button>
         </div>
         <!-- Producto 3 -->
-        <div class="bg-white rounded-xl shadow p-4 text-center">
-          <img src="Logo.png" alt="Producto 3" class="mx-auto mb-4 rounded-lg">
-          <h4 class="text-xl font-bold mb-2">Kit Maker</h4>
-          <p class="mb-4">Componentes avanzados para proyectos más complejos y creativos.</p>
-          <button onclick="verProductosKit(3)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
+        <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
+          <img src="Logo.png" alt="Producto 3" class="w-32 h-32 object-contain mb-4 rounded-lg">
+          <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">Kit Maker</h4>
+          <p class="mb-4 text-center text-sm sm:text-base">Componentes avanzados para proyectos más complejos y creativos.</p>
+          <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto">Ver más</button>
         </div>
       </div>
     </section>
 
     <!-- Contacto -->
-    <section id="contacto" class="p-12 text-center">
-      <h3 class="text-3xl font-bold mb-6">Contáctanos</h3>
-      <p class="mb-4">¿Tienes dudas o quieres más información? Escríbenos directamente.</p>
-      <a href="https://wa.me/595972292392" target="_blank" class="inline-block bg-green-500 text-white px-6 py-3 rounded-lg shadow hover:bg-green-600"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a>
+    <section id="contacto" class="p-6 sm:p-12 text-center">
+      <h3 class="text-2xl sm:text-3xl font-bold mb-6">Contáctanos</h3>
+      <p class="mb-4 text-base sm:text-lg">¿Tienes dudas o quieres más información? Escríbenos directamente.</p>
+      <a href="https://wa.me/595972292392" target="_blank" class="inline-block bg-green-500 text-white px-4 py-3 sm:px-6 rounded-lg shadow hover:bg-green-600"><i class="fab fa-whatsapp mr-2"></i>WhatsApp</a>
       <div class="mt-6 flex justify-center space-x-4">
         <a href="#" class="text-blue-600 text-2xl"><i class="fab fa-facebook"></i></a>
         <a href="#" class="text-pink-500 text-2xl"><i class="fab fa-instagram"></i></a>
@@ -90,7 +90,7 @@
   </main>
 
   <!-- Vista de productos individuales (oculta al inicio) -->
-  <section id="vista-productoskit" class="hidden p-12 bg-gray-100 min-h-screen">
+  <section id="vista-productoskit" class="hidden p-6 sm:p-12 bg-gray-100 min-h-screen">
     <div id="productoskit-content"></div>
     <div class="mt-8 flex justify-center">
       <button onclick="volverAlInicio()" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">Volver al inicio</button>
@@ -127,17 +127,17 @@
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('vista-productoskit').classList.remove('hidden');
       const productos = productosKits[idx-1];
-      let html = `<h3 class="text-3xl font-bold text-center mb-8">Productos del kit</h3><div class="grid md:grid-cols-3 gap-6">`;
+      let html = `<h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos del kit</h3><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
       productos.forEach((p, i) => {
         const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio})`);
         html += `
-          <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center text-center">
-            <img src="${p.img}" alt="${p.nombre}" class="mb-4 rounded-lg w-40 h-40 object-contain bg-gray-100">
-            <h4 class="text-xl font-bold mb-2">${p.nombre}</h4>
-            <p class="mb-2">${p.desc}</p>
+          <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
+            <img src="${p.img}" alt="${p.nombre}" class="w-32 h-32 object-contain mb-4 rounded-lg">
+            <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">${p.nombre}</h4>
+            <p class="mb-2 text-center text-sm sm:text-base">${p.desc}</p>
             <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
             <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
-              class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 w-full">
+              class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 mt-auto">
               Comprar por WhatsApp
             </a>
           </div>
