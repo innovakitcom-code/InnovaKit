@@ -56,14 +56,14 @@
       </div>
       <!-- Producto 2 -->
       <div class="bg-white rounded-xl shadow p-4 text-center">
-        <img src="https://via.placeholder.com/200" alt="Producto 2" class="mx-auto mb-4 rounded-lg">
+        <img src="Logo.png" alt="Producto 2" class="mx-auto mb-4 rounded-lg">
         <h4 class="text-xl font-bold mb-2">Kit de Arduino</h4>
         <p class="mb-4">Perfecto para programadores y creadores que quieran comenzar con proyectos prácticos.</p>
         <button onclick="verProducto(2)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
       </div>
       <!-- Producto 3 -->
       <div class="bg-white rounded-xl shadow p-4 text-center">
-        <img src="https://via.placeholder.com/200" alt="Producto 3" class="mx-auto mb-4 rounded-lg">
+        <img src="Logo.png" alt="Producto 3" class="mx-auto mb-4 rounded-lg">
         <h4 class="text-xl font-bold mb-2">Kit Maker</h4>
         <p class="mb-4">Componentes avanzados para proyectos más complejos y creativos.</p>
         <button onclick="verProducto(3)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
@@ -116,15 +116,27 @@
     document.querySelectorAll('section:not(#vista-producto)').forEach(sec => sec.classList.add('hidden'));
     document.getElementById('vista-producto').classList.remove('hidden');
     // Llena la vista con la info del producto correspondiente
-    const p = productos[idx-1];
-    document.getElementById('vista-producto').innerHTML = `
-      <img src="${p.img}" alt="${p.titulo}" class="mb-6 rounded-lg shadow-lg w-52 md:w-72">
-      <h2 class="text-3xl font-bold mb-2">${p.titulo}</h2>
-      <p class="text-lg mb-6 max-w-xl text-center">${p.desc}</p>
-      <button onclick="volverAlInicio()" class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700">Volver a productos</button>
-    `;
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
+   const productos = productosKits[idx-1];
+      let html = `<h3 class="text-3xl font-bold text-center mb-8">Productos del kit</h3><div class="grid md:grid-cols-3 gap-6">`;
+      productos.forEach((p, i) => {
+        const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio})`);
+        html += `
+          <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center text-center">
+            <img src="${p.img}" alt="${p.nombre}" class="mb-4 rounded-lg w-40 h-40 object-contain bg-gray-100">
+            <h4 class="text-xl font-bold mb-2">${p.nombre}</h4>
+            <p class="mb-2">${p.desc}</p>
+            <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
+            <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
+              class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 w-full">
+              Comprar por WhatsApp
+            </a>
+          </div>
+        `;
+      });
+        html += `</div>`;
+      document.getElementById('productoskit-content').innerHTML = html;
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
 
   function volverAlInicio() {
     // Muestra todas las secciones menos la vista de producto
@@ -132,6 +144,26 @@
     document.getElementById('vista-producto').classList.add('hidden');
     window.scrollTo({top:0, behavior:'smooth'});
   }
+    
+  // --- Aquí defines todos los productos de cada kit (vacíos o de ejemplo) ---
+const productosKits = [
+  // Kit 1: Electrónica Básico (21 productos)
+  [
+    { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
+    { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
+    // ...agrega hasta 21 productos
+  ],
+  // Kit 2: Arduino (6 productos)
+  [
+    { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
+    // ...agrega hasta 6 productos
+  ],
+  // Kit 3: Maker (17 productos)
+  [
+    { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
+    // ...agrega hasta 17 productos
+  ]
+];
 </script>
 </body>
 </html>
