@@ -52,21 +52,21 @@
         <img src="Logo.png" alt="Producto 1" class="mx-auto mb-4 rounded-lg">
         <h4 class="text-xl font-bold mb-2">Kit de Electrónica Básico</h4>
         <p class="mb-4">Incluye componentes esenciales para aprender electrónica desde cero.</p>
-        <a href="https://wa.me/595972292392" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600">Comprar</a>
+       <button onclick="verProducto(1)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
       </div>
       <!-- Producto 2 -->
       <div class="bg-white rounded-xl shadow p-4 text-center">
         <img src="https://via.placeholder.com/200" alt="Producto 2" class="mx-auto mb-4 rounded-lg">
         <h4 class="text-xl font-bold mb-2">Kit de Arduino</h4>
         <p class="mb-4">Perfecto para programadores y creadores que quieran comenzar con proyectos prácticos.</p>
-        <a href="https://wa.me/595972292392" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600">Comprar</a>
+        <button onclick="verProducto(2)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
       </div>
       <!-- Producto 3 -->
       <div class="bg-white rounded-xl shadow p-4 text-center">
         <img src="https://via.placeholder.com/200" alt="Producto 3" class="mx-auto mb-4 rounded-lg">
         <h4 class="text-xl font-bold mb-2">Kit Maker</h4>
         <p class="mb-4">Componentes avanzados para proyectos más complejos y creativos.</p>
-        <a href="https://wa.me/595972292392" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600">Comprar</a>
+        <button onclick="verProducto(3)" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700">Ver más</button>
       </div>
     </div>
   </section>
@@ -82,11 +82,56 @@
       <a href="#" class="text-blue-400 text-2xl"><i class="fab fa-twitter"></i></a>
     </div>
   </section>
-
+<!-- Vista de producto individual (inicialmente oculta) -->
+<section id="vista-producto" class="hidden p-12 flex flex-col items-center bg-gray-100 min-h-screen">
+  <!-- Aquí el contenido se llenará dinámicamente -->
+</section>
   <!-- Footer -->
   <footer class="bg-gray-800 text-white text-center p-4">
     <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
   </footer>
+<script>
+  // Aquí defines cada producto (puedes agregar más campos/fotos a futuro)
+  const productos = [
+    {
+      titulo: "Kit de Electrónica Básico",
+      img: "Logo.png",
+      desc: "Incluye componentes esenciales para aprender electrónica desde cero.",
+      // Puedes agregar más detalles aquí
+    },
+    {
+      titulo: "Kit de Arduino",
+      img: "https://via.placeholder.com/200",
+      desc: "Perfecto para programadores y creadores que quieran comenzar con proyectos prácticos.",
+    },
+    {
+      titulo: "Kit Maker",
+      img: "https://via.placeholder.com/200",
+      desc: "Componentes avanzados para proyectos más complejos y creativos.",
+    }
+  ];
 
+  function verProducto(idx) {
+    // Oculta todas las secciones menos el header y la vista de producto
+    document.querySelectorAll('section:not(#vista-producto)').forEach(sec => sec.classList.add('hidden'));
+    document.getElementById('vista-producto').classList.remove('hidden');
+    // Llena la vista con la info del producto correspondiente
+    const p = productos[idx-1];
+    document.getElementById('vista-producto').innerHTML = `
+      <img src="${p.img}" alt="${p.titulo}" class="mb-6 rounded-lg shadow-lg w-52 md:w-72">
+      <h2 class="text-3xl font-bold mb-2">${p.titulo}</h2>
+      <p class="text-lg mb-6 max-w-xl text-center">${p.desc}</p>
+      <button onclick="volverAlInicio()" class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700">Volver a productos</button>
+    `;
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function volverAlInicio() {
+    // Muestra todas las secciones menos la vista de producto
+    document.querySelectorAll('section:not(#vista-producto)').forEach(sec => sec.classList.remove('hidden'));
+    document.getElementById('vista-producto').classList.add('hidden');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+</script>
 </body>
 </html>
