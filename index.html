@@ -7,27 +7,31 @@
   <title>Innovakit</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://kit.fontawesome.com/a2e0e9c6b1.js" crossorigin="anonymous"></script>
+  
+  <!-- Swiper CSS (para el carrusel) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Header: SIEMPRE VISIBLE -->
   <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20">
-  <!-- Logo y nombre como botón invisible que lleva al inicio -->
+    <!-- Logo y nombre como botón invisible que lleva al inicio -->
     <a href="#main-content" onclick="volverAlInicio()" class="flex items-center mb-2 sm:mb-0 focus:outline-none">
-    <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1">
-    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">
-      <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
-    </h1>
-    <span class="sr-only">Ir al inicio</span>
-  </a>
-  <!-- Menú de navegación, en columna en móvil, fila en escritorio -->
- <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-sm sm:text-base">
-  <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-600">Misión</a>
-  <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600">Visión</a>
-  <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-600">Productos</a>
-  <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-600">Contacto</a>
-</nav>
-</header>
+      <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">
+        <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
+      </h1>
+      <span class="sr-only">Ir al inicio</span>
+    </a>
+    <!-- Menú de navegación, en columna en móvil, fila en escritorio -->
+    <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-sm sm:text-base">
+      <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-600">Misión</a>
+      <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600">Visión</a>
+      <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-600">Productos</a>
+      <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-600">Contacto</a>
+    </nav>
+  </header>
+
   <!-- CONTENIDO PRINCIPAL -->
   <main id="main-content">
     <!-- Hero -->
@@ -52,8 +56,8 @@
     </section>
 
     <!-- Productos -->
-  <section id="productos" class="p-6 sm:p-12 bg-gray-100 scroll-mt-20">
-  <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
+    <section id="productos" class="p-6 sm:p-12 bg-gray-100 scroll-mt-20">
+      <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <!-- Producto 1 -->
         <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
@@ -105,77 +109,90 @@
     <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
   </footer>
 
+  <!-- Swiper JS (para el carrusel) -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
   <script>
     // --- Aquí defines todos los productos de cada kit (vacíos o de ejemplo) ---
     const productosKits = [
       // Kit 1: Electrónica Básico (21 productos)
       [
-        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 2", desc: "Descripción del producto 2", precio: "Gs. 0" },
-        // ...agrega hasta 21 productos
+        { 
+          img: ["SmarCart.jpg", "SpiderBot.jpg", "Brazo.jpg"], 
+          nombre: "Producto 1", 
+          desc: "Descripción del producto 1", 
+          precio: "Gs. 0" 
+        },
+        { 
+          img: ["https://via.placeholder.com/200", "https://via.placeholder.com/200/0000ff"], 
+          nombre: "Producto 2", 
+          desc: "Descripción del producto 2", 
+          precio: "Gs. 0" 
+        },
+        // ... más productos
       ],
       // Kit 2: Arduino (6 productos)
       [
-        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-        { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-        // ...agrega hasta 6 productos
+        { 
+          img: ["https://via.placeholder.com/200", "https://via.placeholder.com/200/ffff00"], 
+          nombre: "Producto 1", 
+          desc: "Descripción del producto 1", 
+          precio: "Gs. 0" 
+        },
+        // ... más productos
       ],
       // Kit 3: Maker (17 productos)
       [
-         { img: "SmarCart.jpg", nombre: "Smart Car Kit", desc: "Auto Robot multisensores", precio: "Gs. 450.000" },
-         { img: "Brazo.jpg", nombre: "Brazo Robot", desc: "Brazo Mecanicazado con cuatro servomotes, y control a distancias por celular", precio: "Gs. 350.000" },
-         { img: "SpiderBot.jpg", nombre: "Robot Araña", desc: "Robot araña con multimoviemto, control a distancia y programación en bloque", precio: "Gs. 350.000" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },
-         { img: "https://via.placeholder.com/200", nombre: "Producto 1", desc: "Descripción del producto 1", precio: "Gs. 0" },  
-        // ...agrega hasta 17 productos
+        { 
+          img: ["SmarCart.jpg", "SmarCart_2.jpg"], 
+          nombre: "Smart Car Kit", 
+          desc: "Auto Robot multisensores", 
+          precio: "Gs. 450.000" 
+        },
+        { 
+          img: ["Brazo.jpg", "Brazo_2.jpg"], 
+          nombre: "Brazo Robot", 
+          desc: "Brazo Mecanizado con cuatro servomotores", 
+          precio: "Gs. 350.000" 
+        },
+        // ... más productos
       ]
     ];
 
     function verProductosKit(idx) {
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('vista-productoskit').classList.remove('hidden');
-      const productos = productosKits[idx-1];
-      let html = `<h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos del kit</h3><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
+      const productos = productosKits[idx - 1];
+      
+      let html = `
+        <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos del kit</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      `;
+
       productos.forEach((p, i) => {
         const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio})`);
+        
+        // Generar slides del carrusel
+        let slidesHTML = '';
+        p.img.forEach((imgSrc, imgIdx) => {
+          slidesHTML += `
+            <div class="swiper-slide flex justify-center items-center">
+              <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain">
+            </div>
+          `;
+        });
+
         html += `
           <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
-            <img src="${p.img}" alt="${p.nombre}" class="w-32 h-32 object-contain mb-4 rounded-lg">
+            <!-- Carrusel de imágenes -->
+            <div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4">
+              <div class="swiper-wrapper">
+                ${slidesHTML}
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+
             <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">${p.nombre}</h4>
             <p class="mb-2 text-center text-sm sm:text-base">${p.desc}</p>
             <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
@@ -186,15 +203,28 @@
           </div>
         `;
       });
+
       html += `</div>`;
       document.getElementById('productoskit-content').innerHTML = html;
-      window.scrollTo({top:0, behavior:'smooth'});
+      
+      // Inicializar Swipers para cada producto
+      productos.forEach((_, i) => {
+        new Swiper(`.swiper-producto-${i}`, {
+          loop: true,
+          navigation: {
+            nextEl: `.swiper-producto-${i} .swiper-button-next`,
+            prevEl: `.swiper-producto-${i} .swiper-button-prev`,
+          },
+        });
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function volverAlInicio() {
       document.getElementById('main-content').style.display = '';
       document.getElementById('vista-productoskit').classList.add('hidden');
-      window.scrollTo({top:0, behavior:'smooth'});
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 </body>
