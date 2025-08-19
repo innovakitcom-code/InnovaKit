@@ -39,11 +39,19 @@
     /* Estilos para el modal */
     .modal {
       transition: opacity 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     body.modal-active {
       overflow-x: hidden;
       overflow-y: visible !important;
+    }
+    
+    .modal-container {
+      max-height: 90vh;
+      overflow-y: auto;
     }
   </style>
 </head>
@@ -52,7 +60,7 @@
   <!-- Header: SIEMPRE VISIBLE -->
   <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20">
     <!-- Logo y nombre como botón invisible que lleva al inicio -->
-    <a href="#" onclick="volverAlInicio(); return false;" class="flex items-center...">
+    <a href="#" onclick="volverAlInicio(); return false;" class="flex items-center">
       <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1">
       <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">
         <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
@@ -144,7 +152,7 @@
   <div id="modal-descripcion" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
     <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
     
-    <div class="modal-container bg-white w-11/12 md:max-w-3xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
+    <div class="modal-container bg-white w-11/12 md:max-w-4xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
       
       <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
         <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
@@ -187,9 +195,9 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
   <script>
-    // --- Aquí defines todos los productos de cada kit (vacíos o de ejemplo) ---
+    // --- Aquí defines todos los productos de cada kit ---
     const productosKits = [
-      // Kit 1: Electrónica Básico (21 productos)
+      // Kit 1: Electrónica Básico (7 productos)
       [
         { 
           img: ["AE101_PORT.png", "AE101_POR2.png", "AE101_11.png", "AE101_12.png", "AE101_2.png", "AE101_13.png", "AE101_22.png", "AE101_3.png", "AE101_4.png"], 
@@ -212,18 +220,52 @@
             { nombre: "Ejemplos de código", archivo: "codigo_ae312.zip" }
           ]
         },
-        // ... más productos
+        { 
+          img: ["AE086.png", "AE086_1.png", "AE086_2.png", "AE086_3.png", "AE086_ultimo.png"], 
+          nombre: "The Most Complete STARTER KIT UNO R3 Project (AE086)", 
+          desc: "Conjunto de componentes electrónicos variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como: -Controller Board 1PCS -LCD 1602 Module (With pin header) 1PCS -Powe Supply Module 1PCS  -GY-521 Module 1PCS -Rc522 RFID Module 1PCS -ULN2003 Stepper Motor Driver Board 1PCS -Stepper Motor 1PCS -Joystick Module 1PCS -AM312 PIR Motion Sensor 1PCS -Sound Sensor Module 1PCS -Water Lever Detection Sensor Module 1PCS -Ultrasonic Sensor 1PCS -Servo Motor (SG90) 1PCS -DS1307 RTC Module 1PCS -IR Receiver Module 1PCS -Rotary Encoder Module 1PCS -DHT11 Temperature and Humidity Module 1PCS -MAX7219 Module 1PCS -Prototype Expansion Board 1PCS -Remote 1PCS -L293D 1PCS -1 Digit 7-Segment Display -4 Digit 7-Segment Display -Passive Buzzer 1PCS -74HC595 1PCS -Active Buzzer 1PCS -Fan Blade and 3-6v Motor (with wire) each 1PCS -USB Cable 1PCS -5v Relay Module 1PCS -Membrane Switch Module 1PCS -9V 1A Adapter 1PCS -830 Tie-Point Protoboard 1PCS -9v Battery Connector With DC 1PCS -Button (Small) (SG90) 5PCS -65Jumper Wire 1PCS -Female-to-Male Dupont Wire 20PCS -Tilt Ball Switch 1PCS -Potentiometer 10k 2PCS -Resistor 120PCS -Electrolytic Capacitor (10Mf 50v 2PCS) – Electrolytic Capacitor (100mF 50V) 2PCS -NPN Transistor (S8050) 5PCS -NPN Transistor (PN2222) 5PCS -104pF Ceramic Capacitor 5PCS -22pF Ceramic Capacitor 5PCS -Thermistor 1PCS -Diode Rectifier 5PCS -Photoresistor (Photocell) 2PCS -RGB LED 1PCS -LED RED 5PCS -LED YELLOW 5PCS -LED BLUE 5PCS -LED GREEN 5PCS -LED WHITE 5PCS", 
+          precio: "Gs. 550.000",
+          documentos: []
+        },
+        { 
+          img: ["AE325.png", "AE325_2.png", "AE325_3.png", "AE325_4.png"], 
+          nombre: "Sensor Module STARTE KIT for UNO  R3 Project (AE325)", 
+          desc: "Kit de sensores para proyectos con Arduino UNO R3. Incluye: -Sensor de temperatura -Sensor de humedad -Sensor de luz -Sensor de sonido -Sensor de movimiento -Sensor de proximidad -Sensor de gas -Sensor de llama -Sensor de tacto -Sensor de inclinación -Sensor de vibración -Sensor de ultrasonido -Sensor de infrarrojos -Sensor de color -Sensor de lluvia -Sensor de velocidad -Sensor de presión -Sensor de campo magnético", 
+          precio: "Gs. 300.000",
+          documentos: []
+        },
+        { 
+          img: ["AE318.png", "AE318_2.png", "AE318_3.png", "AE318_4.png"], 
+          nombre: "9 en 1 Sensor Kit (AE318)", 
+          desc: "Conjunto de sensores de gas variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como: -MQ – 135 Sensor Module 1PCS -MQ – 2 Sensor Module 1PCS -MQ – 3 Sensor Module 1PCS -MQ – 4 Sensor Module 1PCS -MQ – 5 Sensor Module 1PCS -MQ – 6 Sensor Module 1PCS -MQ – 7 Sensor Module 1PCS -MQ – 8 Sensor Module 1PCS -MQ – 9 Sensor Module 1PCS", 
+          precio: "Gs. 255.000",
+          documentos: []
+        },
+        { 
+          img: ["AE041.png", "AE341_2.png", "AE041_3.png", "AE041_4.png", "AE041_ULTIMO.png"], 
+          nombre: "37 Piezas Sensor Kit (AE041)", 
+          desc: "Conjunto de 17 piezas de Módulos y Sensores combinados, - DS18B20 Module - SHOCK SWITCH -Hall Magnetic sensor Module -BUTTON SWITCH -Infrared Receiver -IR Emission -Passive buzzer -Laser module -SMD RGB module -RGB LED module -TEMP and humidity module -Photo-interrupter MODULE -Mercury Switch -Tilt SWITCH MODULE -Reed switch module -Mini reed switch module -Mini two-color module -Dual-color Common-Cathode LED -Knock Sensor -Digital temperature module -Flame module -MENTAL TOUCH MODULE -Analog temp module -Photo-resistor module -7 color flash module -High-sensitive Voice Sensor -Magic light cup MODULE -Joystick module -Linear hall module -Analog hall module -Avoidance module -Tracking module -Rotary encoders module -Buzzer module -Heartbeat module -Relay module -Small sound module", 
+          precio: "Gs. 155.000",
+          documentos: []
+        },
+        { 
+          img: ["AE327.png"], 
+          nombre: "Super STARTE KIT for Raspberry PI (AE327)", 
+          desc: "Kit completo para Raspberry Pi con: -Raspberry Pi -Carcasa -Ventilador -Disipadores -Tarjeta SD -Cable HDMI -Cable de alimentación -Sensor de temperatura -Sensor de humedad -Sensor de movimiento -Display LCD -Teclado -Ratón -Cámara -Módulo WiFi -Módulo Bluetooth -Módulo RFID -Módulo relé -Módulo motor -Módulo servo -Módulo joystick -Módulo zumbador -Módulo LED -Módulo botón -Módulo potenciómetro -Módulo micrófono -Módulo altavoz", 
+          precio: "Gs. 650.000",
+          documentos: []
+        }
       ],
       // Kit 2: Arduino (6 productos)
       [
         { 
           img: ["AE046.png", "AE046_12.png", "AE046_2.png", "AE046_4.png"], 
           nombre: "Kit de Componentes Variados", 
-          desc: "Descripción del producto 1", 
+          desc: "Kit con componentes variados para proyectos de electrónica. Incluye: -Resistencias -Condensadores -Transistores -Diodos -LEDs -Potenciómetros -Interruptores -Pulsadores -Zumbadores -Relés -Displays -Sensores -Cables -Protoboard -Arduino UNO -Shield Ethernet -Shield WiFi -Shield Bluetooth -Shield GPS -Shield LCD -Shield motor -Shield relé -Shield sensor -Shield SD card -Shield audio -Shield teclado -Shield joystick", 
           precio: "Gs. 445.000",
           documentos: []
         },
-        // ... más productos
+        // ... más productos del kit 2
       ],
       // Kit 3: Maker (17 productos)
       [
@@ -237,7 +279,49 @@
             { nombre: "App control", archivo: "app_smartcar.apk" }
           ]
         },
-        // ... más productos
+        { 
+          img: ["BasiCar1.jpg", "BasicCar2.jpg", "BasicCar3.jpg"], 
+          nombre: "TinkerBot microbitt Car", 
+          desc: "Kit educativo STEM con Micro:bit, diseñado para principiantes que deseen aprender programación y robótica. Programa al coche para seguir lineas, evitar obstaculos y experimentar multiples modos de control (IR;APP) para una experiencia de juego y experiencia completa", 
+          precio: "Gs. 440.000",
+          documentos: []
+        },
+        { 
+          img: ["Brazo1.jpg", "Braz3.jpg", "Braz1.jpg"], 
+          nombre: "Robot Arm Kir", 
+          desc: "Diseñado para niños de 12 años en adelante. Perfecto para aprendizaje de electrónica, codificación y robotica. Un brazo robótico versátil de 4 ejes de rotación de abrazadera de 260° y una rotación, codo y base de 180°, integrado con memoria muscular, fáciles para construir y codificar con programación en bloque ACECode o Arduino IDE", 
+          precio: "Gs. 530.000",
+          documentos: []
+        },
+        {    
+          img: ["SpiderBot1.jpg", "SpiderBot2.jpg", "SpiderBot3.jpg"], 
+          nombre: "Kit SpiderBot", 
+          desc: "Kit de Robot Araña, diseñado para niños de 8 años en adelante, movimiento variado por servomotores y control remoto a través de la aplicación ACEBOTT, con movimientos dinámicos el SpiderBot bot realiza 6 acciones y 9 posturas preestablecidas, una vez dominada la programación se desarrolla el movimiento deseado", 
+          precio: "Gs. 615.000",
+          documentos: []
+        },
+        { 
+          img: ["Shark1.jpg", "Shark2.jpg", "Shark3.jpg"], 
+          nombre: "SharkBot Smart Car", 
+          desc: "Kit de Coche Inteligente SharkBot, es un automóvil robot con inteligencia artificial avanzado ideal para jóvenes y adolescentes entre 10 a 18 años, impulsado por el controlador ESP32-S3, compatible con Arduino , Python y ACECode. Con reconocimiento de voz sin conexion, programación avanzada, seguimiento de línea y evitación de obstaculo", 
+          precio: "Gs. 900.000",
+          documentos: []
+        },
+        { 
+          img: ["Meteo1.jpg", "Meteo2.jpg", "Meteo3.jpg"], 
+          nombre: "IOT Weather Station", 
+          desc: "Kit de Estación Meteorológica, monitoreo meteorológico avanzado con 8 sensores para seguimiento de 9 parámetros ambientales, incluido temperatura, humedad, velocidad del viento, los rayos UV, calidad de aire, etc. Resistente al agua y con una construcción de alta calidad  se desarrolla el aprendizaje STEM en programación, monitoreo del clima e integración de múltiples sensores", 
+          precio: "Gs. 1.005.000",
+          documentos: []
+        },
+        { 
+          img: ["Brazo1.jpg", "Braz3.jpg", "Braz1.jpg"], 
+          nombre: "Robot Arm Kit", 
+          desc: "Kit de Brazo Robotico con: -Base metálica -Servomotores -Controlador -Pinzas -Software -Cables -Adaptador -Manual -Sensor de posición -Sensor de fuerza -Sensor de proximidad -Sensor de temperatura -Sensor de luz -Sensor de sonido", 
+          precio: "Gs. 440.000",
+          documentos: []
+        }
+        // ... más productos del kit 3
       ]
     ];
 
@@ -259,12 +343,14 @@
       // Configurar título
       document.getElementById('modal-titulo').textContent = producto.nombre;
       
-      // Configurar descripción
-      document.getElementById('modal-contenido').innerHTML = `
+      // Configurar descripción - manteniendo el formato original
+      let contenidoHTML = `
         <p class="text-lg font-semibold mb-2">Descripción completa:</p>
-        <p class="mb-4">${producto.desc}</p>
-        <p class="text-lg font-semibold text-green-600">${producto.precio}</p>
+        <p class="mb-4 whitespace-pre-line">${producto.desc}</p>
+        <p class="text-lg font-semibold text-green-600 mt-6">${producto.precio}</p>
       `;
+      
+      document.getElementById('modal-contenido').innerHTML = contenidoHTML;
       
       // Configurar documentos descargables
       const documentosLista = document.getElementById('documentos-lista');
@@ -310,13 +396,23 @@
         
         // Generar slides del carrusel
         let slidesHTML = '';
-        p.img.forEach((imgSrc, imgIdx) => {
-          slidesHTML += `
+        if (p.img && p.img.length > 0) {
+          p.img.forEach((imgSrc, imgIdx) => {
+            slidesHTML += `
+              <div class="swiper-slide flex justify-center items-center">
+                <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain">
+              </div>
+            `;
+          });
+        } else {
+          slidesHTML = `
             <div class="swiper-slide flex justify-center items-center">
-              <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain">
+              <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                <span class="text-gray-500">Imagen no disponible</span>
+              </div>
             </div>
           `;
-        });
+        }
 
         html += `
           <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
