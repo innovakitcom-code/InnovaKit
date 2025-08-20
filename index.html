@@ -67,7 +67,6 @@
       </h1>
       <span class="sr-only">Ir al inicio</span>
     </a>
-    <!-- Menú de navegación, en columna en móvil, fila en escritorio -->
     <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-sm sm:text-base">
       <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-600">Misión</a>
       <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600">Visión</a>
@@ -202,7 +201,7 @@
         { 
           img: ["AE101_PORT.png", "AE101_POR2.png", "AE101_11.png", "AE101_12.png", "AE101_2.png", "AE101_13.png", "AE101_22.png", "AE101_3.png", "AE101_4.png"], 
           nombre: "37 SENSOR KIT (AE101)", 
-          desc: "Conjunto de componentes electrónicos variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como: -Avoidance -RGB LED JOYSTICK -IR RECEIVER -18B20 TEMP -Sensor Flame -Sensor Tracking -Photo Resistor -IR EMISSION -POWER SUPPLY MODULE -LCD 1602 Module (With PIN Header) -Relay -Linear Hall -Small Sound -SHOCK -HC-SR501 PIR MOTION SENSOR -PHOTO-INTERRUPTER TAP MODULE -Ultrasonic Sensor -DS-3231 RTC Module -GY-521 MODULE - 7 Color Flash -Button Module -Active Buzzer -Laser Emit -Membrane Switch -Big Sound -Water Level Sensor -Digital Temperature -Magnetic Spring -Mental Touch -SMD RGB -TILT-SWITCH -Rotary Encoder -Temp and Humidity -Two-Color", 
+          desc: "Conjunto de componentes electrónicos variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como: - Avoidance - RGB LED JOYSTICK - IR RECEIVER - 18B20 TEMP - Sensor Flame - Sensor Tracking - Photo Resistor - IR EMISSION - POWER SUPPLY MODULE - LCD 1602 Module (With PIN Header) - Relay - Linear Hall - Small Sound - SHOCK - HC-SR501 PIR MOTION SENSOR - PHOTO- INTERRUPTER TAP MODULE - Ultrasonic Sensor - DS-3231 RTC Module - GY-521 MODULE - 7 Color Flash - Button Module - Active Buzzer - Laser Emit - Membrane Switch - Big Sound -Water Level Sensor -Digital Temperature -Magnetic Spring -Mental Touch -SMD RGB -TILT-SWITCH -Rotary Encoder -Temp and Humidity -Two-Color", 
           precio: "Gs. 355.000",
           documentos: [
             { nombre: "Manual de usuario", archivo: "manual_ae101.pdf" },
@@ -213,10 +212,11 @@
         { 
           img: ["AE312.png", "AE312_1.png", "AE312_11.png", "AE312_2.png", "AE312_3.png"], 
           nombre: "ESP32 Basic STARTER KIT (AE312)", 
-          desc: "Conjunto de componentes electrónicos variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como:-ESP32 Development -0.96 inch OLED -830 Tie-Points Protoboard -Obstacle Avoidance Module -Photosensitive Resistor Module -DHT11 Temperature and Humidity Module -HC-SR501 PIR Motion Sensor -Potentiometer 10k -Micro-USB Cable -Resistor-220Ω 30PCS -Passive Buzzer -Active Buzzer -5v2-Channel Relay Module -Button Switch -F-M DuPont Cable -F-F DuPont Cable -M-M DuPont Cable -LED-RGB -LED-RED -LED-YELLOW -LED-GREEN", 
+          desc: "Conjunto de componentes electrónicos variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como:- ESP32 Development - 0.96 inch OLED - 830 Tie-Points Protoboard - Obstacle Avoidance Module - Photosensitive Resistor Module - DHT11 Temperature and Humidity Module - HC-SR501 PIR Motion Sensor - Potentiometer 10k - Micro-USB Cable - Resistor-220Ω 30PCS - Passive Buzzer - Active Buzzer - 5v2-Channel Relay Module - Button Switch - F-M DuPont Cable - F-F DuPont Cable - M-M DuPont Cable - LED-RGB - LED-RED - LED-YELLOW - LED-GREEN", 
           precio: "Gs. 350.000",
           documentos: [
-            { nombre: "Obtener Tutoriales y Guias", archivo: "https://dl.dropboxusercontent.com/scl/fi/f6lvxpsuxl49e84clxkui/KUONGSHUN-AE312-ESP32-Basic-Starter-Kit.zip?rlkey=dsv53wmczflo8hgc93vb7k1x1&st=txgfre0p" }
+            { nombre: "Manual ESP32", archivo: "manual_esp32.pdf" },
+            { nombre: "Ejemplos de código", archivo: "codigo_ae312.zip" }
           ]
         },
         { 
@@ -229,7 +229,7 @@
         { 
           img: ["AE325.png", "AE325_2.png", "AE325_3.png", "AE325_4.png"], 
           nombre: "Sensor Module STARTE KIT for UNO  R3 Project (AE325)", 
-          desc: "Kit de sensores para proyectos con Arduino UNO R3. Incluye: -Sensor de temperatura -Sensor de humedad -Sensor de luz -Sensor de sonido -Sensor de movimiento -Sensor de proximidad -Sensor de gas -Sensor de llama -Sensor de tacto -Sensor de inclinación -Sensor de vibración -Sensor de ultrasonido -Sensor de infrarrojos -Sensor de color -Sensor de lluvia -Sensor de velocidad -Sensor de presión -Sensor de campo magnético", 
+          desc: "Kit de sensores para proyectos con Arduino UNO R3. Incluye: - Sensor de temperatura -Sensor de humedad -Sensor de luz -Sensor de sonido -Sensor de movimiento -Sensor de proximidad -Sensor de gas -Sensor de llama -Sensor de tacto -Sensor de inclinación -Sensor de vibración -Sensor de ultrasonido -Sensor de infrarrojos -Sensor de color -Sensor de lluvia -Sensor de velocidad -Sensor de presión -Sensor de campo magnético", 
           precio: "Gs. 300.000",
           documentos: []
         },
@@ -255,7 +255,7 @@
           documentos: []
         }
       ],
-      // Kit 2: Arduino (6 productos)
+      // Kit 2: Arduino (1 producto de ejemplo)
       [
         { 
           img: ["AE046.png", "AE046_12.png", "AE046_2.png", "AE046_4.png"], 
@@ -263,10 +263,9 @@
           desc: "Kit con componentes variados para proyectos de electrónica. Incluye: -Resistencias -Condensadores -Transistores -Diodos -LEDs -Potenciómetros -Interruptores -Pulsadores -Zumbadores -Relés -Displays -Sensores -Cables -Protoboard -Arduino UNO -Shield Ethernet -Shield WiFi -Shield Bluetooth -Shield GPS -Shield LCD -Shield motor -Shield relé -Shield sensor -Shield SD card -Shield audio -Shield teclado -Shield joystick", 
           precio: "Gs. 445.000",
           documentos: []
-        },
-        // ... más productos del kit 2
+        }
       ],
-      // Kit 3: Maker (17 productos)
+      // Kit 3: Maker (algunos productos)
       [
         { 
           img: ["SmarCart1.jpg", "SmarCart2.png", "SmarCar1.jpg"], 
@@ -320,7 +319,6 @@
           precio: "Gs. 440.000",
           documentos: []
         }
-        // ... más productos del kit 3
       ]
     ];
 
@@ -330,7 +328,76 @@
       return texto.substring(0, maxLength) + '...';
     }
 
-    // Funciones para el modal
+    /**
+     * EXTRAER COMPONENTES DESDE DESCRIPCIÓN
+     * - Detecta ítems que empiezan por -, *, – o — (con o sin espacio después),
+     * - No rompe cosas como "7-Segment" (el guion del medio de palabra no cuenta como separador),
+     * - Funciona aunque todo esté en una sola línea.
+     */
+    function extraerComponentes(descripcion) {
+      const texto = descripcion.replace(/\r/g, ' ');
+
+      // Regex: ítem si el separador ( -, *, –, — ) está al inicio o precedido por espacio/:
+      // y miramos hasta el siguiente separador similar o el fin del texto.
+      const separador = '[-*–—]';
+      const re = new RegExp(
+        '(?:^|[\\s:])' +               // inicio o espacio o :
+        '(' + separador + ')\\s*' +    // un separador válido
+        '([\\s\\S]*?)' +               // el contenido del ítem (lazy)
+        '(?=(?:[\\s:]' + separador + '\\s)|$)', // hasta antes del próximo separador o fin
+        'g'
+      );
+
+      const componentes = [];
+      let m;
+      while ((m = re.exec(texto)) !== null) {
+        const item = (m[2] || '').trim();
+        if (item && item.length > 1) {
+          componentes.push(item.replace(/\s*[;,.]\s*$/,''));
+        }
+      }
+
+      // Si no encontró nada, fallback simple: recorta desde el primer separador y divide
+      if (componentes.length === 0) {
+        const firstIdx = texto.search(new RegExp(separador + '\\s*[A-Za-z0-9]'));
+        if (firstIdx !== -1) {
+          const cola = texto.slice(firstIdx);
+          cola.split(new RegExp('(?:^|[\\s:])' + separador + '\\s*', 'g'))
+              .map(s => s.trim())
+              .filter(Boolean)
+              .forEach(s => componentes.push(s.replace(/\s*[;,.]\s*$/,'')));
+        }
+      }
+
+      return componentes;
+    }
+
+    // Formatear componentes en 3 columnas SIEMPRE
+    function formatearComponentesEnColumnas(componentes) {
+      if (componentes.length === 0) return '';
+      
+      const columnCount = 3;
+      const itemsPerColumn = Math.ceil(componentes.length / columnCount);
+      let html = '<div class="grid grid-cols-3 gap-4 mt-4 text-sm">'; // 3 columnas fijas
+      
+      for (let col = 0; col < columnCount; col++) {
+        html += '<div class="space-y-1">';
+        const startIndex = col * itemsPerColumn;
+        const endIndex = Math.min(startIndex + itemsPerColumn, componentes.length);
+        
+        for (let i = startIndex; i < endIndex; i++) {
+          html += `<div class="flex items-start leading-snug">
+                    <span class="mr-2">•</span>
+                    <span>${componentes[i]}</span>
+                  </div>`;
+        }
+        html += '</div>';
+      }
+      html += '</div>';
+      return html;
+    }
+
+    // Modal ON/OFF
     function toggleModal() {
       const modal = document.getElementById('modal-descripcion');
       modal.classList.toggle('opacity-0');
@@ -338,20 +405,31 @@
       document.body.classList.toggle('modal-active');
     }
 
+    // Mostrar modal con descripción + componentes
     function mostrarDescripcionCompleta(producto) {
-      // Configurar título
       document.getElementById('modal-titulo').textContent = producto.nombre;
       
-      // Configurar descripción - manteniendo el formato original
-      let contenidoHTML = `
-        <p class="text-lg font-semibold mb-2">Descripción completa:</p>
-        <p class="mb-4 whitespace-pre-line">${producto.desc}</p>
-        <p class="text-lg font-semibold text-green-600 mt-6">${producto.precio}</p>
-      `;
+      const componentes = extraerComponentes(producto.desc);
       
+      let contenidoHTML = `<p class="text-lg font-semibold mb-2">Descripción completa:</p>`;
+      
+      if (componentes.length > 0) {
+        // Texto antes de la primera lista (intro) – cortamos hasta el primer separador
+        const idxPrim = producto.desc.search(/[-*–—]\s*[A-Za-z0-9]/);
+        const intro = idxPrim > -1 ? producto.desc.slice(0, idxPrim).trim() : producto.desc.trim();
+        contenidoHTML += `
+          <p class="mb-4">${intro}</p>
+          <p class="font-semibold mt-4 mb-2">Componentes incluidos:</p>
+          ${formatearComponentesEnColumnas(componentes)}
+        `;
+      } else {
+        contenidoHTML += `<p class="mb-4">${producto.desc}</p>`;
+      }
+      
+      contenidoHTML += `<p class="text-lg font-semibold text-green-600 mt-6">${producto.precio}</p>`;
       document.getElementById('modal-contenido').innerHTML = contenidoHTML;
       
-      // Configurar documentos descargables
+      // Documentos
       const documentosLista = document.getElementById('documentos-lista');
       documentosLista.innerHTML = '';
       
@@ -361,10 +439,7 @@
           docElement.href = `docs/${doc.archivo}`;
           docElement.download = doc.archivo;
           docElement.className = 'flex items-center text-blue-600 hover:text-blue-800';
-          docElement.innerHTML = `
-            <i class="fas fa-file-download mr-2"></i>
-            ${doc.nombre}
-          `;
+          docElement.innerHTML = `<i class="fas fa-file-download mr-2"></i>${doc.nombre}`;
           documentosLista.appendChild(docElement);
         });
         document.getElementById('modal-documentos').classList.remove('hidden');
@@ -372,14 +447,14 @@
         document.getElementById('modal-documentos').classList.add('hidden');
       }
       
-      // Configurar enlace de WhatsApp
+      // WhatsApp
       const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${producto.nombre} - ${producto.desc} (Precio: ${producto.precio})`);
       document.getElementById('modal-whatsapp').href = `https://wa.me/595972292392?text=${mensaje}`;
       
-      // Mostrar modal
       toggleModal();
     }
 
+    // Render productos del kit (con carrusel)
     function verProductosKit(idx) {
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('vista-productoskit').classList.remove('hidden');
@@ -393,7 +468,7 @@
       productos.forEach((p, i) => {
         const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio})`);
         
-        // Generar slides del carrusel
+        // Slides del carrusel
         let slidesHTML = '';
         if (p.img && p.img.length > 0) {
           p.img.forEach((imgSrc, imgIdx) => {
@@ -472,14 +547,22 @@
       } else {
         isEscape = (evt.keyCode === 27);
       }
-      if (isEscape) {
+      // Si el modal está visible, cierra; si no, no hagas nada
+      const modal = document.getElementById('modal-descripcion');
+      const oculto = modal.classList.contains('pointer-events-none');
+      if (isEscape && !oculto) {
         toggleModal();
       }
     };
 
     // Cerrar modal al hacer clic fuera del contenido
-    document.querySelector('.modal-overlay').addEventListener('click', toggleModal);
-    document.querySelector('.modal-close').addEventListener('click', toggleModal);
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('.modal-overlay').addEventListener('click', () => {
+        const modal = document.getElementById('modal-descripcion');
+        if (!modal.classList.contains('pointer-events-none')) toggleModal();
+      });
+      document.querySelector('.modal-close').addEventListener('click', toggleModal);
+    });
   </script>
 </body>
 </html>
