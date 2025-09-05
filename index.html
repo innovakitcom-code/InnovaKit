@@ -126,6 +126,109 @@
       </div>
     </section>
 
+<!-- Sección de Asesorías -->
+<section id="asesorias" class="p-6 sm:p-12 bg-cover bg-center bg-fixed" style="background-image: url('fondo-tecno.jpg');">
+  <div class="bg-white bg-opacity-90 rounded-xl p-6">
+    <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Asesoría para Proyectos Técnicos</h3>
+    <p class="text-center mb-8 max-w-2xl mx-auto">¿Participas en una feria científica o expo técnica? Nuestros expertos te ayudan a desarrollar tu proyecto con los kits Innovakit.</p>
+    
+    <!-- Panel de Asesores -->
+    <div class="mb-12">
+      <h4 class="text-xl font-bold mb-6 text-center">Nuestros Asesores</h4>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Asesor 1 -->
+        <div class="bg-gray-50 rounded-lg p-4 shadow">
+          <img src="asesor1.jpg" alt="Asesor 1" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+          <h5 class="font-bold text-lg text-center">Ing. Carlos Mendoza</h5>
+          <p class="text-sm text-gray-600 text-center mb-2">Especialista en Robótica Educativa</p>
+          <p class="text-sm">+5 años asesorando proyectos escolares. Experto en Arduino y automatización.</p>
+          <div class="mt-3 flex justify-center space-x-2">
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Electrónica</span>
+            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Programación</span>
+          </div>
+        </div>
+        
+        <!-- Asesor 2 -->
+        <div class="bg-gray-50 rounded-lg p-4 shadow">
+          <img src="asesor2.jpg" alt="Asesor 2" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+          <h5 class="font-bold text-lg text-center">Lic. Ana Torres</h5>
+          <p class="text-sm text-gray-600 text-center mb-2">Pedagoga Tecnológica</p>
+          <p class="text-sm">Especializada en metodologías de aprendizaje STEM para proyectos educativos.</p>
+          <div class="mt-3 flex justify-center space-x-2">
+            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">STEM</span>
+            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Metodología</span>
+          </div>
+        </div>
+        
+        <!-- Asesor 3 -->
+        <div class="bg-gray-50 rounded-lg p-4 shadow">
+          <img src="asesor3.jpg" alt="Asesor 3" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+          <h5 class="font-bold text-lg text-center">Ing. Roberto Díaz</h5>
+          <p class="text-sm text-gray-600 text-center mb-2">Experto en IoT</p>
+          <p class="text-sm">Desarrollador de proyectos con sensores y aplicaciones IoT para ferias científicas.</p>
+          <div class="mt-3 flex justify-center space-x-2">
+            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">IoT</span>
+            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">Sensores</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Formulario de Contacto -->
+    <div class="bg-gray-100 rounded-xl p-6">
+      <h4 class="text-xl font-bold mb-6 text-center">Solicitar Asesoría</h4>
+      <form class="max-w-lg mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Nombre completo</label>
+            <input type="text" class="w-full px-3 py-2 border rounded-lg" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Colegio/Institución</label>
+            <input type="text" class="w-full px-3 py-2 border rounded-lg" required>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Email</label>
+            <input type="email" class="w-full px-3 py-2 border rounded-lg" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Teléfono</label>
+            <input type="tel" class="w-full px-3 py-2 border rounded-lg" required>
+          </div>
+        </div>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Tipo de proyecto</label>
+          <select class="w-full px-3 py-2 border rounded-lg">
+            <option>Feria científica</option>
+            <option>Expo técnica</option>
+            <option>Proyecto escolar</option>
+            <option>Competencia de robótica</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Describe tu proyecto o idea</label>
+          <textarea rows="4" class="w-full px-3 py-2 border rounded-lg" placeholder="Qué quieres hacer, qué materiales tienes, qué necesitas..."></textarea>
+        </div>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1">Fecha límite (si aplica)</label>
+          <input type="date" class="w-full px-3 py-2 border rounded-lg">
+        </div>
+        
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">
+          Enviar solicitud de asesoría
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+    
     <!-- Contacto -->
     <section id="contacto" class="p-6 sm:p-12 text-center">
       <h3 class="text-2xl sm:text-3xl font-bold mb-6">Contáctanos</h3>
