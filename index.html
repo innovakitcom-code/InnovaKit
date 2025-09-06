@@ -199,7 +199,7 @@
   </div>
 
 <!-- Vista de Asesorías (oculta al inicio) -->
-<section id="vista-asesorias" class="hidden p-6 sm:p-12 min-h-screen bg-cover bg-center bg-fixed" style="background-image: url('fondo-tecno.jpg');">
+<section id="vista-asesorias" class="hidden p-6 sm:p-12 bg-cover bg-center bg-fixed" style="background-image: url('fondo-tecno.jpg');">
   <div class="bg-white bg-opacity-95 rounded-xl p-6">
     <div class="flex justify-between items-center mb-8">
       <h3 class="text-center sm:text-3xl font-bold">Asesoría para Proyectos Técnicos</h3>
@@ -218,8 +218,9 @@
       <h4 class="text-xl font-bold mb-6 text-center">Nuestros Asesores</h4>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Asesor 1 -->
-        <div class="bg-gray-50 rounded-lg p-4 shadow">
-          <img src="Icono.png" alt="Asesor 1" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+       <div class="bg-gray-50 rounded-lg p-4 shadow">
+  <img src="asesores/carlos-mendoza.jpg" alt="Ing. Carlos Mendoza" 
+       class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
           <h5 class="font-bold text-lg text-center">Ing. Carlos Mendoza</h5>
           <p class="text-sm text-gray-600 text-center mb-2">Especialista en Robótica Educativa</p>
           <p class="text-sm">+5 años asesorando proyectos escolares. Experto en Arduino y automatización.</p>
@@ -231,7 +232,8 @@
         
         <!-- Asesor 2 -->
         <div class="bg-gray-50 rounded-lg p-4 shadow">
-          <img src="Icono.png" alt="Asesor 2" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+  <img src="asesores/ana-torres.jpg" alt="Lic. Ana Torres" 
+       class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
           <h5 class="font-bold text-lg text-center">Lic. Ana Torres</h5>
           <p class="text-sm text-gray-600 text-center mb-2">Pedagoga Tecnológica</p>
           <p class="text-sm">Especializada en metodologías de aprendizaje STEM para proyectos educativos.</p>
@@ -243,7 +245,8 @@
         
         <!-- Asesor 3 -->
         <div class="bg-gray-50 rounded-lg p-4 shadow">
-          <img src="Icono.png" alt="Asesor 3" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+  <img src="asesores/roberto-diaz.jpg" alt="Ing. Roberto Díaz" 
+       class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
           <h5 class="font-bold text-lg text-center">Ing. Roberto Díaz</h5>
           <p class="text-sm text-gray-600 text-center mb-2">Experto en IoT</p>
           <p class="text-sm">Desarrollador de proyectos con sensores y aplicaciones IoT para ferias científicas.</p>
@@ -312,6 +315,10 @@
     <button type="button" onclick="enviarPorWhatsApp()" class="flex-1 bg-green-500 text-white py-3 rounded-lg shadow hover:bg-green-600 font-semibold">
       Contactar por WhatsApp
     </button>
+        <!-- Espacio para que no se superponga con el footer -->
+    <div class="h-20"></div>
+  </div>
+</section>
   </div>
 </form>
   <!-- Footer -->
