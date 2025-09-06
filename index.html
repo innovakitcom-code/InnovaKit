@@ -739,27 +739,34 @@ function verProductosKit(idx) {
   document.getElementById('vista-productoskit').classList.remove('hidden');
   const productos = productosKits[idx - 1];
 
-  // Definimos portadas distintas para cada kit
   const portadas = [
     "png/portada_kit1.svg", // portada producto 1
     "img/portada_kit2.jpg", // portada producto 2  
     "png/portada_kit3.svg"  // portada producto 3
   ];
 
-  // HTML de la portada
+  // ARRAY CON LOS TÍTULOS PERSONALIZADOS PARA CADA KIT
+  const titulosPersonalizados = [
+    "🔌 Kits Kuongshun - Electrónica",
+    "⚡ Kits Innovakit - Proyectos", 
+    "🤖 Kits Acebott - Robótica"
+  ];
+
+  // HTML de la portada CON TÍTULO PERSONALIZADO
   let html = `
-    <div class="relative w-full h-64 sm:h-80 lg:h-96 mb-8">
-      <img src="${portadas[idx-1]}" alt="Portada Kit ${idx}" 
+    <div class="relative w-full h-screen mb-8">
+      <img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" 
            class="absolute inset-0 w-full h-full object-cover">
       <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-        <h2 class="text-3xl sm:text-4xl font-bold text-white">Productos del Kit ${idx}</h2>
+        <h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">
+          ${titulosPersonalizados[idx-1]}  <!-- ← TÍTULO PERSONALIZADO AQUÍ -->
+        </h2>
       </div>
     </div>
     
     <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
   `;
-
   productos.forEach((p, i) => {
     const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio})`);
     
