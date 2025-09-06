@@ -202,7 +202,7 @@
 <section id="vista-asesorias" class="hidden p-6 sm:p-12 min-h-screen bg-cover bg-center bg-fixed" style="background-image: url('fondo-tecno.jpg');">
   <div class="bg-white bg-opacity-95 rounded-xl p-6">
     <div class="flex justify-between items-center mb-8">
-      <h3 class="text-2xl text-center sm:text-3xl font-bold">Asesoría para Proyectos Técnicos</h3>
+      <h3 class="text-center sm:text-3xl font-bold">Asesoría para Proyectos Técnicos</h3>
       <button onclick="volverAlInicio()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg font-semibold">
         Volver al inicio
       </button>
@@ -219,7 +219,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Asesor 1 -->
         <div class="bg-gray-50 rounded-lg p-4 shadow">
-          <img src="asesor1.jpg" alt="Asesor 1" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+          <img src="Icono.png" alt="Asesor 1" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
           <h5 class="font-bold text-lg text-center">Ing. Carlos Mendoza</h5>
           <p class="text-sm text-gray-600 text-center mb-2">Especialista en Robótica Educativa</p>
           <p class="text-sm">+5 años asesorando proyectos escolares. Experto en Arduino y automatización.</p>
@@ -231,7 +231,7 @@
         
         <!-- Asesor 2 -->
         <div class="bg-gray-50 rounded-lg p-4 shadow">
-          <img src="asesor2.jpg" alt="Asesor 2" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+          <img src="Icono.png" alt="Asesor 2" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
           <h5 class="font-bold text-lg text-center">Lic. Ana Torres</h5>
           <p class="text-sm text-gray-600 text-center mb-2">Pedagoga Tecnológica</p>
           <p class="text-sm">Especializada en metodologías de aprendizaje STEM para proyectos educativos.</p>
@@ -243,7 +243,7 @@
         
         <!-- Asesor 3 -->
         <div class="bg-gray-50 rounded-lg p-4 shadow">
-          <img src="asesor3.jpg" alt="Asesor 3" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+          <img src="Icono.png" alt="Asesor 3" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
           <h5 class="font-bold text-lg text-center">Ing. Roberto Díaz</h5>
           <p class="text-sm text-gray-600 text-center mb-2">Experto en IoT</p>
           <p class="text-sm">Desarrollador de proyectos con sensores y aplicaciones IoT para ferias científicas.</p>
@@ -256,60 +256,64 @@
     </div>
     
     <!-- Formulario de Contacto -->
-    <div class="bg-gray-100 rounded-xl p-6">
-      <h4 class="text-xl font-bold mb-6 text-center">Solicitar Asesoría</h4>
-      <form class="max-w-lg mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">Nombre completo</label>
-            <input type="text" class="w-full px-3 py-2 border rounded-lg" required>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Colegio/Institución</label>
-            <input type="text" class="w-full px-3 py-2 border rounded-lg" required>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">Email</label>
-            <input type="email" class="w-full px-3 py-2 border rounded-lg" required>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Teléfono</label>
-            <input type="tel" class="w-full px-3 py-2 border rounded-lg" required>
-          </div>
-        </div>
-        
-        <div class="mb-4">
-          <label class="block text-sm font-medium mb-1">Tipo de proyecto</label>
-          <select class="w-full px-3 py-2 border rounded-lg">
-            <option>Feria científica</option>
-            <option>Expo técnica</option>
-            <option>Proyecto escolar</option>
-            <option>Competencia de robótica</option>
-            <option>Otro</option>
-          </select>
-        </div>
-        
-        <div class="mb-4">
-          <label class="block text-sm font-medium mb-1">Describe tu proyecto o idea</label>
-          <textarea rows="4" class="w-full px-3 py-2 border rounded-lg" placeholder="Qué quieres hacer, qué materiales tienes, qué necesitas..."></textarea>
-        </div>
-        
-        <div class="mb-4">
-          <label class="block text-sm font-medium mb-1">Fecha límite (si aplica)</label>
-          <input type="date" class="w-full px-3 py-2 border rounded-lg">
-        </div>
-        
-        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">
-          Enviar solicitud de asesoría
-        </button>
-      </form>
+    <form class="max-w-lg mx-auto" action="https://formsubmit.co/innovakit.com@gmail.com" method="POST">
+  <!-- Campos ocultos para Formsubmit -->
+  <input type="hidden" name="_subject" value="Nueva solicitud de asesoría - Innovakit">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_next" value="https://tuweb.com/gracias.html">
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">Nombre completo</label>
+      <input type="text" name="nombre" class="w-full px-3 py-2 border rounded-lg" required>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Colegio/Institución</label>
+      <input type="text" name="institucion" class="w-full px-3 py-2 border rounded-lg" required>
     </div>
   </div>
-</section>
   
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">Email</label>
+      <input type="email" name="email" class="w-full px-3 py-2 border rounded-lg" required>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Teléfono</label>
+      <input type="tel" name="telefono" class="w-full px-3 py-2 border rounded-lg" required>
+    </div>
+  </div>
+  
+  <div class="mb-4">
+    <label class="block text-sm font-medium mb-1">Tipo de proyecto</label>
+    <select name="tipo_proyecto" class="w-full px-3 py-2 border rounded-lg">
+      <option>Feria científica</option>
+      <option>Expo técnica</option>
+      <option>Proyecto escolar</option>
+      <option>Competencia de robótica</option>
+      <option>Otro</option>
+    </select>
+  </div>
+  
+  <div class="mb-4">
+    <label class="block text-sm font-medium mb-1">Describe tu proyecto o idea</label>
+    <textarea name="proyecto" rows="4" class="w-full px-3 py-2 border rounded-lg" placeholder="Qué quieres hacer, qué materiales tienes, qué necesitas..." required></textarea>
+  </div>
+  
+  <div class="mb-4">
+    <label class="block text-sm font-medium mb-1">Fecha límite (si aplica)</label>
+    <input type="date" name="fecha_limite" class="w-full px-3 py-2 border rounded-lg">
+  </div>
+  
+  <div class="flex gap-4">
+    <button type="submit" class="flex-1 bg-blue-600 text-white py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">
+      Enviar solicitud
+    </button>
+    <button type="button" onclick="enviarPorWhatsApp()" class="flex-1 bg-green-500 text-white py-3 rounded-lg shadow hover:bg-green-600 font-semibold">
+      Contactar por WhatsApp
+    </button>
+  </div>
+</form>
   <!-- Footer -->
   <footer class="bg-gray-800 text-white text-center p-4">
     <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
@@ -842,6 +846,28 @@
       document.getElementById('vista-asesorias').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // =============================================
+    // FUNCIÓN PARA ENVÍO POR WHATSAPP
+    // =============================================
+    
+    function enviarPorWhatsApp() {
+      // Obtener valores del formulario
+      const nombre = document.querySelector('input[name="nombre"]').value;
+      const institucion = document.querySelector('input[name="institucion"]').value;
+      const email = document.querySelector('input[name="email"]').value;
+      const telefono = document.querySelector('input[name="telefono"]').value;
+      const tipoProyecto = document.querySelector('select[name="tipo_proyecto"]').value;
+      const proyecto = document.querySelector('textarea[name="proyecto"]').value;
+      const fechaLimite = document.querySelector('input[name="fecha_limite"]').value;
+      
+      // Crear mensaje para WhatsApp
+      const mensaje = `¡Hola! Solicito asesoría para proyecto técnico:%0A%0A*Nombre:* ${nombre}%0A*Institución:* ${institucion}%0A*Email:* ${email}%0A*Teléfono:* ${telefono}%0A*Tipo de proyecto:* ${tipoProyecto}%0A*Fecha límite:* ${fechaLimite || 'No especificada'}%0A%0A*Descripción del proyecto:*%0A${proyecto}`;
+      
+      // Abrir WhatsApp
+      window.open(`https://wa.me/595972292392?text=${mensaje}`, '_blank');
+    }
+    
   </script>
 </body>
 </html>
