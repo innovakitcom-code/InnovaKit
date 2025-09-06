@@ -734,55 +734,83 @@
       toggleModal();
     }
 
-    // Render productos del kit (con carrusel)
+ // Render productos del kit (con carrusel)
     function verProductosKit(idx) {
-  document.getElementById('main-content').style.display = 'none';
-  document.getElementById('vista-productoskit').classList.remove('hidden');
-  
-  const productos = productosKits[idx-1];
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('vista-productoskit').classList.remove('hidden');
+      const productos = productosKits[idx - 1];
 
-  // Definimos portadas distintas para cada kit
-  const portadas = [
-    "img/portada_kit1.jpg", // portada producto 1
-    "img/portada_kit2.jpg", // portada producto 2
-    "img/portada_kit3.jpg"  // portada producto 3
-  ];
+      let html = `
+        <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos del kit</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      `;
 
-  // HTML de la portada
-  let html = `
-    <div class="relative w-full h-64 sm:h-80 lg:h-96 mb-8">
-      <img src="${portadas[idx-1]}" alt="Portada Kit ${idx}" 
-           class="absolute inset-0 w-full h-full object-cover">
-      <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-        <h2 class="text-3xl sm:text-4xl font-bold text-white">Productos del Kit ${idx}</h2>
-      </div>
-    </div>
-  `;
+      productos.forEach((p, i) => {
+        const mensaje = encodeURIComponent(¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio}));
 
-  // Listado de productos
-  html += `<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
+        // Slides del carrusel
+        let slidesHTML = '';
+        if (p.img && p.img.length > 0) {
+          p.img.forEach((imgSrc, imgIdx) => {
+            slidesHTML += `
+              <div class="swiper-slide flex justify-center items-center">
+                <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain">
+              </div>
+            `;
+          });
+        } else {
+          slidesHTML = `
+            <div class="swiper-slide flex justify-center items-center">
+              <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                <span class="text-gray-500">Imagen no disponible</span>
+              </div>
+            </div>
+          `;
+        }
 
-  productos.forEach((p) => {
-    const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio})`);
-    html += `
-      <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
-        <img src="${p.img}" alt="${p.nombre}" class="w-32 h-32 object-contain mb-4 rounded-lg">
-        <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">${p.nombre}</h4>
-        <p class="mb-2 text-center text-sm sm:text-base">${p.desc}</p>
-        <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
-        <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
-          class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 mt-auto">
-          Comprar por WhatsApp
-        </a>
-      </div>
-    `;
-  });
+        html += `
+          <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
+            <!-- Carrusel de imágenes -->
+            <div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4">
+              <div class="swiper-wrapper">
+                ${slidesHTML}
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
 
-  html += `</div>`;
-  
-  document.getElementById('productoskit-content').innerHTML = html;
-  window.scrollTo({top:0, behavior:'smooth'});
-}
+            <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">${p.nombre}</h4>
+            <p class="mb-2 text-center text-sm sm:text-base">${acortarTexto(p.desc)} 
+              <a href="javascript:void(0)" onclick="mostrarDescripcionCompleta(${JSON.stringify(p).replace(/"/g, '&quot;')})" class="text-blue-600 hover:underline">Leer más...</a>
+            </p>
+            <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
+            <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
+              class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 mt-auto">
+              Comprar por WhatsApp
+            </a>
+          </div>
+        `;
+      });
+
+      html += </div>;
+      document.getElementById('productoskit-content').innerHTML = html;
+
+      // Inicializar Swipers para cada producto
+      productos.forEach((_, i) => {
+        new Swiper(.swiper-producto-${i}, {
+          loop: true,
+          navigation: {
+            nextEl: .swiper-producto-${i} .swiper-button-next,
+            prevEl: .swiper-producto-${i} .swiper-button-prev,
+          },
+          preventClicks: true,
+          preventClicksPropagation: true,
+          touchStartPreventDefault: true
+        });
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
 
     function volverAlInicio() {
