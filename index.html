@@ -100,7 +100,7 @@
       <p class="max-w-2xl mx-auto text-base sm:text-lg">Convertirnos en referentes en kits educativos y soluciones electrónicas en Paraguay, fomentando el desarrollo tecnológico y la formación práctica de nuevas generaciones.</p>
     </section>
 
-   <!-- Productos -->
+    <!-- Productos -->
     <section id="productos" class="p-6 sm:p-12 bg-gray-100 scroll-mt-20">
       <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -127,7 +127,6 @@
         </div>
       </div>
     </section>
-
 
 <!-- Sección de Asesorías en página principal -->
 <section id="asesorias-preview" class="p-6 sm:p-12 text-center scroll-mt-20">
@@ -734,7 +733,7 @@
       toggleModal();
     }
 
- // Render productos del kit (con carrusel)
+    // Render productos del kit (con carrusel)
     function verProductosKit(idx) {
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('vista-productoskit').classList.remove('hidden');
@@ -746,7 +745,7 @@
       `;
 
       productos.forEach((p, i) => {
-        const mensaje = encodeURIComponent(¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio}));
+        const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio})`);
 
         // Slides del carrusel
         let slidesHTML = '';
@@ -792,16 +791,16 @@
         `;
       });
 
-      html += </div>;
+      html += `</div>`;
       document.getElementById('productoskit-content').innerHTML = html;
 
       // Inicializar Swipers para cada producto
       productos.forEach((_, i) => {
-        new Swiper(.swiper-producto-${i}, {
+        new Swiper(`.swiper-producto-${i}`, {
           loop: true,
           navigation: {
-            nextEl: .swiper-producto-${i} .swiper-button-next,
-            prevEl: .swiper-producto-${i} .swiper-button-prev,
+            nextEl: `.swiper-producto-${i} .swiper-button-next`,
+            prevEl: `.swiper-producto-${i} .swiper-button-prev`,
           },
           preventClicks: true,
           preventClicksPropagation: true,
@@ -811,7 +810,6 @@
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
 
     function volverAlInicio() {
   document.getElementById('main-content').style.display = '';
