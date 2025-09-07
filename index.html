@@ -85,11 +85,11 @@
       <span class="sr-only">Ir al inicio</span>
     </a>
     <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-sm sm:text-base">
-      <a href="#mision" onclick="volverAlInicio() scrollSuave(event, 'mision')" class="hover:text-blue-600">Misión</a>
-      <a href="#vision" onclick="volverAlInicio() scrollSuave(event, 'vision')" class="hover:text-blue-600">Visión</a>
-      <a href="#productos" onclick="volverAlInicio() scrollSuave(event, 'productos')" class="hover:text-blue-600">Productos</a>
-      <a href="#contacto" onclick="volverAlInicio() scrollSuave(event, 'contacto')" class="hover:text-blue-600">Contacto</a>
-      <a href="#asesorias-preview" onclick="volverAlInicio() scrollSuave(event, 'vista-asesorias')" class="hover:text-blue-600">Asesoría</a>
+      <a href="#mision" onclick="volverAlInicio()  class="hover:text-blue-600">Misión</a>
+      <a href="#vision" onclick="volverAlInicio() class="hover:text-blue-600">Visión</a>
+      <a href="#productos" onclick="volverAlInicio()  class="hover:text-blue-600">Productos</a>
+      <a href="#contacto" onclick="volverAlInicio()  class="hover:text-blue-600">Contacto</a>
+      <a href="#asesorias-preview" onclick="volverAlInicio() class="hover:text-blue-600">Asesoría</a>
     </nav>
   </header>
 
@@ -919,14 +919,6 @@ let html = `
       // Abrir WhatsApp
       window.open(`https://wa.me/595972292392?text=${mensaje}`, '_blank');
     }
-
-    function scrollSuave(event, idSeccion) {
-  event.preventDefault(); // evita el salto brusco por defecto
-  const seccion = document.getElementById(idSeccion);
-  if (seccion) {
-    seccion.scrollIntoView({ behavior: 'smooth' });
-  }
-}
 
   </script>
 </body>
