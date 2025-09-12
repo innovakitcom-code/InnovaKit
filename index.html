@@ -84,7 +84,7 @@
       </h1>
       <span class="sr-only">Ir al inicio</span>
     </a>
-    <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-sm sm:text-base">
+    <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-xs sm:text-base overflow-x-auto">
       <a href="#mision" onclick="volverAlInicio()"  class="hover:text-blue-600">Misión</a>
       <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600">Visión</a>
       <a href="#productos" onclick="volverAlInicio()"  class="hover:text-blue-600">Productos</a>
@@ -144,7 +144,7 @@
     <!-- Productos -->
     <section id="productos" class="p-6 sm:p-12 bg-gray-100 scroll-mt-20 mt-12">
       <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center">
         <!-- Producto 1 -->
         <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
           <img src="png/Kounshun.png" alt="Producto 1" class="w-64 h-64 object-contain mb-4 rounded-lg">
@@ -196,10 +196,11 @@
     </a>
 
     <!-- WhatsApp -->
-    <a href="https://wa.me/595972292392" target="_blank"
-       class="bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-600 font-semibold text-lg flex items-center justify-center">
-       <i class="fab fa-whatsapp mr-2"></i>WhatsApp
-    </a>
+   <a href="https://wa.me/595972292392" target="_blank"
+   class="w-full sm:w-auto bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-600 font-semibold text-lg flex items-center justify-center">
+   <i class="fab fa-whatsapp mr-2"></i>WhatsApp
+</a>
+
 
     <!-- Instagram -->
     <a href="https://www.instagram.com/innovakit_ofc?igsh=N2ZsNjh4YWo4MDBs" target="_blank"
@@ -277,7 +278,7 @@
       <h4 class="text-xl font-bold mb-6 text-center">Nuestros Asesores</h4>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Asesor 1 -->
-       <div class="bg-gray-80 rounded-lg p-4 shadow">
+       <div class="bg-gray-80 rounded-lg p-4 shadow max-w-sm mx-auto">
   <img src="asesores/icono_hombre.jpg" alt="Ing. Carlos Mendoza" 
        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
           <h5 class="font-bold text-lg text-center">Ing. Carlos Mendoza</h5>
@@ -290,7 +291,7 @@
         </div>
 
         <!-- Asesor 2 -->
-        <div class="bg-gray-80 rounded-lg p-4 shadow">
+        <div class="bg-gray-80 rounded-lg p-4 shadow max-w-sm mx-auto">
   <img src="asesores/icono_mujer.jpg" alt="Lic. Ana Torres" 
        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
           <h5 class="font-bold text-lg text-center">Lic. Ana Torres</h5>
@@ -303,7 +304,7 @@
         </div>
 
         <!-- Asesor 3 -->
-        <div class="bg-gray-80 rounded-lg p-4 shadow">
+        <div class="bg-gray-80 rounded-lg p-4 shadow max-w-sm mx-auto">
   <img src="asesores/icono_hombre2.jpg" alt="Ing. Roberto Díaz" 
        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top">
           <h5 class="font-bold text-lg text-center">Ing. Roberto Díaz</h5>
