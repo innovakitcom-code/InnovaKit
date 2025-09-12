@@ -861,7 +861,7 @@ let html = `
       p.img.forEach((imgSrc, imgIdx) => {
         slidesHTML += `
           <div class="swiper-slide flex justify-center items-center">
-            <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain">
+            <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain" loading="lazy">
           </div>
         `;
       });
