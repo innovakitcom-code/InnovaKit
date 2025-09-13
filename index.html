@@ -115,6 +115,10 @@
       <a href="#productos" onclick="volverAlInicio()"  class="hover:text-blue-600">Productos</a>
       <a href="#contacto" onclick="volverAlInicio()"  class="hover:text-blue-600">Contacto</a>
       <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-600">Asesoría</a>
+      <!-- Botón del carrito en la barra -->
+  <button onclick="verCarrito()" class="ml-4 bg-yellow-400 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-500 font-semibold">
+    🛒 Carrito (<span id="carrito-count">0</span>)
+  </button>
     </nav>
   </header>
 
@@ -185,6 +189,8 @@
           <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">Kit de Electrónica Básico</h4>
           <p class="mb-4 text-center text-sm sm:text-base">Incluye componentes esenciales para aprender electrónica desde cero.</p>
           <button onclick="verProductosKit(1)" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto">Ver más</button>
+          <!-- Botón agregar al carrito -->
+        <button onclick="agregarAlCarrito('${p.nombre}', '${p.precio}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-2"> Agregar al carrito</button>
         </div>
         <!-- Producto 2 -->
        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
@@ -192,6 +198,7 @@
           <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">Kit de Electrónica Make</h4>
           <p class="mb-4 text-center text-sm sm:text-base">Perfecto para programadores y creadores que quieran comenzar con proyectos prácticos.</p>
           <button onclick="verProductosKit(2)" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto">Ver más</button>
+         <button onclick="agregarAlCarrito('${p.nombre}', '${p.precio}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-2"> Agregar al carrito</button>
         </div>
         <!-- Producto 3 -->
         <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
@@ -199,6 +206,7 @@
           <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">Kit de Robótica Acebott</h4>
           <p class="mb-4 text-center text-sm sm:text-base">Componentes avanzados para proyectos más complejos y creativos.</p>
           <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto">Ver más</button>
+          <button onclick="agregarAlCarrito('${p.nombre}', '${p.precio}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-2"> Agregar al carrito</button>
         </div>
       </div>
     </section>
@@ -996,5 +1004,42 @@ let html = `
     }
 
   </script>
+  <script>
+  function comprarPorWhatsApp(nombre, precio) {
+    const numero = "595972292392"; // tu número de WhatsApp
+    const mensaje = `Hola, quiero comprar:%0A- ${nombre} (${precio})`;
+    const url = `https://wa.me/${numero}?text=${mensaje}`;
+    window.open(url, "_blank");
+  }
+</script>
+  <script>
+  let carrito = [];
+
+  function agregarAlCarrito(nombre, precio) {
+    carrito.push({ nombre, precio });
+    actualizarContador();
+    alert(nombre + " agregado al carrito ✅");
+  }
+
+  function actualizarContador() {
+    document.getElementById("carrito-count").textContent = carrito.length;
+  }
+
+  function verCarrito() {
+    if (carrito.length === 0) {
+      alert("Tu carrito está vacío 🛒");
+      return;
+    }
+
+    let mensaje = "Hola, quiero comprar:%0A";
+    carrito.forEach((p, i) => {
+      mensaje += `${i+1}. ${p.nombre} - ${p.precio}%0A`;
+    });
+
+    const numero = "595972292392"; // tu número de WhatsApp
+    const url = `https://wa.me/${numero}?text=${mensaje}`;
+    window.open(url, "_blank");
+  }
+</script>
 </body>
 </html>
