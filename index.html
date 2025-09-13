@@ -292,8 +292,6 @@
         <div class="flex justify-end pt-2">
           <button class="px-4 bg-transparent p-3 rounded-lg text-blue-500 hover:bg-gray-100 hover:text-blue-400 mr-2" onclick="toggleModal()">Cerrar</button>
           <a id="modal-whatsapp" href="#" target="_blank" class="px-4 p-3 rounded-lg bg-green-500 text-white hover:bg-green-600">Comprar por WhatsApp</a>
-        <!-- AGREGAR AL CARRITO -->
-          <button onclick="agregarAlCarritoDesdeKit(${idx}, ${i})" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-2"> Agregar al carrito</button>
         </div>
 
       </div>
@@ -934,6 +932,8 @@ let html = `
           class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 mt-auto">
           Comprar por WhatsApp
         </a>
+        <button onclick="agregarAlCarrito('${p.nombre}', '${p.precio}')"
+  class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-2"> Agregar al carrito</button>
       </div>
     `;
   });
