@@ -37,7 +37,7 @@
 <style>
   .bg-animated {
   background: linear-gradient(270deg, #34d399, #6ee7b7, #3b82f6);
-  background-size: 100% 100%;
+  background-size: 200% 200%;   /* espacio suficiente para animar sin verse gigante */
   animation: moveGradient 15s ease infinite;
 }
 
@@ -46,7 +46,6 @@
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
   body { font-family: 'Inter', sans-serif; }
 </style>
   <!-- ESTILOS PARA EL CARRUSEL  -->
@@ -138,7 +137,7 @@
     <!-- Hero -->
    <!-- HERO -->
 <section id="hero"
-  class="relative overflow-hidden bg-animated text-white py-12 sm:py-16 max-h-[500px]">
+  class="relative overflow-hidden bg-animated text-white py-12 sm:py-16 min-h-[400px] flex items-center">
   <div class="max-w-6xl mx-auto px-6 py-12 sm:py-20">
     <div class="grid md:grid-cols-2 gap-8 items-center">
       <!-- Texto -->
