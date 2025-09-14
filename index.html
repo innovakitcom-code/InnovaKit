@@ -35,6 +35,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
+  .bg-animated {
+  background: linear-gradient(270deg, #34d399, #6ee7b7, #3b82f6);
+  background-size: 600% 600%;
+  animation: moveGradient 12s ease infinite;
+}
+
+@keyframes moveGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
   body { font-family: 'Inter', sans-serif; }
 </style>
   <!-- ESTILOS PARA EL CARRUSEL  -->
@@ -126,7 +138,7 @@
     <!-- Hero -->
    <!-- HERO -->
 <section id="hero"
-  class="relative overflow-hidden bg-gradient-to-r from-green-400 via-green-300 to-blue-500 text-white">
+  class="relative overflow-hidden bg-animated text-white">
   <div class="max-w-6xl mx-auto px-6 py-12 sm:py-20">
     <div class="grid md:grid-cols-2 gap-8 items-center">
       <!-- Texto -->
