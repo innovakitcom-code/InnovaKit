@@ -124,18 +124,51 @@
   <!-- CONTENIDO PRINCIPAL -->
   <main id="main-content">
     <!-- Hero -->
-   <section class="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center p-8 sm:p-16">
-  <h2 class="text-xl sm:text-4xl font-bold mb-4">Aprende Electrónica de Forma Simple</h1>
-<p class="text-sm sm:text-lg max-w-2xl mx-auto">
-  Con <strong>Innovakit</strong> tienes kits completos, asesoría y soporte para que transformes tus ideas en proyectos reales.
-</p>
-<a href="#productos" class="mt-6 inline-block bg-white text-blue-600 px-6 py-3 sm:px-8 sm:py-3 rounded-lg shadow hover:bg-gray-200 font-semibold text-base sm:text-lg">
- Ver Nuestros kits
-</a>
-<a href="#asesorias-preview" class="mt-4 inline-block bg-yellow-300 text-gray-900 px-6 py-3 rounded-lg shadow hover:bg-yellow-500 font-semibold text-base sm:text-lg">
-  Solicita asesoría
-</a>
+   <!-- HERO -->
+<section id="hero"
+  class="relative overflow-hidden bg-gradient-to-r from-green-400 via-green-300 to-blue-500 text-white">
+  <div class="max-w-6xl mx-auto px-6 py-12 sm:py-20">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <!-- Texto -->
+      <div>
+        <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold leading-tight">
+          Aprende electrónica de forma simple
+        </h1>
+        <p class="mt-4 text-sm sm:text-lg opacity-90 max-w-prose">
+          Con <strong>Innovakit</strong> tienes kits completos, asesoría y soporte para transformar tus ideas en
+          proyectos reales. Ideal para estudiantes, makers y emprendedores.
+        </p>
+
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+          <a href="#productos"
+             class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-blue-700 hover:bg-blue-800
+                    text-white font-semibold shadow-md transition">
+            Ver nuestros kits
+          </a>
+          <a href="#asesorias-preview"
+             class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#FFD84D] hover:bg-yellow-400
+                    text-gray-900 font-semibold shadow-md transition">
+            Solicita asesoría
+          </a>
+        </div>
+      </div>
+
+      <!-- Ilustración (muestra en desktop) -->
+      <div class="hidden md:block">
+        <!-- Reemplaza el src por tu vector/ilustración -->
+        <img src="img/vector-electronica.svg"
+             alt="Ilustración de electrónica y tecnología"
+             class="w-full h-auto drop-shadow-xl">
+      </div>
+    </div>
+  </div>
+
+  <!-- Toque visual suave -->
+  <div aria-hidden="true"
+       class="pointer-events-none absolute -top-16 -right-16 w-96 h-96 rounded-full bg-white/10 blur-3xl">
+  </div>
 </section>
+
 
 
     <!-- Misión -->
