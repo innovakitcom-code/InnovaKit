@@ -266,40 +266,76 @@
       </div>
     </section>
 <!-- Vista de Componentes (oculta al inicio) -->
-<section id="vista-componentes" class="hidden p-6 sm:p-12 bg-gray-100 min-h-screen">
-  <div class="flex items-center justify-between gap-3 flex-wrap mb-6">
-    <h3 class="text-2xl sm:text-3xl font-bold">Componentes Sueltos</h3>
-    <div class="flex items-center gap-2">
-      <input id="cmp-search" type="search" placeholder="Buscar (ej: DHT11, relé, I2C)" class="w-64 max-w-[70vw] px-3 py-2 border rounded-lg">
-      <select id="cmp-categoria" class="px-3 py-2 border rounded-lg">
-        <option value="">Todas las categorías</option>
-        <option value="sensores">Sensores</option>
-        <option value="modulos">Módulos</option>
-        <option value="microcontroladores">Microcontroladores</option>
-        <option value="actuadores">Actuadores</option>
-        <option value="accesorios">Accesorios</option>
-      </select>
-      <select id="cmp-orden" class="px-3 py-2 border rounded-lg">
-        <option value="relevancia">Orden: Relevancia</option>
-        <option value="precio_asc">Precio ↑</option>
-        <option value="precio_desc">Precio ↓</option>
-        <option value="nombre_asc">Nombre A–Z</option>
-      </select>
+<section id="vista-componentes" class="hidden p-4 sm:p-8 bg-gray-50 min-h-screen">
+  <!-- Header con título y controles -->
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Componentes Sueltos</h2>
+      
+      <!-- Controles de búsqueda y filtros - MEJORADO PARA RESPONSIVE -->
+      <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+        <!-- Buscador -->
+        <div class="flex-1 sm:flex-none">
+          <input id="cmp-search" type="search" 
+                 placeholder="Buscar (ej: DHT11, relé, I2C)" 
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+        </div>
+        
+        <!-- Filtros en línea en desktop, columna en móvil -->
+        <div class="flex flex-col sm:flex-row gap-2">
+          <select id="cmp-categoria" 
+                  class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            <option value="">Todas las categorías</option>
+            <option value="sensores">Sensores</option>
+            <option value="modulos">Módulos</option>
+            <option value="microcontroladores">Microcontroladores</option>
+            <option value="actuadores">Actuadores</option>
+            <option value="accesorios">Accesorios</option>
+          </select>
+          
+          <select id="cmp-orden" 
+                  class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            <option value="relevancia">Orden: Relevancia</option>
+            <option value="precio_asc">Precio ↑</option>
+            <option value="precio_desc">Precio ↓</option>
+            <option value="nombre_asc">Nombre A–Z</option>
+          </select>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div id="cmp-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+    <!-- Grid de componentes -->
+    <div id="cmp-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+      <!-- Aquí se cargarán los componentes dinámicamente -->
+    </div>
 
-  <div class="flex items-center justify-center gap-2 mt-8">
-    <button id="cmp-prev" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">« Anterior</button>
-    <span id="cmp-page" class="min-w-24 text-center"></span>
-    <button id="cmp-next" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Siguiente »</button>
-  </div>
+    <!-- Estado vacío (oculto inicialmente) -->
+    <div id="cmp-empty-state" class="hidden text-center py-12">
+      <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+      <h3 class="text-xl font-semibold text-gray-600 mb-2">No se encontraron componentes</h3>
+      <p class="text-gray-500">Intenta con otros términos de búsqueda o cambia los filtros</p>
+    </div>
 
-  <div class="mt-8 flex justify-center">
-    <button onclick="volverAlInicio()" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">
-      Volver al inicio
-    </button>
+    <!-- Paginación -->
+    <div class="flex items-center justify-center gap-4 mt-8">
+      <button id="cmp-prev" 
+              class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition">
+        « Anterior
+      </button>
+      <span id="cmp-page" class="min-w-24 text-center text-gray-600 font-medium"></span>
+      <button id="cmp-next" 
+              class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition">
+        Siguiente »
+      </button>
+    </div>
+
+    <!-- Botón volver -->
+    <div class="mt-8 flex justify-center">
+      <button onclick="volverAlInicio()" 
+              class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 font-semibold transition">
+        Volver al inicio
+      </button>
+    </div>
   </div>
 </section>
 
