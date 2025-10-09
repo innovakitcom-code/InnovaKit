@@ -135,7 +135,8 @@
       <a href="#contacto" onclick="volverAlInicio()"  class="hover:text-blue-600">Contacto</a>
       <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-600">Asesoría</a>
       <a href="#componentes" onclick="verComponentes()" class="hover:text-blue-600">Componentes</a>
-
+<!-- DENTRO DEL <nav> DEL HEADER, AGREGA: -->
+<a href="javascript:void(0)" onclick="mostrarComponentes()" class="hover:text-blue-600">Componentes</a>
       <!-- Botón del carrito en la barra -->
   <button onclick="verCarrito()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold">
   🛒 Carrito (<span id="carrito-count">0</span>)
@@ -265,44 +266,87 @@
         </div>
       </div>
     </section>
-<!-- Vista de Componentes (oculta al inicio) -->
-<section id="vista-componentes" class="hidden p-4 sm:p-8 bg-gray-50 min-h-screen">
-  <!-- Header con título y controles -->
+<!-- ============================================= -->
+<!-- SECCIÓN COMPONENTES (OCULTA INICIALMENTE) -->
+<!-- ============================================= -->
+<section id="seccion-componentes" class="hidden bg-white py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-7xl mx-auto">
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
-      <h2 class="text-2xl sm:text-3xl font-bold text-gray-800">Componentes Sueltos</h2>
-      
-      <!-- Controles de búsqueda y filtros - MEJORADO PARA RESPONSIVE -->
-      <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-        <!-- Buscador -->
-        <div class="flex-1 sm:flex-none">
-          <input id="cmp-search" type="search" 
-                 placeholder="Buscar (ej: DHT11, relé, I2C)" 
-                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-        </div>
+    
+    <!-- HEADER DE COMPONENTES -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+        🛠️ Componentes Electrónicos
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Encuentra todos los componentes que necesitas para tus proyectos. 
+        Busca por nombre, categoría o precio.
+      </p>
+    </div>
+
+    <!-- BARRA DE BÚSQUEDA Y FILTROS -->
+    <div class="bg-gray-50 rounded-2xl p-6 mb-8 shadow-sm">
+      <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
         
-        <!-- Filtros en línea en desktop, columna en móvil -->
-        <div class="flex flex-col sm:flex-row gap-2">
-          <select id="cmp-categoria" 
-                  class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+        <!-- BUSCADOR -->
+        <div class="flex-1 w-full lg:max-w-md">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fas fa-search text-gray-400"></i>
+            </div>
+            <input 
+              type="text" 
+              id="buscador-componentes"
+              placeholder="Buscar componentes (DHT11, Arduino, Relé...)" 
+              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+            >
+          </div>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+          <!-- FILTRO CATEGORÍA -->
+          <select id="filtro-categoria" class="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 transition">
             <option value="">Todas las categorías</option>
             <option value="sensores">Sensores</option>
             <option value="modulos">Módulos</option>
             <option value="microcontroladores">Microcontroladores</option>
             <option value="actuadores">Actuadores</option>
             <option value="accesorios">Accesorios</option>
+            <option value="herramientas">Herramientas</option>
           </select>
-          
-          <select id="cmp-orden" 
-                  class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+
+          <!-- FILTRO ORDEN -->
+          <select id="filtro-orden" class="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 transition">
             <option value="relevancia">Orden: Relevancia</option>
-            <option value="precio_asc">Precio ↑</option>
-            <option value="precio_desc">Precio ↓</option>
-            <option value="nombre_asc">Nombre A–Z</option>
+            <option value="precio-asc">Precio: Menor a Mayor</option>
+            <option value="precio-desc">Precio: Mayor a Menor</option>
+            <option value="nombre-asc">Nombre: A-Z</option>
           </select>
         </div>
+
       </div>
     </div>
+
+    <!-- CONTADOR DE RESULTADOS -->
+    <div id="contador-resultados" class="mb-6 text-gray-600 font-medium">
+      Cargando componentes...
+    </div>
+
+    <!-- GRID DE COMPONENTES -->
+    <div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+      <!-- Los componentes se cargarán aquí dinámicamente -->
+    </div>
+
+    <!-- BOTÓN VOLVER AL INICIO -->
+    <div class="text-center mt-12">
+      <button onclick="volverAlInicio()" 
+              class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl shadow-lg transition font-semibold">
+        ← Volver al Inicio
+      </button>
+    </div>
+
+  </div>
+</section>
 
     <!-- Grid de componentes -->
     <div id="cmp-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
@@ -1281,174 +1325,209 @@ let html = `
   });
 </script>
 <script>
-  // --- Estado de Componentes ---
-  let CMP_DATA = [];
-  let CMP_FILTERED = [];
-  let CMP_PAGE = 1;
-  const CMP_PAGE_SIZE = 18;
+// =============================================
+// SISTEMA COMPONENTES + SCROLL INFINITO
+// =============================================
 
-  function verComponentes() {
-    console.log('Ver componentes clicked');
+// Datos de ejemplo (luego los cambias por JSON real)
+const componentesEjemplo = [
+  // ... tus 500 componentes aquí ...
+];
+
+// Variables para scroll infinito
+let todosLosComponentes = [];
+let componentesVisibles = [];
+let indiceActual = 0;
+const COMPONENTES_POR_CARGA = 12;
+let cargandoMas = false;
+
+function mostrarComponentes() {
+  console.log('🔧 Mostrando sección de componentes...');
+  
+  // Ocultar otras secciones
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('vista-productoskit').classList.add('hidden');
+  document.getElementById('vista-asesorias').classList.add('hidden');
+  
+  // Mostrar sección componentes
+  document.getElementById('seccion-componentes').classList.remove('hidden');
+  
+  // Inicializar sistema de componentes
+  inicializarComponentes();
+  
+  // Scroll al inicio
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function inicializarComponentes() {
+  // Reiniciar variables
+  todosLosComponentes = [...componentesEjemplo];
+  componentesVisibles = [];
+  indiceActual = 0;
+  cargandoMas = false;
+  
+  // Aplicar filtros iniciales
+  aplicarFiltrosYBusqueda();
+  
+  // Configurar scroll infinito
+  configurarScrollInfinito();
+}
+
+function aplicarFiltrosYBusqueda() {
+  const textoBusqueda = document.getElementById('buscador-componentes').value.toLowerCase();
+  const categoriaSeleccionada = document.getElementById('filtro-categoria').value;
+  
+  // Filtrar todos los componentes
+  const componentesFiltrados = componentesEjemplo.filter(componente => {
+    const coincideTexto = !textoBusqueda || 
+      componente.nombre.toLowerCase().includes(textoBusqueda) ||
+      componente.desc.toLowerCase().includes(textoBusqueda) ||
+      (componente.tags && componente.tags.some(tag => tag.toLowerCase().includes(textoBusqueda)));
     
-    // Ocultar main y otras vistas; mostrar componentes
-    document.getElementById('main-content').classList.add('hidden');
-    document.getElementById('vista-asesorias').classList.add('hidden');
-    document.getElementById('vista-productoskit').classList.add('hidden');
-    document.getElementById('vista-componentes').classList.remove('hidden');
-
-    if (CMP_DATA.length === 0) {
-      console.log('Cargando componentes por primera vez...');
-      cargarComponentes();
-    } else {
-      console.log('Componentes ya cargados, aplicando filtros...');
-      CMP_PAGE = 1;
-      aplicarFiltrosYRender();
-    }
+    const coincideCategoria = !categoriaSeleccionada || 
+      componente.categoria === categoriaSeleccionada;
     
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+    return coincideTexto && coincideCategoria;
+  });
+  
+  // Actualizar lista completa
+  todosLosComponentes = componentesFiltrados;
+  componentesVisibles = [];
+  indiceActual = 0;
+  
+  // Cargar primer lote
+  cargarSiguienteLote();
+}
 
-  async function cargarComponentes() {
-    try {
-      console.log('Intentando cargar componentes.json...');
-      const res = await fetch('data/componentes.json');
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-      
-      CMP_DATA = await res.json();
-      console.log('Componentes cargados:', CMP_DATA.length);
-      
-      CMP_PAGE = 1;
-      aplicarFiltrosYRender();
-      wireComponentesUI();
-    } catch (e) {
-      console.error('Error cargando componentes:', e);
-      document.getElementById('cmp-grid').innerHTML =
-        '<div class="col-span-full text-center text-red-600 p-8">Error cargando componentes: ' + e.message + '</div>';
-    }
-  }
+function cargarSiguienteLote() {
+  if (indiceActual >= todosLosComponentes.length) return;
+  
+  const inicio = indiceActual;
+  const fin = inicio + COMPONENTES_POR_CARGA;
+  const nuevoLote = todosLosComponentes.slice(inicio, fin);
+  
+  componentesVisibles = [...componentesVisibles, ...nuevoLote];
+  indiceActual = fin;
+  
+  renderizarComponentes();
+}
 
-  function wireComponentesUI() {
-    const q = document.getElementById('cmp-search');
-    const cat = document.getElementById('cmp-categoria');
-    const ord = document.getElementById('cmp-orden');
-    const prev = document.getElementById('cmp-prev');
-    const next = document.getElementById('cmp-next');
-
-    const debounced = debounce(() => { 
-      CMP_PAGE = 1; 
-      aplicarFiltrosYRender(); 
-    }, 250);
-    
-    if (q) q.addEventListener('input', debounced);
-    if (cat) cat.addEventListener('change', () => { CMP_PAGE = 1; aplicarFiltrosYRender(); });
-    if (ord) ord.addEventListener('change', () => { CMP_PAGE = 1; aplicarFiltrosYRender(); });
-
-    if (prev) prev.addEventListener('click', () => { 
-      if (CMP_PAGE > 1) { 
-        CMP_PAGE--; 
-        renderComponentes(); 
-      } 
-    });
-    
-    if (next) next.addEventListener('click', () => {
-      const maxPage = Math.ceil(CMP_FILTERED.length / CMP_PAGE_SIZE) || 1;
-      if (CMP_PAGE < maxPage) { 
-        CMP_PAGE++; 
-        renderComponentes(); 
-      }
-    });
-  }
-
-  function aplicarFiltrosYRender() {
-    const q = (document.getElementById('cmp-search')?.value || '').toLowerCase();
-    const categoria = document.getElementById('cmp-categoria')?.value || '';
-    const orden = document.getElementById('cmp-orden')?.value || 'relevancia';
-
-    console.log('Aplicando filtros:', { q, categoria, orden });
-
-    CMP_FILTERED = CMP_DATA.filter(it => {
-      const okCat = !categoria || it.categoria === categoria;
-      const texto = `${it.nombre} ${it.desc} ${(it.tags||[]).join(' ')}`.toLowerCase();
-      const okQ = !q || texto.includes(q);
-      return okCat && okQ;
-    });
-
-    console.log('Resultados filtrados:', CMP_FILTERED.length);
-
-    // Orden
-    CMP_FILTERED.sort((a,b) => {
-      if (orden === 'precio_asc') return (a.precio||0) - (b.precio||0);
-      if (orden === 'precio_desc') return (b.precio||0) - (a.precio||0);
-      if (orden === 'nombre_asc') return a.nombre.localeCompare(b.nombre);
-      return 0; // relevancia (default)
-    });
-
-    renderComponentes();
-  }
-
-  function renderComponentes() {
-    const grid = document.getElementById('cmp-grid');
-    if (!grid) {
-      console.error('No se encontró cmp-grid');
-      return;
-    }
-
-    const start = (CMP_PAGE - 1) * CMP_PAGE_SIZE;
-    const slice = CMP_FILTERED.slice(start, start + CMP_PAGE_SIZE);
-
-    console.log('Renderizando componentes:', slice.length);
-
-    if (slice.length === 0) {
-      grid.innerHTML = '<div class="col-span-full text-center text-gray-500 p-8">No se encontraron componentes</div>';
-    } else {
-      grid.innerHTML = slice.map(cardComponent).join('');
-    }
-
-    const maxPage = Math.ceil(CMP_FILTERED.length / CMP_PAGE_SIZE) || 1;
-    const pageElement = document.getElementById('cmp-page');
-    if (pageElement) {
-      pageElement.textContent = `Página ${CMP_PAGE} de ${maxPage}`;
-    }
-    
-    const prevBtn = document.getElementById('cmp-prev');
-    const nextBtn = document.getElementById('cmp-next');
-    if (prevBtn) prevBtn.disabled = CMP_PAGE <= 1;
-    if (nextBtn) nextBtn.disabled = CMP_PAGE >= maxPage;
-  }
-
-  function cardComponent(it) {
-    return `
-    <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition p-4 flex flex-col">
-      <img src="${it.img}" alt="${escapeHtml(it.nombre)}" class="w-full h-48 object-contain mb-3 rounded-lg bg-gray-100" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzljYTNhZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlbjwvdGV4dD48L3N2Zz4='">
-      <h4 class="text-lg font-bold mb-1">${escapeHtml(it.nombre)}</h4>
-      <p class="text-sm text-gray-600 mb-3 flex-grow">${escapeHtml(it.desc || '')}</p>
-      <div class="mt-auto flex items-center justify-between">
-        <span class="font-semibold text-green-600">${formatGs(it.precio)}</span>
-        <button class="bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 transition"
-                onclick="agregarAlCarrito('${escapeHtml(it.nombre)}', ${it.precio})">Añadir al carrito</button>
+function renderizarComponentes() {
+  const grid = document.getElementById('grid-componentes');
+  const contador = document.getElementById('contador-resultados');
+  
+  if (!grid) return;
+  
+  // Actualizar contador
+  contador.textContent = `${componentesVisibles.length} de ${todosLosComponentes.length} componentes mostrados`;
+  
+  // Renderizar componentes visibles
+  grid.innerHTML = componentesVisibles.map(componente => `
+    <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden group">
+      <div class="h-48 bg-gray-100 flex items-center justify-center overflow-hidden">
+        <img 
+          src="${componente.img}" 
+          alt="${componente.nombre}"
+          class="h-40 w-40 object-contain group-hover:scale-105 transition-transform duration-300"
+          onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzljYTNhZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlbjwvdGV4dD48L3N2Zz4='"
+        >
       </div>
-    </article>`;
-  }
+      
+      <div class="p-4">
+        <h3 class="font-bold text-lg text-gray-900 mb-2 line-clamp-2">${componente.nombre}</h3>
+        <p class="text-gray-600 text-sm mb-3 line-clamp-2">${componente.desc}</p>
+        
+        <div class="flex items-center justify-between mb-3">
+          <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded">
+            ${componente.categoria}
+          </span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-lg font-bold text-green-600">Gs. ${componente.precio.toLocaleString('es-PY')}</span>
+          <button 
+            onclick="agregarAlCarrito('${componente.nombre}', ${componente.precio})"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition font-medium text-sm"
+          >
+            + Carrito
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  
+  // Ocultar loader si existe
+  ocultarLoader();
+}
 
-  // Helpers
-  function formatGs(n) {
-    if (typeof n !== 'number') return 'Gs. -';
-    return 'Gs. ' + n.toLocaleString('es-PY');
+function configurarScrollInfinito() {
+  window.addEventListener('scroll', () => {
+    if (cargandoMas) return;
+    
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    const distanciaAlFinal = scrollHeight - (scrollTop + clientHeight);
+    
+    // Cargar más cuando queden 200px para el final
+    if (distanciaAlFinal < 200 && indiceActual < todosLosComponentes.length) {
+      cargandoMas = true;
+      mostrarLoader();
+      
+      // Pequeño delay para mejor UX
+      setTimeout(() => {
+        cargarSiguienteLote();
+        cargandoMas = false;
+      }, 300);
+    }
+  });
+}
+
+function mostrarLoader() {
+  let loader = document.getElementById('loader-componentes');
+  if (!loader) {
+    loader = document.createElement('div');
+    loader.id = 'loader-componentes';
+    loader.className = 'col-span-full text-center py-8';
+    loader.innerHTML = `
+      <div class="inline-flex items-center gap-2 text-blue-600">
+        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+        <span>Cargando más componentes...</span>
+      </div>
+    `;
+    document.getElementById('grid-componentes').appendChild(loader);
   }
+}
+
+function ocultarLoader() {
+  const loader = document.getElementById('loader-componentes');
+  if (loader) loader.remove();
+}
+
+// Configurar búsqueda en tiempo real
+function configurarBusqueda() {
+  const buscador = document.getElementById('buscador-componentes');
+  const filtroCategoria = document.getElementById('filtro-categoria');
+  const filtroOrden = document.getElementById('filtro-orden');
   
-  function escapeHtml(s = '') {
-    const div = document.createElement('div');
-    div.textContent = s;
-    return div.innerHTML;
-  }
+  const aplicarFiltros = () => {
+    aplicarFiltrosYBusqueda();
+  };
   
-  function debounce(fn, wait) {
-    let t; 
-    return (...args) => { 
-      clearTimeout(t); 
-      t = setTimeout(() => fn(...args), wait); 
-    };
+  buscador.addEventListener('input', aplicarFiltros);
+  filtroCategoria.addEventListener('change', aplicarFiltros);
+  filtroOrden.addEventListener('change', aplicarFiltros);
+}
+
+// Llamar esto cuando se muestre componentes
+document.addEventListener('DOMContentLoaded', () => {
+  // Configurar una sola vez
+  const buscador = document.getElementById('buscador-componentes');
+  if (buscador) {
+    buscador.addEventListener('input', () => {
+      if (document.getElementById('seccion-componentes').classList.contains('hidden')) return;
+      aplicarFiltrosYBusqueda();
+    });
   }
+});
 </script>
 
 </body>
