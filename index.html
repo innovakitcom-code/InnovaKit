@@ -1249,34 +1249,45 @@ let html = `
   let CMP_DATA = [];
   let CMP_FILTERED = [];
   let CMP_PAGE = 1;
-  const CMP_PAGE_SIZE = 18; // 3 columnas x 6 filas aprox.
+  const CMP_PAGE_SIZE = 18;
 
   function verComponentes() {
+    console.log('Ver componentes clicked');
+    
     // Ocultar main y otras vistas; mostrar componentes
-    document.getElementById('main-content')?.classList.add('hidden');
-    document.getElementById('vista-asesorias')?.classList.add('hidden');
-    document.getElementById('vista-productoskit')?.classList.add('hidden');
-    document.getElementById('vista-componentes')?.classList.remove('hidden');
+    document.getElementById('main-content').classList.add('hidden');
+    document.getElementById('vista-asesorias').classList.add('hidden');
+    document.getElementById('vista-productoskit').classList.add('hidden');
+    document.getElementById('vista-componentes').classList.remove('hidden');
 
     if (CMP_DATA.length === 0) {
+      console.log('Cargando componentes por primera vez...');
       cargarComponentes();
     } else {
+      console.log('Componentes ya cargados, aplicando filtros...');
       CMP_PAGE = 1;
       aplicarFiltrosYRender();
     }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   async function cargarComponentes() {
     try {
-      const res = await fetch('/data/componentes.json', { cache: 'no-store' });
+      console.log('Intentando cargar componentes.json...');
+      const res = await fetch('data/componentes.json');
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      
       CMP_DATA = await res.json();
+      console.log('Componentes cargados:', CMP_DATA.length);
+      
       CMP_PAGE = 1;
       aplicarFiltrosYRender();
       wireComponentesUI();
     } catch (e) {
       console.error('Error cargando componentes:', e);
       document.getElementById('cmp-grid').innerHTML =
-        '<div class="col-span-full text-center text-red-600">No se pudieron cargar los componentes.</div>';
+        '<div class="col-span-full text-center text-red-600 p-8">Error cargando componentes: ' + e.message + '</div>';
     }
   }
 
@@ -1287,22 +1298,37 @@ let html = `
     const prev = document.getElementById('cmp-prev');
     const next = document.getElementById('cmp-next');
 
-    const debounced = debounce(() => { CMP_PAGE = 1; aplicarFiltrosYRender(); }, 250);
-    q.addEventListener('input', debounced);
-    cat.addEventListener('change', () => { CMP_PAGE = 1; aplicarFiltrosYRender(); });
-    ord.addEventListener('change', () => { CMP_PAGE = 1; aplicarFiltrosYRender(); });
+    const debounced = debounce(() => { 
+      CMP_PAGE = 1; 
+      aplicarFiltrosYRender(); 
+    }, 250);
+    
+    if (q) q.addEventListener('input', debounced);
+    if (cat) cat.addEventListener('change', () => { CMP_PAGE = 1; aplicarFiltrosYRender(); });
+    if (ord) ord.addEventListener('change', () => { CMP_PAGE = 1; aplicarFiltrosYRender(); });
 
-    prev.addEventListener('click', () => { if (CMP_PAGE > 1) { CMP_PAGE--; renderComponentes(); } });
-    next.addEventListener('click', () => {
+    if (prev) prev.addEventListener('click', () => { 
+      if (CMP_PAGE > 1) { 
+        CMP_PAGE--; 
+        renderComponentes(); 
+      } 
+    });
+    
+    if (next) next.addEventListener('click', () => {
       const maxPage = Math.ceil(CMP_FILTERED.length / CMP_PAGE_SIZE) || 1;
-      if (CMP_PAGE < maxPage) { CMP_PAGE++; renderComponentes(); }
+      if (CMP_PAGE < maxPage) { 
+        CMP_PAGE++; 
+        renderComponentes(); 
+      }
     });
   }
 
   function aplicarFiltrosYRender() {
-    const q = (document.getElementById('cmp-search').value || '').toLowerCase();
-    const categoria = document.getElementById('cmp-categoria').value;
-    const orden = document.getElementById('cmp-orden').value;
+    const q = (document.getElementById('cmp-search')?.value || '').toLowerCase();
+    const categoria = document.getElementById('cmp-categoria')?.value || '';
+    const orden = document.getElementById('cmp-orden')?.value || 'relevancia';
+
+    console.log('Aplicando filtros:', { q, categoria, orden });
 
     CMP_FILTERED = CMP_DATA.filter(it => {
       const okCat = !categoria || it.categoria === categoria;
@@ -1310,6 +1336,8 @@ let html = `
       const okQ = !q || texto.includes(q);
       return okCat && okQ;
     });
+
+    console.log('Resultados filtrados:', CMP_FILTERED.length);
 
     // Orden
     CMP_FILTERED.sort((a,b) => {
@@ -1324,27 +1352,44 @@ let html = `
 
   function renderComponentes() {
     const grid = document.getElementById('cmp-grid');
+    if (!grid) {
+      console.error('No se encontró cmp-grid');
+      return;
+    }
+
     const start = (CMP_PAGE - 1) * CMP_PAGE_SIZE;
     const slice = CMP_FILTERED.slice(start, start + CMP_PAGE_SIZE);
 
-    grid.innerHTML = slice.map(cardComponent).join('');
+    console.log('Renderizando componentes:', slice.length);
+
+    if (slice.length === 0) {
+      grid.innerHTML = '<div class="col-span-full text-center text-gray-500 p-8">No se encontraron componentes</div>';
+    } else {
+      grid.innerHTML = slice.map(cardComponent).join('');
+    }
 
     const maxPage = Math.ceil(CMP_FILTERED.length / CMP_PAGE_SIZE) || 1;
-    document.getElementById('cmp-page').textContent = `Página ${CMP_PAGE} de ${maxPage}`;
-    document.getElementById('cmp-prev').disabled = CMP_PAGE <= 1;
-    document.getElementById('cmp-next').disabled = CMP_PAGE >= maxPage;
+    const pageElement = document.getElementById('cmp-page');
+    if (pageElement) {
+      pageElement.textContent = `Página ${CMP_PAGE} de ${maxPage}`;
+    }
+    
+    const prevBtn = document.getElementById('cmp-prev');
+    const nextBtn = document.getElementById('cmp-next');
+    if (prevBtn) prevBtn.disabled = CMP_PAGE <= 1;
+    if (nextBtn) nextBtn.disabled = CMP_PAGE >= maxPage;
   }
 
   function cardComponent(it) {
     return `
     <article class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition p-4 flex flex-col">
-      <img src="${it.img}" alt="${escapeHtml(it.nombre)}" class="w-full h-48 object-contain mb-3 rounded-lg" loading="lazy">
+      <img src="${it.img}" alt="${escapeHtml(it.nombre)}" class="w-full h-48 object-contain mb-3 rounded-lg bg-gray-100" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzljYTNhZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlbjwvdGV4dD48L3N2Zz4='">
       <h4 class="text-lg font-bold mb-1">${escapeHtml(it.nombre)}</h4>
-      <p class="text-sm text-gray-600 mb-3">${escapeHtml(it.desc || '')}</p>
+      <p class="text-sm text-gray-600 mb-3 flex-grow">${escapeHtml(it.desc || '')}</p>
       <div class="mt-auto flex items-center justify-between">
-        <span class="font-semibold">${formatGs(it.precio)}</span>
-        <button class="bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700"
-                onclick="agregarAlCarritoCmp('${it.id}')">Añadir</button>
+        <span class="font-semibold text-green-600">${formatGs(it.precio)}</span>
+        <button class="bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+                onclick="agregarAlCarrito('${escapeHtml(it.nombre)}', ${it.precio})">Añadir al carrito</button>
       </div>
     </article>`;
   }
@@ -1354,19 +1399,19 @@ let html = `
     if (typeof n !== 'number') return 'Gs. -';
     return 'Gs. ' + n.toLocaleString('es-PY');
   }
-  function escapeHtml(s='') {
-    return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  
+  function escapeHtml(s = '') {
+    const div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
   }
+  
   function debounce(fn, wait) {
-    let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
-  }
-
-  // Carrito (usa tu mismo sistema)
-  function agregarAlCarritoCmp(id) {
-    const item = CMP_DATA.find(x => x.id === id);
-    if (!item) return;
-    // Reutilizá tu lógica de carrito existente
-    console.log('Add to cart:', item);
+    let t; 
+    return (...args) => { 
+      clearTimeout(t); 
+      t = setTimeout(() => fn(...args), wait); 
+    };
   }
 </script>
 
