@@ -813,21 +813,15 @@
 
     /**
      * EXTRAER COMPONENTES DESDE DESCRIPCIÓN
-     * - Detecta ítems que empiezan por -, *, – o — (con o sin espacio después),
-     * - No rompe cosas como "7-Segment" (el guion del medio de palabra no cuenta como separador),
-     * - Funciona aunque todo esté en una sola línea.
      */
     function extraerComponentes(descripcion) {
       const texto = descripcion.replace(/\r/g, ' ');
-
-      // Regex: ítem si el separador ( -, *, –, — ) está al inicio o precedido por espacio/:
-      // y miramos hasta el siguiente separador similar o el fin del texto.
       const separador = '[-*–—]';
       const re = new RegExp(
-        '(?:^|[\\s:])' +               // inicio o espacio o :
-        '(' + separador + ')\\s*' +    // un separador válido
-        '([\\s\\S]*?)' +               // el contenido del ítem (lazy)
-        '(?=(?:[\\s:]' + separador + '\\s)|$)', // hasta antes del próximo separador o fin
+        '(?:^|[\\s:])' +
+        '(' + separador + ')\\s*' +
+        '([\\s\\S]*?)' +
+        '(?=(?:[\\s:]' + separador + '\\s)|$)',
         'g'
       );
 
@@ -840,7 +834,6 @@
         }
       }
 
-      // Si no encontró nada, fallback simple: recorta desde el primer separador y divide
       if (componentes.length === 0) {
         const firstIdx = texto.search(new RegExp(separador + '\\s*[A-Za-z0-9]'));
         if (firstIdx !== -1) {
@@ -861,7 +854,7 @@
 
       const columnCount = 3;
       const itemsPerColumn = Math.ceil(componentes.length / columnCount);
-      let html = '<div class="grid grid-cols-3 gap-4 mt-4 text-sm">'; // 3 columnas fijas
+      let html = '<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 text-sm">';
 
       for (let col = 0; col < columnCount; col++) {
         html += '<div class="space-y-1">';
@@ -897,7 +890,6 @@
       let contenidoHTML = `<p class="text-lg font-semibold mb-2">Descripción completa:</p>`;
 
       if (componentes.length > 0) {
-        // Texto antes de la primera lista (intro) – cortamos hasta el primer separador
         const idxPrim = producto.desc.search(/[-*–—]\s*[A-Za-z0-9]/);
         const intro = idxPrim > -1 ? producto.desc.slice(0, idxPrim).trim() : producto.desc.trim();
         contenidoHTML += `
@@ -919,8 +911,8 @@
       if (producto.documentos && producto.documentos.length > 0) {
         producto.documentos.forEach(doc => {
           const docElement = document.createElement('a');
-          docElement.href = doc.archivo;  // Usa directamente lo que definas en productosKits
-          docElement.target = "_blank";   // Abre en nueva pestaña
+          docElement.href = doc.archivo;
+          docElement.target = "_blank";
           docElement.className = 'flex items-center text-blue-600 hover:text-blue-800';
           docElement.innerHTML = `<i class="fas fa-file-download mr-2"></i>${doc.nombre}`;
           documentosLista.appendChild(docElement);
@@ -931,125 +923,126 @@
       }
 
       // WhatsApp
-      const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${producto.nombre} - ${producto.desc} (Precio: ${producto.precio})`);
+      const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${producto.nombre} - ${producto.precio}`);
       document.getElementById('modal-whatsapp').href = `https://wa.me/595972292392?text=${mensaje}`;
 
       toggleModal();
     }
 
     // Render productos del kit (con carrusel)
-function verProductosKit(idx) {
-  document.getElementById('main-content').style.display = 'none';
-  document.getElementById('vista-productoskit').classList.remove('hidden');
-  const productos = productosKits[idx - 1];
+    function verProductosKit(idx) {
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('vista-productoskit').classList.remove('hidden');
+      const productos = productosKits[idx - 1];
 
-  const portadas = [
-    "png/portada_kit1.png", // portada producto 1
-    "png/portada2.svg", // portada producto 2  
-    "png/portada_kit3.svg"  // portada producto 3
-  ];
+      const portadas = [
+        "png/portada_kit1.png",
+        "png/portada2.svg", 
+        "png/portada_kit3.svg"
+      ];
 
-  // ARRAY CON LOS TÍTULOS PERSONALIZADOS PARA CADA KIT
-  const titulosPersonalizados = [
-    "🔌 Kits de Electrónica - Kuongshun",
-    "⚡ Kits Proyectos - Innovakit", 
-    "🤖 Kits de Robótica - Acebott"
-  ];
+      const titulosPersonalizados = [
+        "🔌 Kits de Electrónica - Kuongshun",
+        "⚡ Kits Proyectos - Innovakit", 
+        "🤖 Kits de Robótica - Acebott"
+      ];
 
-  // HTML de la portada CON TÍTULO PERSONALIZADO
-let html = `
-  <!-- PORTADA SIN MARGENES LATERALES -->
-  <div class="portada-sin-margenes">
-    <img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" 
-         class="absolute inset-0">
-    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-      <h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">
-        ${titulosPersonalizados[idx-1]}
-      </h2>
-    </div>
-  </div>
+      let html = `
+        <!-- PORTADA SIN MARGENES LATERALES -->
+        <div class="portada-sin-margenes">
+          <img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" 
+               class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">
+              ${titulosPersonalizados[idx-1]}
+            </h2>
+          </div>
+        </div>
 
-  <!-- CONTENIDO NORMAL (con márgenes) -->
-  <div class="container mx-auto px-4 mt-8">
-    <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-`;
-  productos.forEach((p, i) => {
-    const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.desc} (Precio: ${p.precio})`);
-    
-    // Slides del carrusel (MANTIENE ESTA PARTE)
-    let slidesHTML = '';
-    if (p.img && p.img.length > 0) {
-      p.img.forEach((imgSrc, imgIdx) => {
-        slidesHTML += `
-          <div class="swiper-slide flex justify-center items-center">
-            <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain" loading="lazy">
+        <!-- CONTENIDO NORMAL (con márgenes) -->
+        <div class="container mx-auto px-4 mt-8">
+          <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      `;
+      
+      productos.forEach((p, i) => {
+        const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.precio}`);
+        
+        let slidesHTML = '';
+        if (p.img && p.img.length > 0) {
+          p.img.forEach((imgSrc, imgIdx) => {
+            slidesHTML += `
+              <div class="swiper-slide flex justify-center items-center">
+                <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain" loading="lazy">
+              </div>
+            `;
+          });
+        } else {
+          slidesHTML = `
+            <div class="swiper-slide flex justify-center items-center">
+              <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                <span class="text-gray-500">Imagen no disponible</span>
+              </div>
+            </div>
+          `;
+        }
+
+        html += `
+          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
+            <!-- Carrusel de imágenes -->
+            <div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4">
+              <div class="swiper-wrapper">
+                ${slidesHTML}
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+
+            <h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4>
+            <p class="mb-2 text-sm sm:text-base">${acortarTexto(p.desc)} 
+              <a href="javascript:void(0)" onclick="mostrarDescripcionCompleta(${JSON.stringify(p).replace(/"/g, '&quot;')})" class="text-blue-600 hover:underline">Leer más...</a>
+            </p>
+            <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
+            <div class="flex flex-col gap-2 w-full mt-auto">
+              <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
+                class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">
+                Comprar por WhatsApp
+              </a>
+              <button onclick="agregarAlCarrito('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')"
+                class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+                Agregar al carrito
+              </button>
+            </div>
           </div>
         `;
       });
-    } else {
-      slidesHTML = `
-        <div class="swiper-slide flex justify-center items-center">
-          <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-            <span class="text-gray-500">Imagen no disponible</span>
-          </div>
-        </div>
-      `;
+
+      html += `</div></div>`;
+      document.getElementById('productoskit-content').innerHTML = html;
+      
+      // Inicializar Swipers para cada producto
+      productos.forEach((_, i) => {
+        new Swiper(`.swiper-producto-${i}`, {
+          loop: true,
+          navigation: {
+            nextEl: `.swiper-producto-${i} .swiper-button-next`,
+            prevEl: `.swiper-producto-${i} .swiper-button-prev`,
+          },
+          preventClicks: true,
+          preventClicksPropagation: true,
+          touchStartPreventDefault: true
+        });
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    html += `
-      <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
-        <!-- Carrusel de imágenes (MANTIENE EL CARRUSEL) -->
-        <div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4">
-          <div class="swiper-wrapper">
-            ${slidesHTML}
-          </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-        </div>
-
-        <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">${p.nombre}</h4>
-        <p class="mb-2 text-center text-sm sm:text-base">${acortarTexto(p.desc)} 
-          <!-- MANTIENE EL "Leer más..." -->
-          <a href="javascript:void(0)" onclick="mostrarDescripcionCompleta(${JSON.stringify(p).replace(/"/g, '&quot;')})" class="text-blue-600 hover:underline">Leer más...</a>
-        </p>
-        <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
-        <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
-          class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 mt-auto">
-          Comprar por WhatsApp
-        </a>
-        <button onclick="agregarAlCarrito('${p.nombre}', '${p.precio}')"
-  class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-2"> Agregar al carrito</button>
-      </div>
-    `;
-  });
-
-  html += `</div></div>`;;
-  document.getElementById('productoskit-content').innerHTML = html;
-  
-  // Inicializar Swipers para cada producto (MANTIENE ESTO)
-  productos.forEach((_, i) => {
-    new Swiper(`.swiper-producto-${i}`, {
-      loop: true,
-      navigation: {
-        nextEl: `.swiper-producto-${i} .swiper-button-next`,
-        prevEl: `.swiper-producto-${i} .swiper-button-prev`,
-      },
-      preventClicks: true,
-      preventClicksPropagation: true,
-      touchStartPreventDefault: true
-    });
-  });
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
     function volverAlInicio() {
-  document.getElementById('main-content').style.display = '';
-  document.getElementById('vista-productoskit').classList.add('hidden');
-  document.getElementById('vista-asesorias').classList.add('hidden'); // ← NUEVA LÍNEA
-  document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
-}
+      document.getElementById('main-content').style.display = '';
+      document.getElementById('vista-productoskit').classList.add('hidden');
+      document.getElementById('vista-asesorias').classList.add('hidden');
+      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // Cerrar modal con tecla ESC
     document.onkeydown = function(evt) {
@@ -1060,7 +1053,6 @@ let html = `
       } else {
         isEscape = (evt.keyCode === 27);
       }
-      // Si el modal está visible, cierra; si no, no hagas nada
       const modal = document.getElementById('modal-descripcion');
       const oculto = modal.classList.contains('pointer-events-none');
       if (isEscape && !oculto) {
@@ -1081,7 +1073,6 @@ let html = `
     // FUNCIONES PARA LA SECCIÓN DE ASESORÍAS
     // =============================================
 
-    // Función para mostrar la vista de asesorías
     function verAsesorias() {
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('vista-productoskit').classList.add('hidden');
@@ -1089,12 +1080,7 @@ let html = `
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // =============================================
-    // FUNCIÓN PARA ENVÍO POR WHATSAPP
-    // =============================================
-
     function enviarPorWhatsApp() {
-      // Obtener valores del formulario
       const nombre = document.querySelector('input[name="nombre"]').value;
       const institucion = document.querySelector('input[name="institucion"]').value;
       const email = document.querySelector('input[name="email"]').value;
@@ -1103,13 +1089,10 @@ let html = `
       const proyecto = document.querySelector('textarea[name="proyecto"]').value;
       const fechaLimite = document.querySelector('input[name="fecha_limite"]').value;
 
-      // Crear mensaje para WhatsApp
       const mensaje = `¡Hola! Solicito asesoría para proyecto técnico:%0A%0A*Nombre:* ${nombre}%0A*Institución:* ${institucion}%0A*Email:* ${email}%0A*Teléfono:* ${telefono}%0A*Tipo de proyecto:* ${tipoProyecto}%0A*Fecha límite:* ${fechaLimite || 'No especificada'}%0A%0A*Descripción del proyecto:*%0A${proyecto}`;
 
-      // Abrir WhatsApp
       window.open(`https://wa.me/595972292392?text=${mensaje}`, '_blank');
     }
-
   </script>
   <script>
   function comprarPorWhatsApp(nombre, precio) {
@@ -1119,29 +1102,45 @@ let html = `
     window.open(url, "_blank");
   }
 </script>
-  <script>
+<script>
   let carrito = [];
 
   function agregarAlCarrito(nombre, precio) {
     carrito.push({ nombre, precio });
     actualizarContador();
-    alert(nombre + " agregado al carrito ✅");
+    // Mostrar notificación bonita
+    mostrarNotificacion(`${nombre} agregado al carrito ✅`);
   }
 
-  function agregarAlCarritoDesdeKit(kitIdx, prodIdx) {
-    const p = productosKits[kitIdx - 1][prodIdx];
-    agregarAlCarrito(p.nombre, p.precio);
+  function mostrarNotificacion(mensaje) {
+    // Crear elemento de notificación
+    const notificacion = document.createElement('div');
+    notificacion.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+    notificacion.textContent = mensaje;
+    
+    document.body.appendChild(notificacion);
+    
+    // Animación de entrada
+    setTimeout(() => {
+      notificacion.classList.remove('translate-x-full');
+    }, 100);
+    
+    // Animación de salida después de 3 segundos
+    setTimeout(() => {
+      notificacion.classList.add('translate-x-full');
+      setTimeout(() => {
+        document.body.removeChild(notificacion);
+      }, 300);
+    }, 3000);
   }
 
   function actualizarContador() {
     document.getElementById("carrito-count").textContent = carrito.length;
   }
 
-  // Helpers para total (opcional)
   function parseGs(str) { return Number(String(str).replace(/[^\d]/g,'')) || 0; }
   function formatearGs(n) { return 'Gs. ' + n.toLocaleString('es-PY'); }
 
-  // --- Modal Carrito ---
   function toggleModalCarrito(forceOpen = null) {
     const modal = document.getElementById('modal-carrito');
     const willOpen = forceOpen === null ? modal.classList.contains('opacity-0') : forceOpen;
@@ -1162,13 +1161,13 @@ let html = `
     cont.innerHTML = carrito.map((p, i) => {
       total += parseGs(p.precio);
       return `
-        <div class="flex items-center justify-between py-2">
+        <div class="flex items-center justify-between py-3 border-b">
           <div class="flex-1 pr-3">
-            <p class="font-medium">${p.nombre}</p>
-            <p class="text-sm text-green-700">${p.precio}</p>
+            <p class="font-medium text-gray-800">${p.nombre}</p>
+            <p class="text-sm text-green-700 font-semibold">${p.precio}</p>
           </div>
           <button onclick="quitarDelCarrito(${i})"
-                  class="text-red-600 hover:text-red-800 font-semibold">Quitar</button>
+                  class="text-red-500 hover:text-red-700 font-semibold px-2 py-1 rounded hover:bg-red-50 transition">✕</button>
         </div>`;
     }).join('');
     document.getElementById('carrito-total').textContent = formatearGs(total);
@@ -1186,16 +1185,23 @@ let html = `
   }
 
   function vaciarCarrito() {
-    carrito = [];
-    actualizarContador();
-    renderizarCarrito();
+    if (carrito.length === 0) return;
+    if (confirm('¿Estás seguro de que quieres vaciar el carrito?')) {
+      carrito = [];
+      actualizarContador();
+      renderizarCarrito();
+    }
   }
 
   function enviarCarritoWhatsApp() {
-    if (carrito.length === 0) { alert("Tu carrito está vacío 🛒"); return; }
+    if (carrito.length === 0) { 
+      mostrarNotificacion("Tu carrito está vacío 🛒"); 
+      return; 
+    }
     const numero = "595972292392";
     const cuerpo = carrito.map((p, i) => `${i+1}. ${p.nombre} - ${p.precio}`).join('%0A');
-    const url = `https://wa.me/${numero}?text=Hola, quiero comprar:%0A${cuerpo}`;
+    const total = carrito.reduce((sum, p) => sum + parseGs(p.precio), 0);
+    const url = `https://wa.me/${numero}?text=¡Hola! Quiero comprar los siguientes productos:%0A%0A${cuerpo}%0A%0A*Total: ${formatearGs(total)}*`;
     window.open(url, "_blank");
   }
 
