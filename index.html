@@ -261,6 +261,13 @@
           <p class="mb-4 text-center text-sm sm:text-base">Componentes avanzados para proyectos más complejos y creativos.</p>
           <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto">Ver más</button>
         </div>
+        <!-- Producto 4 -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
+    <img src="png/componentes-sueltos.png" alt="Componentes Sueltos" class="w-64 h-64 object-contain mb-4 rounded-lg" loading="lazy">
+    <h4 class="text-lg sm:text-xl font-bold mb-2 text-center">Componentes Sueltos</h4>
+    <p class="mb-4 text-center text-sm sm:text-base">Compra sensores, motores, displays y componentes individuales.</p>
+    <button onclick="verComponentesSueltos()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto">Ver componentes</button>
+  </div>
       </div>
     </section>
 
@@ -377,7 +384,65 @@
     </div>
   </div>
 </div>
+<!-- Modal de producto individual -->
+<div id="modal-producto" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
+  <div class="modal-container bg-white w-11/12 md:max-w-4xl mx-auto rounded shadow-lg z-50 overflow-y-auto max-h-screen">
+
+    <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+      <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+      </svg>
+    </div>
+
+    <div class="modal-content py-4 text-left px-6">
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Columna izquierda - Imágenes -->
+        <div>
+          <img id="modal-producto-imagen" src="" alt="" class="w-full h-64 object-contain rounded-lg bg-gray-100 mb-4">
+          <div class="grid grid-cols-4 gap-2">
+            <img id="modal-producto-thumb1" src="" alt="" class="h-16 object-contain rounded border cursor-pointer hover:border-blue-500">
+            <img id="modal-producto-thumb2" src="" alt="" class="h-16 object-contain rounded border cursor-pointer hover:border-blue-500">
+            <img id="modal-producto-thumb3" src="" alt="" class="h-16 object-contain rounded border cursor-pointer hover:border-blue-500">
+            <img id="modal-producto-thumb4" src="" alt="" class="h-16 object-contain rounded border cursor-pointer hover:border-blue-500">
+          </div>
+        </div>
+
+        <!-- Columna derecha - Información -->
+        <div>
+          <h2 id="modal-producto-nombre" class="text-2xl font-bold mb-2"></h2>
+          <div class="flex items-center mb-4">
+            <span id="modal-producto-precio" class="text-3xl font-bold text-green-600"></span>
+            <span id="modal-producto-stock" class="ml-4 px-2 py-1 text-xs rounded-full bg-green-100 text-green-800"></span>
+          </div>
+
+          <div class="mb-6">
+            <p id="modal-producto-descripcion" class="text-gray-700 mb-4"></p>
+            
+            <!-- Especificaciones -->
+            <div id="modal-producto-especificaciones" class="text-sm text-gray-600 space-y-1">
+              <!-- Se llena con JavaScript -->
+            </div>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="space-y-3">
+            <button onclick="comprarProductoWhatsApp()" class="w-full bg-green-500 text-white px-6 py-3 rounded-lg shadow hover:bg-green-600 font-semibold flex items-center justify-center">
+              <i class="fab fa-whatsapp mr-2"></i> Comprar por WhatsApp
+            </button>
+            <button onclick="agregarProductoAlCarrito()" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">
+              Agregar al carrito
+            </button>
+            <button onclick="toggleModalProducto()" class="w-full bg-gray-200 text-gray-800 px-6 py-3 rounded-lg shadow hover:bg-gray-300 font-semibold">
+              Seguir viendo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Vista de Asesorías (oculta al inicio) -->
 <section id="vista-asesorias" class="hidden p-6 sm:p-12 bg-cover bg-center bg-fixed" style="background-image: url('png/Fondo_web.svg');">
   <div class="bg-gray-50 bg-opacity-73 rounded-xl p-6">
@@ -498,6 +563,66 @@
 </section>
   </div>
 </form>
+  <!-- Vista de Componentes Sueltos -->
+<section id="vista-componentes-sueltos" class="hidden min-h-screen bg-gray-50">
+  <!-- Header con breadcrumb -->
+  <div class="bg-white shadow-sm border-b">
+    <div class="container mx-auto px-4 py-4">
+      <nav class="text-sm text-gray-500">
+        <a href="#" onclick="volverAlInicio()" class="hover:text-blue-600">Inicio</a> / 
+        <span class="text-gray-800 font-medium">Componentes Sueltos</span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-6">
+    <!-- Barra superior con búsqueda y filtros -->
+    <div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
+      <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <!-- Búsqueda -->
+        <div class="flex-1 w-full md:w-auto">
+          <div class="relative">
+            <input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." 
+                   class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <div class="absolute left-3 top-2.5 text-gray-400">
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="flex flex-wrap gap-2">
+          <select id="filtro-categoria" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="todos">Todas las categorías</option>
+            <option value="sensores">Sensores</option>
+            <option value="motores">Motores</option>
+            <option value="displays">Displays</option>
+            <option value="modulos">Módulos</option>
+            <option value="placas">Placas</option>
+          </select>
+          
+          <select id="filtro-precio" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="todos">Todos los precios</option>
+            <option value="0-50000">Gs. 0 - 50.000</option>
+            <option value="50000-100000">Gs. 50.000 - 100.000</option>
+            <option value="100000-200000">Gs. 100.000 - 200.000</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de productos -->
+    <div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Los productos se cargan aquí con JavaScript -->
+    </div>
+
+    <!-- Loading state -->
+    <div id="loading-componentes" class="text-center py-8 hidden">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <p class="mt-2 text-gray-600">Cargando componentes...</p>
+    </div>
+  </div>
+</section>
   <!-- Footer -->
   <footer class="bg-gray-800 text-white text-center p-4">
     <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
@@ -804,7 +929,200 @@
         }
       ]
     ];
+// Base de datos de componentes sueltos
+const componentesSueltos = [
+  {
+    id: 1,
+    nombre: "Arduino UNO R3 ATmega328P",
+    categoria: "placas",
+    precio: "Gs. 185.000",
+    precioNum: 185000,
+    imagen: "png/arduino-uno.png",
+    imagenes: ["png/arduino-uno.png", "png/arduino-uno-2.png", "png/arduino-uno-3.png"],
+    descripcion: "Tarjeta de desarrollo más popular de la familia, basado en el microcontrolador ATmega328, ideal para iniciarse en el mundo de los microcontroladores.",
+    stock: "disponible",
+    especificaciones: [
+      "Microcontrolador: ATmega328P",
+      "Voltaje operación: 5V",
+      "Voltaje entrada: 7-12V",
+      "Pines digitales: 14",
+      "Pines analógicos: 6",
+      "Memoria Flash: 32KB",
+      "Incluye cable USB"
+    ]
+  },
+  {
+    id: 2,
+    nombre: "Sensor DHT11",
+    categoria: "sensores", 
+    precio: "Gs. 25.000",
+    precioNum: 25000,
+    imagen: "png/dht11.png",
+    imagenes: ["png/dht11.png", "png/dht11-2.png"],
+    descripcion: "Sensor digital de temperatura y humedad relativa. Fácil de usar con librerías disponibles.",
+    stock: "disponible",
+    especificaciones: [
+      "Temperatura: 0-50°C ±2°C",
+      "Humedad: 20-90% ±5%",
+      "Voltaje: 3-5V",
+      "Interface: Digital",
+      "Dimensiones: 15.5mm x 12mm"
+    ]
+  },
+  // Agregar más componentes aquí...
+];
 
+// Función para mostrar vista de componentes sueltos
+function verComponentesSueltos() {
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('vista-productoskit').classList.add('hidden');
+  document.getElementById('vista-asesorias').classList.add('hidden');
+  document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+  
+  renderizarComponentesSueltos();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Función para renderizar componentes con filtros
+function renderizarComponentesSueltos() {
+  const grid = document.getElementById('grid-componentes');
+  const loading = document.getElementById('loading-componentes');
+  
+  loading.classList.remove('hidden');
+  
+  setTimeout(() => {
+    const filtroTexto = document.getElementById('buscar-componente').value.toLowerCase();
+    const filtroCategoria = document.getElementById('filtro-categoria').value;
+    const filtroPrecio = document.getElementById('filtro-precio').value;
+    
+    let componentesFiltrados = componentesSueltos.filter(comp => {
+      // Filtro por texto
+      const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
+                           comp.descripcion.toLowerCase().includes(filtroTexto);
+      
+      // Filtro por categoría
+      const coincideCategoria = filtroCategoria === 'todos' || comp.categoria === filtroCategoria;
+      
+      // Filtro por precio
+      let coincidePrecio = true;
+      if (filtroPrecio !== 'todos') {
+        const [min, max] = filtroPrecio.split('-').map(Number);
+        coincidePrecio = comp.precioNum >= min && comp.precioNum <= max;
+      }
+      
+      return coincideTexto && coincideCategoria && coincidePrecio;
+    });
+
+    // Generar HTML
+    grid.innerHTML = componentesFiltrados.map(comp => `
+      <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer" 
+           onclick="mostrarModalProducto(${comp.id})">
+        <div class="p-4">
+          <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-4 rounded">
+          <h3 class="font-semibold text-lg mb-2 line-clamp-2">${comp.nombre}</h3>
+          <p class="text-green-600 font-bold text-xl mb-2">${comp.precio}</p>
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+              ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
+            </span>
+            <button class="text-blue-600 hover:text-blue-800 font-semibold">
+              Ver detalles ›
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    
+    loading.classList.add('hidden');
+  }, 500);
+}
+
+// Funciones para el modal de producto
+function mostrarModalProducto(id) {
+  const producto = componentesSueltos.find(comp => comp.id === id);
+  if (!producto) return;
+  
+  // Llenar modal con datos del producto
+  document.getElementById('modal-producto-nombre').textContent = producto.nombre;
+  document.getElementById('modal-producto-precio').textContent = producto.precio;
+  document.getElementById('modal-producto-descripcion').textContent = producto.descripcion;
+  document.getElementById('modal-producto-imagen').src = producto.imagen;
+  
+  // Stock
+  const stockElement = document.getElementById('modal-producto-stock');
+  stockElement.textContent = producto.stock === 'disponible' ? 'En stock' : 'Sin existencias';
+  stockElement.className = `ml-4 px-2 py-1 text-xs rounded-full ${producto.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+  
+  // Especificaciones
+  const especElement = document.getElementById('modal-producto-especificaciones');
+  especElement.innerHTML = producto.especificaciones.map(spec => 
+    `<div class="flex"><span class="mr-2">•</span><span>${spec}</span></div>`
+  ).join('');
+  
+  // Thumbnails
+  producto.imagenes.forEach((img, index) => {
+    const thumb = document.getElementById(`modal-producto-thumb${index + 1}`);
+    if (thumb) {
+      thumb.src = img;
+      thumb.style.display = 'block';
+      thumb.onclick = () => document.getElementById('modal-producto-imagen').src = img;
+    }
+  });
+  
+  // Ocultar thumbs no utilizados
+  for (let i = producto.imagenes.length; i < 4; i++) {
+    const thumb = document.getElementById(`modal-producto-thumb${i + 1}`);
+    if (thumb) thumb.style.display = 'none';
+  }
+  
+  toggleModalProducto();
+}
+
+function toggleModalProducto() {
+  const modal = document.getElementById('modal-producto');
+  modal.classList.toggle('opacity-0');
+  modal.classList.toggle('pointer-events-none');
+  document.body.classList.toggle('modal-active');
+}
+
+function comprarProductoWhatsApp() {
+  const producto = componentesSueltos.find(comp => 
+    comp.nombre === document.getElementById('modal-producto-nombre').textContent
+  );
+  if (producto) {
+    const mensaje = `¡Hola! Quiero comprar: ${producto.nombre} - ${producto.precio}`;
+    window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`, '_blank');
+  }
+}
+
+function agregarProductoAlCarrito() {
+  const producto = componentesSueltos.find(comp => 
+    comp.nombre === document.getElementById('modal-producto-nombre').textContent
+  );
+  if (producto) {
+    agregarAlCarrito(producto.nombre, producto.precio);
+    toggleModalProducto();
+  }
+}
+
+// Event listeners para filtros
+document.addEventListener('DOMContentLoaded', function() {
+  // Búsqueda en tiempo real
+  const buscarInput = document.getElementById('buscar-componente');
+  if (buscarInput) {
+    buscarInput.addEventListener('input', renderizarComponentesSueltos);
+  }
+  
+  // Filtros
+  const filtroCategoria = document.getElementById('filtro-categoria');
+  const filtroPrecio = document.getElementById('filtro-precio');
+  if (filtroCategoria) filtroCategoria.addEventListener('change', renderizarComponentesSueltos);
+  if (filtroPrecio) filtroPrecio.addEventListener('change', renderizarComponentesSueltos);
+  
+  // Cerrar modal
+  document.querySelector('#modal-producto .modal-overlay').addEventListener('click', toggleModalProducto);
+  document.querySelector('#modal-producto .modal-close').addEventListener('click', toggleModalProducto);
+});
     // Función para acortar texto
     function acortarTexto(texto, maxLength = 120) {
       if (texto.length <= maxLength) return texto;
@@ -1041,6 +1359,7 @@
       document.getElementById('main-content').style.display = '';
       document.getElementById('vista-productoskit').classList.add('hidden');
       document.getElementById('vista-asesorias').classList.add('hidden');
+      document.getElementById('vista-componentes-sueltos').classList.add('hidden');
       document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
