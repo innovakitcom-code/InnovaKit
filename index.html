@@ -1183,6 +1183,8 @@ const componentesPorPagina = 8; // Puedes ajustar este número
 
 // Función para mostrar vista de componentes sueltos
 function verComponentesSueltos() {
+  // Aleatorizar el orden de componentes sueltos
+  componentesSueltos.sort(() => Math.random() - 0.5);
   document.getElementById('main-content').style.display = 'none';
   document.getElementById('vista-productoskit').classList.add('hidden');
   document.getElementById('vista-asesorias').classList.add('hidden');
