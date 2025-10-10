@@ -1177,6 +1177,10 @@ const componentesSueltos = [
   // Agregar más componentes aquí...
 ];
 
+// Variables globales para paginación
+let paginaActual = 1;
+const componentesPorPagina = 8; // Puedes ajustar este número
+
 // Función para mostrar vista de componentes sueltos
 function verComponentesSueltos() {
   document.getElementById('main-content').style.display = 'none';
@@ -1184,11 +1188,11 @@ function verComponentesSueltos() {
   document.getElementById('vista-asesorias').classList.add('hidden');
   document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
   
+  paginaActual = 1; // Resetear a primera página
   renderizarComponentesSueltos();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-// Función para renderizar componentes con filtros
+// Función para renderizar componentes con filtros Y PAGINACIÓN
 function renderizarComponentesSueltos() {
   const grid = document.getElementById('grid-componentes');
   const loading = document.getElementById('loading-componentes');
@@ -1218,8 +1222,15 @@ function renderizarComponentesSueltos() {
       return coincideTexto && coincideCategoria && coincidePrecio;
     });
 
-    // Generar HTML
-    grid.innerHTML = componentesFiltrados.map(comp => `
+    // CALCULAR PAGINACIÓN
+    const totalComponentes = componentesFiltrados.length;
+    const totalPaginas = Math.ceil(totalComponentes / componentesPorPagina);
+    const inicio = (paginaActual - 1) * componentesPorPagina;
+    const fin = inicio + componentesPorPagina;
+    const componentesPagina = componentesFiltrados.slice(inicio, fin);
+
+    // Generar HTML de los componentes
+    grid.innerHTML = componentesPagina.map(comp => `
       <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer" 
            onclick="mostrarModalProducto(${comp.id})">
         <div class="p-4">
@@ -1237,11 +1248,44 @@ function renderizarComponentesSueltos() {
         </div>
       </div>
     `).join('');
+
+    // AGREGAR PAGINACIÓN (solo si hay más de una página)
+    if (totalPaginas > 1) {
+      const paginacionHTML = `
+        <div class="mt-8 flex justify-center items-center space-x-4">
+          <button onclick="cambiarPagina(${paginaActual - 1})" 
+                  ${paginaActual === 1 ? 'disabled' : ''}
+                  class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            ‹ Anterior
+          </button>
+          
+          <span class="text-sm text-gray-600">
+            Página ${paginaActual} de ${totalPaginas}
+          </span>
+          
+          <button onclick="cambiarPagina(${paginaActual + 1})" 
+                  ${paginaActual === totalPaginas ? 'disabled' : ''}
+                  class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            Siguiente ›
+          </button>
+        </div>
+      `;
+      grid.innerHTML += paginacionHTML;
+    }
     
     loading.classList.add('hidden');
   }, 500);
 }
-
+    // Función para cambiar de página
+function cambiarPagina(nuevaPagina) {
+  paginaActual = nuevaPagina;
+  renderizarComponentesSueltos();
+  // Hacer scroll suave hacia el top del grid
+  document.getElementById('grid-componentes').scrollIntoView({ 
+    behavior: 'smooth', 
+    block: 'start' 
+  });
+}
 // Funciones para el modal de producto
 function mostrarModalProducto(id) {
   const producto = componentesSueltos.find(comp => comp.id === id);
@@ -1310,19 +1354,32 @@ function agregarProductoAlCarrito() {
   }
 }
 
-// Event listeners para filtros
+// Event listeners para filtros (modifica estos)
 document.addEventListener('DOMContentLoaded', function() {
   // Búsqueda en tiempo real
   const buscarInput = document.getElementById('buscar-componente');
   if (buscarInput) {
-    buscarInput.addEventListener('input', renderizarComponentesSueltos);
+    buscarInput.addEventListener('input', function() {
+      paginaActual = 1; // Resetear a primera página al buscar
+      renderizarComponentesSueltos();
+    });
   }
   
   // Filtros
   const filtroCategoria = document.getElementById('filtro-categoria');
   const filtroPrecio = document.getElementById('filtro-precio');
-  if (filtroCategoria) filtroCategoria.addEventListener('change', renderizarComponentesSueltos);
-  if (filtroPrecio) filtroPrecio.addEventListener('change', renderizarComponentesSueltos);
+  if (filtroCategoria) {
+    filtroCategoria.addEventListener('change', function() {
+      paginaActual = 1; // Resetear a primera página al filtrar
+      renderizarComponentesSueltos();
+    });
+  }
+  if (filtroPrecio) {
+    filtroPrecio.addEventListener('change', function() {
+      paginaActual = 1; // Resetear a primera página al filtrar
+      renderizarComponentesSueltos();
+    });
+  }
   
   // Cerrar modal
   document.querySelector('#modal-producto .modal-overlay').addEventListener('click', toggleModalProducto);
