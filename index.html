@@ -628,6 +628,9 @@
                 <option value="displays">Displays</option>
                 <option value="modulos">Módulos</option>
                 <option value="placas">Placas</option>
+                <option value="placas">RaspBerry</option>
+                <option value="placas">Alimentación</option>
+                <option value="placas">Fuente</option>
               </select>
               
               <select id="filtro-precio" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -1416,7 +1419,7 @@ const componentesSueltos = [
   {
     id: 25,
     nombre: "Sensor de movimiento PIR AM312",
-    categoria: "motores", 
+    categoria: "sensores", 
     precio: "Gs. 40.000",
     precioNum: 40000,
     imagen: "comp/AM312_1.webp",
@@ -1464,28 +1467,82 @@ const componentesSueltos = [
       "Procesador:RP2040 Dual-core ARM Cortex-M0+(133 MHz)",
       "Memoria RAM: 264 KB SRAM",
       "Memoria Flash: 2 MB integrada",
-      "onectividad: USB 1.1 (dispositivo/host)",
+      "Conectividad: USB 1.1 (dispositivo/host)",
       "Interfaces: I2C, SPI, UART, PWM, ADC",
       "Compatible con MicroPython, C/C++ y Arduino IDE"
     ]
   },
   {
     id: 28,
-    nombre: "Raspberry Pi Pico Zero",
+    nombre: "Módulo de fuente de alimentación",
     categoria: "RaspBerry", 
-    precio: "Gs. 130.000",
-    precioNum: 130000,
-    imagen: "comp/rasppico1.webp",
-    imagenes: ["comp/rasppico1.webp", "comp/rasppico2.webp", "comp/rasppico3.webp"],
-    descripcion: "Versión compacta y económica de la Raspberry Pi Pico, ideal para proyectos embebidos, controladores y dispositivos IoT con bajo consumo de energía.",
+    precio: "Gs. 50.000",
+    precioNum: 50000,
+    imagen: "comp/SUPPLY1.webp",
+    imagenes: ["comp/SUPPLY1.webp", "comp/SUPPLY2.webp", "comp/SUPPLY3.webp"],
+    descripcion: "Proporciona una fuente de alimentación regulada para protoboards, permitiendo alimentar proyectos Arduino y otros circuitos electrónicos de forma estable y segura",
     stock: "Sin Stock",
     especificaciones: [
-      "Procesador:RP2040 Dual-core ARM Cortex-M0+(133 MHz)",
-      "Memoria RAM: 264 KB SRAM",
-      "Memoria Flash: 2 MB integrada",
-      "onectividad: USB 1.1 (dispositivo/host)",
-      "Interfaces: I2C, SPI, UART, PWM, ADC",
-      "Compatible con MicroPython, C/C++ y Arduino IDE"
+      "Entrada: 6.5V – 12V DC",
+      "Salidas seleccionables: 3.3V y 5V DC",
+      "Corriente máxima de salida: 700 mA por línea",
+      "Interruptor ON/OFF integrado",
+      "Reguladores AMS1117 para estabilidad",
+    ]
+  },
+  {
+    id: 29,
+    nombre: "Sensor de movimiento PIR HC-SR501",
+    categoria: "sensores", 
+    precio: "Gs. 35.000",
+    precioNum: 35000,
+    imagen: "comp/HC-SR501_1.webp",
+    imagenes: ["comp/HC-SR501_1.webp", "comp/HC-SR501_2.webp", "comp/HC-SR501_3.webp"],
+    descripcion: "Sensor PIR de alta sensibilidad que detecta movimiento humano mediante radiación infrarroja, ideal para alarmas, iluminación automática y proyectos IoT",
+    stock: "Sin Stock",
+    especificaciones: [
+      "Modelo: HC-SR501",
+      "Voltaje de operación: 4.5V – 20V DC",
+      "Corriente en reposo: ≈ 50 µA",
+      "Distancia de detección: 3 – 7 metros (ajustable)",
+      "Ángulo de detección: ≈ 120°",
+    ]
+  },
+  {
+    id: 30,
+    nombre: "Módulo relé",
+    categoria: "RaspBerry", 
+    precio: "Gs. 30.000",
+    precioNum: 30000,
+    imagen: "comp/relay3.webp",
+    imagenes: ["comp/relay3.webp", "comp/relay1.webp", "comp/relay2.webp"],
+    descripcion: "Permite controlar dispositivos de alto voltaje con señales de bajo voltaje desde un microcontrolador, semi abierto semi cerrado",
+    stock: "disponible",
+    especificaciones: [
+      "Voltaje de operación: 5V DC",
+      "Tipo de relé: 1 canal (SPDT)",
+      "Corriente máxima de conmutación: 10A a 250V AC",
+      "Indicador LED de estado integrado",
+      "Pines: VCC, GND, IN",
+    ]
+  },
+  {
+    id: 31,
+    nombre: "Sensor ultrasónico HC-SR04",
+    categoria: "sensores", 
+    precio: "Gs. 30.000",
+    precioNum: 30000,
+    imagen: "comp/ultrasonic1.webp",
+    imagenes: ["comp/ultrasonic1.webp", "comp/ultrasonic2.webp"],
+    descripcion: "Mide distancias mediante ondas ultrasónicas con gran precisión, ideal para robots, sistemas de estacionamiento y detección de obstáculos",
+    stock: "Sin Stock",
+    especificaciones: [
+      "Modelo: HC-SR04",
+      "Voltaje de operación: 5V DC",
+      "Corriente de trabajo: 15 mA",
+      "Rango de medición: 2 cm – 400 cm",
+      "Precisión: ±3 mm",
+      "Ángulo de detección: 15°",
     ]
   },
   // Agregar más componentes aquí...
