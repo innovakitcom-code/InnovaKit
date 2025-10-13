@@ -1168,18 +1168,18 @@ function renderizarComponentesSueltos() {
 
     // Generar HTML de los componentes
     grid.innerHTML = componentesPagina.map(comp => `
-  <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full" 
+ <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full" 
      onclick="mostrarModalProducto(${comp.id})">
   
-  <!-- Sección 1: Imagen y nombre (flexible) -->
-  <div class="p-6 flex-grow">
-    <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded">
-    <h3 class="font-semibold text-lg mb-1 line-clamp-2 min-h-[2.5rem]">${comp.nombre}</h3>
+  <!-- Sección 1: Imagen y nombre (menos flexible) -->
+  <div class="p-4 flex-grow-0">  <!-- flex-grow-0 en lugar de flex-grow -->
+    <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded"> <!-- mb-3 → mb-2 -->
+    <h3 class="font-semibold text-lg mb-2 line-clamp-2">${comp.nombre}</h3> <!-- quitamos min-h -->
   </div>
   
   <!-- Sección 2: Precio (fijo) -->
-  <div class="px-4 pb-2">
-    <p class="text-green-600 font-bold text-2xl">${comp.precio}</p>
+  <div class="px-4">
+    <p class="text-green-600 font-bold text-2xl">${comp.precio}</p> <!-- text-2xl → text-lg -->
   </div>
   
   <!-- Sección 3: Stock y botón (fijo) -->
