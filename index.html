@@ -1172,8 +1172,8 @@ function renderizarComponentesSueltos() {
      onclick="mostrarModalProducto(${comp.id})">
   
   <!-- Sección 1: Imagen y nombre (flexible pero mínimo) -->
-  <div class="p-4 flex-grow min-h-[160px]">  <!-- Altura mínima en lugar de dejar crecer libre -->
-    <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-44 object-contain mb-3 rounded"> <!-- h-40 → h-32 -->
+  <div class="p-4 flex-grow min-h-[140px]">  <!-- Altura mínima en lugar de dejar crecer libre -->
+    <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-2 rounded"> <!-- h-40 → h-32 -->
     <h3 class="font-semibold text-xl line-clamp-2">${comp.nombre}</h3>
   </div>
   
