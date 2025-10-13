@@ -46,6 +46,54 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
+  /* CATEGORÍAS ANIMADAS a,snfakjfnlDJFAKJBLAKJBGAKDFGBAKLJGFKAJFGBKLAJDBGFKLADJGFBKAJBGFKAJBGFKBAKDFGBAKJ*/
+.category-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.category-header {
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.category-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.expand-indicator {
+  transition: transform 0.3s ease;
+}
+
+.category-card.active .expand-indicator {
+  transform: rotate(180deg);
+}
+
+.subcategories {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.category-card.active .subcategories {
+  max-height: 2000px;
+}
+
+.category-products-grid {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
   /* Modo oscuro 
 .dark {
   color-scheme: dark;
@@ -736,7 +784,10 @@
             </div>
           </div>
         </div>
-
+        <!-- NUEVO: Sistema de categorías animado -->
+<div id="categorias-animadas" class="space-y-4">
+  <!-- Las categorías se generarán con JavaScript -->
+</div>
         <!-- Grid de productos -->
         <div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <!-- Los productos se cargan aquí con JavaScript -->
@@ -1125,7 +1176,7 @@ function verComponentesSueltos() {
         document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
         
         paginaActual = 1;
-        renderizarComponentesSueltos();
+        renderizarCategoriasAnimadas();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
@@ -1762,6 +1813,57 @@ function initDarkMode() {
 
 // Inicializar cuando cargue la página
 document.addEventListener('DOMContentLoaded', initDarkMode);
+  // FUNCIÓN PARA RENDERIZAR CATEGORÍAS ANIMADAS
+function renderizarCategoriasAnimadas() {
+  const container = document.getElementById('categorias-animadas');
+  if (!container) return;
+
+  // Ocultar vista original, mostrar categorías
+  document.getElementById('grid-componentes').classList.add('hidden');
+  container.classList.remove('hidden');
+
+  // Organizar por categorías
+  const categorias = {};
+  componentesSueltos.forEach(comp => {
+    if (!categorias[comp.categoria]) categorias[comp.categoria] = [];
+    categorias[comp.categoria].push(comp);
+  });
+
+  // Generar HTML
+  container.innerHTML = Object.keys(categorias).map(categoria => `
+    <div class="category-card">
+      <div class="category-header">
+        <div class="category-title">${categoria}</div>
+        <div class="expand-indicator">▼</div>
+      </div>
+      <div class="subcategories">
+        <div class="category-products-grid">
+          ${categorias[categoria].map(comp => `
+            <div class="bg-white rounded-lg border p-4 hover:shadow-md cursor-pointer min-h-[370px] flex flex-col" 
+                 onclick="mostrarModalProducto(${comp.id})">
+              <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-3 rounded">
+              <h3 class="font-semibold text-lg mb-2 flex-grow">${comp.nombre}</h3>
+              <p class="text-green-600 font-bold text-xl mb-2">${comp.precio}</p>
+              <div class="flex justify-between items-center mt-auto">
+                <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                  ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
+                </span>
+                <span class="text-blue-600 font-semibold">Ver detalles ›</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Event listeners para expandir
+  container.querySelectorAll('.category-header').forEach(header => {
+    header.addEventListener('click', () => {
+      header.parentElement.classList.toggle('active');
+    });
+  });
+}
 </script>
 
 </body>
