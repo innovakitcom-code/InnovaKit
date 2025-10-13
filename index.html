@@ -1168,28 +1168,28 @@ function renderizarComponentesSueltos() {
 
     // Generar HTML de los componentes
     grid.innerHTML = componentesPagina.map(comp => `
-      <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full" 
-           onclick="mostrarModalProducto(${comp.id})">
-        <!-- Contenido superior - crece según necesidad -->
-        <div class="p-4 flex-grow">
-          <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-4 rounded">
-          <h3 class="font-semibold text-lg mb-2 line-clamp-2 min-h-[3rem] flex items-start">${comp.nombre}</h3>
-          <p class="text-green-600 font-bold text-xl mb-2">${comp.precio}</p>
-        </div>
-        
-        <!-- Contenido inferior - siempre al fondo -->
-        <div class="p-4 pt-0 mt-auto">
-          <div class="flex items-center justify-between">
-            <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-              ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
-            </span>
-            <button class="text-blue-600 hover:text-blue-800 font-semibold">
-              Ver detalles ›
-            </button>
-          </div>
-        </div>
+  <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full" 
+       onclick="mostrarModalProducto(${comp.id})">
+    <!-- Contenido superior - compacto -->
+    <div class="p-4 flex-grow">
+      <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-3 rounded"> <!-- h-48 → h-40 -->
+      <h3 class="font-semibold text-lg mb-1 line-clamp-2 min-h-[2.5rem]">${comp.nombre}</h3> <!-- mb-2 → mb-1, min-h-[3rem] → min-h-[2.5rem] -->
+      <p class="text-green-600 font-bold text-xl">${comp.precio}</p> <!-- quitamos mb-2 -->
+    </div>
+    
+    <!-- Contenido inferior - pegado al fondo -->
+    <div class="p-4 pt-2"> <!-- pt-0 → pt-2 para un poco de espacio -->
+      <div class="flex items-center justify-between">
+        <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+          ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
+        </span>
+        <button class="text-blue-600 hover:text-blue-800 font-semibold">
+          Ver detalles ›
+        </button>
       </div>
-    `).join('');
+    </div>
+  </div>
+`).join('');
 
     // ACTUALIZAR INFORMACIÓN DE PAGINACIÓN FIJA
 const infoPaginacion = document.getElementById('info-paginacion');
