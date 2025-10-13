@@ -1168,7 +1168,7 @@ function renderizarComponentesSueltos() {
 
     // Generar HTML de los componentes
     grid.innerHTML = componentesPagina.map(comp => `
- <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full" 
+ <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full min-h-[400px]" 
      onclick="mostrarModalProducto(${comp.id})">
   
   <!-- Sección 1: Imagen y nombre (flexible pero mínimo) -->
