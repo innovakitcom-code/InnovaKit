@@ -1171,19 +1171,19 @@ function renderizarComponentesSueltos() {
  <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full" 
      onclick="mostrarModalProducto(${comp.id})">
   
-  <!-- Sección 1: Imagen y nombre (menos flexible) -->
-  <div class="p-4 flex-grow-0">  <!-- flex-grow-0 en lugar de flex-grow -->
-    <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded"> <!-- mb-3 → mb-2 -->
-    <h3 class="font-semibold text-lg mb-2 line-clamp-2">${comp.nombre}</h3> <!-- quitamos min-h -->
+  <!-- Sección 1: Imagen y nombre (flexible pero mínimo) -->
+  <div class="p-4 flex-grow min-h-[120px]">  <!-- Altura mínima en lugar de dejar crecer libre -->
+    <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-32 object-contain mb-2 rounded"> <!-- h-40 → h-32 -->
+    <h3 class="font-semibold text-lg mb-1 line-clamp-2">${comp.nombre}</h3>
   </div>
   
   <!-- Sección 2: Precio (fijo) -->
-  <div class="px-4">
-    <p class="text-green-600 font-bold text-2xl">${comp.precio}</p> <!-- text-2xl → text-lg -->
+  <div class="px-4 pb-1">  <!-- pb-2 → pb-1 -->
+    <p class="text-green-600 font-bold text-lg">${comp.precio}</p>
   </div>
   
   <!-- Sección 3: Stock y botón (fijo) -->
-  <div class="p-4 pt-2">
+  <div class="p-4 pt-1">  <!-- pt-2 → pt-1 -->
     <div class="flex items-center justify-between">
       <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
         ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
