@@ -1168,12 +1168,17 @@ function renderizarComponentesSueltos() {
 
     // Generar HTML de los componentes
     grid.innerHTML = componentesPagina.map(comp => `
-      <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer" 
+      <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full" 
            onclick="mostrarModalProducto(${comp.id})">
-        <div class="p-4">
+        <!-- Contenido superior - crece según necesidad -->
+        <div class="p-4 flex-grow">
           <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-4 rounded">
-          <h3 class="font-semibold text-lg mb-2 line-clamp-2">${comp.nombre}</h3>
+          <h3 class="font-semibold text-lg mb-2 line-clamp-2 min-h-[3rem] flex items-start">${comp.nombre}</h3>
           <p class="text-green-600 font-bold text-xl mb-2">${comp.precio}</p>
+        </div>
+        
+        <!-- Contenido inferior - siempre al fondo -->
+        <div class="p-4 pt-0 mt-auto">
           <div class="flex items-center justify-between">
             <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
               ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
