@@ -701,152 +701,72 @@
       <div class="container mx-auto px-4 py-6">
     
 <!-- Barra superior con búsqueda y filtros -->
-<div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
-  <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-    <!-- Búsqueda -->
-    <div class="flex-1 w-full md:w-auto">
-      <div class="relative">
-        <input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." 
-               class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <div class="absolute left-3 top-2.5 text-gray-400">
-          <i class="fas fa-search"></i>
-        </div>
-      </div>
+<!-- 🔍 FILTROS Y BÚSQUEDA -->
+<div class="bg-white rounded-xl shadow-md border p-4 mb-6">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    
+    <!-- Campo de búsqueda -->
+    <div class="flex items-center w-full md:w-1/3 relative">
+      <i class="fas fa-search absolute left-3 text-gray-400"></i>
+      <input id="buscar-componente" 
+             type="text" 
+             placeholder="Buscar componentes..."
+             class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
     </div>
 
-    <!-- NUEVO: Sistema de Filtrado Jerárquico con Hover -->
-    <div class="flex flex-wrap gap-2 items-center">
-      <!-- Filtro de categorías principal con hover -->
-      <div class="relative group">
-        <button class="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 font-medium flex items-center">
-          <span id="categoria-activa">📦 Todas las categorías</span>
+    <!-- Filtros -->
+    <div class="flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-2/3">
+      
+      <!-- Categorías -->
+      <div class="relative">
+        <button id="btn-categoria" 
+                class="flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-lg font-medium hover:bg-blue-200 transition">
+          <i class="fas fa-layer-group mr-2"></i>
+          <span id="categoria-activa">Todas las categorías</span>
           <i class="fas fa-chevron-down ml-2 text-sm"></i>
         </button>
-        
-        <!-- Menú desplegable de categorías -->
-        <div class="absolute top-full left-0 mt-1 w-64 bg-white border rounded-lg shadow-xl z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-          <div class="grid grid-cols-1 max-h-96 overflow-y-auto">
-            <!-- Todas las categorías -->
-            <button class="categoria-item px-4 py-3 text-left hover:bg-blue-50 border-b flex items-center justify-between"
-                    data-categoria="todos"
-                    onclick="seleccionarCategoria('todos', '📦 Todas las categorías')">
-              <span>📦 Todas las categorías</span>
-              <i class="fas fa-check hidden text-blue-600"></i>
-            </button>
-            
-            <!-- Categorías con subcategorías -->
-            <button class="categoria-item px-4 py-3 text-left hover:bg-blue-50 border-b flex items-center justify-between relative group/sub"
-                    data-categoria="componentes-pasivos"
-                    onclick="seleccionarCategoria('componentes-pasivos', '🔌 Componentes pasivos')">
-              <span>🔌 Componentes pasivos</span>
-              <div class="flex items-center">
-                <i class="fas fa-check hidden text-blue-600 mr-2"></i>
-                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-              </div>
-              
-              <!-- Subcategorías -->
-              <div class="absolute left-full top-0 ml-1 w-64 bg-white border rounded-lg shadow-xl opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200 z-40">
-                <button class="subcategoria-item w-full px-4 py-3 text-left hover:bg-green-50 border-b flex items-center justify-between"
-                        data-categoria="componentes-pasivos"
-                        data-subcategoria="resistencias"
-                        onclick="seleccionarSubcategoria('componentes-pasivos', 'resistencias', '🔌 Resistencias')">
-                  <span>Resistencias</span>
-                  <i class="fas fa-check hidden text-green-600"></i>
-                </button>
-                <button class="subcategoria-item w-full px-4 py-3 text-left hover:bg-green-50 border-b flex items-center justify-between"
-                        data-categoria="componentes-pasivos"
-                        data-subcategoria="condensadores"
-                        onclick="seleccionarSubcategoria('componentes-pasivos', 'condensadores', '🔌 Condensadores')">
-                  <span>Condensadores</span>
-                  <i class="fas fa-check hidden text-green-600"></i>
-                </button>
-                <button class="subcategoria-item w-full px-4 py-3 text-left hover:bg-green-50 border-b flex items-center justify-between"
-                        data-categoria="componentes-pasivos"
-                        data-subcategoria="inductores"
-                        onclick="seleccionarSubcategoria('componentes-pasivos', 'inductores', '🔌 Inductores')">
-                  <span>Inductores</span>
-                  <i class="fas fa-check hidden text-green-600"></i>
-                </button>
-                <button class="subcategoria-item w-full px-4 py-3 text-left hover:bg-green-50 border-b"
-                        data-categoria="componentes-pasivos"
-                        data-subcategoria="potenciometros"
-                        onclick="seleccionarSubcategoria('componentes-pasivos', 'potenciometros', '🔌 Potenciómetros')">
-                  <span>Potenciómetros</span>
-                  <i class="fas fa-check hidden text-green-600"></i>
-                </button>
-              </div>
-            </button>
 
-            <!-- Semiconductores -->
-            <button class="categoria-item px-4 py-3 text-left hover:bg-blue-50 border-b flex items-center justify-between relative group/sub"
-                    data-categoria="semiconductores"
-                    onclick="seleccionarCategoria('semiconductores', '⚡ Semiconductores')">
-              <span>⚡ Semiconductores</span>
-              <div class="flex items-center">
-                <i class="fas fa-check hidden text-blue-600 mr-2"></i>
-                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-              </div>
-              
-              <!-- Subcategorías -->
-              <div class="absolute left-full top-0 ml-1 w-64 bg-white border rounded-lg shadow-xl opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200 z-40">
-                <button class="subcategoria-item w-full px-4 py-3 text-left hover:bg-green-50 border-b"
-                        data-categoria="semiconductores"
-                        data-subcategoria="transistores"
-                        onclick="seleccionarSubcategoria('semiconductores', 'transistores', '⚡ Transistores')">
-                  <span>Transistores</span>
-                  <i class="fas fa-check hidden text-green-600"></i>
-                </button>
-                <button class="subcategoria-item w-full px-4 py-3 text-left hover:bg-green-50 border-b"
-                        data-categoria="semiconductores"
-                        data-subcategoria="diodos"
-                        onclick="seleccionarSubcategoria('semiconductores', 'diodos', '⚡ Diodos')">
-                  <span>Diodos</span>
-                  <i class="fas fa-check hidden text-green-600"></i>
-                </button>
-                <button class="subcategoria-item w-full px-4 py-3 text-left hover:bg-green-50 border-b"
-                        data-categoria="semiconductores"
-                        data-subcategoria="reguladores"
-                        onclick="seleccionarSubcategoria('semiconductores', 'reguladores', '⚡ Reguladores')">
-                  <span>Reguladores</span>
-                  <i class="fas fa-check hidden text-green-600"></i>
-                </button>
-              </div>
-            </button>
-
-            <!-- Más categorías (puedes agregar las demás siguiendo el mismo patrón) -->
-            <button class="categoria-item px-4 py-3 text-left hover:bg-blue-50 border-b"
-                    data-categoria="optoelectronica"
-                    onclick="seleccionarCategoria('optoelectronica', '👁️ Optoelectrónica')">
-              <span>👁️ Optoelectrónica</span>
-              <i class="fas fa-check hidden text-blue-600"></i>
-            </button>
-            
-            <button class="categoria-item px-4 py-3 text-left hover:bg-blue-50 border-b"
-                    data-categoria="modulos-sensores"
-                    onclick="seleccionarCategoria('modulos-sensores', '🤖 Módulos y Sensores')">
-              <span>🤖 Módulos y Sensores</span>
-              <i class="fas fa-check hidden text-blue-600"></i>
-            </button>
-
-            <!-- Agrega aquí las demás categorías principales -->
-          </div>
+        <!-- Menú desplegable -->
+        <div class="absolute left-0 mt-2 w-64 bg-white border rounded-lg shadow-lg hidden" id="menu-categorias">
+          <ul class="max-h-60 overflow-y-auto divide-y divide-gray-100">
+            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('todos','Todas las categorías')">📦 Todas</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('componentes-pasivos','Componentes pasivos')">🔌 Componentes pasivos</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('semiconductores','Semiconductores')">⚡ Semiconductores</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('optoelectronica','Optoelectrónica')">👁️ Optoelectrónica</button></li>
+            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('modulos-sensores','Módulos y Sensores')">🤖 Módulos y Sensores</button></li>
+          </ul>
         </div>
       </div>
 
-      <!-- Filtro de precio (se mantiene igual) -->
-      <select id="filtro-precio" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" onchange="paginaActual = 1; renderizarComponentesSueltos();">
+      <!-- Filtro de precios -->
+      <select id="filtro-precio" 
+              class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+              onchange="paginaActual = 1; renderizarComponentesSueltos();">
         <option value="todos">Todos los precios</option>
         <option value="0-50000">Gs. 0 - 50.000</option>
         <option value="50000-100000">Gs. 50.000 - 100.000</option>
         <option value="100000-200000">Gs. 100.000 - 200.000</option>
       </select>
 
-      <!-- Botón para limpiar filtros -->
-      <button onclick="limpiarFiltros()" class="px-3 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-medium">
+      <!-- Limpiar -->
+      <button onclick="limpiarFiltros()" 
+              class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
         <i class="fas fa-times mr-1"></i> Limpiar
       </button>
     </div>
   </div>
+</div>
+
+<script>
+  // Mostrar/ocultar menú de categorías
+  const btnCat = document.getElementById("btn-categoria");
+  const menuCat = document.getElementById("menu-categorias");
+  btnCat.addEventListener("click", () => menuCat.classList.toggle("hidden"));
+  document.addEventListener("click", (e) => {
+    if (!btnCat.contains(e.target) && !menuCat.contains(e.target)) menuCat.classList.add("hidden");
+  });
+</script>
+
 
   <!-- Etiqueta de filtro activo -->
   <div id="filtro-activo" class="mt-3 hidden">
