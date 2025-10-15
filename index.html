@@ -1243,7 +1243,11 @@ function verComponentesSueltos() {
         document.getElementById('vista-productoskit').classList.add('hidden');
         document.getElementById('vista-asesorias').classList.add('hidden');
         document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-
+        
+        // Renderizar productos
+        renderizarComponentesSueltos();
+    }
+}
 // Función para seleccionar categoría
 function seleccionarCategoria(categoriaId, texto) {
     filtroCategoriaActual = categoriaId;
