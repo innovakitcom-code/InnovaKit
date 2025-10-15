@@ -1215,6 +1215,9 @@ document.addEventListener('DOMContentLoaded', cargarProductos);
 // Variables globales para paginación
 let paginaActual = 1;
 const componentesPorPagina = 8; // Puedes ajustar este número
+// Variables globales para filtros activos
+let filtroCategoriaActual = 'todos';
+let filtroSubcategoriaActual = 'todos';
 
 // Función para mostrar vista de componentes sueltos
 function verComponentesSueltos() {
@@ -1240,9 +1243,6 @@ function verComponentesSueltos() {
         document.getElementById('vista-productoskit').classList.add('hidden');
         document.getElementById('vista-asesorias').classList.add('hidden');
         document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-// Variables globales para filtros activos
-let filtroCategoriaActual = 'todos';
-let filtroSubcategoriaActual = 'todos';
 
 // Función para seleccionar categoría
 function seleccionarCategoria(categoriaId, texto) {
