@@ -46,17 +46,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-  /* Animaciones para el filtrado jerárquico */
-#subcategorias-container, #subsubcategorias-container {
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: all 0.3s ease-in-out;
-}
-
-#subcategorias-container.slide-in, #subsubcategorias-container.slide-in {
-    opacity: 1;
-    transform: translateX(0);
-}
   /* Modo oscuro 
 .dark {
   color-scheme: dark;
@@ -710,64 +699,43 @@
   <div class="page-container">
     <div class="products-container">
       <div class="container mx-auto px-4 py-6">
-       
-            <!-- Barra superior con búsqueda y filtros -->
-<div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
-  <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-    <!-- Búsqueda -->
-    <div class="flex-1 w-full md:w-auto">
-      <div class="relative">
-        <input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." 
-               class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <div class="absolute left-3 top-2.5 text-gray-400">
-          <i class="fas fa-search"></i>
-        </div>
-      </div>
-    </div>
+        <!-- Barra superior con búsqueda y filtros -->
+        <div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
+          <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <!-- Búsqueda -->
+            <div class="flex-1 w-full md:w-auto">
+              <div class="relative">
+                <input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." 
+                       class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <div class="absolute left-3 top-2.5 text-gray-400">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+            </div>
 
-    <!-- NUEVO: Sistema de Filtrado Jerárquico -->
-    <div class="flex flex-wrap gap-2">
-      <!-- Select principal que se ve igual que antes -->
-      <select id="filtro-categoria" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <option value="todos">Todas las categorías</option>
-        <option value="componentes-pasivos">🔌 Componentes pasivos</option>
-        <option value="semiconductores">⚡ Semiconductores</option>
-        <option value="optoelectronica">👁️ Optoelectrónica</option>
-        <option value="modulos-sensores">🤖 Módulos y Sensores</option>
-        <option value="alimentacion">🔋 Alimentación</option>
-        <option value="conectores">🔗 Conectores</option>
-        <option value="equipos-taller">🛠️ Equipos de taller</option>
-        <option value="impresion-3d">🖨️ Impresión 3D</option>
-        <option value="robotica">⚙️ Robótica</option>
-        <option value="microcontroladores">📟 Microcontroladores</option>
-        <option value="componentes-mecanicos">🔧 Componentes mecánicos</option>
-        <option value="kits-componentes">📦 Kits de componentes</option>
-      </select>
-      
-      <!-- Contenedor para subcategorías (aparece dinámicamente) -->
-      <div id="subcategorias-container" class="hidden">
-        <select id="filtro-subcategoria" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-48">
-          <option value="todos">Todas las subcategorías</option>
-        </select>
-      </div>
-      
-      <!-- Contenedor para sub-subcategorías (aparece dinámicamente) -->
-      <div id="subsubcategorias-container" class="hidden">
-        <select id="filtro-subsubcategoria" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-48">
-          <option value="todos">Todas las sub-subcategorías</option>
-        </select>
-      </div>
-    </div>
-    
-    <!-- Filtro de precio (se mantiene igual) -->
-    <select id="filtro-precio" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-      <option value="todos">Todos los precios</option>
-      <option value="0-50000">Gs. 0 - 50.000</option>
-      <option value="50000-100000">Gs. 50.000 - 100.000</option>
-      <option value="100000-200000">Gs. 100.000 - 200.000</option>
-    </select>
-  </div>
-</div>
+            <!-- Filtros -->
+            <div class="flex flex-wrap gap-2">
+              <select id="filtro-categoria" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="todos">Todas las categorías</option>
+                <option value="sensores">Sensores</option>
+                <option value="motores">Motores</option>
+                <option value="displays">Displays</option>
+                <option value="modulos">Módulos</option>
+                <option value="placas">Placas</option>
+                <option value="raspberry">RaspBerry</option>
+                <option value="placas">Alimentación</option>
+                <option value="placas">Fuente</option>
+              </select>
+              
+              <select id="filtro-precio" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="todos">Todos los precios</option>
+                <option value="0-50000">Gs. 0 - 50.000</option>
+                <option value="50000-100000">Gs. 50.000 - 100.000</option>
+                <option value="100000-200000">Gs. 100.000 - 200.000</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
         <!-- Grid de productos -->
         <div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -1103,166 +1071,6 @@
         },
       ]
     ];
-    // Estructura jerárquica de categorías
-const categoriasJerarquia = {
-    "componentes-pasivos": {
-        nombre: "🔌 Componentes pasivos",
-        subcategorias: {
-            "resistencias": { nombre: "Resistencias", subsubcategorias: {} },
-            "condensadores": { nombre: "Condensadores", subsubcategorias: {} },
-            "inductores": { nombre: "Inductores", subsubcategorias: {} },
-            "potenciometros": { nombre: "Potenciómetros", subsubcategorias: {} }
-        }
-    },
-    "semiconductores": {
-        nombre: "⚡ Semiconductores",
-        subcategorias: {
-            "transistores": {
-                nombre: "Transistores",
-                subsubcategorias: {
-                    "bjt": "BJT",
-                    "mosfet": "MOSFET",
-                    "igbt": "IGBT"
-                }
-            },
-            "diodos": {
-                nombre: "Diodos",
-                subsubcategorias: {
-                    "rectificadores": "Rectificadores",
-                    "zener": "Zener",
-                    "tvs": "TVS"
-                }
-            },
-            "reguladores": { nombre: "Reguladores de tensión", subsubcategorias: {} },
-            "circuitos-integrados": { nombre: "Circuitos integrados", subsubcategorias: {} }
-        }
-    },
-    "optoelectronica": {
-        nombre: "👁️ Optoelectrónica",
-        subcategorias: {
-            "leds": { nombre: "LEDs", subsubcategorias: {} },
-            "fotoresistencias": { nombre: "Fotoresistencias", subsubcategorias: {} },
-            "displays": {
-                nombre: "Displays",
-                subsubcategorias: {
-                    "lcd": "LCD",
-                    "oled": "OLED",
-                    "7-segmentos": "7 segmentos"
-                }
-            },
-            "sensores-opticos": { nombre: "Sensores ópticos", subsubcategorias: {} }
-        }
-    },
-    "modulos-sensores": {
-        nombre: "🤖 Módulos y Sensores",
-        subcategorias: {
-            "sensores": {
-                nombre: "Sensores",
-                subsubcategorias: {
-                    "temperatura": "Temperatura",
-                    "humedad": "Humedad",
-                    "movimiento": "Movimiento (PIR)",
-                    "ultrasonico": "Ultrasonico",
-                    "gas": "Gas (MQ series)"
-                }
-            },
-            "modulos-comunicacion": {
-                nombre: "Módulos comunicación",
-                subsubcategorias: {
-                    "wifi": "WiFi (ESP8266/32)",
-                    "bluetooth": "Bluetooth",
-                    "rfid": "RFID"
-                }
-            },
-            "modulos-control": {
-                nombre: "Módulos control",
-                subsubcategorias: {
-                    "relay": "Relay",
-                    "motor-driver": "Motor Driver",
-                    "servo": "Servo"
-                }
-            }
-        }
-    },
-    "alimentacion": {
-        nombre: "🔋 Alimentación",
-        subcategorias: {
-            "fuentes": { nombre: "Fuentes de poder", subsubcategorias: {} },
-            "reguladores": { nombre: "Reguladores", subsubcategorias: {} },
-            "baterias": { nombre: "Baterías", subsubcategorias: {} },
-            "convertidores": { nombre: "Convertidores DC-DC", subsubcategorias: {} }
-        }
-    },
-    "conectores": {
-        nombre: "🔗 Conectores",
-        subcategorias: {
-            "jumper-wires": { nombre: "Jumper wires", subsubcategorias: {} },
-            "headers": { nombre: "Headers", subsubcategorias: {} },
-            "terminales": { nombre: "Terminales", subsubcategorias: {} },
-            "cables-usb": { nombre: "Cables USB", subsubcategorias: {} }
-        }
-    },
-    "equipos-taller": {
-        nombre: "🛠️ Equipos de taller",
-        subcategorias: {
-            "multimetros": { nombre: "Multímetros", subsubcategorias: {} },
-            "soldadores": { nombre: "Soldadores", subsubcategorias: {} },
-            "protoboards": { nombre: "Protoboards", subsubcategorias: {} },
-            "herramientas": { nombre: "Herramientas", subsubcategorias: {} }
-        }
-    },
-    "impresion-3d": {
-        nombre: "🖨️ Impresión 3D",
-        subcategorias: {
-            "filamentos": { nombre: "Filamentos", subsubcategorias: {} },
-            "accesorios": { nombre: "Accesorios", subsubcategorias: {} },
-            "repuestos": { nombre: "Repuestos", subsubcategorias: {} }
-        }
-    },
-    "robotica": {
-        nombre: "⚙️ Robótica",
-        subcategorias: {
-            "motores": {
-                nombre: "Motores",
-                subsubcategorias: {
-                    "dc": "DC",
-                    "servo": "Servo",
-                    "stepper": "Stepper"
-                }
-            },
-            "chasis": { nombre: "Chasis", subsubcategorias: {} },
-            "ruedas": { nombre: "Ruedas", subsubcategorias: {} },
-            "kits-completos": { nombre: "Kits completos", subsubcategorias: {} }
-        }
-    },
-    "microcontroladores": {
-        nombre: "📟 Microcontroladores",
-        subcategorias: {
-            "arduino": { nombre: "Arduino", subsubcategorias: {} },
-            "raspberry": { nombre: "Raspberry Pi", subsubcategorias: {} },
-            "esp": { nombre: "ESP", subsubcategorias: {} },
-            "placas-desarrollo": { nombre: "Placas desarrollo", subsubcategorias: {} }
-        }
-    },
-    "componentes-mecanicos": {
-        nombre: "🔧 Componentes mecánicos",
-        subcategorias: {
-            "tornilleria": { nombre: "Tornillería", subsubcategorias: {} },
-            "soportes": { nombre: "Soportes", subsubcategorias: {} },
-            "engranajes": { nombre: "Engranajes", subsubcategorias: {} },
-            "rodamientos": { nombre: "Rodamientos", subsubcategorias: {} }
-        }
-    },
-    "kits-componentes": {
-        nombre: "📦 Kits de componentes",
-        subcategorias: {
-            "basicos": { nombre: "Básicos", subsubcategorias: {} },
-            "avanzados": { nombre: "Avanzados", subsubcategorias: {} },
-            "especializados": { nombre: "Especializados", subsubcategorias: {} }
-        }
-    }
-};
-
 // Base de datos de componentes sueltos
 // Variable global para almacenar productos
 let componentesSueltos = [];
@@ -1286,23 +1094,6 @@ async function cargarProductos() {
 
 // Llamar a cargar productos cuando la página cargue
 document.addEventListener('DOMContentLoaded', cargarProductos);
-    document.getElementById('filtro-categoria').addEventListener('change', function() {
-    actualizarSubcategorias(this.value);
-    paginaActual = 1;
-    renderizarComponentesSueltos();
-});
-
-document.getElementById('filtro-subcategoria').addEventListener('change', function() {
-    const categoriaId = document.getElementById('filtro-categoria').value;
-    actualizarSubSubcategorias(categoriaId, this.value);
-    paginaActual = 1;
-    renderizarComponentesSueltos();
-});
-
-document.getElementById('filtro-subsubcategoria').addEventListener('change', function() {
-    paginaActual = 1;
-    renderizarComponentesSueltos();
-});
 
 // Variables globales para paginación
 let paginaActual = 1;
@@ -1338,116 +1129,25 @@ function verComponentesSueltos() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
-    
-    // Función para actualizar subcategorías con animación
-function actualizarSubcategorias(categoriaId) {
-    const subcatContainer = document.getElementById('subcategorias-container');
-    const subcatSelect = document.getElementById('filtro-subcategoria');
-    const subsubcatContainer = document.getElementById('subsubcategorias-container');
-    
-    // Limpiar selects
-    subcatSelect.innerHTML = '<option value="todos">Todas las subcategorías</option>';
-    
-    // Ocultar sub-subcategorías
-    subsubcatContainer.classList.add('hidden');
-    subsubcatContainer.classList.remove('slide-in');
-    
-    if (categoriaId === 'todos') {
-        // Ocultar con animación
-        subcatContainer.classList.add('hidden');
-        subcatContainer.classList.remove('slide-in');
-        return;
-    }
-    
-    const categoria = categoriasJerarquia[categoriaId];
-    if (categoria && Object.keys(categoria.subcategorias).length > 0) {
-        // Llenar subcategorías
-        Object.entries(categoria.subcategorias).forEach(([id, subcat]) => {
-            const option = document.createElement('option');
-            option.value = id;
-            option.textContent = subcat.nombre;
-            subcatSelect.appendChild(option);
-        });
-        
-        // Mostrar con animación
-        subcatContainer.classList.remove('hidden');
-        setTimeout(() => subcatContainer.classList.add('slide-in'), 10);
-    } else {
-        // Ocultar con animación
-        subcatContainer.classList.add('hidden');
-        subcatContainer.classList.remove('slide-in');
-    }
-}
-
-// Función para actualizar sub-subcategorías con animación
-function actualizarSubSubcategorias(categoriaId, subcategoriaId) {
-    const subsubcatContainer = document.getElementById('subsubcategorias-container');
-    const subsubcatSelect = document.getElementById('filtro-subsubcategoria');
-    
-    // Limpiar select
-    subsubcatSelect.innerHTML = '<option value="todos">Todas las sub-subcategorías</option>';
-    
-    if (subcategoriaId === 'todos') {
-        // Ocultar con animación
-        subsubcatContainer.classList.add('hidden');
-        subsubcatContainer.classList.remove('slide-in');
-        return;
-    }
-    
-    const categoria = categoriasJerarquia[categoriaId];
-    const subcategoria = categoria?.subcategorias[subcategoriaId];
-    
-    if (subcategoria && Object.keys(subcategoria.subsubcategorias).length > 0) {
-        // Llenar sub-subcategorías
-        Object.entries(subcategoria.subsubcategorias).forEach(([id, nombre]) => {
-            const option = document.createElement('option');
-            option.value = id;
-            option.textContent = nombre;
-            subsubcatSelect.appendChild(option);
-        });
-        
-        // Mostrar con animación
-        subsubcatContainer.classList.remove('hidden');
-        setTimeout(() => subsubcatContainer.classList.add('slide-in'), 10);
-    } else {
-        // Ocultar con animación
-        subsubcatContainer.classList.add('hidden');
-        subsubcatContainer.classList.remove('slide-in');
-    }
-}
-
-// Nueva función de filtrado que considera la jerarquía
+// Función para renderizar componentes con filtros Y PAGINACIÓN
 function renderizarComponentesSueltos() {
-    const grid = document.getElementById('grid-componentes');
-    const loading = document.getElementById('loading-componentes');
+  const grid = document.getElementById('grid-componentes');
+  const loading = document.getElementById('loading-componentes');
+  
+  loading.classList.remove('hidden');
+  
+  setTimeout(() => {
+    const filtroTexto = document.getElementById('buscar-componente').value.toLowerCase();
+    const filtroCategoria = document.getElementById('filtro-categoria').value;
+    const filtroPrecio = document.getElementById('filtro-precio').value;
     
-    loading.classList.remove('hidden');
-    
-    setTimeout(() => {
-        const filtroTexto = document.getElementById('buscar-componente').value.toLowerCase();
-        const filtroCategoria = document.getElementById('filtro-categoria').value;
-        const filtroSubcategoria = document.getElementById('filtro-subcategoria').value;
-        const filtroSubsubcategoria = document.getElementById('filtro-subsubcategoria').value;
-        const filtroPrecio = document.getElementById('filtro-precio').value;
-        
-        let componentesFiltrados = componentesSueltos.filter(comp => {
+    let componentesFiltrados = componentesSueltos.filter(comp => {
       // Filtro por texto
       const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
                            comp.descripcion.toLowerCase().includes(filtroTexto);
       
-     // Filtro por jerarquía de categorías
-            let coincideCategoria = true;
-            if (filtroCategoria !== 'todos') {
-                coincideCategoria = comp.categoria === filtroCategoria;
-                
-                if (filtroSubcategoria !== 'todos') {
-                    coincideCategoria = comp.subcategoria === filtroSubcategoria;
-                    
-                    if (filtroSubsubcategoria !== 'todos') {
-                        coincideCategoria = comp.subsubcategoria === filtroSubsubcategoria;
-                    }
-                }
-            }
+      // Filtro por categoría
+      const coincideCategoria = filtroCategoria === 'todos' || comp.categoria === filtroCategoria;
       
       // Filtro por precio
       let coincidePrecio = true;
@@ -1511,29 +1211,6 @@ botones[1].disabled = paginaActual === totalPaginas;
     loading.classList.add('hidden');
   }, 500);
 }
-    // Agregar los event listeners para el nuevo sistema
-document.addEventListener('DOMContentLoaded', function() {
-    // Event listeners existentes...
-    
-    // Nuevos event listeners para el sistema jerárquico
-    document.getElementById('filtro-categoria').addEventListener('change', function() {
-        actualizarSubcategorias(this.value);
-        paginaActual = 1;
-        renderizarComponentesSueltos();
-    });
-    
-    document.getElementById('filtro-subcategoria').addEventListener('change', function() {
-        const categoriaId = document.getElementById('filtro-categoria').value;
-        actualizarSubSubcategorias(categoriaId, this.value);
-        paginaActual = 1;
-        renderizarComponentesSueltos();
-    });
-    
-    document.getElementById('filtro-subsubcategoria').addEventListener('change', function() {
-        paginaActual = 1;
-        renderizarComponentesSueltos();
-    });
-});
     // Función para cambiar de página
 function cambiarPagina(nuevaPagina) {
   paginaActual = nuevaPagina;
