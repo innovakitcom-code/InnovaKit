@@ -718,25 +718,80 @@
     <div class="flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-2/3">
       
       <!-- Categorías -->
-      <div class="relative">
-        <button id="btn-categoria" 
-                class="flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-lg font-medium hover:bg-blue-200 transition">
-          <i class="fas fa-layer-group mr-2"></i>
-          <span id="categoria-activa">Todas las categorías</span>
-          <i class="fas fa-chevron-down ml-2 text-sm"></i>
+<div class="relative">
+  <!-- Botón que abre / cierra el panel principal -->
+  <button id="btn-categoria" 
+          class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-tl-md rounded-tr-md rounded-bl-md rounded-br-md font-medium shadow"
+          aria-expanded="false" aria-controls="menu-categorias-main">
+    <i class="fas fa-bars mr-2"></i>
+    <span id="categoria-activa">TODAS CATEGORÍAS</span>
+    <i class="fas fa-chevron-down ml-2"></i>
+  </button>
+
+  <!-- Panel principal (lista vertical como la estética actual) -->
+  <div id="menu-categorias-main"
+       class="absolute left-0 mt-2 w-64 bg-white border rounded-lg shadow-lg z-40 hidden">
+    <ul class="divide-y">
+      <!-- Item con subcategoría -->
+      <li class="relative group">
+        <button class="w-full text-left px-4 py-3 flex items-center justify-between hover:bg-gray-50 focus:bg-gray-50">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-screwdriver-wrench text-gray-500"></i>
+            <span>Componentes pasivos</span>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
         </button>
 
-        <!-- Menú desplegable -->
-        <div class="absolute left-0 mt-2 w-64 bg-white border rounded-lg shadow-lg hidden" id="menu-categorias">
-          <ul class="max-h-60 overflow-y-auto divide-y divide-gray-100">
-            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('todos','Todas las categorías')">📦 Todas</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('componentes-pasivos','Componentes pasivos')">🔌 Componentes pasivos</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('semiconductores','Semiconductores')">⚡ Semiconductores</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('optoelectronica','Optoelectrónica')">👁️ Optoelectrónica</button></li>
-            <li><button class="w-full text-left px-4 py-2 hover:bg-blue-50" onclick="seleccionarCategoria('modulos-sensores','Módulos y Sensores')">🤖 Módulos y Sensores</button></li>
+        <!-- Submenú: aparece al hover (desktop) y por click (mobile) -->
+        <div class="absolute left-full top-0 ml-1 w-56 bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
+          <ul class="divide-y">
+            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('componentes-pasivos','resistencias','Resistencias')">Resistencias</button></li>
+            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('componentes-pasivos','condensadores','Condensadores')">Condensadores</button></li>
+            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('componentes-pasivos','inductores','Inductores')">Inductores</button></li>
+            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('componentes-pasivos','potenciometros','Potenciómetros')">Potenciómetros</button></li>
           </ul>
         </div>
-      </div>
+      </li>
+
+      <!-- Item con subcategoría: Semiconductores -->
+      <li class="relative group">
+        <button class="w-full text-left px-4 py-3 flex items-center justify-between hover:bg-gray-50">
+          <div class="flex items-center gap-2">
+            <i class="fas fa-microchip text-gray-500"></i>
+            <span>Semiconductores</span>
+          </div>
+          <i class="fas fa-chevron-right text-gray-400"></i>
+        </button>
+
+        <div class="absolute left-full top-0 ml-1 w-56 bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
+          <ul class="divide-y">
+            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('semiconductores','transistores','Transistores')">Transistores</button></li>
+            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('semiconductores','diodos','Diodos')">Diodos</button></li>
+            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('semiconductores','reguladores','Reguladores')">Reguladores</button></li>
+            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('semiconductores','ci','Circuitos integrados')">Circuitos integrados</button></li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- Item simple sin subcategoría -->
+      <li>
+        <button class="w-full text-left px-4 py-3 flex items-center gap-2 hover:bg-gray-50" onclick="seleccionarCategoria('optoelectronica','Optoelectrónica')">
+          <i class="fas fa-eye text-gray-500"></i>
+          Optoelectrónica
+        </button>
+      </li>
+
+      <li>
+        <button class="w-full text-left px-4 py-3 flex items-center gap-2 hover:bg-gray-50" onclick="seleccionarCategoria('modulos-sensores','Módulos y Sensores')">
+          <i class="fas fa-robot text-gray-500"></i>
+          Módulos y Sensores
+        </button>
+      </li>
+
+      <!-- Agrega más items/ submenus siguiendo el patrón -->
+    </ul>
+  </div>
+</div>
 
       <!-- Filtro de precios -->
       <select id="filtro-precio" 
@@ -1893,6 +1948,74 @@ function initDarkMode() {
 
 // Inicializar cuando cargue la página
 document.addEventListener('DOMContentLoaded', initDarkMode);
+  /* Mejora de la animación y la sombra del submenú */
+#menu-categorias-main { transform-origin: top left; }
+#menu-categorias-main, #menu-categorias-main .group > div {
+  transition: transform .15s ease, opacity .15s ease;
+}
+.group:hover > div { transform: translateX(0); }
+
+</script>
+<script>
+  // Toggle del panel principal (botón)
+  const btnCat = document.getElementById('btn-categoria');
+  const menuMain = document.getElementById('menu-categorias-main');
+  btnCat.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const opened = !menuMain.classList.contains('hidden');
+    if(opened){
+      menuMain.classList.add('hidden');
+      btnCat.setAttribute('aria-expanded','false');
+    } else {
+      menuMain.classList.remove('hidden');
+      btnCat.setAttribute('aria-expanded','true');
+    }
+  });
+
+  // Cerrar si se hace click fuera (mejora UX, especialmente en mobile)
+  document.addEventListener('click', (e) => {
+    if(!menuMain.contains(e.target) && !btnCat.contains(e.target)){
+      menuMain.classList.add('hidden');
+      btnCat.setAttribute('aria-expanded','false');
+    }
+  });
+
+  // Para dispositivos táctiles: permitir abrir submenú con click en el li
+  document.querySelectorAll('#menu-categorias-main .group > button').forEach(btn => {
+    btn.addEventListener('click', (ev) => {
+      const parent = btn.closest('.group');
+      const submenu = parent.querySelector('div');
+      // si es visible => ocultar, si está oculto => mostrar (toggle)
+      const visible = !submenu.classList.contains('invisible');
+      if(visible){
+        submenu.classList.add('invisible','opacity-0','pointer-events-none');
+      } else {
+        submenu.classList.remove('invisible','opacity-0','pointer-events-none');
+        submenu.classList.add('visible','opacity-100');
+      }
+    });
+  });
+
+  // Funciones de selección (adaptar a las tuyas)
+  function seleccionarCategoria(codigo, texto){
+    // actualiza etiqueta visible y renderiza
+    document.getElementById('categoria-activa').textContent = texto.toUpperCase();
+    // cerrar panel
+    menuMain.classList.add('hidden');
+    btnCat.setAttribute('aria-expanded','false');
+    // aquí llamas a tu función que aplica el filtro, por ej:
+    // aplicarFiltroCategoria(codigo);
+    console.log('categoria seleccionada', codigo);
+    // si tienes una función renderizarComponentesSueltos() pásale filtros globales
+  }
+
+  function seleccionarSubcategoria(codigoCategoria, codigoSub, texto){
+    document.getElementById('categoria-activa').textContent = texto;
+    menuMain.classList.add('hidden');
+    btnCat.setAttribute('aria-expanded','false');
+    console.log('subcategoria seleccionada', codigoCategoria, codigoSub);
+    // aplicar filtro y render
+  }
 </script>
 
 </body>
