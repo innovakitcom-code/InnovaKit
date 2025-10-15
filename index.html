@@ -699,136 +699,44 @@
   <div class="page-container">
     <div class="products-container">
       <div class="container mx-auto px-4 py-6">
-    
-<!-- Barra superior con búsqueda y filtros -->
-<!-- 🔍 FILTROS Y BÚSQUEDA -->
-<div class="bg-white rounded-xl shadow-md border p-4 mb-6">
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-    
-    <!-- Campo de búsqueda -->
-    <div class="flex items-center w-full md:w-1/3 relative">
-      <i class="fas fa-search absolute left-3 text-gray-400"></i>
-      <input id="buscar-componente" 
-             type="text" 
-             placeholder="Buscar componentes..."
-             class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
-    </div>
+        <!-- Barra superior con búsqueda y filtros -->
+        <div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
+          <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <!-- Búsqueda -->
+            <div class="flex-1 w-full md:w-auto">
+              <div class="relative">
+                <input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." 
+                       class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <div class="absolute left-3 top-2.5 text-gray-400">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+            </div>
 
-    <!-- Filtros -->
-    <div class="flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-2/3">
-      
-      <!-- Categorías -->
-<div class="relative">
-  <!-- Botón que abre / cierra el panel principal -->
-  <button id="btn-categoria" 
-          class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-tl-md rounded-tr-md rounded-bl-md rounded-br-md font-medium shadow"
-          aria-expanded="false" aria-controls="menu-categorias-main">
-    <i class="fas fa-bars mr-2"></i>
-    <span id="categoria-activa">TODAS CATEGORÍAS</span>
-    <i class="fas fa-chevron-down ml-2"></i>
-  </button>
-
-  <!-- Panel principal (lista vertical como la estética actual) -->
-  <div id="menu-categorias-main"
-       class="absolute left-0 mt-2 w-64 bg-white border rounded-lg shadow-lg z-40 hidden">
-    <ul class="divide-y">
-      <!-- Item con subcategoría -->
-      <li class="relative group">
-        <button class="w-full text-left px-4 py-3 flex items-center justify-between hover:bg-gray-50 focus:bg-gray-50">
-          <div class="flex items-center gap-2">
-            <i class="fas fa-screwdriver-wrench text-gray-500"></i>
-            <span>Componentes pasivos</span>
+            <!-- Filtros -->
+            <div class="flex flex-wrap gap-2">
+              <select id="filtro-categoria" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="todos">Todas las categorías</option>
+                <option value="sensores">Sensores</option>
+                <option value="motores">Motores</option>
+                <option value="displays">Displays</option>
+                <option value="modulos">Módulos</option>
+                <option value="placas">Placas</option>
+                <option value="raspberry">RaspBerry</option>
+                <option value="placas">Alimentación</option>
+                <option value="placas">Fuente</option>
+              </select>
+              
+              <select id="filtro-precio" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="todos">Todos los precios</option>
+                <option value="0-50000">Gs. 0 - 50.000</option>
+                <option value="50000-100000">Gs. 50.000 - 100.000</option>
+                <option value="100000-200000">Gs. 100.000 - 200.000</option>
+              </select>
+            </div>
           </div>
-          <i class="fas fa-chevron-right text-gray-400"></i>
-        </button>
-
-        <!-- Submenú: aparece al hover (desktop) y por click (mobile) -->
-        <div class="absolute left-full top-0 ml-1 w-56 bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
-          <ul class="divide-y">
-            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('componentes-pasivos','resistencias','Resistencias')">Resistencias</button></li>
-            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('componentes-pasivos','condensadores','Condensadores')">Condensadores</button></li>
-            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('componentes-pasivos','inductores','Inductores')">Inductores</button></li>
-            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('componentes-pasivos','potenciometros','Potenciómetros')">Potenciómetros</button></li>
-          </ul>
         </div>
-      </li>
 
-      <!-- Item con subcategoría: Semiconductores -->
-      <li class="relative group">
-        <button class="w-full text-left px-4 py-3 flex items-center justify-between hover:bg-gray-50">
-          <div class="flex items-center gap-2">
-            <i class="fas fa-microchip text-gray-500"></i>
-            <span>Semiconductores</span>
-          </div>
-          <i class="fas fa-chevron-right text-gray-400"></i>
-        </button>
-
-        <div class="absolute left-full top-0 ml-1 w-56 bg-white border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
-          <ul class="divide-y">
-            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('semiconductores','transistores','Transistores')">Transistores</button></li>
-            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('semiconductores','diodos','Diodos')">Diodos</button></li>
-            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('semiconductores','reguladores','Reguladores')">Reguladores</button></li>
-            <li><button class="w-full px-4 py-3 text-left hover:bg-gray-50" onclick="seleccionarSubcategoria('semiconductores','ci','Circuitos integrados')">Circuitos integrados</button></li>
-          </ul>
-        </div>
-      </li>
-
-      <!-- Item simple sin subcategoría -->
-      <li>
-        <button class="w-full text-left px-4 py-3 flex items-center gap-2 hover:bg-gray-50" onclick="seleccionarCategoria('optoelectronica','Optoelectrónica')">
-          <i class="fas fa-eye text-gray-500"></i>
-          Optoelectrónica
-        </button>
-      </li>
-
-      <li>
-        <button class="w-full text-left px-4 py-3 flex items-center gap-2 hover:bg-gray-50" onclick="seleccionarCategoria('modulos-sensores','Módulos y Sensores')">
-          <i class="fas fa-robot text-gray-500"></i>
-          Módulos y Sensores
-        </button>
-      </li>
-
-      <!-- Agrega más items/ submenus siguiendo el patrón -->
-    </ul>
-  </div>
-</div>
-
-      <!-- Filtro de precios -->
-      <select id="filtro-precio" 
-              class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              onchange="paginaActual = 1; renderizarComponentesSueltos();">
-        <option value="todos">Todos los precios</option>
-        <option value="0-50000">Gs. 0 - 50.000</option>
-        <option value="50000-100000">Gs. 50.000 - 100.000</option>
-        <option value="100000-200000">Gs. 100.000 - 200.000</option>
-      </select>
-
-      <!-- Limpiar -->
-      <button onclick="limpiarFiltros()" 
-              class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
-        <i class="fas fa-times mr-1"></i> Limpiar
-      </button>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Mostrar/ocultar menú de categorías
-  const btnCat = document.getElementById("btn-categoria");
-  const menuCat = document.getElementById("menu-categorias");
-  btnCat.addEventListener("click", () => menuCat.classList.toggle("hidden"));
-  document.addEventListener("click", (e) => {
-    if (!btnCat.contains(e.target) && !menuCat.contains(e.target)) menuCat.classList.add("hidden");
-  });
-</script>
-
-
-  <!-- Etiqueta de filtro activo -->
-  <div id="filtro-activo" class="mt-3 hidden">
-    <span class="text-sm text-gray-600">Filtro activo: </span>
-    <span id="filtro-activo-texto" class="text-sm font-medium bg-blue-100 text-blue-700 px-2 py-1 rounded"></span>
-  </div>
-</div>
         <!-- Grid de productos -->
         <div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <!-- Los productos se cargan aquí con JavaScript -->
@@ -1190,9 +1098,6 @@ document.addEventListener('DOMContentLoaded', cargarProductos);
 // Variables globales para paginación
 let paginaActual = 1;
 const componentesPorPagina = 8; // Puedes ajustar este número
-// Variables globales para filtros activos
-let filtroCategoriaActual = 'todos';
-let filtroSubcategoriaActual = 'todos';
 
 // Función para mostrar vista de componentes sueltos
 function verComponentesSueltos() {
@@ -1219,122 +1124,31 @@ function verComponentesSueltos() {
         document.getElementById('vista-asesorias').classList.add('hidden');
         document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
         
-        // Renderizar productos
+        paginaActual = 1;
         renderizarComponentesSueltos();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
-// Función para seleccionar categoría
-function seleccionarCategoria(categoriaId, texto) {
-    filtroCategoriaActual = categoriaId;
-    filtroSubcategoriaActual = 'todos';
-    
-    // Actualizar interfaz
-    document.getElementById('categoria-activa').textContent = texto;
-    document.getElementById('filtro-activo-texto').textContent = texto;
-    document.getElementById('filtro-activo').classList.remove('hidden');
-    
-    // Remover selecciones anteriores
-    document.querySelectorAll('.categoria-item .fa-check').forEach(icon => {
-        icon.classList.add('hidden');
-    });
-    document.querySelectorAll('.subcategoria-item .fa-check').forEach(icon => {
-        icon.classList.add('hidden');
-    });
-    
-    // Marcar como seleccionado
-    const item = document.querySelector(`[data-categoria="${categoriaId}"]`);
-    if (item) {
-        const check = item.querySelector('.fa-check');
-        if (check) check.classList.remove('hidden');
-    }
-    
-    // Filtrar productos
-    paginaActual = 1;
-    renderizarComponentesSueltos();
-}
-
-// Función para seleccionar subcategoría
-function seleccionarSubcategoria(categoriaId, subcategoriaId, texto) {
-    filtroCategoriaActual = categoriaId;
-    filtroSubcategoriaActual = subcategoriaId;
-    
-    // Actualizar interfaz
-    document.getElementById('categoria-activa').textContent = texto;
-    document.getElementById('filtro-activo-texto').textContent = texto;
-    document.getElementById('filtro-activo').classList.remove('hidden');
-    
-    // Remover selecciones anteriores
-    document.querySelectorAll('.categoria-item .fa-check').forEach(icon => {
-        icon.classList.add('hidden');
-    });
-    document.querySelectorAll('.subcategoria-item .fa-check').forEach(icon => {
-        icon.classList.add('hidden');
-    });
-    
-    // Marcar como seleccionado
-    const item = document.querySelector(`[data-categoria="${categoriaId}"][data-subcategoria="${subcategoriaId}"]`);
-    if (item) {
-        const check = item.querySelector('.fa-check');
-        if (check) check.classList.remove('hidden');
-    }
-    
-    // Filtrar productos
-    paginaActual = 1;
-    renderizarComponentesSueltos();
-}
-
-// Función para limpiar filtros
-function limpiarFiltros() {
-    filtroCategoriaActual = 'todos';
-    filtroSubcategoriaActual = 'todos';
-    
-    // Actualizar interfaz
-    document.getElementById('categoria-activa').textContent = '📦 Todas las categorías';
-    document.getElementById('filtro-activo').classList.add('hidden');
-    document.getElementById('buscar-componente').value = '';
-    document.getElementById('filtro-precio').value = 'todos';
-    
-    // Remover selecciones
-    document.querySelectorAll('.fa-check').forEach(icon => {
-        icon.classList.add('hidden');
-    });
-    
-    // Marcar "Todas las categorías" como seleccionada
-    const itemTodos = document.querySelector('[data-categoria="todos"]');
-    if (itemTodos) {
-        const check = itemTodos.querySelector('.fa-check');
-        if (check) check.classList.remove('hidden');
-    }
-            
-       // Renderizar todos los productos
-    paginaActual = 1;
-    renderizarComponentesSueltos();
-}
-
 // Función para renderizar componentes con filtros Y PAGINACIÓN
 function renderizarComponentesSueltos() {
-    const grid = document.getElementById('grid-componentes');
-    const loading = document.getElementById('loading-componentes');
-    
-    loading.classList.remove('hidden');
+  const grid = document.getElementById('grid-componentes');
+  const loading = document.getElementById('loading-componentes');
+  
+  loading.classList.remove('hidden');
+  
   setTimeout(() => {
-        const filtroTexto = document.getElementById('buscar-componente').value.toLowerCase();
-        const filtroPrecio = document.getElementById('filtro-precio').value;
-        
-        let componentesFiltrados = componentesSueltos.filter(comp => {
+    const filtroTexto = document.getElementById('buscar-componente').value.toLowerCase();
+    const filtroCategoria = document.getElementById('filtro-categoria').value;
+    const filtroPrecio = document.getElementById('filtro-precio').value;
+    
+    let componentesFiltrados = componentesSueltos.filter(comp => {
       // Filtro por texto
       const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
                            comp.descripcion.toLowerCase().includes(filtroTexto);
       
-       // Filtro por categoría y subcategoría
-            let coincideCategoria = true;
-            if (filtroCategoriaActual !== 'todos') {
-                coincideCategoria = comp.categoria === filtroCategoriaActual;
-                
-                if (filtroSubcategoriaActual !== 'todos') {
-                    coincideCategoria = comp.subcategoria === filtroSubcategoriaActual;
-                }
-            }
+      // Filtro por categoría
+      const coincideCategoria = filtroCategoria === 'todos' || comp.categoria === filtroCategoria;
+      
       // Filtro por precio
       let coincidePrecio = true;
       if (filtroPrecio !== 'todos') {
@@ -1948,101 +1762,7 @@ function initDarkMode() {
 
 // Inicializar cuando cargue la página
 document.addEventListener('DOMContentLoaded', initDarkMode);
-  /* Mejora de la animación y la sombra del submenú */
-#menu-categorias-main { transform-origin: top left; }
-#menu-categorias-main, #menu-categorias-main .group > div {
-  transition: transform .15s ease, opacity .15s ease;
-}
-.group:hover > div { transform: translateX(0); }
-
 </script>
-<script>
-  // Toggle del panel principal (botón)
-  <script>
-  // Elementos principales
-  const btnCat = document.getElementById('btn-categoria');
-  const menuMain = document.getElementById('menu-categorias-main');
-
-  // Safety: si no existen, evita errores y sale
-  if (btnCat && menuMain) {
-    // Toggle del panel principal (botón)
-    btnCat.addEventListener('click', (e) => {
-      e.stopPropagation();
-      menuMain.classList.toggle('hidden');
-      const opened = !menuMain.classList.contains('hidden');
-      btnCat.setAttribute('aria-expanded', opened ? 'true' : 'false');
-    });
-
-    // Cerrar si se hace click fuera
-    document.addEventListener('click', (e) => {
-      if (!menuMain.contains(e.target) && !btnCat.contains(e.target)) {
-        menuMain.classList.add('hidden');
-        btnCat.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // Evitar que clicks dentro del menú cierren inmediatamente (por ejemplo en botones)
-    menuMain.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-
-    // Habilitar toggle en submenús para dispositivos táctiles
-    // Busca cada li.group y añade toggle por click al primer button dentro
-    document.querySelectorAll('#menu-categorias-main .group').forEach(group => {
-      const btn = group.querySelector('button');
-      const submenu = group.querySelector('div');
-
-      // Si no hay submenu, saltar
-      if (!submenu) return;
-
-      // Para desktop usamos hover (ya controlado por CSS), pero para touch agregamos toggle por click
-      btn.addEventListener('click', (ev) => {
-        // si el submenu ya está visible: ocultar; si está oculto: mostrar
-        const isVisible = !submenu.classList.contains('invisible');
-        if (isVisible) {
-          submenu.classList.add('invisible','opacity-0','pointer-events-none');
-          submenu.classList.remove('visible','opacity-100');
-        } else {
-          submenu.classList.remove('invisible');
-          submenu.classList.add('visible','opacity-100');
-          // Aseguramos que el panel principal quede abierto
-          menuMain.classList.remove('hidden');
-        }
-      });
-
-      // Al tocar fuera del submenu lo cerramos (mejora UX)
-      document.addEventListener('click', (ev) => {
-        if (!group.contains(ev.target)) {
-          submenu.classList.add('invisible','opacity-0','pointer-events-none');
-          submenu.classList.remove('visible','opacity-100');
-        }
-      });
-    });
-  } else {
-    console.warn('Menu de categorias no encontrado: revisa IDs btn-categoria y menu-categorias-main');
-  }
-
-  // Funciones de selección (adaptalas según tu lógica)
-  function seleccionarCategoria(codigo, texto){
-    const etiqueta = document.getElementById('categoria-activa');
-    if (etiqueta) etiqueta.textContent = texto.toUpperCase();
-    if (menuMain) menuMain.classList.add('hidden');
-    if (btnCat) btnCat.setAttribute('aria-expanded','false');
-    // Aquí llama a tu lógica para aplicar filtros, ej:
-    // aplicarFiltroCategoria(codigo);
-    console.log('categoria seleccionada', codigo);
-  }
-
-  function seleccionarSubcategoria(codigoCategoria, codigoSub, texto){
-    const etiqueta = document.getElementById('categoria-activa');
-    if (etiqueta) etiqueta.textContent = texto;
-    if (menuMain) menuMain.classList.add('hidden');
-    if (btnCat) btnCat.setAttribute('aria-expanded','false');
-    console.log('subcategoria seleccionada', codigoCategoria, codigoSub);
-    // aplicar filtro y render
-  }
-</script>
-
 
 </body>
 </html>
