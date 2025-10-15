@@ -1958,65 +1958,91 @@ document.addEventListener('DOMContentLoaded', initDarkMode);
 </script>
 <script>
   // Toggle del panel principal (botón)
+  <script>
+  // Elementos principales
   const btnCat = document.getElementById('btn-categoria');
   const menuMain = document.getElementById('menu-categorias-main');
-  btnCat.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const opened = !menuMain.classList.contains('hidden');
-    if(opened){
-      menuMain.classList.add('hidden');
-      btnCat.setAttribute('aria-expanded','false');
-    } else {
-      menuMain.classList.remove('hidden');
-      btnCat.setAttribute('aria-expanded','true');
-    }
-  });
 
-  // Cerrar si se hace click fuera (mejora UX, especialmente en mobile)
-  document.addEventListener('click', (e) => {
-    if(!menuMain.contains(e.target) && !btnCat.contains(e.target)){
-      menuMain.classList.add('hidden');
-      btnCat.setAttribute('aria-expanded','false');
-    }
-  });
+  // Safety: si no existen, evita errores y sale
+  if (btnCat && menuMain) {
+    // Toggle del panel principal (botón)
+    btnCat.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menuMain.classList.toggle('hidden');
+      const opened = !menuMain.classList.contains('hidden');
+      btnCat.setAttribute('aria-expanded', opened ? 'true' : 'false');
+    });
 
-  // Para dispositivos táctiles: permitir abrir submenú con click en el li
-  document.querySelectorAll('#menu-categorias-main .group > button').forEach(btn => {
-    btn.addEventListener('click', (ev) => {
-      const parent = btn.closest('.group');
-      const submenu = parent.querySelector('div');
-      // si es visible => ocultar, si está oculto => mostrar (toggle)
-      const visible = !submenu.classList.contains('invisible');
-      if(visible){
-        submenu.classList.add('invisible','opacity-0','pointer-events-none');
-      } else {
-        submenu.classList.remove('invisible','opacity-0','pointer-events-none');
-        submenu.classList.add('visible','opacity-100');
+    // Cerrar si se hace click fuera
+    document.addEventListener('click', (e) => {
+      if (!menuMain.contains(e.target) && !btnCat.contains(e.target)) {
+        menuMain.classList.add('hidden');
+        btnCat.setAttribute('aria-expanded', 'false');
       }
     });
-  });
 
-  // Funciones de selección (adaptar a las tuyas)
+    // Evitar que clicks dentro del menú cierren inmediatamente (por ejemplo en botones)
+    menuMain.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    // Habilitar toggle en submenús para dispositivos táctiles
+    // Busca cada li.group y añade toggle por click al primer button dentro
+    document.querySelectorAll('#menu-categorias-main .group').forEach(group => {
+      const btn = group.querySelector('button');
+      const submenu = group.querySelector('div');
+
+      // Si no hay submenu, saltar
+      if (!submenu) return;
+
+      // Para desktop usamos hover (ya controlado por CSS), pero para touch agregamos toggle por click
+      btn.addEventListener('click', (ev) => {
+        // si el submenu ya está visible: ocultar; si está oculto: mostrar
+        const isVisible = !submenu.classList.contains('invisible');
+        if (isVisible) {
+          submenu.classList.add('invisible','opacity-0','pointer-events-none');
+          submenu.classList.remove('visible','opacity-100');
+        } else {
+          submenu.classList.remove('invisible');
+          submenu.classList.add('visible','opacity-100');
+          // Aseguramos que el panel principal quede abierto
+          menuMain.classList.remove('hidden');
+        }
+      });
+
+      // Al tocar fuera del submenu lo cerramos (mejora UX)
+      document.addEventListener('click', (ev) => {
+        if (!group.contains(ev.target)) {
+          submenu.classList.add('invisible','opacity-0','pointer-events-none');
+          submenu.classList.remove('visible','opacity-100');
+        }
+      });
+    });
+  } else {
+    console.warn('Menu de categorias no encontrado: revisa IDs btn-categoria y menu-categorias-main');
+  }
+
+  // Funciones de selección (adaptalas según tu lógica)
   function seleccionarCategoria(codigo, texto){
-    // actualiza etiqueta visible y renderiza
-    document.getElementById('categoria-activa').textContent = texto.toUpperCase();
-    // cerrar panel
-    menuMain.classList.add('hidden');
-    btnCat.setAttribute('aria-expanded','false');
-    // aquí llamas a tu función que aplica el filtro, por ej:
+    const etiqueta = document.getElementById('categoria-activa');
+    if (etiqueta) etiqueta.textContent = texto.toUpperCase();
+    if (menuMain) menuMain.classList.add('hidden');
+    if (btnCat) btnCat.setAttribute('aria-expanded','false');
+    // Aquí llama a tu lógica para aplicar filtros, ej:
     // aplicarFiltroCategoria(codigo);
     console.log('categoria seleccionada', codigo);
-    // si tienes una función renderizarComponentesSueltos() pásale filtros globales
   }
 
   function seleccionarSubcategoria(codigoCategoria, codigoSub, texto){
-    document.getElementById('categoria-activa').textContent = texto;
-    menuMain.classList.add('hidden');
-    btnCat.setAttribute('aria-expanded','false');
+    const etiqueta = document.getElementById('categoria-activa');
+    if (etiqueta) etiqueta.textContent = texto;
+    if (menuMain) menuMain.classList.add('hidden');
+    if (btnCat) btnCat.setAttribute('aria-expanded','false');
     console.log('subcategoria seleccionada', codigoCategoria, codigoSub);
     // aplicar filtro y render
   }
 </script>
+
 
 </body>
 </html>
