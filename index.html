@@ -759,8 +759,7 @@
             <div class="space-y-1">
               <!-- Categoría Sensores -->
               <div class="relative subcategory-group">
-                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"
-                  onclick="aplicarFiltroCategoria('Sensores')">
+                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-sensor text-green-500"></i>
                     Sensores
@@ -774,22 +773,19 @@
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Sensores</div>
                     <div class="space-y-1">
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" 
-                        onclick="aplicarFiltroCategoria('Temperatura')">
+                        onclick="aplicarFiltroCategoria('Temperatura')">>
                         <i class="fas fa-thermometer-half text-orange-500"></i>
                         Temperatura
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
-                        onclick="aplicarFiltroCategoria('Humedad')">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2">
                         <i class="fas fa-tint text-blue-500"></i>
                         Humedad
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
-                        onclick="aplicarFiltroCategoria('Movimiento')">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2">
                         <i class="fas fa-eye text-purple-500"></i>
                         Movimiento
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
-                        onclick="aplicarFiltroCategoria('Luz')">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2">
                         <i class="fas fa-sun text-yellow-500"></i>
                         Luz
                       </button>
@@ -800,8 +796,7 @@
 
               <!-- Categoría Motores -->
               <div class="relative subcategory-group">
-                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"
-                  onclick="aplicarFiltroCategoria('Motores')">
+                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-cog text-red-500"></i>
                     Motores
@@ -814,18 +809,15 @@
                   <div class="p-3">
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Motores</div>
                     <div class="space-y-1">
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
-                        onclick="aplicarFiltroCategoria('Servo Motores')">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2">
                         <i class="fas fa-robot text-red-400"></i>
                         Servo Motores
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
-                        onclick="aplicarFiltroCategoria("Stepper')">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2">
                         <i class="fas fa-sync-alt text-red-400"></i>
                         Stepper
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
-                        onclick="aplicarFiltroCategoria('DC Motores')">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2">
                         <i class="fas fa-bolt text-red-400"></i>
                         DC Motors
                       </button>
@@ -836,8 +828,7 @@
 
               <!-- Categoría Displays -->
               <div class="relative subcategory-group">
-                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"
-                  onclick="aplicarFiltroCategoria('Displays')">
+                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-tv text-purple-500"></i>
                     Displays
@@ -886,8 +877,7 @@
             <div class="border-t my-2"></div>
 
             <!-- Botón ver todos -->
-            <button class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700"
-              onclick="aplicarFiltroCategoria('categorías')">
+            <button class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700">
               <i class="fas fa-th-list mr-2"></i>
               Ver todas las categorías
             </button>
@@ -1309,18 +1299,7 @@ function verComponentesSueltos() {
     document.getElementById('vista-productoskit').classList.add('hidden');
     document.getElementById('vista-asesorias').classList.add('hidden');
     document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-
-  // Aleatorizar el orden de componentes sueltos
-        componentesSueltos.sort(() => Math.random() - 0.5);
-        document.getElementById('main-content').style.display = 'none';
-        document.getElementById('vista-productoskit').classList.add('hidden');
-        document.getElementById('vista-asesorias').classList.add('hidden');
-        document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-        
-        paginaActual = 1;
-        renderizarComponentesSueltos();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    
     // Mostrar loading inmediatamente
     const grid = document.getElementById('grid-componentes');
     grid.innerHTML = `
@@ -2171,19 +2150,51 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-<!-- En Sensores -->
-<button onclick="aplicarFiltroCategoria('Temperatura')">Temperatura</button>
-<button onclick="aplicarFiltroCategoria('Humedad')">Humedad</button>
-<button onclick="aplicarFiltroCategoria('Movimiento')">Movimiento</button>
-<button onclick="aplicarFiltroCategoria('Gas')">Gas</button>
-
-<!-- En Motores -->  
-<button onclick="aplicarFiltroCategoria('Servo Motores')">Servo Motores</button>
-<button onclick="aplicarFiltroCategoria('DC Motors')">DC Motors</button>
-
-<!-- En Displays -->
-<button onclick="aplicarFiltroCategoria('LCD 16x2')">LCD 16x2</button>
-<button onclick="aplicarFiltroCategoria('OLED')">OLED</button>
+function aplicarFiltroCategoria(categoria) {
+  console.log('Filtrando por:', categoria);
+  // Aquí implementarías la lógica de filtrado
+  // Por ahora solo mostramos una notificación
+  mostrarNotificacion(`Filtrando por: ${categoria}`);
+}
+  function aplicarFiltroCategoria(categoria) {
+    console.log('Filtrando por:', categoria);
+    
+    // Ocultar el dropdown
+    const dropdowns = document.querySelectorAll('.subcategory-panel');
+    dropdowns.forEach(panel => {
+        panel.classList.add('opacity-0', 'invisible', 'scale-95');
+    });
+    
+    // Aplicar filtro
+    paginaActual = 1;
+    
+    // Buscar en todas las categorías posibles
+    const categoriasMap = {
+        'Temperatura': ['sensores'],
+        'Humedad': ['sensores'],
+        'Movimiento': ['sensores'],
+        'Luz': ['sensores'],
+        'Servo Motores': ['motores', 'Servos'],
+        'Stepper': ['motores'],
+        'DC Motors': ['motores'],
+        'LCD 16x2': ['displays', 'Pantallas'],
+        'Matriz LED': ['displays'],
+        'OLED': ['displays', 'Pantallas']
+    };
+    
+    const categoriasBuscadas = categoriasMap[categoria] || [categoria.toLowerCase()];
+    
+    // Filtrar productos
+    const productosFiltrados = componentesSueltos.filter(comp => {
+        return categoriasBuscadas.some(cat => 
+            comp.categoria.toLowerCase().includes(cat.toLowerCase())
+        );
+    });
+    
+    // Actualizar la vista
+    renderizarComponentesFiltrados(productosFiltrados);
+    mostrarNotificacion(`Filtrando por: ${categoria}`);
+}
 
 function renderizarComponentesFiltrados(productosFiltrados) {
     const grid = document.getElementById('grid-componentes');
@@ -2237,77 +2248,6 @@ function limpiarFiltros() {
     paginaActual = 1;
     renderizarComponentesSueltos();
     mostrarNotificacion('Filtros limpiados ✅');
-}
-  function aplicarFiltroCategoria(subcategoria) {
-    console.log('Filtrando por subcategoría:', subcategoria);
-    
-    // MAPEO DE SUBCATEGORÍAS A CATEGORÍAS REALES
-    const mapeoSubcategorias = {
-        // Sensores
-        'Temperatura': ['sensores'],
-        'Humedad': ['sensores'],
-        'Movimiento': ['sensores'],
-        'Luz': ['sensores'],
-        'Gas': ['sensores'],
-        'Sonido': ['sensores'],
-        'Vibración': ['sensores'],
-        'Color': ['sensores'],
-        'Flama': ['sensores'],
-        'Pulso': ['sensores'],
-        'Alcohol': ['sensores'],
-        'Hidrógeno': ['sensores'],
-        'Monóxido': ['sensores'],
-        'Obstáculos': ['sensores'],
-        'Línea': ['sensores'],
-        'Táctil': ['sensores'],
-        'Magnético': ['sensores'],
-        'Inclinación': ['sensores'],
-        
-        // Motores
-        'Servo Motores': ['Servos', 'motores'],
-        'Stepper': ['motores'],
-        'DC Motors': ['motores'],
-        
-        // Displays
-        'LCD 16x2': ['displays', 'Pantallas'],
-        'Matriz LED': ['displays'],
-        'OLED': ['Pantallas'],
-        '7 Segmentos': ['displays'],
-        
-        // Placas
-        'Arduino': ['placas', 'Arduino'],
-        'Raspberry': ['raspberry', 'raspBerry'],
-        'ESP32': ['ioT'],
-        'Shields': ['Placas'],
-        
-        // Módulos
-        'Bluetooth': ['ioT'],
-        'WiFi': ['ioT'],
-        'RFID': ['sensores'],
-        'RTC': ['sensores'],
-        'Relé': ['RaspBerry'],
-        'I2C': ['ioT']
-    };
-    
-    const categoriasBuscadas = mapeoSubcategorias[subcategoria] || [subcategoria.toLowerCase()];
-    
-    // Ocultar dropdown
-    const dropdowns = document.querySelectorAll('.subcategory-panel');
-    dropdowns.forEach(panel => {
-        panel.classList.add('opacity-0', 'invisible', 'scale-95');
-    });
-    
-    // Aplicar filtro
-    paginaActual = 1;
-    
-    const productosFiltrados = componentesSueltos.filter(comp => {
-        return categoriasBuscadas.some(cat => 
-            comp.categoria.toLowerCase().includes(cat.toLowerCase())
-        );
-    });
-    
-    renderizarComponentesFiltrados(productosFiltrados);
-    mostrarNotificacion(`Filtrando: ${subcategoria}`);
 }
 </script>
 
