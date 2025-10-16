@@ -2332,47 +2332,56 @@ function limpiarFiltros() {
     renderizarComponentesSueltos();
     mostrarNotificacion('Filtros limpiados ✅ Mostrando todos los productos');
 }
-</script>
-<script>
-// Toggle del dropdown en móvil
-document.addEventListener('DOMContentLoaded', function() {
-    const categoriaButton = document.querySelector('#filtro-categoria-container button');
-    const dropdown = document.querySelector('#filtro-categoria-container .absolute');
-    let isOpen = false;
+      // =============================================
+    // TOGGLE DROPDOWN CATEGORÍAS PARA MÓVIL
+    // =============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoriaButton = document.querySelector('#filtro-categoria-container button');
+        const dropdown = document.querySelector('#filtro-categoria-container .absolute');
+        let isOpen = false;
 
-    categoriaButton.addEventListener('click', function(e) {
-        if (window.innerWidth < 768) { // Solo en móvil
-            e.stopPropagation();
-            
-            if (isOpen) {
-                // Cerrar
-                dropdown.classList.add('opacity-0', 'invisible', 'scale-95');
-                dropdown.classList.remove('opacity-100', 'visible', 'scale-100');
-            } else {
-                // Abrir
-                dropdown.classList.remove('opacity-0', 'invisible', 'scale-95');
-                dropdown.classList.add('opacity-100', 'visible', 'scale-100');
-            }
-            isOpen = !isOpen;
+        if (categoriaButton && dropdown) {
+            categoriaButton.addEventListener('click', function(e) {
+                if (window.innerWidth < 768) { // Solo en móvil
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (isOpen) {
+                        // Cerrar
+                        dropdown.classList.add('opacity-0', 'invisible', 'scale-95');
+                        dropdown.classList.remove('opacity-100', 'visible', 'scale-100');
+                    } else {
+                        // Abrir
+                        dropdown.classList.remove('opacity-0', 'invisible', 'scale-95');
+                        dropdown.classList.add('opacity-100', 'visible', 'scale-100');
+                    }
+                    isOpen = !isOpen;
+                }
+            });
+
+            // Cerrar al tocar fuera (solo móvil)
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth < 768 && isOpen && 
+                    !dropdown.contains(e.target) && 
+                    e.target !== categoriaButton && 
+                    !categoriaButton.contains(e.target)) {
+                    
+                    dropdown.classList.add('opacity-0', 'invisible', 'scale-95');
+                    dropdown.classList.remove('opacity-100', 'visible', 'scale-100');
+                    isOpen = false;
+                }
+            });
+
+            // Resetear estado al cambiar tamaño de pantalla
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768 && isOpen) {
+                    dropdown.classList.add('opacity-0', 'invisible', 'scale-95');
+                    dropdown.classList.remove('opacity-100', 'visible', 'scale-100');
+                    isOpen = false;
+                }
+            });
         }
     });
-
-    // Cerrar al tocar fuera (solo móvil)
-    document.addEventListener('click', function(e) {
-        if (window.innerWidth < 768 && isOpen && !dropdown.contains(e.target) && e.target !== categoriaButton) {
-            dropdown.classList.add('opacity-0', 'invisible', 'scale-95');
-            dropdown.classList.remove('opacity-100', 'visible', 'scale-100');
-            isOpen = false;
-        }
-    });
-
-    // Resetear estado al cambiar tamaño de pantalla
-    window.addEventListener('resize', function() {
-        if (window.innerWidth >= 768) {
-            isOpen = false;
-        }
-    });
-});
 </script>
 </body>
 </html>
