@@ -1230,11 +1230,18 @@
     ];
 // Base de datos de componentes sueltos
 // Variable global para almacenar productos
+// Función para parsear precios en Guaraníes
+function parseGs(str) { 
+    return Number(String(str).replace(/[^\d]/g,'')) || 0; 
+}
+
+// Variable global para almacenar productos
 let componentesSueltos = [];
-// Función para cargar productos desde JSON
-// Función para cargar productos desde JSON
+
+// Función para cargar productos desde JSON (MEJORADA)
 async function cargarProductos() {
     try {
+        console.log('🔄 Iniciando carga de productos...');
         const response = await fetch('productos.json');
         
         if (!response.ok) {
@@ -1242,27 +1249,43 @@ async function cargarProductos() {
         }
         
         const data = await response.json();
+        console.log('📦 Datos recibidos:', data);
         
         if (!data.componentesSueltos) {
             throw new Error('Formato JSON inválido: falta propiedad componentesSueltos');
         }
         
-        componentesSueltos = data.componentesSueltos.map(comp => ({
+        // Verificar IDs duplicados
+        const ids = new Set();
+        const productosUnicos = [];
+        
+        data.componentesSueltos.forEach(comp => {
+            if (ids.has(comp.id)) {
+                console.warn(`⚠️ ID duplicado encontrado: ${comp.id} - ${comp.nombre}`);
+                // Asignar nuevo ID automáticamente
+                comp.id = Math.max(...ids) + 1;
+            }
+            ids.add(comp.id);
+            productosUnicos.push(comp);
+        });
+        
+        // ASIGNAR directamente a la variable global
+        componentesSueltos = productosUnicos.map(comp => ({
             ...comp,
-            // Asegurar que precioNum esté presente
             precioNum: comp.precioNum || parseGs(comp.precio)
         }));
         
-        console.log(`✅ Cargados ${componentesSueltos.length} productos`);
+        console.log(`✅ Cargados ${componentesSueltos.length} productos únicos`);
         
-        // Si ya estamos en la vista de componentes, renderizar
+        // Renderizar inmediatamente si estamos en la vista correcta
         if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) {
             renderizarComponentesSueltos();
         }
+        
     } catch (error) {
         console.error('❌ Error cargando productos:', error);
         
-        // Mostrar error al usuario
+        // Mostrar error al usuario de forma más amigable
         const grid = document.getElementById('grid-componentes');
         if (grid) {
             grid.innerHTML = `
@@ -1270,28 +1293,22 @@ async function cargarProductos() {
                     <div class="text-red-500 text-4xl mb-2">⚠️</div>
                     <p class="text-red-600 font-semibold">Error cargando productos</p>
                     <p class="text-gray-600 text-sm mt-1">${error.message}</p>
-                    <button onclick="cargarProductos()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                        Reintentar
-                    </button>
+                    <div class="mt-4 space-x-2">
+                        <button onclick="cargarProductos()" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            Reintentar
+                        </button>
+                        <button onclick="volverAlInicio()" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+                            Volver al inicio
+                        </button>
+                    </div>
                 </div>
             `;
         }
     }
 }
-// Llamar a cargar productos cuando la página cargue
-document.addEventListener('DOMContentLoaded', cargarProductos);
 
-// Variables globales para paginación
-let paginaActual = 1;
-const componentesPorPagina = 8; // Puedes ajustar este número
-
-// Función para mostrar vista de componentes sueltos
-// Función para mostrar vista de componentes sueltos (MEJORADA)
-// Función para mostrar vista de componentes sueltos (VERSIÓN CORREGIDA)
+// Función para ver componentes sueltos (MEJORADA)
 function verComponentesSueltos() {
-    // Aleatorizar el orden de componentes sueltos
-    componentesSueltos.sort(() => Math.random() - 0.5);
-    
     // Ocultar otras vistas y mostrar componentes sueltos
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('vista-productoskit').classList.add('hidden');
@@ -1311,19 +1328,23 @@ function verComponentesSueltos() {
     paginaActual = 1;
     
     // Si ya tenemos productos, renderizar inmediatamente
-    if (componentesSueltos.length > 0) {
+    if (componentesSueltos && componentesSueltos.length > 0) {
+        console.log('🔄 Renderizando productos existentes...');
         renderizarComponentesSueltos();
     } else {
-        // Si no, esperar a que carguen
-        console.log('🔄 Esperando carga de productos...');
-        // Intentar cargar productos si no están cargados
+        // Si no, cargar productos
+        console.log('🔄 Cargando productos desde JSON...');
         cargarProductos();
     }
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-    
-// Función para renderizar componentes con filtros Y PAGINACIÓN
+
+// Llamar a cargar productos cuando la página cargue
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Inicializando Innovakit...');
+    cargarProductos();
+});
 // Función para renderizar componentes con filtros Y PAGINACIÓN (MEJORADA)
 function renderizarComponentesSueltos() {
     const grid = document.getElementById('grid-componentes');
