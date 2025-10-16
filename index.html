@@ -2222,8 +2222,13 @@ renderizarComponentesFiltradosConPaginacion(productosFiltrados, categoria);
     mostrarNotificacion(`Filtrando por: ${categoria} (${productosFiltrados.length} productos)`);
 }
 
-function renderizarComponentesFiltrados(productosFiltrados, categoriaFiltro = '') {
+// AGREGA ESTA NUEVA FUNCIÓN después de aplicarFiltroCategoria
+function renderizarComponentesFiltradosConPaginacion(productosFiltrados, categoriaFiltro = '') {
     const grid = document.getElementById('grid-componentes');
+    const loading = document.getElementById('loading-componentes');
+    
+    // Ocultar loading
+    if (loading) loading.classList.add('hidden');
     
     // Mostrar información del filtro aplicado
     const infoFiltro = categoriaFiltro ? 
@@ -2237,7 +2242,14 @@ function renderizarComponentesFiltrados(productosFiltrados, categoriaFiltro = ''
             <p class="text-sm text-blue-600 mt-1">Mostrando ${productosFiltrados.length} productos</p>
         </div>` : '';
     
-    if (productosFiltrados.length === 0) {
+    // CALCULAR PAGINACIÓN (igual que en renderizarComponentesSueltos)
+    const totalComponentes = productosFiltrados.length;
+    const totalPaginas = Math.ceil(totalComponentes / componentesPorPagina);
+    const inicio = (paginaActual - 1) * componentesPorPagina;
+    const fin = inicio + componentesPorPagina;
+    const componentesPagina = productosFiltrados.slice(inicio, fin);
+
+    if (componentesPagina.length === 0) {
         grid.innerHTML = infoFiltro + `
             <div class="col-span-full text-center py-8">
                 <div class="text-gray-400 text-4xl mb-2">🔍</div>
@@ -2249,13 +2261,6 @@ function renderizarComponentesFiltrados(productosFiltrados, categoriaFiltro = ''
             </div>
         `;
     } else {
-        // Calcular paginación
-        const totalComponentes = productosFiltrados.length;
-        const totalPaginas = Math.ceil(totalComponentes / componentesPorPagina);
-        const inicio = (paginaActual - 1) * componentesPorPagina;
-        const fin = inicio + componentesPorPagina;
-        const componentesPagina = productosFiltrados.slice(inicio, fin);
-        
         grid.innerHTML = infoFiltro + componentesPagina.map(comp => `
             <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full min-h-[370px]" 
                  onclick="mostrarModalProducto(${comp.id})">
@@ -2283,12 +2288,10 @@ function renderizarComponentesFiltrados(productosFiltrados, categoriaFiltro = ''
             </div>
         `).join('');
         
-        // Actualizar paginación
-        actualizarPaginacion(totalPaginas);
+        console.log('✅ Productos filtrados renderizados:', componentesPagina.length);
     }
-}
 
-function actualizarPaginacion(totalPaginas) {
+    // ACTUALIZAR PAGINACIÓN (igual que en renderizarComponentesSueltos)
     const infoPaginacion = document.getElementById('info-paginacion');
     const botones = document.querySelectorAll('.pagination-fixed button');
 
