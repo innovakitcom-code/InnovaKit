@@ -1365,8 +1365,8 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
     
     let componentesFiltrados = componentesSueltos.filter(comp => {
         // Filtro por texto
-        const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
-                             (comp.descripcion && comp.descripcion.toLowerCase().includes(filtroTexto));
+       const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
+                     (comp.desc && comp.desc.toLowerCase().includes(filtroTexto));
         
         // Filtro por precio
         let coincidePrecio = true;
