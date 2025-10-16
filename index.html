@@ -2156,72 +2156,28 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function aplicarFiltroCategoria(categoria) {
-    console.log('Filtrando por:', categoria);
-      mostrarNotificacion(`Filtrando por: ${categoria}`);
+    console.log('Filtrando por categoría:', categoria);
+    mostrarNotificacion(Filtrando por: ${categoria});
     // Ocultar el dropdown
     const dropdowns = document.querySelectorAll('.subcategory-panel');
     dropdowns.forEach(panel => {
         panel.classList.add('opacity-0', 'invisible', 'scale-95');
     });
-
+    
     // Resetear a primera página
     paginaActual = 1;
-
-    // MAPA COMPLETO DE CATEGORÍAS Y SUBCATEGORÍAS
-    const categoriasMap = {
-        // Sensores y sus subcategorías
-        'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20'],
-        'Humedad': ['humedad', 'dht11', 'dht22'],
-        'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio'],
-        'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible'],
-
-        // Motores y sus subcategorías
-        'Servo Motores': ['servo', 'sg90'],
-        'Stepper': ['stepper', 'paso a paso'],
-        'DC Motors': ['motor dc', 'motor corriente continua'],
-
-        // Displays y sus subcategorías
-        'LCD 16x2': ['lcd', '16x2', 'pantalla lcd'],
-        'Matriz LED': ['matriz led', 'max7219', '8x8'],
-        'OLED': ['oled', 'pantalla oled', 'display oled'],
-
-        // Categorías principales
-        'Módulos': ['módulo', 'module', 'shield'],
-        'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266'],
-        'Raspberry Pi': ['raspberry', 'pi', 'rpi'],
-
-        // Categorías generales
-        'Sensores': ['sensor', 'detector', 'medidor'],
-        'Motores': ['motor', 'servo', 'stepper'],
-        'Displays': ['display', 'pantalla', 'lcd', 'oled', 'led']
-    };
-
-    // Obtener términos de búsqueda para esta categoría
-    const terminosBusqueda = categoriasMap[categoria] || [categoria.toLowerCase()];
-
-    console.log('Buscando términos:', terminosBusqueda);
-
-    // Filtrar productos
+    
+    // FILTRAR POR CATEGORÍA EXACTA del JSON
     const productosFiltrados = componentesSueltos.filter(comp => {
-        const textoBusqueda = (
-            comp.nombre.toLowerCase() + ' ' + 
-            (comp.descripcion || '').toLowerCase() + ' ' +
-            (comp.categoria || '').toLowerCase() + ' ' +
-            (comp.especificaciones ? comp.especificaciones.join(' ').toLowerCase() : '')
-        );
-
-        return terminosBusqueda.some(termino => 
-            textoBusqueda.includes(termino.toLowerCase())
-        );
+        return comp.categoria && comp.categoria.toLowerCase() === categoria.toLowerCase();
     });
-
-    console.log(`Encontrados ${productosFiltrados.length} productos para "${categoria}"`);
-
+    
+    console.log(`Encontrados ${productosFiltrados.length} productos para categoría "${categoria}"`);
+    
     // Actualizar la vista
-renderizarComponentesFiltradosConPaginacion(productosFiltrados, categoria);
-    mostrarNotificacion(`Filtrando por: ${categoria} (${productosFiltrados.length} productos)`);
+    renderizarComponentesFiltradosConPaginacion(productosFiltrados, categoria);
+    mostrarNotificacion(`Filtrado por: ${categoria} (${productosFiltrados.length} productos)`);
 }
-
 // AGREGA ESTA NUEVA FUNCIÓN después de aplicarFiltroCategoria
 function renderizarComponentesFiltradosConPaginacion(productosFiltrados, categoriaFiltro = '') {
     const grid = document.getElementById('grid-componentes');
