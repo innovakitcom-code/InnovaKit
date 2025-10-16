@@ -1230,12 +1230,18 @@
     ];
 // Base de datos de componentes sueltos
 // Variable global para almacenar productos
+// Función para parsear precios en Guaraníes
+function parseGs(str) { 
+    return Number(String(str).replace(/[^\d]/g,'')) || 0; 
+}
+
+// Base de datos de componentes sueltos
 let componentesSueltos = [];
 
 // Función para cargar productos desde JSON
-// Función para cargar productos desde JSON
 async function cargarProductos() {
     try {
+        console.log('🔄 Iniciando carga de productos...');
         const response = await fetch('productos.json');
         
         if (!response.ok) {
@@ -1243,6 +1249,7 @@ async function cargarProductos() {
         }
         
         const data = await response.json();
+        console.log('📦 Datos recibidos:', data);
         
         if (!data.componentesSueltos) {
             throw new Error('Formato JSON inválido: falta propiedad componentesSueltos');
@@ -1250,27 +1257,31 @@ async function cargarProductos() {
         
         componentesSueltos = data.componentesSueltos.map(comp => ({
             ...comp,
-            // Asegurar que precioNum esté presente
             precioNum: comp.precioNum || parseGs(comp.precio)
         }));
         
         console.log(`✅ Cargados ${componentesSueltos.length} productos`);
         
-        // Si ya estamos en la vista de componentes, renderizar
+        // Si estamos en la vista de componentes, renderizar
         if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) {
             renderizarComponentesSueltos();
         }
     } catch (error) {
         console.error('❌ Error cargando productos:', error);
         
-        // Mostrar error al usuario
+        // Mostrar error específico
+        let errorMessage = error.message;
+        if (error.message.includes('Failed to fetch')) {
+            errorMessage = 'No se pudo cargar el archivo productos.json. Verifica que exista en el mismo directorio.';
+        }
+        
         const grid = document.getElementById('grid-componentes');
         if (grid) {
             grid.innerHTML = `
                 <div class="col-span-full text-center py-8">
                     <div class="text-red-500 text-4xl mb-2">⚠️</div>
                     <p class="text-red-600 font-semibold">Error cargando productos</p>
-                    <p class="text-gray-600 text-sm mt-1">${error.message}</p>
+                    <p class="text-gray-600 text-sm mt-1">${errorMessage}</p>
                     <button onclick="cargarProductos()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                         Reintentar
                     </button>
@@ -1279,16 +1290,18 @@ async function cargarProductos() {
         }
     }
 }
-// Llamar a cargar productos cuando la página cargue
-document.addEventListener('DOMContentLoaded', cargarProductos);
 
+// Llamar a cargar productos cuando la página cargue
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Página cargada, iniciando carga de productos...');
+    cargarProductos();
+});
 // Variables globales para paginación
 let paginaActual = 1;
 const componentesPorPagina = 8; // Puedes ajustar este número
 
 // Función para mostrar vista de componentes sueltos
 // Función para mostrar vista de componentes sueltos (MEJORADA)
-// Función para mostrar vista de componentes sueltos (VERSIÓN CORREGIDA)
 function verComponentesSueltos() {
     // Aleatorizar el orden de componentes sueltos
     componentesSueltos.sort(() => Math.random() - 0.5);
