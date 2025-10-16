@@ -1131,7 +1131,12 @@ const componentesPorPagina = 8; // Puedes ajustar este número
 
 // Función para mostrar vista de componentes sueltos
 // Función para mostrar vista de componentes sueltos (MEJORADA)
+// Función para mostrar vista de componentes sueltos (VERSIÓN CORREGIDA)
 function verComponentesSueltos() {
+    // Aleatorizar el orden de componentes sueltos
+    componentesSueltos.sort(() => Math.random() - 0.5);
+    
+    // Ocultar otras vistas y mostrar componentes sueltos
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('vista-productoskit').classList.add('hidden');
     document.getElementById('vista-asesorias').classList.add('hidden');
@@ -1146,31 +1151,21 @@ function verComponentesSueltos() {
         </div>
     `;
     
+    // Resetear a primera página
+    paginaActual = 1;
+    
     // Si ya tenemos productos, renderizar inmediatamente
     if (componentesSueltos.length > 0) {
-        paginaActual = 1;
         renderizarComponentesSueltos();
     } else {
         // Si no, esperar a que carguen
         console.log('🔄 Esperando carga de productos...');
+        // Intentar cargar productos si no están cargados
+        cargarProductos();
     }
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-        // Aleatorizar el orden de componentes sueltos
-        componentesSueltos.sort(() => Math.random() - 0.5);
-        document.getElementById('main-content').style.display = 'none';
-        document.getElementById('vista-productoskit').classList.add('hidden');
-        document.getElementById('vista-asesorias').classList.add('hidden');
-        document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-        
-        paginaActual = 1;
-        renderizarComponentesSueltos();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-}
-
-
     
 // Función para renderizar componentes con filtros Y PAGINACIÓN
 // Función para renderizar componentes con filtros Y PAGINACIÓN (MEJORADA)
