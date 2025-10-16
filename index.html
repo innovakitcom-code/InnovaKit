@@ -2160,12 +2160,19 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-function aplicarFiltroCategoria(categoria) {
-  console.log('Filtrando por:', categoria);
-  // Aquí implementarías la lógica de filtrado
-  // Por ahora solo mostramos una notificación
-  mostrarNotificacion(`Filtrando por: ${categoria}`);
-}
+<!-- En Sensores -->
+<button onclick="aplicarFiltroCategoria('Temperatura')">Temperatura</button>
+<button onclick="aplicarFiltroCategoria('Humedad')">Humedad</button>
+<button onclick="aplicarFiltroCategoria('Movimiento')">Movimiento</button>
+<button onclick="aplicarFiltroCategoria('Gas')">Gas</button>
+
+<!-- En Motores -->  
+<button onclick="aplicarFiltroCategoria('Servo Motores')">Servo Motores</button>
+<button onclick="aplicarFiltroCategoria('DC Motors')">DC Motors</button>
+
+<!-- En Displays -->
+<button onclick="aplicarFiltroCategoria('LCD 16x2')">LCD 16x2</button>
+<button onclick="aplicarFiltroCategoria('OLED')">OLED</button>
 
 function renderizarComponentesFiltrados(productosFiltrados) {
     const grid = document.getElementById('grid-componentes');
