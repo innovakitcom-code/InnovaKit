@@ -859,19 +859,21 @@
               </div>
 
               <!-- Otras categorías simples -->
-              <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2">
-                <i class="fas fa-microchip text-gray-500"></i>
-                Módulos
-              </button>
-              <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2">
-                <i class="fas fa-plug text-orange-500"></i>
-                Placas
-              </button>
-              <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2">
-                <i class="fab fa-raspberry-pi text-red-500"></i>
-                Raspberry Pi
-              </button>
-            </div>
+<button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+        onclick="aplicarFiltroCategoria('Módulos')">
+  <i class="fas fa-microchip text-gray-500"></i>
+  Módulos
+</button>
+<button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+        onclick="aplicarFiltroCategoria('Placas')">
+  <i class="fas fa-plug text-orange-500"></i>
+  Placas
+</button>
+<button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+        onclick="aplicarFiltroCategoria('Raspberry Pi')">
+  <i class="fab fa-raspberry-pi text-red-500"></i>
+  Raspberry Pi
+</button>
 
             <!-- Divider -->
             <div class="border-t my-2"></div>
