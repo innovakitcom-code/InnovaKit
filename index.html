@@ -1230,13 +1230,11 @@
     ];
 // Base de datos de componentes sueltos
 // Variable global para almacenar productos
-// Base de datos de componentes sueltos - SOLO UNA DECLARACIÓN
-let componentesSueltos = [];
 
+// Función para cargar productos desde JSON
 // Función para cargar productos desde JSON
 async function cargarProductos() {
     try {
-        console.log('🔄 Iniciando carga de productos...');
         const response = await fetch('productos.json');
         
         if (!response.ok) {
@@ -1244,19 +1242,17 @@ async function cargarProductos() {
         }
         
         const data = await response.json();
-        console.log('📦 Datos JSON cargados:', data);
         
         if (!data.componentesSueltos) {
             throw new Error('Formato JSON inválido: falta propiedad componentesSueltos');
         }
         
-        // ASIGNAR DIRECTAMENTE al array global
         componentesSueltos = data.componentesSueltos.map(comp => ({
             ...comp,
+            // Asegurar que precioNum esté presente
             precioNum: comp.precioNum || parseGs(comp.precio)
         }));
         
-        console.log(`✅ Cargados ${componentesSueltos.length} productos`, componentesSueltos);
         console.log(`✅ Cargados ${componentesSueltos.length} productos`);
         
         // Si ya estamos en la vista de componentes, renderizar
@@ -1291,6 +1287,7 @@ const componentesPorPagina = 8; // Puedes ajustar este número
 
 // Función para mostrar vista de componentes sueltos
 // Función para mostrar vista de componentes sueltos (MEJORADA)
+// Función para mostrar vista de componentes sueltos (VERSIÓN CORREGIDA)
 function verComponentesSueltos() {
     // Aleatorizar el orden de componentes sueltos
     componentesSueltos.sort(() => Math.random() - 0.5);
@@ -1329,12 +1326,6 @@ function verComponentesSueltos() {
 // Función para renderizar componentes con filtros Y PAGINACIÓN
 // Función para renderizar componentes con filtros Y PAGINACIÓN (MEJORADA)
 function renderizarComponentesSueltos() {
-    console.log('🎯 Renderizando componentes, total:', componentesSueltos.length);
-    console.log('📋 Productos:', componentesSueltos);
-    
-    const grid = document.getElementById('grid-componentes');
-    // ... el resto del código igual
-}
     const grid = document.getElementById('grid-componentes');
     const loading = document.getElementById('loading-componentes');
     
