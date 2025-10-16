@@ -1299,7 +1299,17 @@ function verComponentesSueltos() {
     document.getElementById('vista-productoskit').classList.add('hidden');
     document.getElementById('vista-asesorias').classList.add('hidden');
     document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-    
+    // Aleatorizar el orden de componentes sueltos
+        componentesSueltos.sort(() => Math.random() - 0.5);
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('vista-productoskit').classList.add('hidden');
+        document.getElementById('vista-asesorias').classList.add('hidden');
+        document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+        
+        paginaActual = 1;
+        renderizarComponentesSueltos();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     // Mostrar loading inmediatamente
     const grid = document.getElementById('grid-componentes');
     grid.innerHTML = `
