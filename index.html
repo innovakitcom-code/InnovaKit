@@ -1289,46 +1289,35 @@ function verComponentesSueltos() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
-// Función para renderizar componentes con filtros Y PAGINACIÓN (MEJORADA)
+
+// Función para renderizar componentes con filtros Y PAGINACIÓN
 function renderizarComponentesSueltos() {
-    const grid = document.getElementById('grid-componentes');
-    const loading = document.getElementById('loading-componentes');
-    
-    // Ocultar loading principal, mostrar grid
-    if (loading) loading.classList.add('hidden');
-    
-    // Verificar que tenemos productos
-    if (!componentesSueltos || componentesSueltos.length === 0) {
-        grid.innerHTML = `
-            <div class="col-span-full text-center py-8">
-                <div class="text-yellow-500 text-4xl mb-2">🔄</div>
-                <p class="text-gray-600">Cargando productos...</p>
-            </div>
-        `;
-        return;
-    }
-    
+  const grid = document.getElementById('grid-componentes');
+  const loading = document.getElementById('loading-componentes');
+  
+  loading.classList.remove('hidden');
+  
+  setTimeout(() => {
     const filtroTexto = document.getElementById('buscar-componente').value.toLowerCase();
     const filtroCategoria = document.getElementById('filtro-categoria').value;
     const filtroPrecio = document.getElementById('filtro-precio').value;
     
     let componentesFiltrados = componentesSueltos.filter(comp => {
-        // Filtro por texto
-        const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
-                             (comp.descripcion && comp.descripcion.toLowerCase().includes(filtroTexto));
-        
-        // Filtro por categoría
-        const coincideCategoria = filtroCategoria === 'todos' || comp.categoria === filtroCategoria;
-        
-        // Filtro por precio
-        let coincidePrecio = true;
-        if (filtroPrecio !== 'todos') {
-            const [min, max] = filtroPrecio.split('-').map(Number);
-            const precioNum = comp.precioNum || parseGs(comp.precio);
-            coincidePrecio = precioNum >= min && precioNum <= max;
-        }
-        
-        return coincideTexto && coincideCategoria && coincidePrecio;
+      // Filtro por texto
+      const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
+                           comp.descripcion.toLowerCase().includes(filtroTexto);
+      
+      // Filtro por categoría
+      const coincideCategoria = filtroCategoria === 'todos' || comp.categoria === filtroCategoria;
+      
+      // Filtro por precio
+      let coincidePrecio = true;
+      if (filtroPrecio !== 'todos') {
+        const [min, max] = filtroPrecio.split('-').map(Number);
+        coincidePrecio = comp.precioNum >= min && comp.precioNum <= max;
+      }
+      
+      return coincideTexto && coincideCategoria && coincidePrecio;
     });
 
     // CALCULAR PAGINACIÓN
@@ -1349,33 +1338,33 @@ function renderizarComponentesSueltos() {
         `;
     } else {
         grid.innerHTML = componentesPagina.map(comp => `
-            <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full min-h-[370px]" 
-                 onclick="mostrarModalProducto(${comp.id})">
-              
-              <!-- Sección 1: Imagen y nombre -->
-              <div class="p-4 flex-grow min-h-[140px]">
-                <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-3 rounded" loading="lazy">
-                <h3 class="font-semibold text-lg line-clamp-2">${comp.nombre}</h3>
-              </div>
-              
-              <!-- Sección 2: Precio -->
-              <div class="px-4">
-                <p class="text-green-600 font-bold text-lg">${comp.precio}</p>
-              </div>
-              
-              <!-- Sección 3: Stock y botón -->
-              <div class="p-4 pt-1">
-                <div class="flex items-center justify-between">
-                  <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                    ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
-                  </span>
-                  <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm">
-                    Ver detalles ›
-                  </button>
-                </div>
-              </div>
-            </div>
-        `).join('');
+ <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full min-h-[370px]" 
+     onclick="mostrarModalProducto(${comp.id})">
+  
+  <!-- Sección 1: Imagen y nombre (flexible pero mínimo) -->
+  <div class="p-4 flex-grow min-h-[140px]">  <!-- Altura mínima en lugar de dejar crecer libre -->
+    <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-3 rounded"> 
+    <h3 class="font-semibold text-xl line-clamp-2">${comp.nombre}</h3>
+  </div>
+  
+  <!-- Sección 2: Precio (fijo) -->
+  <div class="px-4">  <!-- pb-2 → pb-1 -->
+    <p class="text-green-600 font-bold text-xl">${comp.precio}</p>
+  </div>
+  
+  <!-- Sección 3: Stock y botón (fijo) -->
+  <div class="p-4 pt-1">  <!-- pt-2 → pt-1 -->
+    <div class="flex items-center justify-between">
+      <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+        ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
+      </span>
+      <button class="text-blue-600 hover:text-blue-800 font-semibold">
+        Ver detalles ›
+      </button>
+    </div>
+  </div>
+</div>
+`).join('');
     }
 
     // ACTUALIZAR INFORMACIÓN DE PAGINACIÓN FIJA
