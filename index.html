@@ -759,7 +759,8 @@
             <div class="space-y-1">
               <!-- Categoría Sensores -->
               <div class="relative subcategory-group">
-                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
+                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"
+                  onclick="aplicarFiltroCategoria('Sensores')">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-sensor text-green-500"></i>
                     Sensores
@@ -773,19 +774,22 @@
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Sensores</div>
                     <div class="space-y-1">
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" 
-                        onclick="aplicarFiltroCategoria('Temperatura')">>
+                        onclick="aplicarFiltroCategoria('Temperatura')">
                         <i class="fas fa-thermometer-half text-orange-500"></i>
                         Temperatura
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('Humedad')">
                         <i class="fas fa-tint text-blue-500"></i>
                         Humedad
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('Movimiento')">
                         <i class="fas fa-eye text-purple-500"></i>
                         Movimiento
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('Luz')">
                         <i class="fas fa-sun text-yellow-500"></i>
                         Luz
                       </button>
@@ -796,7 +800,8 @@
 
               <!-- Categoría Motores -->
               <div class="relative subcategory-group">
-                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
+                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"
+                  onclick="aplicarFiltroCategoria('Motores')">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-cog text-red-500"></i>
                     Motores
@@ -809,15 +814,18 @@
                   <div class="p-3">
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Motores</div>
                     <div class="space-y-1">
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('Servo Motores')">
                         <i class="fas fa-robot text-red-400"></i>
                         Servo Motores
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria("Stepper')">
                         <i class="fas fa-sync-alt text-red-400"></i>
                         Stepper
                       </button>
-                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('DC Motores')">
                         <i class="fas fa-bolt text-red-400"></i>
                         DC Motors
                       </button>
@@ -828,7 +836,8 @@
 
               <!-- Categoría Displays -->
               <div class="relative subcategory-group">
-                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
+                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"
+                  onclick="aplicarFiltroCategoria('Displays')">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-tv text-purple-500"></i>
                     Displays
@@ -877,7 +886,8 @@
             <div class="border-t my-2"></div>
 
             <!-- Botón ver todos -->
-            <button class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700">
+            <button class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700"
+              onclick="aplicarFiltroCategoria('categorías')">
               <i class="fas fa-th-list mr-2"></i>
               Ver todas las categorías
             </button>
