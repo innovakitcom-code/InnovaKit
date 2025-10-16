@@ -887,13 +887,15 @@
         </div>
       </div>
 
-      <!-- Filtro de Precio (mantenemos este simple) -->
-      <select id="filtro-precio" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm hover:shadow-md transition-shadow duration-300">
-        <option value="todos">💎 Todos los precios</option>
-        <option value="0-50000">💰 Gs. 0 - 50.000</option>
-        <option value="50000-100000">💵 Gs. 50.000 - 100.000</option>
-        <option value="100000-200000">💳 Gs. 100.000 - 200.000</option>
-      </select>
+      <!-- Filtro de Precio -->
+      <div class="flex-1 md:flex-none">
+        <select id="filtro-precio" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm hover:shadow-md transition-shadow duration-300">
+          <option value="todos">💎 Todos</option>
+          <option value="0-50000">💰 0-50k</option>
+          <option value="50000-100000">💵 50-100k</option>
+          <option value="100000-200000">💳 100-200k</option>
+        </select>
+      </div>
     </div>
   </div>
 </div>
