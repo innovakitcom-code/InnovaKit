@@ -1231,60 +1231,32 @@
 // Base de datos de componentes sueltos
 // Variable global para almacenar productos
 // Función para parsear precios en Guaraníes
-function parseGs(str) { 
-    return Number(String(str).replace(/[^\d]/g,'')) || 0; 
-}
 
 // Variable global para almacenar productos
 let componentesSueltos = [];
-
-// Función para cargar productos desde JSON (MEJORADA)
+// Función para cargar productos desde JSON
 async function cargarProductos() {
     try {
-        console.log('🔄 Iniciando carga de productos...');
         const response = await fetch('productos.json');
-        
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-        }
-        
         const data = await response.json();
-        console.log('📦 Datos recibidos:', data);
+        componentesSueltos = data.componentesSueltos;
         
-        if (!data.componentesSueltos) {
-            throw new Error('Formato JSON inválido: falta propiedad componentesSueltos');
-        }
-        
-        // Verificar IDs duplicados
-        const ids = new Set();
-        const productosUnicos = [];
-        
-        data.componentesSueltos.forEach(comp => {
-            if (ids.has(comp.id)) {
-                console.warn(`⚠️ ID duplicado encontrado: ${comp.id} - ${comp.nombre}`);
-                // Asignar nuevo ID automáticamente
-                comp.id = Math.max(...ids) + 1;
-            }
-            ids.add(comp.id);
-            productosUnicos.push(comp);
-        });
-        
-        // ASIGNAR directamente a la variable global
-        componentesSueltos = productosUnicos.map(comp => ({
-            ...comp,
-            precioNum: comp.precioNum || parseGs(comp.precio)
-        }));
-        
-        console.log(`✅ Cargados ${componentesSueltos.length} productos únicos`);
-        
-        // Renderizar inmediatamente si estamos en la vista correcta
+        // Si ya estamos en la vista de componentes, renderizar
         if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) {
             renderizarComponentesSueltos();
         }
-        
     } catch (error) {
-        console.error('❌ Error cargando productos:', error);
-        
+        console.error('Error cargando productos:', error);
+        // Puedes agregar un mensaje de error al usuario
+    }
+}
+
+// Llamar a cargar productos cuando la página cargue
+document.addEventListener('DOMContentLoaded', cargarProductos);
+
+// Variables globales para paginación
+let paginaActual = 1;
+const componentesPorPagina = 8; // Puedes ajustar este número
         // Mostrar error al usuario de forma más amigable
         const grid = document.getElementById('grid-componentes');
         if (grid) {
