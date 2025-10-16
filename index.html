@@ -1232,10 +1232,12 @@
 function parseGs(str) { 
     return Number(String(str).replace(/[^\d]/g,'')) || 0; 
 }
-
 // Base de datos de componentes sueltos
 let componentesSueltos = [];
 
+// Variables globales para paginación
+let paginaActual = 1;
+const componentesPorPagina = 8; // ← AGREGA ESTA LÍNEA
 // Función para cargar productos desde JSON - VERSIÓN CORREGIDA
 async function cargarProductos() {
     try {
