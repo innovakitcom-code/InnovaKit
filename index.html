@@ -1257,28 +1257,7 @@ document.addEventListener('DOMContentLoaded', cargarProductos);
 // Variables globales para paginación
 let paginaActual = 1;
 const componentesPorPagina = 8; // Puedes ajustar este número
-        // Mostrar error al usuario de forma más amigable
-        const grid = document.getElementById('grid-componentes');
-        if (grid) {
-            grid.innerHTML = `
-                <div class="col-span-full text-center py-8">
-                    <div class="text-red-500 text-4xl mb-2">⚠️</div>
-                    <p class="text-red-600 font-semibold">Error cargando productos</p>
-                    <p class="text-gray-600 text-sm mt-1">${error.message}</p>
-                    <div class="mt-4 space-x-2">
-                        <button onclick="cargarProductos()" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                            Reintentar
-                        </button>
-                        <button onclick="volverAlInicio()" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
-                            Volver al inicio
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-    }
-}
-
+      
 // Función para ver componentes sueltos (MEJORADA)
 function verComponentesSueltos() {
     // Ocultar otras vistas y mostrar componentes sueltos
@@ -1296,27 +1275,20 @@ function verComponentesSueltos() {
         </div>
     `;
     
-    // Resetear a primera página
-    paginaActual = 1;
-    
-    // Si ya tenemos productos, renderizar inmediatamente
-    if (componentesSueltos && componentesSueltos.length > 0) {
-        console.log('🔄 Renderizando productos existentes...');
-        renderizarComponentesSueltos();
+   // Los productos se renderizarán automáticamente cuando carguen
     } else {
-        // Si no, cargar productos
-        console.log('🔄 Cargando productos desde JSON...');
-        cargarProductos();
+        // Aleatorizar el orden de componentes sueltos
+        componentesSueltos.sort(() => Math.random() - 0.5);
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('vista-productoskit').classList.add('hidden');
+        document.getElementById('vista-asesorias').classList.add('hidden');
+        document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+        
+        paginaActual = 1;
+        renderizarComponentesSueltos();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-// Llamar a cargar productos cuando la página cargue
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Inicializando Innovakit...');
-    cargarProductos();
-});
 // Función para renderizar componentes con filtros Y PAGINACIÓN (MEJORADA)
 function renderizarComponentesSueltos() {
     const grid = document.getElementById('grid-componentes');
