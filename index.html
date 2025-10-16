@@ -2156,45 +2156,6 @@ function aplicarFiltroCategoria(categoria) {
   // Por ahora solo mostramos una notificación
   mostrarNotificacion(`Filtrando por: ${categoria}`);
 }
-  function aplicarFiltroCategoria(categoria) {
-    console.log('Filtrando por:', categoria);
-    
-    // Ocultar el dropdown
-    const dropdowns = document.querySelectorAll('.subcategory-panel');
-    dropdowns.forEach(panel => {
-        panel.classList.add('opacity-0', 'invisible', 'scale-95');
-    });
-    
-    // Aplicar filtro
-    paginaActual = 1;
-    
-    // Buscar en todas las categorías posibles
-    const categoriasMap = {
-        'Temperatura': ['sensores'],
-        'Humedad': ['sensores'],
-        'Movimiento': ['sensores'],
-        'Luz': ['sensores'],
-        'Servo Motores': ['motores', 'Servos'],
-        'Stepper': ['motores'],
-        'DC Motors': ['motores'],
-        'LCD 16x2': ['displays', 'Pantallas'],
-        'Matriz LED': ['displays'],
-        'OLED': ['displays', 'Pantallas']
-    };
-    
-    const categoriasBuscadas = categoriasMap[categoria] || [categoria.toLowerCase()];
-    
-    // Filtrar productos
-    const productosFiltrados = componentesSueltos.filter(comp => {
-        return categoriasBuscadas.some(cat => 
-            comp.categoria.toLowerCase().includes(cat.toLowerCase())
-        );
-    });
-    
-    // Actualizar la vista
-    renderizarComponentesFiltrados(productosFiltrados);
-    mostrarNotificacion(`Filtrando por: ${categoria}`);
-}
 
 function renderizarComponentesFiltrados(productosFiltrados) {
     const grid = document.getElementById('grid-componentes');
@@ -2248,6 +2209,77 @@ function limpiarFiltros() {
     paginaActual = 1;
     renderizarComponentesSueltos();
     mostrarNotificacion('Filtros limpiados ✅');
+}
+  function aplicarFiltroCategoria(subcategoria) {
+    console.log('Filtrando por subcategoría:', subcategoria);
+    
+    // MAPEO DE SUBCATEGORÍAS A CATEGORÍAS REALES
+    const mapeoSubcategorias = {
+        // Sensores
+        'Temperatura': ['sensores'],
+        'Humedad': ['sensores'],
+        'Movimiento': ['sensores'],
+        'Luz': ['sensores'],
+        'Gas': ['sensores'],
+        'Sonido': ['sensores'],
+        'Vibración': ['sensores'],
+        'Color': ['sensores'],
+        'Flama': ['sensores'],
+        'Pulso': ['sensores'],
+        'Alcohol': ['sensores'],
+        'Hidrógeno': ['sensores'],
+        'Monóxido': ['sensores'],
+        'Obstáculos': ['sensores'],
+        'Línea': ['sensores'],
+        'Táctil': ['sensores'],
+        'Magnético': ['sensores'],
+        'Inclinación': ['sensores'],
+        
+        // Motores
+        'Servo Motores': ['Servos', 'motores'],
+        'Stepper': ['motores'],
+        'DC Motors': ['motores'],
+        
+        // Displays
+        'LCD 16x2': ['displays', 'Pantallas'],
+        'Matriz LED': ['displays'],
+        'OLED': ['Pantallas'],
+        '7 Segmentos': ['displays'],
+        
+        // Placas
+        'Arduino': ['placas', 'Arduino'],
+        'Raspberry': ['raspberry', 'raspBerry'],
+        'ESP32': ['ioT'],
+        'Shields': ['Placas'],
+        
+        // Módulos
+        'Bluetooth': ['ioT'],
+        'WiFi': ['ioT'],
+        'RFID': ['sensores'],
+        'RTC': ['sensores'],
+        'Relé': ['RaspBerry'],
+        'I2C': ['ioT']
+    };
+    
+    const categoriasBuscadas = mapeoSubcategorias[subcategoria] || [subcategoria.toLowerCase()];
+    
+    // Ocultar dropdown
+    const dropdowns = document.querySelectorAll('.subcategory-panel');
+    dropdowns.forEach(panel => {
+        panel.classList.add('opacity-0', 'invisible', 'scale-95');
+    });
+    
+    // Aplicar filtro
+    paginaActual = 1;
+    
+    const productosFiltrados = componentesSueltos.filter(comp => {
+        return categoriasBuscadas.some(cat => 
+            comp.categoria.toLowerCase().includes(cat.toLowerCase())
+        );
+    });
+    
+    renderizarComponentesFiltrados(productosFiltrados);
+    mostrarNotificacion(`Filtrando: ${subcategoria}`);
 }
 </script>
 
