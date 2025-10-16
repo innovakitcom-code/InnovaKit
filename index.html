@@ -1332,11 +1332,14 @@ function renderizarComponentesSueltos() {
     const grid = document.getElementById('grid-componentes');
     const loading = document.getElementById('loading-componentes');
     
+    console.log('🎨 Renderizando componentes...');
+    
     // Ocultar loading principal, mostrar grid
     if (loading) loading.classList.add('hidden');
     
     // Verificar que tenemos productos
     if (!componentesSueltos || componentesSueltos.length === 0) {
+        console.warn('⚠️ No hay productos para renderizar');
         grid.innerHTML = `
             <div class="col-span-full text-center py-8">
                 <div class="text-yellow-500 text-4xl mb-2">🔄</div>
@@ -1346,28 +1349,35 @@ function renderizarComponentesSueltos() {
         return;
     }
     
-    const filtroTexto = document.getElementById('buscar-componente').value.toLowerCase();
-    const filtroCategoria = document.getElementById('filtro-categoria').value;
-    const filtroPrecio = document.getElementById('filtro-precio').value;
+    // Obtener valores de filtros de forma segura
+   // Obtener valores de filtros de forma segura
+const buscarInput = document.getElementById('buscar-componente');
+const filtroCategoria = document.getElementById('filtro-categoria'); // ← ESTE puede ser null
+const filtroPrecio = document.getElementById('filtro-precio');
+
+const filtroTexto = buscarInput ? buscarInput.value.toLowerCase() : '';
+const filtroCategoriaValor = filtroCategoria ? filtroCategoria.value : 'todos'; // ← Manejar null
+const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
+    
+    console.log('🔍 Filtros - Texto:', filtroTexto, 'Precio:', filtroPrecioValor);
     
     let componentesFiltrados = componentesSueltos.filter(comp => {
         // Filtro por texto
         const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
                              (comp.descripcion && comp.descripcion.toLowerCase().includes(filtroTexto));
         
-        // Filtro por categoría
-        const coincideCategoria = filtroCategoria === 'todos' || comp.categoria === filtroCategoria;
-        
         // Filtro por precio
         let coincidePrecio = true;
-        if (filtroPrecio !== 'todos') {
-            const [min, max] = filtroPrecio.split('-').map(Number);
+        if (filtroPrecioValor !== 'todos') {
+            const [min, max] = filtroPrecioValor.split('-').map(Number);
             const precioNum = comp.precioNum || parseGs(comp.precio);
             coincidePrecio = precioNum >= min && precioNum <= max;
         }
         
-        return coincideTexto && coincideCategoria && coincidePrecio;
+        return coincideTexto && coincidePrecio;
     });
+
+    console.log('📊 Productos filtrados:', componentesFiltrados.length);
 
     // CALCULAR PAGINACIÓN
     const totalComponentes = componentesFiltrados.length;
@@ -1414,6 +1424,8 @@ function renderizarComponentesSueltos() {
               </div>
             </div>
         `).join('');
+        
+        console.log('✅ Productos renderizados:', componentesPagina.length);
     }
 
     // ACTUALIZAR INFORMACIÓN DE PAGINACIÓN FIJA
@@ -1950,8 +1962,20 @@ document.addEventListener('DOMContentLoaded', function() {
 // =============================================
 function initDarkMode() {
   const toggleBtn = document.getElementById('toggle-dark-mode');
+  
+  // Si el botón no existe (está comentado), salir silenciosamente
+  if (!toggleBtn) {
+    return;
+  }
+  
   const darkIcon = document.getElementById('dark-icon');
   const lightIcon = document.getElementById('light-icon');
+  
+  // Verificar que los iconos existan
+  if (!darkIcon || !lightIcon) {
+    console.warn('Iconos de modo oscuro no encontrados');
+    return;
+  }
   
   // Verificar preferencia guardada o del sistema
   const isDark = localStorage.getItem('darkMode') === 'true' || 
@@ -1984,11 +2008,6 @@ document.addEventListener('DOMContentLoaded', initDarkMode);
   // =============================================
 // MEJORAS DE USABILIDAD - AGREGAR ESTO AL FINAL
 // =============================================
-
-// Función para parsear precios en Guaraníes
-function parseGs(str) { 
-    return Number(String(str).replace(/[^\d]/g,'')) || 0; 
-}
 
 // Mejorar la función de mostrarModalProducto para manejar errores
 function mostrarModalProducto(id) {
