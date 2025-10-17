@@ -2443,45 +2443,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Redimensionar en cambios de tamaño
   window.addEventListener('resize', mejorarExperienciaMovil);
 });
-  // =============================================
-    // CSS específico para móvil SOLO
-    // =============================================
-  /* MEJORAS SOLO PARA MÓVIL - NO AFECTA DESKTOP */
-@media (max-width: 768px) {
-  /* Filtros en columna */
-  .flex-col.md\:flex-row {
-    flex-direction: column;
-  }
-  
-  /* Input más grande en móvil */
-  #buscar-componente {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    font-size: 16px; /* Previene zoom en iOS */
-  }
-  
-  /* Botones más grandes en móvil */
-  #filtro-categoria-container button,
-  #filtro-precio {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    min-height: 48px;
-  }
-  
-  /* Dropdown ocupa ancho completo en móvil */
-  #filtro-categoria-container .absolute {
-    width: 100% !important;
-    left: 0 !important;
-    right: 0 !important;
-  }
-  
-  /* Subcategorías en móvil - posición mejorada */
-  .subcategory-panel {
-    width: 100% !important;
-    left: 0 !important;
-    right: 0 !important;
-  }
-}
 </script>
 </body>
 </html>
