@@ -2,189 +2,131 @@
 <html lang="es">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RKS4HGY5XD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RKS4HGY5XD');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RKS4HGY5XD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RKS4HGY5XD');
+  </script>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="png/favicon.png">
-  <title>Innovakit</title>
+  <title>Innovakit - Kits de Electrónica en Paraguay</title>
+  
+  <!-- Meta tags mejorados -->
   <meta name="description" content="Innovakit ofrece kits de electrónica, asesorías técnicas y proyectos personalizados en Paraguay. Aprende, crea y destaca en ferias científicas y proyectos educativos.">
-<meta name="keywords" content="kits de electrónica, proyectos electrónicos, asesoría técnica, innovakit, Paraguay, ferias científicas, Arduino, programación">
-<meta name="author" content="Innovakit">
-<meta name="robots" content="index, follow">
+  <meta name="keywords" content="kits de electrónica, proyectos electrónicos, asesoría técnica, innovakit, Paraguay, ferias científicas, Arduino, programación">
+  <meta name="author" content="Innovakit">
+  <meta name="robots" content="index, follow">
 
-  <!-- Open graph (para compartir la página) -->
+  <!-- Open Graph mejorado -->
   <meta property="og:title" content="Innovakit - Kits y componentes de Electrónica en Paraguay">
-<meta property="og:description" content="Aprende, crea y destaca con los kits de Innovakit. Proyectos electrónicos con acompañamiento profesional en Paraguay.">
-<meta property="og:image" content="https://wwwinnovakit.com/png/wthpp_web.png">
-<meta property="og:url" content="https://wwwinnovakit.com">
-<meta property="og:type" content="website">
+  <meta property="og:description" content="Aprende, crea y destaca con los kits de Innovakit. Proyectos electrónicos con acompañamiento profesional en Paraguay.">
+  <meta property="og:image" content="https://wwwinnovakit.com/png/wthpp_web.png">
+  <meta property="og:url" content="https://wwwinnovakit.com">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Innovakit">
 
-    <!-- FontAwesome CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Innovakit - Kits de Electrónica en Paraguay">
+  <meta name="twitter:description" content="Aprende electrónica de forma simple con kits completos y asesoría profesional.">
+  <meta name="twitter:image" content="https://wwwinnovakit.com/png/wthpp_web.png">
+
+  <!-- Preconexiones para mejorar rendimiento -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <!-- CSS optimizado -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Solo una carga de Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://kit.fontawesome.com/a2e0e9c6b1.js" crossorigin="anonymous"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Configuración de Tailwind para modo oscuro -->
-<script>
-  tailwind.config = {
-    darkMode: 'class',
-    theme: {
-      extend: {
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'innovakit-green': '#7eb74a',
+            'innovakit-yellow': '#fdc344',
+            'innovakit-blue': '#3b82f6'
+          }
+        }
       }
     }
-  }
-</script>
-  <!-- Swiper CSS (para el carrusel) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-  
-<style>
-  
-  /* Modo oscuro 
-.dark {
-  color-scheme: dark;
-}
+  </script>
 
-.dark body {
-  background-color: #1f2937;
-  color: #f9fafb;
-}
-
-.dark .bg-white {
-  background-color: #374151;
-}
-
-.dark .bg-gray-50 {
-  background-color: #111827;
-}
-
-.dark .bg-gray-200 {
-  background-color: #374151;
-}
-
-.dark .text-gray-800 {
-  color: #f9fafb;
-}
-
-.dark .text-gray-600 {
-  color: #d1d5db;
-}
-
-.dark .border-gray-300 {
-  border-color: #4b5563;
-}
-
-.dark .shadow-md {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-}
-*/
-/* Cards de productos en modo oscuro 
-.dark .bg-white.rounded-xl {
-  background-color: #374151;
-  border: 1px solid #4b5563;
-}
-
-.dark .text-gray-500 {
-  color: #9ca3af;
-}
-*/
-/* Modal en modo oscuro 
-.dark .modal-container {
-  background-color: #374151;
-  color: #f9fafb;
-}
-
-.dark .bg-gray-100 {
-  background-color: #4b5563;
-}
-
-.dark .bg-gray-900 {
-  background-color: #111827;
-}
-*/
-/* Botones en modo oscuro 
-.dark .bg-blue-600 {
-  background-color: #2563eb;
-}
-
-.dark .bg-blue-600:hover {
-  background-color: #1d4ed8;
-}
-
-.dark .bg-yellow-500 {
-  background-color: #d97706;
-}
-
-.dark .bg-green-500 {
-  background-color: #059669;
-}
-*/
-  /* Estilos para el nuevo sistema de filtros con hover */
-.subcategory-group:hover .subcategory-panel {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: scale(1) !important;
-}
-
-/* Efectos de profundidad */
-#filtro-categoria-container .absolute {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.08);
-}
-
-/* Transiciones suaves */
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Efecto de escalado suave */
-.scale-95 {
-  transform: scale(0.95);
-}
-
-.scale-100 {
-  transform: scale(1);
-}
-/* Paginación fija en modo oscuro*/
-.dark .pagination-fixed {
-  background-color: #111827;
-  border-top-color: #374151;
-}
-  .bg-animated {
-  background: linear-gradient(270deg, #34d399, #6ee7b7, #3b82f6);
-  background-size: 200% 200%;  
-   
-  /* espacio suficiente para animar sin verse gigante */
-  animation: moveGradient 8s ease infinite;
-}
-
-@keyframes moveGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-  .btn-hover {
-  transition: all 0.3s ease;
-}
-.btn-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-  body { font-family: 'Inter', sans-serif; }
-</style>
-  
-  <!-- ESTILOS PARA EL CARRUSEL  -->
+  <!-- Estilos CSS optimizados -->
   <style>
+    /* Variables CSS para consistencia */
+    :root {
+      --transition-standard: all 0.3s ease;
+      --shadow-standard: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    body { 
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Mejoras de accesibilidad */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Efectos de hover optimizados */
+    .btn-hover {
+      transition: var(--transition-standard);
+    }
     
-    /* Evita selección de imágenes en el carrusel */
+    .btn-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Animación de gradiente optimizada */
+    .bg-animated {
+      background: linear-gradient(270deg, #34d399, #6ee7b7, #3b82f6);
+      background-size: 200% 200%;
+      animation: moveGradient 8s ease infinite;
+    }
+
+    @keyframes moveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Mejoras para el sistema de filtros */
+    .subcategory-group:hover .subcategory-panel {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: scale(1) !important;
+    }
+
+    /* Transiciones suaves para todos los elementos */
+    .transition-all {
+      transition-property: all;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Estilos para Swiper mejorados */
     .swiper-slide, .swiper-slide * {
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -193,7 +135,6 @@
       pointer-events: none;
     }
 
-    /* Mejora flechas de navegación */
     .swiper-button-next, .swiper-button-prev {
       background-color: rgba(255,255,255,0.8);
       width: 30px;
@@ -201,36 +142,37 @@
       border-radius: 50%;
       color: #3b82f6;
       padding: 15px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow-standard);
     }
+    
     .swiper-button-next::after, .swiper-button-prev::after {
       font-size: 1rem;
     }
-/* NUEVO: Contenedor principal con altura fija */
-.page-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
 
-/* NUEVO: Contenedor de productos con crecimiento flexible */
-.products-container {
-    flex: 1;
-}
+    /* Estructura de página mejorada */
+    .page-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-/* NUEVO: Paginación fija en la parte inferior */
-.pagination-fixed {
-    position: sticky;
-    bottom: 0;
-    background-color: #f5f5f5;
-    padding: 15px 0;
-    border-top: 1px solid #e0e0e0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
-    /* Estilos para el modal */
+    .products-container {
+      flex: 1;
+    }
+
+    .pagination-fixed {
+      position: sticky;
+      bottom: 0;
+      background-color: #f5f5f5;
+      padding: 15px 0;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    /* Mejoras para modales */
     .modal {
       transition: opacity 0.25s ease;
       display: flex;
@@ -247,45 +189,83 @@
       max-height: 90vh;
       overflow-y: auto;
     }
-    /* portada largo completo> */
-.portada-sin-margenes {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  height: 40vh; /* Ajusta la altura que prefieras */
-  position: relative;
-  overflow: hidden;
-}
 
-.portada-sin-margenes img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    /* Portada sin márgenes */
+    .portada-sin-margenes {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      height: 40vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portada-sin-margenes img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Mejoras de accesibilidad para enlaces */
+    a:focus, button:focus {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+
+    /* Mejoras de rendimiento para imágenes */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Clase utilitaria para texto truncado */
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Estados de carga mejorados */
+    .loading-spinner {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-
-  <!-- Header: SIEMPRE VISIBLE -->
-  <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20">
-    <!-- Logo y nombre como botón invisible que lleva al inicio -->
-    <a href="#" onclick="volverAlInicio(); return false;" class="flex items-center">
-      <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1">
+  <!-- Header mejorado con mejor semántica -->
+  <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20" role="banner">
+    <!-- Logo como enlace semántico -->
+    <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded" onclick="volverAlInicio(); return false;">
+      <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1" width="60" height="60">
       <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">
         <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
       </h1>
-      <span class="sr-only">Ir al inicio</span>
+      <span class="sr-only">Página de inicio de Innovakit</span>
     </a>
-    <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-xs sm:text-base overflow-x-auto">
-      <a href="#mision" onclick="volverAlInicio()"  class="hover:text-blue-600">Misión ǀ </a>
-      <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600">Visión ǀ </a>
-      <a href="#productos" onclick="volverAlInicio()"  class="hover:text-blue-600">Productos ǀ </a>
-      <a href="#contacto" onclick="volverAlInicio()"  class="hover:text-blue-600">Contacto ǀ </a>
-      <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-600">Asesoría </a>
-      <!-- Botón del carrito en la barra -->
-  <button onclick="verCarrito()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold">
-  🛒 Carrito (<span id="carrito-count">0</span>)
-</button>
+    
+    <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-xs sm:text-base overflow-x-auto" aria-label="Navegación principal">
+      <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Misión ǀ</a>
+      <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Visión ǀ</a>
+      <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Productos ǀ</a>
+      <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Contacto ǀ</a>
+      <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Asesoría</a>
+      
+      <!-- Botón del carrito con mejor accesibilidad -->
+      <button onclick="verCarrito()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500" aria-label="Ver carrito de compras">
+        🛒 Carrito (<span id="carrito-count" aria-live="polite">0</span>)
+      </button>
+    </nav>
   </header>
     <!-- BOTÓN MODO OSCURO DESHABILITADO TEMPORALMENTE -->
   <!--
@@ -294,35 +274,34 @@
   <i class="fas fa-sun hidden" id="light-icon"></i>
 </button>
   -->
-  <!-- CONTENIDO PRINCIPAL -->
-  <main id="main-content">
-   <!-- HERO -->
-<section id="hero" 
-  class="relative overflow-hidden bg-animated text-white min-h-[51vh] flex items-center">
+    <!-- CONTENIDO PRINCIPAL -->
+  <main id="main-content" role="main">
+   <!-- HERO MEJORADO -->
+<section id="hero" class="relative overflow-hidden bg-animated text-white min-h-[51vh] flex items-center" aria-labelledby="hero-heading">
   <!-- Añadir overlay para mejor contraste -->
-  <div class="absolute inset-0 bg-black/20"></div>
+  <div class="absolute inset-0 bg-black/20" aria-hidden="true"></div>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 relative z-10 w-full">
     <div class="grid md:grid-cols-2 gap-8 items-center">
       <!-- Texto -->
       <div>
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4">Aprende electrónica de forma <span class="text-yellow-300">simple</span></h1>
+        <h1 id="hero-heading" class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4">Aprende electrónica de forma <span class="text-yellow-300">simple</span></h1>
 <p class="mt-4 text-lg sm:text-xl opacity-95 max-w-prose mx-auto md:mx-0">
           Con <strong>Innovakit</strong> tienes kits completos, asesoría y soporte para transformar tus ideas en proyectos reales. Ideal para estudiantes, makers y emprendedores.</p>
 
         <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
   <a href="#productos"
      class="btn-hover inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-blue-700 hover:bg-blue-800
-            text-white font-semibold shadow-lg transition">
+            text-white font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-300">
     <span>Ver nuestros kits</span>
-    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
     </svg>
   </a>
   <a href="#asesorias-preview"
      class="btn-hover inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-[#FFD84D] hover:bg-yellow-400
-            text-gray-900 font-semibold shadow-lg transition">
+            text-gray-900 font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-yellow-300">
     <span>Solicita asesoría</span>
-    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
     </svg>
   </a>
@@ -330,9 +309,9 @@
       </div>
 
       <!-- Ilustración (muestra en desktop) -->
-      <div class="hidden md:block">
+      <div class="hidden md:block" aria-hidden="true">
         <!-- Reemplaza el src por tu vector/ilustración -->
-        <img src="png/vector-electrónica.svg" alt="Ilustración de electrónica y tecnología" class="w-64 md:w-80 h-auto object-contain drop-shadow-xl mx-auto">
+        <img src="png/vector-electrónica.svg" alt="" class="w-64 md:w-80 h-auto object-contain drop-shadow-xl mx-auto">
       </div>
     </div>
   </div>
@@ -945,8 +924,8 @@
     </div>
   </div>
 </section>
-  <!-- Footer -->
-  <footer class="bg-gray-800 text-white text-center p-4">
+    <!-- Footer mejorado -->
+  <footer class="bg-gray-800 text-white text-center p-4" role="contentinfo">
     <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
   </footer>
 
@@ -2332,6 +2311,81 @@ function limpiarFiltros() {
     renderizarComponentesSueltos();
     mostrarNotificacion('Filtros limpiados ✅ Mostrando todos los productos');
 }
+   // =============================================
+    // Función para lazy loading de imágenes (AGREGAR AL FINAL DEL SCRIPT)
+  // =============================================
+  function initLazyLoading() {
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+              imageObserver.unobserve(img);
+            }
+          });
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+          imageObserver.observe(img);
+        });
+      }
+    }
+
+    // Inicialización mejorada cuando carga la página (REEMPLAZA la actual)
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🚀 Inicializando Innovakit...');
+      
+      // Inicializar lazy loading
+      initLazyLoading();
+      
+      // Cargar productos automáticamente
+      cargarProductos();
+      
+      // Inicializar modo oscuro si existe
+      if (typeof initDarkMode === 'function') {
+        initDarkMode();
+      }
+      
+      // Event listeners para filtros (mejorados)
+      const buscarInput = document.getElementById('buscar-componente');
+      if (buscarInput) {
+        let searchTimeout;
+        buscarInput.addEventListener('input', function() {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            paginaActual = 1;
+            renderizarComponentesSueltos();
+          }, 300);
+        });
+      }
+      
+      // Filtros
+      const filtroCategoria = document.getElementById('filtro-categoria');
+      const filtroPrecio = document.getElementById('filtro-precio');
+      
+      [filtroCategoria, filtroPrecio].forEach(filter => {
+        if (filter) {
+          filter.addEventListener('change', function() {
+            paginaActual = 1;
+            renderizarComponentesSueltos();
+          });
+        }
+      });
+      
+      // Cerrar modales
+      document.querySelectorAll('.modal-overlay, .modal-close').forEach(el => {
+        el.addEventListener('click', function() {
+          const modal = this.closest('.modal');
+          if (modal.id === 'modal-producto') {
+            toggleModalProducto();
+          }
+        });
+      });
+      
+      console.log('✅ Innovakit inicializado correctamente');
+    });
 </script>
 
 </body>
