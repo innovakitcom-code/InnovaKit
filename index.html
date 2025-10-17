@@ -1032,6 +1032,22 @@
 
 
   <script>
+    // Detectar soporte para WebP
+function supportsWebP() {
+    return new Promise(resolve => {
+        const webP = new Image();
+        webP.onload = webP.onerror = function () {
+            resolve(webP.height === 2);
+        };
+        webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+    });
+}
+
+// Función para convertir rutas a WebP
+function toWebP(path) {
+    if (!path) return path;
+    return path.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+}
     // --- Aquí defines todos los productos de cada kit ---
     const productosKits = [
       // Kit 1: Electrónica Básico (7 productos)
@@ -1331,7 +1347,7 @@ let componentesSueltos = [];
 // Variables globales para paginación
 let paginaActual = 1;
 const componentesPorPagina = 8; // ← AGREGA ESTA LÍNEA
-// Función para cargar productos desde JSON - VERSIÓN CORREGIDA
+// Función para cargar productos desde JSON - VERSIÓN OPTIMIZADA CON WEBP
 async function cargarProductos() {
     try {
         console.log('🔄 Iniciando carga de productos...');
@@ -1348,16 +1364,23 @@ async function cargarProductos() {
             throw new Error('Formato JSON inválido: falta propiedad componentesSueltos');
         }
         
+        // Verificar soporte WebP y optimizar imágenes
+        const webPSupported = await supportsWebP();
+        console.log('🌐 Soporte WebP:', webPSupported);
+        
         componentesSueltos = data.componentesSueltos.map(comp => ({
             ...comp,
-            precioNum: comp.precioNum || parseGs(comp.precio)
+            precioNum: comp.precioNum || parseGs(comp.precio),
+            // Optimizar imagen si hay soporte WebP
+            imagen: webPSupported ? toWebP(comp.imagen) : comp.imagen,
+            imagenes: comp.imagenes ? comp.imagenes.map(img => webPSupported ? toWebP(img) : img) : []
         }));
         
-        console.log(`✅ Cargados ${componentesSueltos.length} productos`);
+        console.log(`✅ Cargados ${componentesSueltos.length} productos optimizados`);
         
         // Renderizar inmediatamente si estamos en la vista correcta
         if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) {
-            console.log('🔄 Renderizando componentes...');
+            console.log('🔄 Renderizando componentes optimizados...');
             renderizarComponentesSueltos();
         }
     } catch (error) {
@@ -1381,7 +1404,7 @@ async function cargarProductos() {
 
 // Llamar a cargar productos cuando la página cargue
 document.addEventListener('DOMContentLoaded', cargarProductos);
-// Función para mostrar vista de componentes sueltos
+
 // Función para mostrar vista de componentes sueltos (MEJORADA)
 function verComponentesSueltos() {
     console.log('🎯 Mostrando componentes sueltos...');
@@ -1392,7 +1415,7 @@ function verComponentesSueltos() {
     document.getElementById('vista-productoskit').classList.add('hidden');
     document.getElementById('vista-asesorias').classList.add('hidden');
     document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-    // Aleatorizar el orden de componentes sueltos
+
 
         
     // Mostrar loading inmediatamente
@@ -1424,7 +1447,7 @@ function verComponentesSueltos() {
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-// Función para renderizar componentes con filtros Y PAGINACIÓN
+
 // Función para renderizar componentes con filtros Y PAGINACIÓN (MEJORADA)
 function renderizarComponentesSueltos() {
     const grid = document.getElementById('grid-componentes');
@@ -1447,7 +1470,6 @@ function renderizarComponentesSueltos() {
         return;
     }
     
-    // Obtener valores de filtros de forma segura
    // Obtener valores de filtros de forma segura
 const buscarInput = document.getElementById('buscar-componente');
 const filtroCategoria = document.getElementById('filtro-categoria'); // ← ESTE puede ser null
@@ -1500,7 +1522,7 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
               
               <!-- Sección 1: Imagen y nombre -->
               <div class="p-4 flex-grow min-h-[140px]">
-                <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-3 rounded" loading="lazy">
+                <img data-src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-3 rounded lazy" loading="lazy">
                 <h3 class="font-semibold text-lg line-clamp-2">${comp.nombre}</h3>
               </div>
               
@@ -2176,7 +2198,48 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof initDarkMode === 'function') {
         initDarkMode();
     }
-    
+    // Lazy Loading Avanzado con Intersection Observer
+function initAdvancedLazyLoading() {
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    
+                    // Cargar imagen principal
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                    }
+                    
+                    // Cargar srcset si existe
+                    if (img.dataset.srcset) {
+                        img.srcset = img.dataset.srcset;
+                    }
+                    
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px', // Carga 50px antes de entrar en vista
+            threshold: 0.1
+        });
+
+        // Observar todas las imágenes con data-src
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            // Agregar imagen de placeholder pequeña
+            if (!img.src) {
+                img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yMCAxM0MxNi4xMyAxMyAxMyAxNi4xMyAxMyAyMEMxMyAyMy44NyAxNi4xMyAyNyAyMCAyN0MyMy44NyAyNyAyNyAyMy44NyAyNyAyMEMyNyAxNi4xMyAyMy44NyAxMyAyMCAxM1pNMjAgMjVDMTcuMjQgMjUgMTUgMjIuNzYgMTUgMjBDMTUgMTcuMjQgMTcuMjQgMTUgMjAgMTVDMjIuNzYgMTUgMjUgMTcuMjQgMjUgMjBDMjUgMjIuNzYgMjIuNzYgMjUgMjAgMjVaIiBmaWxsPSIjOEU5N0FBIi8+CjxwYXRoIGQ9Ik0yNi42NiAxNS4zNEwyNC4zOCAxM0wyMi4xNCAxNS4yNkwyMC4zMiAxMy40NEwxOC4wNiAxNS43TDE1LjgyIDEzLjQ0TDE0LjY2IDE0LjZMMTcuMzQgMTcuMjZMMTQuNjYgMTkuOTRMMTUuODIgMjEuMUwxOC4xOCAxOC43NEwyMC40NCAyMUwyMi4yMiAxOS4yMkwyNC41IDIxLjVMMjUuNjYgMjAuMzRMMjMuMTggMTcuODZMMjUuODYgMTUuMThMMjYuNjYgMTUuMzRaIiBmaWxsPSIjOEU5N0FBIi8+Cjwvc3ZnPgo=';
+            }
+            imageObserver.observe(img);
+        });
+    } else {
+        // Fallback para navegadores antiguos
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            img.src = img.dataset.src;
+        });
+    }
+}
     // Event listeners para filtros (mejorados)
     const buscarInput = document.getElementById('buscar-componente');
     if (buscarInput) {
@@ -2484,6 +2547,25 @@ function limpiarFiltros() {
       
       console.log('✅ Innovakit inicializado correctamente');
     });
+      // =============================================
+    // SERVICE WORKER PARA CACHE - FASE 2
+    // =============================================
+    
+    // Registrar Service Worker para cache
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('✅ Service Worker registrado:', registration);
+                })
+                .catch(error => {
+                    console.log('❌ Error registrando Service Worker:', error);
+                });
+        });
+    }
+
+}
+</script>
 </script>
 
 </body>
