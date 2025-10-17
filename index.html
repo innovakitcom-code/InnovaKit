@@ -25,6 +25,14 @@
   <meta name="author" content="Innovakit">
   <meta name="robots" content="index, follow">
 
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#7eb74a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Innovakit">
+  <link rel="apple-touch-icon" href="png/favicon.png">
+  <link rel="manifest" href="/manifest.json">
+  
   <!-- Open Graph mejorado -->
   <meta property="og:title" content="Innovakit - Kits y componentes de Electrónica en Paraguay">
   <meta property="og:description" content="Aprende, crea y destaca con los kits de Innovakit. Proyectos electrónicos con acompañamiento profesional en Paraguay.">
@@ -243,6 +251,52 @@
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+        /* ============================================= */
+    /* MEJORAS TOUCH MOBILE - FASE 3 */
+    /* ============================================= */
+    
+    /* Mejorar targets táctiles (mínimo 44px recomendado) */
+    .touch-target {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Prevenir zoom en inputs en iOS */
+    input, select, textarea {
+      font-size: 16px; /* Previene zoom en iOS */
+    }
+    
+    /* Mejorar scrolling en iOS */
+    .smooth-scroll {
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Optimizar botones para touch */
+    .btn-mobile {
+      padding: 12px 20px;
+      font-size: 16px;
+    }
+    
+    /* Prevenir highlight azul en tap */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Mejorar rendimiento de animaciones en móvil */
+    @media (max-width: 768px) {
+      .transform-mobile {
+        will-change: transform;
+      }
+    }
+    
+    /* Safe areas para iPhone X+ */
+    .safe-top {
+      padding-top: env(safe-area-inset-top);
+    }
+    
+    .safe-bottom {
+      padding-bottom: env(safe-area-inset-bottom);
     }
   </style>
 </head>
@@ -2565,7 +2619,64 @@ function limpiarFiltros() {
     }
 
 }
+      // =============================================
+    // PWA INSTALL PROMPT - FASE 3
+    // =============================================
+    
+    let deferredPrompt;
+    const installButton = document.createElement('button');
+    
+    // Crear botón de instalación
+    function createInstallButton() {
+      installButton.innerHTML = '📲 Instalar App';
+      installButton.className = 'fixed bottom-24 right-6 z-50 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hidden';
+      installButton.onclick = installPWA;
+      
+      document.body.appendChild(installButton);
+    }
+    
+    // Mostrar prompt de instalación
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Mostrar botón después de 5 segundos
+      setTimeout(() => {
+        installButton.classList.remove('hidden');
+        installButton.classList.add('animate-bounce');
+      }, 5000);
+      
+      // Ocultar después de 15 segundos
+      setTimeout(() => {
+        installButton.classList.add('hidden');
+      }, 15000);
+    });
+    
+    // Instalar PWA
+    async function installPWA() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+          console.log('✅ Usuario instaló la PWA');
+          installButton.classList.add('hidden');
+        }
+        
+        deferredPrompt = null;
+      }
+    }
+    
+    // Detectar si ya está instalado
+    window.addEventListener('appinstalled', () => {
+      console.log('🎉 PWA instalada correctamente');
+      installButton.classList.add('hidden');
+    });
+    
+    // Inicializar botón de instalación
+    createInstallButton();
 </script>
+  
 </script>
 
 </body>
