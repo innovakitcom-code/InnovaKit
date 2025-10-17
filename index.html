@@ -127,6 +127,88 @@
   background-color: #059669;
 }
 */
+    /* AGREGA ESTOS ESTILOS RESPONSIVE AL FINAL DE TU <style> */
+/* Mejoras responsive para móviles */
+@media (max-width: 640px) {
+  /* Ajustes para los productos principales */
+  #productos .h-96 {
+    height: auto !important;
+    min-height: 380px;
+  }
+  
+  /* Mejoras para filtros en móvil */
+  #filtro-categoria-container .absolute {
+    position: fixed !important;
+    left: 1rem !important;
+    right: 1rem !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+  
+  /* Subcategorías en móvil - posición mejorada */
+  .subcategory-panel {
+    position: fixed !important;
+    left: 1rem !important;
+    right: 1rem !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Input de búsqueda más grande en móvil */
+  #buscar-componente {
+    font-size: 16px !important; /* Previene zoom en iOS */
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+  
+  /* Botones de filtro más grandes en móvil */
+  #filtro-categoria-container button,
+  #filtro-precio {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    min-height: 48px !important;
+  }
+  
+  /* Grid de productos en componentes sueltos */
+  #grid-componentes {
+    gap: 1rem !important;
+  }
+  
+  /* Tarjetas de productos en componentes sueltos */
+  #grid-componentes > div {
+    min-height: 320px !important;
+  }
+  
+  /* Imágenes en tarjetas */
+  #grid-componentes img {
+    height: 180px !important;
+  }
+}
+
+/* Mejoras para tablets */
+@media (min-width: 641px) and (max-width: 768px) {
+  #productos .h-96 {
+    height: 420px !important;
+  }
+  
+  /* Ajuste específico para el producto 4 en tablets */
+  #productos > div > div:nth-child(4) {
+    height: 420px !important;
+  }
+}
+
+/* Asegurar que todos los productos tengan la misma altura */
+#productos > div > div {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Forzar misma altura para el contenido interno */
+#productos > div > div > .mt-auto {
+  margin-top: auto !important;
+}
   /* Estilos para el nuevo sistema de filtros con hover */
 .subcategory-group:hover .subcategory-panel {
   opacity: 1 !important;
@@ -410,7 +492,7 @@
       <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
     </div>
     
-    <!-- Producto 4 -->
+    <!-- Producto 4 - MEJORADO PARA MÓVILES -->
     <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
       <img src="png/Producto4.svg" alt="Componentes Sueltos" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Componentes</h4>
@@ -728,34 +810,34 @@
     <div class="products-container">
       <div class="container mx-auto px-4 py-6">
   
-<!-- Barra superior con búsqueda y filtros - VERSIÓN HÍBRIDA -->
+<!-- Barra superior con búsqueda y filtros - VERSIÓN MEJORADA RESPONSIVE -->
 <div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
-  <!-- Móvil: columna / Desktop: fila (igual que tu versión móvil favorita) -->
   <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
     
-    <!-- Búsqueda -->
-    <div class="flex-1">
+    <!-- Búsqueda - Ocupa todo el ancho en móvil -->
+    <div class="flex-1 w-full">
       <div class="relative">
         <input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." 
-               class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <div class="absolute left-3 top-2.5 text-gray-400">
+               class="w-full px-4 py-3 pl-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-sm">
+        <div class="absolute left-4 top-3.5 text-gray-400">
           <i class="fas fa-search"></i>
         </div>
       </div>
     </div>
 
-    <!-- Contenedor de filtros para móvil / Desktop normal -->
-    <div class="flex flex-row gap-2 md:gap-3">
-      <!-- Filtro de Categorías -->
+    <!-- Contenedor de filtros para móvil - MEJORADO -->
+    <div class="flex flex-col xs:flex-row gap-2 md:gap-3 w-full xs:w-auto">
+      
+      <!-- Filtro de Categorías - MEJORADO PARA MÓVIL -->
       <div class="relative group flex-1 md:flex-none" id="filtro-categoria-container">
-     <button class="w-full md:w-auto px-3 md:px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center justify-center md:justify-start gap-2 shadow-md hover:shadow-lg text-sm md:text-base h-[42px] md:h-auto max-w-[200px] md:max-w-none">
+        <button class="w-full md:w-auto px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center justify-center md:justify-start gap-2 shadow-md hover:shadow-lg text-base md:text-base h-auto">
           <i class="fas fa-layer-group"></i>
-          <span class="hidden xs:inline md:inline">Categorías</span>
+          <span class="truncate">Categorías</span>
           <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
         </button>
         
-        <!-- Dropdown de Categorías (MANTENER EXACTAMENTE IGUAL) -->
-        <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100 z-50">
+        <!-- Dropdown de Categorías - POSICIÓN MEJORADA PARA MÓVIL -->
+        <div class="absolute top-full left-0 mt-2 w-full xs:w-64 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50 max-h-96 overflow-y-auto">
           <div class="p-3">
             <!-- Lista de Categorías Principales -->
             <div class="space-y-1">
@@ -764,35 +846,35 @@
                 <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-sensor text-green-500"></i>
-                    Sensores
+                    <span class="truncate">Sensores</span>
                   </span>
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
                 
-                <!-- Subcategorías Sensores -->
-                <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
+                <!-- Subcategorías Sensores - POSICIÓN MEJORADA PARA MÓVIL -->
+                <div class="absolute left-0 xs:left-full top-0 xs:ml-1 w-full xs:w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top scale-95">
                   <div class="p-3">
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Sensores</div>
                     <div class="space-y-1">
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" 
                         onclick="aplicarFiltroCategoria('Temperatura')">
                         <i class="fas fa-thermometer-half text-orange-500"></i>
-                        Temperatura
+                        <span class="truncate">Temperatura</span>
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Humedad')">
                         <i class="fas fa-tint text-blue-500"></i>
-                        Humedad
+                        <span class="truncate">Humedad</span>
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Movimiento')">
                         <i class="fas fa-eye text-purple-500"></i>
-                        Movimiento
+                        <span class="truncate">Movimiento</span>
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Luz')">
                         <i class="fas fa-sun text-yellow-500"></i>
-                        Luz
+                        <span class="truncate">Luz</span>
                       </button>
                     </div>
                   </div>
@@ -804,7 +886,7 @@
                 <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-cog text-red-500"></i>
-                    Motores
+                    <span class="truncate">Motores</span>
                   </span>
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
@@ -817,17 +899,17 @@
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Servo Motores')">
                         <i class="fas fa-robot text-red-400"></i>
-                        Servo Motores
+                        <span class="truncate">Servo Motores</span>
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Stepper')">
                         <i class="fas fa-sync-alt text-red-400"></i>
-                        Stepper
+                        <span class="truncate">Stepper</span>
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('DC Motors')">
                         <i class="fas fa-bolt text-red-400"></i>
-                        DC Motors
+                        <span class="DC Motors">Luz</span>
                       </button>
                     </div>
                   </div>
@@ -839,7 +921,7 @@
                 <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-tv text-purple-500"></i>
-                    Displays
+                    <span class="truncate">Displays</span>
                   </span>
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
@@ -852,17 +934,17 @@
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('LCD 16x2')">
                         <i class="fas fa-hashtag text-purple-400"></i>
-                        LCD 16x2
+                        <span class="truncate">LCD 16X2</span>
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Matriz LED')">
                         <i class="fas fa-th text-purple-400"></i>
-                        Matriz LED
+                        <span class="truncate">Matriz LED</span>
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('OLED')">
                         <i class="fas fa-mobile-alt text-purple-400"></i>
-                        OLED
+                        <span class="truncate">OLED</span>
                       </button>
                     </div>
                   </div>
@@ -873,24 +955,24 @@
               <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
                       onclick="aplicarFiltroCategoria('Módulos')">
                 <i class="fas fa-microchip text-gray-500"></i>
-                Módulos
+                <span class="truncate">Módulos</span>
               </button>
               <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
                       onclick="aplicarFiltroCategoria('Placas')">
                 <i class="fas fa-plug text-orange-500"></i>
-                Placas
+                <span class="truncate">Placas</span>
               </button>
               <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
                       onclick="aplicarFiltroCategoria('Raspberry Pi')">
                 <i class="fab fa-raspberry-pi text-red-500"></i>
-                Raspberry Pi
+                <span class="truncate">Raspberry Pi</span>
               </button>
 
               <!-- Divider -->
               <div class="border-t my-2"></div>
 
-              <!-- Botón ver todos -->
-              <button onclick="limpiarFiltros()" class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700">
+               <!-- Botón ver todos -->
+              <button onclick="limpiarFiltros()" class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700 mt-2">
                 <i class="fas fa-th-list mr-2"></i>
                 Ver todas las categorías
               </button>
@@ -899,15 +981,14 @@
         </div>
       </div>
 
-      <!-- Filtro de Precio -->
-     <select id="filtro-precio" class="flex-1 md:flex-none px-3 md:px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 text-sm md:text-base w-auto max-w-[220px] md:max-w-[220px]">
-        <option value="todos">💎 <span class="hidden md:inline">Todos los </span><span class="md:hidden">precios</span></option>
-        <option value="0-50000">💰 <span class="hidden md:inline">Gs. 0 - 50.000</span><span class="md:hidden">0-50k</span></option>
-        <option value="50000-100000">💵 <span class="hidden md:inline">Gs. 50.000 - 100.000</span><span class="md:hidden">50-100k</span></option>
-        <option value="100000-200000">💳 <span class="hidden md:inline">Gs. 100.000 - 200.000</span><span class="md:hidden">100-200k</span></option>
+          <!-- Filtro de Precio - MEJORADO -->
+      <select id="filtro-precio" class="flex-1 md:flex-none px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 text-center md:text-base w-full md:w-48">
+        <option value="todos">💎 Todos los precios</option>
+        <option value="0-50000">💰 Gs. 0 - 50.000</option>
+        <option value="50000-100000">💵 Gs. 50.000 - 100.000</option>
+        <option value="100000-200000">💳 Gs. 100.000 - 200.000</option>
       </select>
     </div>
-    
   </div>
 </div>
         <!-- Grid de productos -->
@@ -2332,7 +2413,49 @@ function limpiarFiltros() {
     renderizarComponentesSueltos();
     mostrarNotificacion('Filtros limpiados ✅ Mostrando todos los productos');
 }
-</script>
+      // =============================================
+    // TOGGLE DROPDOWN CATEGORÍAS PARA MÓVIL ELIMINAR SI SIGUE SIN FUNCIONAR
+    // =============================================
+  
+    // =============================================
+    // ELIMINAR SI SIGUE SIN FUNCIONAR
+    // =============================================
 
+   // =============================================
+    // ELIMINAR SI SIGUE SIN FUNCIONAR
+    // =============================================
+  // AGREGA ESTA FUNCIÓN PARA MEJORAR EL COMPORTAMIENTO EN MÓVILES
+function mejorarExperienciaMovil() {
+  // Prevenir problemas de visualización en iOS
+  const viewport = document.querySelector('meta[name="viewport"]');
+  if (viewport && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+  }
+  
+  // Mejorar el comportamiento de los dropdowns en móvil
+  document.addEventListener('click', function(e) {
+    if (window.innerWidth < 768) {
+      const isDropdown = e.target.closest('#filtro-categoria-container');
+      const isSubcategory = e.target.closest('.subcategory-panel');
+      
+      if (!isDropdown && !isSubcategory) {
+        // Cerrar todos los dropdowns
+        document.querySelectorAll('.subcategory-panel, #filtro-categoria-container .absolute').forEach(el => {
+          el.classList.add('opacity-0', 'invisible', 'scale-95');
+          el.classList.remove('opacity-100', 'visible', 'scale-100');
+        });
+      }
+    }
+  });
+}
+
+// Ejecutar cuando cargue la página
+document.addEventListener('DOMContentLoaded', function() {
+  mejorarExperienciaMovil();
+  
+  // Redimensionar en cambios de tamaño
+  window.addEventListener('resize', mejorarExperienciaMovil);
+});
+</script>
 </body>
 </html>
