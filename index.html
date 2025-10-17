@@ -1461,16 +1461,10 @@ document.addEventListener('DOMContentLoaded', cargarProductos);
 
 // Función para mostrar vista de componentes sueltos (MEJORADA)
 function verComponentesSueltos() {
-    console.log('🎯 Mostrando componentes sueltos...');
-    
-    // Ocultar otras vistas y mostrar componentes sueltos
-    componentesSueltos.sort(() => Math.random() - 0.5);
-    document.getElementById('main-content').style.display = 'none';
-    document.getElementById('vista-productoskit').classList.add('hidden');
-    document.getElementById('vista-asesorias').classList.add('hidden');
-    document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-
-
+    navegarA('componentes');
+  }
+  console.log('🎯 Mostrando componentes sueltos...');
+   componentesSueltos.sort(() => Math.random() - 0.5);
         
     // Mostrar loading inmediatamente
     const grid = document.getElementById('grid-componentes');
@@ -1851,8 +1845,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Render productos del kit (con carrusel)
     function verProductosKit(idx) {
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('vista-productoskit').classList.remove('hidden');
+    navegarA('productoskit', { kitId: idx });
       const productos = productosKits[idx - 1];
 
       const portadas = [
@@ -1958,12 +1951,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function volverAlInicio() {
-      document.getElementById('main-content').style.display = '';
-      document.getElementById('vista-productoskit').classList.add('hidden');
-      document.getElementById('vista-asesorias').classList.add('hidden');
-      document.getElementById('vista-componentes-sueltos').classList.add('hidden');
-      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    navegarA('inicio');
+}
 
     // Cerrar modal con tecla ESC
     document.onkeydown = function(evt) {
@@ -1995,12 +1984,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
 
     function verAsesorias() {
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('vista-productoskit').classList.add('hidden');
-      document.getElementById('vista-asesorias').classList.remove('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
+    navegarA('asesorias');
+}
+    
     function enviarPorWhatsApp() {
       const nombre = document.querySelector('input[name="nombre"]').value;
       const institucion = document.querySelector('input[name="institucion"]').value;
@@ -2252,7 +2238,127 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof initDarkMode === 'function') {
         initDarkMode();
     }
-    // Lazy Loading Avanzado con Intersection Observer
+   
+    // Event listeners para filtros (mejorados)
+    const buscarInput = document.getElementById('buscar-componente');
+    if (buscarInput) {
+        let searchTimeout;
+        buscarInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                paginaActual = 1;
+                renderizarComponentesSueltos();
+            }, 300);
+        });
+    }
+    
+    // Filtros
+    const filtroCategoria = document.getElementById('filtro-categoria');
+    const filtroPrecio = document.getElementById('filtro-precio');
+    
+    [filtroCategoria, filtroPrecio].forEach(filter => {
+        if (filter) {
+            filter.addEventListener('change', function() {
+                paginaActual = 1;
+                renderizarComponentesSueltos();
+            });
+        }
+    });
+    
+    // Cerrar modales
+    document.querySelectorAll('.modal-overlay, .modal-close').forEach(el => {
+        el.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal.id === 'modal-producto') {
+                toggleModalProducto();
+            }
+        });
+    });
+    
+    console.log('✅ Innovakit inicializado correctamente');
+  // Inicializar history state al cargar
+    if (!history.state) {
+        history.replaceState({vista: 'inicio'}, '', '#inicio');
+    }
+    
+    // Manejar hash en URL al cargar (por si alguien viene con un enlace directo)
+    if (window.location.hash) {
+        const hash = window.location.hash;
+        if (hash.includes('productoskit')) {
+            const kitId = hash.split('-')[1];
+            if (kitId) navegarA('productoskit', { kitId: parseInt(kitId) });
+        } else if (hash === '#asesorias') {
+            navegarA('asesorias');
+        } else if (hash === '#componentes') {
+            navegarA('componentes');
+        }
+    }
+});
+      // =============================================
+    // HISTORY API PARA NAVEGACIÓN MÓVIL - FIX BOTÓN ATRÁS
+    // =============================================
+
+    // Función para cambiar vista y actualizar history
+    function navegarA(vista, data = {}) {
+        console.log('🔄 Navegando a:', vista, data);
+        
+        // Ocultar todas las vistas
+        document.getElementById('main-content').style.display = 'none';
+        document.getElementById('vista-productoskit').classList.add('hidden');
+        document.getElementById('vista-asesorias').classList.add('hidden');
+        document.getElementById('vista-componentes-sueltos').classList.add('hidden');
+        
+        // Mostrar vista solicitada
+        switch(vista) {
+            case 'inicio':
+                document.getElementById('main-content').style.display = '';
+                history.pushState({vista: 'inicio'}, '', '#inicio');
+                break;
+            case 'productoskit':
+                document.getElementById('vista-productoskit').classList.remove('hidden');
+                history.pushState({vista: 'productoskit', data: data}, '', `#productoskit-${data.kitId}`);
+                // Llamar a la función original de productoskit
+                if (data.kitId) {
+                    setTimeout(() => verProductosKitOriginal(data.kitId), 50);
+                }
+                break;
+            case 'asesorias':
+                document.getElementById('vista-asesorias').classList.remove('hidden');
+                history.pushState({vista: 'asesorias'}, '', '#asesorias');
+                // Llamar a la función original de asesorías
+                setTimeout(verAsesoriasOriginal, 50);
+                break;
+            case 'componentes':
+                document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+                history.pushState({vista: 'componentes'}, '', '#componentes');
+                // Llamar a la función original de componentes
+                setTimeout(verComponentesSueltosOriginal, 50);
+                break;
+        }
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Manejar botón atrás/adelante del navegador
+    window.addEventListener('popstate', function(event) {
+        console.log('🔙 Popstate:', event.state);
+        if (event.state && event.state.vista) {
+            navegarA(event.state.vista, event.state.data || {});
+        } else {
+            // Si no hay state, volver al inicio
+            navegarA('inicio');
+        }
+    });
+
+    // Guardar las funciones originales
+    const verProductosKitOriginal = verProductosKit;
+    const verAsesoriasOriginal = verAsesorias;
+    const verComponentesSueltosOriginal = verComponentesSueltos;
+
+    // =============================================
+    // LAZY LOADING AVANZADO - FASE 2
+    // =============================================
+  // Lazy Loading Avanzado con Intersection Observer
 function initAdvancedLazyLoading() {
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -2294,44 +2400,6 @@ function initAdvancedLazyLoading() {
         });
     }
 }
-    // Event listeners para filtros (mejorados)
-    const buscarInput = document.getElementById('buscar-componente');
-    if (buscarInput) {
-        let searchTimeout;
-        buscarInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                paginaActual = 1;
-                renderizarComponentesSueltos();
-            }, 300);
-        });
-    }
-    
-    // Filtros
-    const filtroCategoria = document.getElementById('filtro-categoria');
-    const filtroPrecio = document.getElementById('filtro-precio');
-    
-    [filtroCategoria, filtroPrecio].forEach(filter => {
-        if (filter) {
-            filter.addEventListener('change', function() {
-                paginaActual = 1;
-                renderizarComponentesSueltos();
-            });
-        }
-    });
-    
-    // Cerrar modales
-    document.querySelectorAll('.modal-overlay, .modal-close').forEach(el => {
-        el.addEventListener('click', function() {
-            const modal = this.closest('.modal');
-            if (modal.id === 'modal-producto') {
-                toggleModalProducto();
-            }
-        });
-    });
-    
-    console.log('✅ Innovakit inicializado correctamente');
-});
    // =============================================
   // NUEVO SISTEMA DE FILTROS CON HOVER
   // =============================================
