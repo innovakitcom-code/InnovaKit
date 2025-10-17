@@ -728,33 +728,33 @@
     <div class="products-container">
       <div class="container mx-auto px-4 py-6">
   
-<!-- Barra superior con búsqueda y filtros - VERSIÓN HÍBRIDA -->
+<!-- BARRA DE FILTROS CORREGIDA - Desktop original + Mobile mejorado -->
 <div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
-  <!-- Móvil: columna / Desktop: fila (igual que tu versión móvil favorita) -->
+  <!-- Desktop: diseño original / Mobile: columna -->
   <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
     
     <!-- Búsqueda -->
     <div class="flex-1">
       <div class="relative">
         <input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." 
-               class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+               class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
         <div class="absolute left-3 top-2.5 text-gray-400">
           <i class="fas fa-search"></i>
         </div>
       </div>
     </div>
 
-    <!-- Contenedor de filtros para móvil / Desktop normal -->
+    <!-- Contenedor de filtros -->
     <div class="flex flex-row gap-2 md:gap-3">
-      <!-- Filtro de Categorías -->
+      <!-- Filtro de Categorías - VERSIÓN ORIGINAL DESKTOP -->
       <div class="relative group flex-1 md:flex-none" id="filtro-categoria-container">
-     <button class="w-full md:w-auto px-3 md:px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center justify-center md:justify-start gap-2 shadow-md hover:shadow-lg text-sm md:text-base h-[42px] md:h-auto max-w-[200px] md:max-w-none">
+        <button class="w-full md:w-auto px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center justify-center md:justify-start gap-2 shadow-md hover:shadow-lg text-sm md:text-base">
           <i class="fas fa-layer-group"></i>
           <span class="hidden xs:inline md:inline">Categorías</span>
           <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
         </button>
         
-        <!-- Dropdown de Categorías (MANTENER EXACTAMENTE IGUAL) -->
+        <!-- Dropdown de Categorías - ORIGINAL DESKTOP -->
         <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100 z-50">
           <div class="p-3">
             <!-- Lista de Categorías Principales -->
@@ -769,7 +769,7 @@
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
                 
-                <!-- Subcategorías Sensores -->
+                <!-- Subcategorías Sensores - ORIGINAL DESKTOP -->
                 <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
                   <div class="p-3">
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Sensores</div>
@@ -809,7 +809,7 @@
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
                 
-                <!-- Subcategorías Motores -->
+                <!-- Subcategorías Motores - ORIGINAL DESKTOP -->
                 <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
                   <div class="p-3">
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Motores</div>
@@ -844,7 +844,7 @@
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
                 
-                <!-- Subcategorías Displays -->
+                <!-- Subcategorías Displays - ORIGINAL DESKTOP -->
                 <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
                   <div class="p-3">
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Displays</div>
@@ -2443,6 +2443,45 @@ document.addEventListener('DOMContentLoaded', function() {
   // Redimensionar en cambios de tamaño
   window.addEventListener('resize', mejorarExperienciaMovil);
 });
+// =============================================
+    // ELIMINAR SI SIGUE SIN FUNCIONAR
+    // =============================================
+  /* MEJORAS SOLO PARA MÓVIL - NO AFECTA DESKTOP */
+@media (max-width: 768px) {
+  /* Filtros en columna */
+  .flex-col.md\:flex-row {
+    flex-direction: column;
+  }
+  
+  /* Input más grande en móvil */
+  #buscar-componente {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 16px; /* Previene zoom en iOS */
+  }
+  
+  /* Botones más grandes en móvil */
+  #filtro-categoria-container button,
+  #filtro-precio {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    min-height: 48px;
+  }
+  
+  /* Dropdown ocupa ancho completo en móvil */
+  #filtro-categoria-container .absolute {
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  /* Subcategorías en móvil - posición mejorada */
+  .subcategory-panel {
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+}
 </script>
 </body>
 </html>
