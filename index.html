@@ -743,7 +743,17 @@
         </div>
       </div>
     </div>
+<!-- AGREGAR ESTO DESPUÉS DE LA BARRA DE FILTROS Y ANTES DE LA PAGINACIÓN -->
+<div class="container mx-auto px-4 py-6">
+  <!-- Loading state -->
+  <div id="loading-componentes" class="text-center py-8">
+    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    <p class="mt-2 text-gray-600">Cargando productos...</p>
+  </div>
 
+  <!-- Grid de productos - ESTE ES EL ELEMENTO CLAVE QUE FALTABA -->
+  <div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+</div>
     <!-- Contenedor de filtros -->
     <div class="flex flex-row gap-2 md:gap-3">
       <!-- Filtro de Categorías - VERSIÓN ORIGINAL DESKTOP -->
@@ -1350,48 +1360,68 @@ function verComponentesSueltos() {
 }
 // Función para renderizar componentes con filtros Y PAGINACIÓN
 // Función para renderizar componentes con filtros Y PAGINACIÓN (MEJORADA)
+// Función para renderizar componentes con filtros Y PAGINACIÓN (VERSIÓN CORREGIDA)
 function renderizarComponentesSueltos() {
     const grid = document.getElementById('grid-componentes');
     const loading = document.getElementById('loading-componentes');
-     
-    // VERIFICACIÓN DE SEGURIDAD
+    
+    console.log('🎨 Iniciando renderizado...');
+    
+    // VERIFICACIÓN DE SEGURIDAD MEJORADA
     if (!grid) {
-        console.error('❌ Elemento grid-componentes no encontrado en el DOM');
+        console.error('❌ ERROR CRÍTICO: Elemento grid-componentes no encontrado');
+        // Crear el elemento si no existe
+        const container = document.querySelector('.products-container .container');
+        if (container) {
+            const newGrid = document.createElement('div');
+            newGrid.id = 'grid-componentes';
+            newGrid.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6';
+            container.appendChild(newGrid);
+            console.log('✅ grid-componentes creado dinámicamente');
+        }
         return;
     }
-    console.log('🎨 Renderizando componentes...');
-    
+
     // Ocultar loading principal, mostrar grid
-    if (loading) loading.classList.add('hidden');
-    
+    if (loading) {
+        loading.classList.add('hidden');
+    }
+
     // Verificar que tenemos productos
     if (!componentesSueltos || componentesSueltos.length === 0) {
         console.warn('⚠️ No hay productos para renderizar');
         grid.innerHTML = `
             <div class="col-span-full text-center py-8">
-                <div class="text-yellow-500 text-4xl mb-2">🔄</div>
-                <p class="text-gray-600">Cargando productos...</p>
+                <div class="text-yellow-500 text-4xl mb-2">📦</div>
+                <p class="text-gray-600">No hay productos disponibles</p>
+                <button onclick="cargarProductos()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Recargar productos
+                </button>
             </div>
         `;
         return;
     }
     
-    // Obtener valores de filtros de forma segura
-   // Obtener valores de filtros de forma segura
-const buscarInput = document.getElementById('buscar-componente');
-const filtroCategoria = document.getElementById('filtro-categoria'); // ← ESTE puede ser null
-const filtroPrecio = document.getElementById('filtro-precio');
+    console.log(`📊 Productos disponibles: ${componentesSueltos.length}`);
 
-const filtroTexto = buscarInput ? buscarInput.value.toLowerCase() : '';
-const filtroCategoriaValor = filtroCategoria ? filtroCategoria.value : 'todos'; // ← Manejar null
-const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
+    // Obtener valores de filtros de forma segura
+    const buscarInput = document.getElementById('buscar-componente');
+    const filtroPrecio = document.getElementById('filtro-precio');
+
+    const filtroTexto = buscarInput ? buscarInput.value.toLowerCase().trim() : '';
+    const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
     
-    console.log('🔍 Filtros - Texto:', filtroTexto, 'Precio:', filtroPrecioValor);
-    
+    console.log('🔍 Filtros aplicados:', {
+        texto: filtroTexto,
+        precio: filtroPrecioValor
+    });
+
+    // APLICAR FILTROS
     let componentesFiltrados = componentesSueltos.filter(comp => {
-        // Filtro por texto
-     const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
-                     (comp.desc && comp.desc.toLowerCase().includes(filtroTexto));
+        // Filtro por texto (nombre y descripción)
+        const coincideTexto = !filtroTexto || 
+            comp.nombre.toLowerCase().includes(filtroTexto) || 
+            (comp.descripcion && comp.descripcion.toLowerCase().includes(filtroTexto));
         
         // Filtro por precio
         let coincidePrecio = true;
@@ -1404,22 +1434,33 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
         return coincideTexto && coincidePrecio;
     });
 
-    console.log('📊 Productos filtrados:', componentesFiltrados.length);
+    console.log('✅ Productos después de filtrar:', componentesFiltrados.length);
 
     // CALCULAR PAGINACIÓN
     const totalComponentes = componentesFiltrados.length;
-    const totalPaginas = Math.ceil(totalComponentes / componentesPorPagina);
+    const totalPaginas = Math.ceil(totalComponentes / componentesPorPagina) || 1;
     const inicio = (paginaActual - 1) * componentesPorPagina;
     const fin = inicio + componentesPorPagina;
     const componentesPagina = componentesFiltrados.slice(inicio, fin);
 
-    // Generar HTML de los componentes
+    console.log('📄 Paginación:', {
+        paginaActual,
+        totalPaginas,
+        inicio,
+        fin,
+        componentesEnPagina: componentesPagina.length
+    });
+
+    // GENERAR HTML
     if (componentesPagina.length === 0) {
         grid.innerHTML = `
             <div class="col-span-full text-center py-8">
                 <div class="text-gray-400 text-4xl mb-2">🔍</div>
                 <p class="text-gray-600 font-semibold">No se encontraron productos</p>
                 <p class="text-gray-500 text-sm mt-1">Prueba con otros filtros o términos de búsqueda</p>
+                <button onclick="limpiarFiltros()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Mostrar todos los productos
+                </button>
             </div>
         `;
     } else {
@@ -1431,6 +1472,7 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
               <div class="p-4 flex-grow min-h-[140px]">
                 <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-3 rounded" loading="lazy">
                 <h3 class="font-semibold text-lg line-clamp-2">${comp.nombre}</h3>
+                <p class="text-sm text-gray-500 mt-1">${comp.categoria || 'Electrónica'}</p>
               </div>
               
               <!-- Sección 2: Precio -->
@@ -1452,8 +1494,25 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
             </div>
         `).join('');
         
-        console.log('✅ Productos renderizados:', componentesPagina.length);
+        console.log('✅ Productos renderizados correctamente');
     }
+
+    // ACTUALIZAR INFORMACIÓN DE PAGINACIÓN FIJA
+    const infoPaginacion = document.getElementById('info-paginacion');
+    const botones = document.querySelectorAll('.pagination-fixed button');
+
+    if (infoPaginacion) {
+        infoPaginacion.textContent = `Página ${paginaActual} de ${totalPaginas}`;
+    }
+
+    // Actualizar estado de botones
+    if (botones.length >= 2) {
+        botones[0].disabled = paginaActual === 1;
+        botones[1].disabled = paginaActual === totalPaginas || totalPaginas === 0;
+    }
+    
+    console.log('🎉 Renderizado completado exitosamente');
+}
 
     // ACTUALIZAR INFORMACIÓN DE PAGINACIÓN FIJA
     const infoPaginacion = document.getElementById('info-paginacion');
