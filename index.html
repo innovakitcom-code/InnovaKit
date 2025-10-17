@@ -1544,7 +1544,11 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
               </div>
             </div>
         `).join('');
-        
+                // INICIALIZAR LAZY LOADING PARA LAS NUEVAS IMÁGENES
+        setTimeout(() => {
+            initAdvancedLazyLoading();
+        }, 100);
+      
         console.log('✅ Productos renderizados:', componentesPagina.length);
     }
 
