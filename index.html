@@ -1301,7 +1301,18 @@ function verComponentesSueltos() {
     document.getElementById('vista-productoskit').classList.add('hidden');
     document.getElementById('vista-asesorias').classList.add('hidden');
     document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-    
+
+  // DEBUG: Verificar qué elementos existen
+    console.log('🔍 Elementos en vista-componentes-sueltos:');
+    const vista = document.getElementById('vista-componentes-sueltos');
+    if (vista) {
+        console.log('✅ vista-componentes-sueltos encontrado');
+        console.log('🔍 Buscando grid-componentes...');
+        const grid = vista.querySelector('#grid-componentes');
+        console.log('grid-componentes dentro de vista:', grid);
+    } else {
+        console.log('❌ vista-componentes-sueltos NO encontrado');
+    }
     // Aleatorizar el orden de componentes sueltos
     componentesSueltos.sort(() => Math.random() - 0.5);
     
