@@ -1297,40 +1297,43 @@ function verComponentesSueltos() {
     console.log('🎯 Mostrando componentes sueltos...');
     
     // Ocultar otras vistas y mostrar componentes sueltos
-    componentesSueltos.sort(() => Math.random() - 0.5);
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('vista-productoskit').classList.add('hidden');
     document.getElementById('vista-asesorias').classList.add('hidden');
     document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+    
     // Aleatorizar el orden de componentes sueltos
-
-        
-    // Mostrar loading inmediatamente
+    componentesSueltos.sort(() => Math.random() - 0.5);
+    
+    // MOSTRAR LOADING PERO VERIFICAR QUE EL ELEMENTO EXISTA
     const grid = document.getElementById('grid-componentes');
-    grid.innerHTML = `
-        <div class="col-span-full text-center py-8">
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <p class="mt-2 text-gray-600">Cargando productos...</p>
-        </div>
-    `;
+    if (grid) {
+        grid.innerHTML = `
+            <div class="col-span-full text-center py-8">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <p class="mt-2 text-gray-600">Cargando productos...</p>
+            </div>
+        `;
+    }
     
     // Resetear a primera página
     paginaActual = 1;
     
     console.log('📊 Productos cargados:', componentesSueltos.length);
     
-    // Si ya tenemos productos, renderizar inmediatamente
-    if (componentesSueltos && componentesSueltos.length > 0) {
-        console.log('🚀 Renderizando productos existentes...');
-        renderizarComponentesSueltos();
-    } else {
-        console.log('🔄 No hay productos, recargando...');
-        // Forzar recarga de productos
-        cargarProductos().then(() => {
-            console.log('✅ Productos recargados, renderizando...');
+    // ESPERAR UN FRAME PARA ASEGURAR QUE EL DOM ESTÉ LISTO
+    setTimeout(() => {
+        if (componentesSueltos && componentesSueltos.length > 0) {
+            console.log('🚀 Renderizando productos existentes...');
             renderizarComponentesSueltos();
-        });
-    }
+        } else {
+            console.log('🔄 No hay productos, recargando...');
+            cargarProductos().then(() => {
+                console.log('✅ Productos recargados, renderizando...');
+                renderizarComponentesSueltos();
+            });
+        }
+    }, 50);
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1339,7 +1342,12 @@ function verComponentesSueltos() {
 function renderizarComponentesSueltos() {
     const grid = document.getElementById('grid-componentes');
     const loading = document.getElementById('loading-componentes');
-    
+     
+    // VERIFICACIÓN DE SEGURIDAD
+    if (!grid) {
+        console.error('❌ Elemento grid-componentes no encontrado en el DOM');
+        return;
+    }
     console.log('🎨 Renderizando componentes...');
     
     // Ocultar loading principal, mostrar grid
