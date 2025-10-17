@@ -2528,80 +2528,81 @@ function limpiarFiltros() {
 }
    // =============================================
     // Función para lazy loading de imágenes (AGREGAR AL FINAL DEL SCRIPT)
-  // =============================================
-  function initLazyLoading() {
-      if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target;
-              img.src = img.dataset.src;
-              img.classList.remove('lazy');
-              imageObserver.unobserve(img);
-            }
-          });
-        });
+    // =============================================
+    function initLazyLoading() {
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
 
-        document.querySelectorAll('img[data-src]').forEach(img => {
-          imageObserver.observe(img);
-        });
-      }
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
     }
 
     // Inicialización mejorada cuando carga la página (REEMPLAZA la actual)
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('🚀 Inicializando Innovakit...');
-      
-      // Inicializar lazy loading
-      initLazyLoading();
-      
-      // Cargar productos automáticamente
-      cargarProductos();
-      
-      // Inicializar modo oscuro si existe
-      if (typeof initDarkMode === 'function') {
-        initDarkMode();
-      }
-      
-      // Event listeners para filtros (mejorados)
-      const buscarInput = document.getElementById('buscar-componente');
-      if (buscarInput) {
-        let searchTimeout;
-        buscarInput.addEventListener('input', function() {
-          clearTimeout(searchTimeout);
-          searchTimeout = setTimeout(() => {
-            paginaActual = 1;
-            renderizarComponentesSueltos();
-          }, 300);
-        });
-      }
-      
-      // Filtros
-      const filtroCategoria = document.getElementById('filtro-categoria');
-      const filtroPrecio = document.getElementById('filtro-precio');
-      
-      [filtroCategoria, filtroPrecio].forEach(filter => {
-        if (filter) {
-          filter.addEventListener('change', function() {
-            paginaActual = 1;
-            renderizarComponentesSueltos();
-          });
+        console.log('🚀 Inicializando Innovakit...');
+        
+        // Inicializar lazy loading
+        initLazyLoading();
+        
+        // Cargar productos automáticamente
+        cargarProductos();
+        
+        // Inicializar modo oscuro si existe
+        if (typeof initDarkMode === 'function') {
+            initDarkMode();
         }
-      });
-      
-      // Cerrar modales
-      document.querySelectorAll('.modal-overlay, .modal-close').forEach(el => {
-        el.addEventListener('click', function() {
-          const modal = this.closest('.modal');
-          if (modal.id === 'modal-producto') {
-            toggleModalProducto();
-          }
+        
+        // Event listeners para filtros (mejorados)
+        const buscarInput = document.getElementById('buscar-componente');
+        if (buscarInput) {
+            let searchTimeout;
+            buscarInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    paginaActual = 1;
+                    renderizarComponentesSueltos();
+                }, 300);
+            });
+        }
+        
+        // Filtros
+        const filtroCategoria = document.getElementById('filtro-categoria');
+        const filtroPrecio = document.getElementById('filtro-precio');
+        
+        [filtroCategoria, filtroPrecio].forEach(filter => {
+            if (filter) {
+                filter.addEventListener('change', function() {
+                    paginaActual = 1;
+                    renderizarComponentesSueltos();
+                });
+            }
         });
-      });
-      
-      console.log('✅ Innovakit inicializado correctamente');
-    });
-      // =============================================
+        
+        // Cerrar modales
+        document.querySelectorAll('.modal-overlay, .modal-close').forEach(el => {
+            el.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                if (modal.id === 'modal-producto') {
+                    toggleModalProducto();
+                }
+            });
+        });
+        
+        console.log('✅ Innovakit inicializado correctamente');
+    });   // 🎯 CIERRE CORRECTO DEL DOMContentLoaded
+
+    // =============================================
     // SERVICE WORKER PARA CACHE - FASE 2
     // =============================================
     
@@ -2618,8 +2619,7 @@ function limpiarFiltros() {
         });
     }
 
-
-      // =============================================
+    // =============================================
     // PWA INSTALL PROMPT - FASE 3
     // =============================================
     
@@ -2628,54 +2628,54 @@ function limpiarFiltros() {
     
     // Crear botón de instalación
     function createInstallButton() {
-      installButton.innerHTML = '📲 Instalar App';
-      installButton.className = 'fixed bottom-24 right-6 z-50 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hidden';
-      installButton.onclick = installPWA;
-      
-      document.body.appendChild(installButton);
+        installButton.innerHTML = '📲 Instalar App';
+        installButton.className = 'fixed bottom-24 right-6 z-50 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hidden';
+        installButton.onclick = installPWA;
+        
+        document.body.appendChild(installButton);
     }
     
     // Mostrar prompt de instalación
     window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      
-      // Mostrar botón después de 5 segundos
-      setTimeout(() => {
-        installButton.classList.remove('hidden');
-        installButton.classList.add('animate-bounce');
-      }, 5000);
-      
-      // Ocultar después de 15 segundos
-      setTimeout(() => {
-        installButton.classList.add('hidden');
-      }, 15000);
+        e.preventDefault();
+        deferredPrompt = e;
+        
+        // Mostrar botón después de 5 segundos
+        setTimeout(() => {
+            installButton.classList.remove('hidden');
+            installButton.classList.add('animate-bounce');
+        }, 5000);
+        
+        // Ocultar después de 15 segundos
+        setTimeout(() => {
+            installButton.classList.add('hidden');
+        }, 15000);
     });
     
     // Instalar PWA
     async function installPWA() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        
-        if (outcome === 'accepted') {
-          console.log('✅ Usuario instaló la PWA');
-          installButton.classList.add('hidden');
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                console.log('✅ Usuario instaló la PWA');
+                installButton.classList.add('hidden');
+            }
+            
+            deferredPrompt = null;
         }
-        
-        deferredPrompt = null;
-      }
     }
     
     // Detectar si ya está instalado
     window.addEventListener('appinstalled', () => {
-      console.log('🎉 PWA instalada correctamente');
-      installButton.classList.add('hidden');
+        console.log('🎉 PWA instalada correctamente');
+        installButton.classList.add('hidden');
     });
     
     // Inicializar botón de instalación
     createInstallButton();
-  
+
 </script>
 
 </body>
