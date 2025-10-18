@@ -755,38 +755,65 @@
         filter: contrast(1.2) brightness(1.1);
       }
     }
-    /* Header responsive para móviles */
+    /* ============================================= */
+/* HEADER RESPONSIVE PARA MÓVILES - FORZADO */
+/* ============================================= */
+
 @media (max-width: 768px) {
-  /* Ocultar logo en móviles */
-  header .flex a img {
-    display: none;
+  /* Ocultar logo SOLO en móviles */
+  header .mobile-logo {
+    display: none !important;
   }
   
-  /* Mover "Innovakit" a la derecha */
-  header .flex a {
-    margin-left: auto;
+  /* Asegurar que el contenedor ocupe todo el ancho */
+  header > .flex.items-center {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  
+  /* Innovakit a la IZQUIERDA */
+  header > .flex.items-center > a {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+  
+  /* Carrito a la DERECHA */
+  header .mobile-cart-btn {
+    margin-left: auto !important;
+    margin-right: 0 !important;
     order: 2;
   }
   
-  /* Mover carrito a la izquierda */
-  header .flex button[onclick="verCarrito()"] {
-    order: 1;
-    margin-right: auto;
-    margin-left: 0;
-  }
-  
-  /* Ajustar el contenedor del header */
-  header .flex {
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  /* Ajustar navegación para que ocupe toda la línea */
-  header nav {
+  /* Navegación ocupa línea completa */
+  header .mobile-nav {
+    width: 100% !important;
+    margin-top: 12px !important;
+    justify-content: center !important;
     order: 3;
-    width: 100%;
-    margin-top: 10px;
-    justify-content: center;
+  }
+  
+  /* Resetear cualquier flexbox que interfiera */
+  header {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+/* Para pantallas grandes, resetear los estilos móviles */
+@media (min-width: 769px) {
+  header .mobile-logo {
+    display: block !important;
+  }
+  
+  header > .flex.items-center {
+    width: auto !important;
+    justify-content: flex-start !important;
+  }
+  
+  header .mobile-cart-btn {
+    margin-left: 1rem !important;
   }
 }
   </style>
@@ -794,9 +821,9 @@
 <body class="bg-gray-50 text-gray-800">
   <!-- Header mejorado con mejor semántica - MEJORADO FASE 5 -->
   <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20 backdrop-blur bg-white/95" role="banner">
-  <!-- Contenedor principal para logo y carrito -->
-  <div class="flex items-center w-full sm:w-auto justify-between sm:justify-start">
-    <!-- Logo como enlace semántico -->
+  <!-- Contenedor principal para logo y carrito - REORGANIZADO -->
+  <div class="flex items-center w-full justify-between sm:w-auto sm:justify-start">
+    <!-- Logo e Innovakit a la IZQUIERDA -->
     <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover" onclick="volverAlInicio(); return false;">
       <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1 mobile-logo" width="60" height="60">
       <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">
@@ -805,8 +832,8 @@
       <span class="sr-only">Página de inicio de Innovakit</span>
     </a>
     
-    <!-- Botón del carrito que se mueve a la izquierda en móvil -->
-    <button onclick="verCarrito()" class="sm:ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover relative mobile-cart-btn" aria-label="Ver carrito de compras">
+    <!-- Botón del carrito a la DERECHA -->
+    <button onclick="verCarrito()" class="bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover relative mobile-cart-btn" aria-label="Ver carrito de compras">
       🛒 Carrito <span id="carrito-count" aria-live="polite">0</span>
       <div id="cart-badge" class="cart-badge hidden">0</div>
     </button>
