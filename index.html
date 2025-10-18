@@ -755,34 +755,72 @@
         filter: contrast(1.2) brightness(1.1);
       }
     }
+    /* Header responsive para móviles */
+@media (max-width: 768px) {
+  /* Ocultar logo en móviles */
+  header .flex a img {
+    display: none;
+  }
+  
+  /* Mover "Innovakit" a la derecha */
+  header .flex a {
+    margin-left: auto;
+    order: 2;
+  }
+  
+  /* Mover carrito a la izquierda */
+  header .flex button[onclick="verCarrito()"] {
+    order: 1;
+    margin-right: auto;
+    margin-left: 0;
+  }
+  
+  /* Ajustar el contenedor del header */
+  header .flex {
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* Ajustar navegación para que ocupe toda la línea */
+  header nav {
+    order: 3;
+    width: 100%;
+    margin-top: 10px;
+    justify-content: center;
+  }
+}
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
   <!-- Header mejorado con mejor semántica - MEJORADO FASE 5 -->
   <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20 backdrop-blur bg-white/95" role="banner">
+  <!-- Contenedor principal para logo y carrito -->
+  <div class="flex items-center w-full sm:w-auto justify-between sm:justify-start">
     <!-- Logo como enlace semántico -->
     <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover" onclick="volverAlInicio(); return false;">
-      <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1" width="60" height="60">
+      <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1 mobile-logo" width="60" height="60">
       <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">
         <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
       </h1>
       <span class="sr-only">Página de inicio de Innovakit</span>
     </a>
     
-     <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-xs sm:text-base overflow-x-auto" aria-label="Navegación principal">
-      <a href="#mision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Misión ǀ</a>
-      <a href="#vision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Visión ǀ</a>
-      <a href="#productos" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Productos ǀ</a>
-      <a href="#contacto" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Contacto ǀ</a>
-      <a href="#asesorias-preview" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Asesoría</a>
-      
-      <!-- Botón del carrito con mejor accesibilidad - MEJORADO FASE 5 -->
-      <button onclick="verCarrito()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover relative" aria-label="Ver carrito de compras">
-        🛒 Carrito <span id="carrito-count" aria-live="polite">0</span>
-        <div id="cart-badge" class="cart-badge hidden">0</div>
-      </button>
-    </nav>
-  </header>
+    <!-- Botón del carrito que se mueve a la izquierda en móvil -->
+    <button onclick="verCarrito()" class="sm:ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover relative mobile-cart-btn" aria-label="Ver carrito de compras">
+      🛒 Carrito <span id="carrito-count" aria-live="polite">0</span>
+      <div id="cart-badge" class="cart-badge hidden">0</div>
+    </button>
+  </div>
+
+  <!-- Navegación -->
+  <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-xs sm:text-base overflow-x-auto mt-2 sm:mt-0 mobile-nav" aria-label="Navegación principal">
+    <a href="#mision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Misión ǀ</a>
+    <a href="#vision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Visión ǀ</a>
+    <a href="#productos" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Productos ǀ</a>
+    <a href="#contacto" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Contacto ǀ</a>
+    <a href="#asesorias-preview" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Asesoría</a>
+  </nav>
+</header>
     <!-- BOTÓN MODO OSCURO DESHABILITADO TEMPORALMENTE -->
   <!--
   <button id="toggle-dark-mode" class="ml-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-3 py-2 rounded-lg shadow hover:bg-gray-300 dark:hover:bg-gray-600 transition">
