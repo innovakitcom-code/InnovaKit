@@ -756,7 +756,37 @@
       }
     }
     /* Header responsive para móviles */
+/* ELIMINAR ESTE BLOQUE COMPLETO - Causa problemas con la posición del carrito */
+/*
 @media (max-width: 768px) {
+  header .flex a img {
+    display: none;
+  }
+  
+  header .flex a {
+    margin-left: auto;
+    order: 2;
+  }
+  
+  header .flex button[onclick="verCarrito()"] {
+    order: 1;
+    margin-right: auto;
+    margin-left: 0;
+  }
+  
+  header .flex {
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  header nav {
+    order: 3;
+    width: 100%;
+    margin-top: 10px;
+    justify-content: center;
+  }
+}
+*/@media (max-width: 768px) {
   /* Ocultar logo en móviles */
   header .flex a img {
     display: none;
@@ -792,34 +822,59 @@
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-  <!-- Header mejorado con mejor semántica - MEJORADO FASE 5 -->
-  <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20 backdrop-blur bg-white/95" role="banner">
-  <!-- Contenedor principal para logo y carrito -->
-  <div class="flex items-center w-full sm:w-auto justify-between sm:justify-start">
-    <!-- Logo como enlace semántico -->
+ <!-- Header MEJORADO - Tu diseño desktop + Mi diseño móvil -->
+<header class="bg-white shadow-md p-4 sticky top-0 z-20 backdrop-blur bg-white/95" role="banner">
+  
+  <!-- Desktop: Tu diseño (oculto en móvil) -->
+  <div class="hidden sm:flex justify-between items-center">
+    <!-- Logo -->
     <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover" onclick="volverAlInicio(); return false;">
-      <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1 mobile-logo" width="60" height="60">
-      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">
+      <img src="Icono.png" alt="Logo Innovakit" class="h-14 lg:h-16 mr-1" width="60" height="60">
+      <h1 class="text-2xl lg:text-3xl font-bold">
         <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
       </h1>
-      <span class="sr-only">Página de inicio de Innovakit</span>
     </a>
-    
-    <!-- Botón del carrito que se mueve a la izquierda en móvil -->
-    <button onclick="verCarrito()" class="sm:ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover relative mobile-cart-btn" aria-label="Ver carrito de compras">
-      🛒 Carrito <span id="carrito-count" aria-live="polite">0</span>
-      <div id="cart-badge" class="cart-badge hidden">0</div>
-    </button>
+
+    <!-- Navegación + Carrito (tu diseño) -->
+    <nav class="flex items-center text-base" aria-label="Navegación principal">
+      <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-2">Misión |</a>
+      <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-2">Visión |</a>
+      <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-2">Productos |</a>
+      <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-2">Contacto |</a>
+      <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-2">Asesoría</a>
+      
+      <!-- Carrito -->
+      <button onclick="verCarrito()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover" aria-label="Ver carrito de compras">
+  🛒 Carrito (<span id="carrito-count-desktop" aria-live="polite">0</span>)
+</button>
+
+  <!-- Móvil: Mi diseño (oculto en desktop) -->
+  <div class="sm:hidden">
+    <!-- Primera línea: Logo + Carrito -->
+    <div class="flex justify-between items-center mb-3">
+      <!-- Logo -->
+      <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover" onclick="volverAlInicio(); return false;">
+        <img src="Icono.png" alt="Logo Innovakit" class="h-14 mr-1" width="60" height="60">
+        <h1 class="text-2xl font-bold">
+          <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
+        </h1>
+      </a>
+
+      <!-- Carrito Móvil -->
+      <button onclick="verCarrito()" class="bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover" aria-label="Ver carrito de compras">
+  🛒 <span class="carrito-text">Carrito</span> (<span id="carrito-count-mobile" aria-live="polite">0</span>)
+</button>
+
+    <!-- Segunda línea: Navegación -->
+    <nav class="flex flex-wrap justify-center gap-1 items-center text-sm overflow-x-auto" aria-label="Navegación móvil">
+      <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Misión |</a>
+      <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Visión |</a>
+      <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Productos |</a>
+      <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Contacto |</a>
+      <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Asesoría</a>
+    </nav>
   </div>
 
-  <!-- Navegación -->
-  <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-xs sm:text-base overflow-x-auto mt-2 sm:mt-0 mobile-nav" aria-label="Navegación principal">
-    <a href="#mision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Misión ǀ</a>
-    <a href="#vision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Visión ǀ</a>
-    <a href="#productos" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Productos ǀ</a>
-    <a href="#contacto" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Contacto ǀ</a>
-    <a href="#asesorias-preview" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Asesoría</a>
-  </nav>
 </header>
     <!-- BOTÓN MODO OSCURO DESHABILITADO TEMPORALMENTE -->
   <!--
@@ -1353,68 +1408,69 @@
       </div>
     </div>
 
-    <!-- Formulario de Contacto -->
-    <form class="max-w-lg mx-auto" action="https://formsubmit.co/innovakit.com@gmail.com" method="POST">
- <!-- Formulario de Asesorías - MEJORADO FASE 5 -->
-<form class="max-w-4xl mx-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-200" action="https://formsubmit.co/innovakit.com@gmail.com" method="POST">
-  <!-- Campos ocultos para Formsubmit -->
-  <input type="hidden" name="_subject" value="Nueva solicitud de asesoría - Innovakit">
-  <input type="hidden" name="_template" value="table">
-  <input type="hidden" name="_next" value="https://tuweb.com/gracias.html">
+    <!-- Formulario de Contacto MEJORADO -->
+    <form class="max-w-4xl mx-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-200" action="https://formsubmit.co/innovakit.com@gmail.com" method="POST">
+      <!-- Campos ocultos para Formsubmit -->
+      <input type="hidden" name="_subject" value="Nueva solicitud de asesoría - Innovakit">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://tuweb.com/gracias.html">
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <div class="space-y-2">
-      <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre completo</label>
-      <input type="text" name="nombre" class="form-input-enhanced w-full" required>
-    </div>
-    <div class="space-y-2">
-      <label class="block text-sm font-semibold text-gray-700 mb-2">Colegio/Institución</label>
-      <input type="text" name="institucion" class="form-input-enhanced w-full" required>
-    </div>
-  </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre completo</label>
+          <input type="text" name="nombre" class="form-input-enhanced w-full" required>
+        </div>
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Colegio/Institución</label>
+          <input type="text" name="institucion" class="form-input-enhanced w-full" required>
+        </div>
+      </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <div class="space-y-2">
-      <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-      <input type="email" name="email" class="form-input-enhanced w-full" required>
-    </div>
-    <div class="space-y-2">
-      <label class="block text-sm font-semibold text-gray-700 mb-2">Teléfono</label>
-      <input type="tel" name="telefono" class="form-input-enhanced w-full" required>
-    </div>
-  </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+          <input type="email" name="email" class="form-input-enhanced w-full" required>
+        </div>
+        <div class="space-y-2">
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Teléfono</label>
+          <input type="tel" name="telefono" class="form-input-enhanced w-full" required>
+        </div>
+      </div>
 
-  <div class="mb-6">
-    <label class="block text-sm font-semibold text-gray-700 mb-3">Tipo de proyecto</label>
-    <select name="tipo_proyecto" class="form-input-enhanced w-full">
-      <option>Feria científica</option>
-      <option>Expo técnica</option>
-      <option>Proyecto escolar</option>
-      <option>Competencia de robótica</option>
-      <option>Otro</option>
-    </select>
-  </div>
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-gray-700 mb-3">Tipo de proyecto</label>
+        <select name="tipo_proyecto" class="form-input-enhanced w-full">
+          <option>Feria científica</option>
+          <option>Expo técnica</option>
+          <option>Proyecto escolar</option>
+          <option>Competencia de robótica</option>
+          <option>Otro</option>
+        </select>
+      </div>
 
-  <div class="mb-6">
-    <label class="block text-sm font-semibold text-gray-700 mb-3">Describe tu proyecto o idea</label>
-    <textarea name="proyecto" rows="5" class="form-input-enhanced w-full resize-none" placeholder="Qué quieres hacer, qué materiales tienes, qué necesitas..." required></textarea>
-  </div>
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-gray-700 mb-3">Describe tu proyecto o idea</label>
+        <textarea name="proyecto" rows="5" class="form-input-enhanced w-full resize-none" placeholder="Qué quieres hacer, qué materiales tienes, qué necesitas..." required></textarea>
+      </div>
 
-  <div class="mb-8">
-    <label class="block text-sm font-semibold text-gray-700 mb-3">Fecha límite (si aplica)</label>
-    <input type="date" name="fecha_limite" class="form-input-enhanced w-full">
-  </div>
+      <div class="mb-8">
+        <label class="block text-sm font-semibold text-gray-700 mb-3">Fecha límite (si aplica)</label>
+        <input type="date" name="fecha_limite" class="form-input-enhanced w-full">
+      </div>
 
-  <div class="flex flex-col sm:flex-row gap-4">
-    <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300">
-      <i class="fas fa-paper-plane mr-3"></i>
-      Enviar solicitud
-    </button>
-    <button type="button" onclick="enviarPorWhatsApp()" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300">
-      <i class="fab fa-whatsapp mr-3"></i>
-      Contactar por WhatsApp
-    </button>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300">
+          <i class="fas fa-paper-plane mr-3"></i>
+          Enviar solicitud
+        </button>
+        <button type="button" onclick="enviarPorWhatsApp()" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300">
+          <i class="fab fa-whatsapp mr-3"></i>
+          Contactar por WhatsApp
+        </button>
+      </div>
+    </form>
   </div>
+</section>
   
   <!-- Espacio para que no se superponga con el footer -->
   <div class="h-12"></div>
@@ -1687,7 +1743,7 @@
     
     <!-- Copyright y info -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-      <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
+      <p>&copy; 2025 Innovakit. <strong>Todos los derechos reservados.</strong></p>
       <p>Kits de electrónica y robótica educativa en Paraguay</p>
       <div class="flex gap-4">
         <a href="https://www.facebook.com/share/15HSQmpG2Z8/" target="_blank" class="hover:text-blue-400 transition-colors duration-300">
@@ -1700,7 +1756,6 @@
     </div>
   </div>
 </footer>
-
 <!-- Swiper JS (para el carrusel) -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
@@ -1721,6 +1776,7 @@ function toWebP(path) {
     if (!path) return path;
     return path.replace(/\.(jpg|jpeg|png)$/i, '.webp');
 }
+
     // --- Aquí defines todos los productos de cada kit ---
     const productosKits = [
       // Kit 1: Electrónica Básico (7 productos)
@@ -2656,7 +2712,7 @@ document.addEventListener('DOMContentLoaded', function() {
     carrito.push({ nombre, precio });
     actualizarContador();
     proporcionarFeedbackTactil();
-    mostrarNotificacion(`${nombre} agregado al carrito ✅`);
+    mostrarNotificacion(`${nombre} agregado ✅`);
     trackEvent('Carrito', 'Agregar Producto', nombre);
 }
 
@@ -2682,9 +2738,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 3000);
   }
 
-  function actualizarContador() {
-    document.getElementById("carrito-count").textContent = carrito.length;
-  }
+ function actualizarContador() {
+    const count = carrito.length;
+    
+    // Actualizar ambos contadores
+    const desktopCount = document.getElementById("carrito-count-desktop");
+    const mobileCount = document.getElementById("carrito-count-mobile");
+    
+    if (desktopCount) desktopCount.textContent = count;
+    if (mobileCount) mobileCount.textContent = count;
+}
 
   function parseGs(str) { return Number(String(str).replace(/[^\d]/g,'')) || 0; }
   function formatearGs(n) { return 'Gs. ' + n.toLocaleString('es-PY'); }
@@ -3405,7 +3468,7 @@ function limpiarFiltros() {
     // Inicializar botón de instalación
     createInstallButton();
 // =============================================
-// MEJORAS UX/UI - FASE 5
+// MEJORAS UX/UI - FASE 5 (CORREGIDO)
 // =============================================
 
 // 1. Sistema de notificaciones mejorado
@@ -3429,36 +3492,14 @@ function mostrarNotificacion(mensaje, tipo = 'success', duracion = 4000) {
     }, duracion);
 }
 
-// 2. Mejoras para el carrito (badge animado)
-function actualizarContador() {
-    const count = carrito.length;
-    document.getElementById("carrito-count").textContent = count;
-    
-    // Crear o actualizar badge
-    let badge = document.getElementById('cart-badge');
-    if (!badge) {
-        badge = document.createElement('div');
-        badge.id = 'cart-badge';
-        badge.className = 'cart-badge hidden';
-        document.querySelector('button[onclick="verCarrito()"]').appendChild(badge);
-    }
-    
-    if (count > 0) {
-        badge.textContent = count;
-        badge.classList.remove('hidden');
-    } else {
-        badge.classList.add('hidden');
-    }
-}
-
-// 3. Feedback táctil (solo en móviles)
+// 2. Feedback táctil (solo en móviles)
 function proporcionarFeedbackTactil() {
     if ('vibrate' in navigator) {
         navigator.vibrate(50);
     }
 }
 
-// 4. Analytics mejorado
+// 3. Analytics mejorado
 function trackEvent(categoria, accion, etiqueta = '') {
     if (typeof gtag !== 'undefined') {
         gtag('event', accion, {
@@ -3468,6 +3509,8 @@ function trackEvent(categoria, accion, etiqueta = '') {
     }
     console.log(`📊 Analytics: ${categoria} - ${accion} - ${etiqueta}`);
 }
+
+// 4. Función actualizarContador se mantiene como la ORIGINAL (no duplicar)}
   // =============================================
 // MEJORAS ESPECÍFICAS PARA MÓVIL - MODAL DE PRODUCTO
 // =============================================
@@ -3525,4 +3568,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
