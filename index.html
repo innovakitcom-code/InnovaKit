@@ -447,7 +447,7 @@
       gap: 12px;
     }
 /* ============================================= */
-/* MEJORAS ESPECÍFICAS PARA MODAL EN MÓVIL */
+/* MEJORAS ESPECÍFICAS PARA MODAL EN MÓVIL - CORREGIDO */
 /* ============================================= */
 
 @media (max-width: 768px) {
@@ -471,10 +471,6 @@
   }
 
   /* Imágenes más compactas */
-  #modal-producto .space-y-6 {
-    space-y: 16px !important;
-  }
-
   #modal-producto .h-80 {
     height: 200px !important;
   }
@@ -502,24 +498,16 @@
   }
 
   /* Botones apilados verticalmente y mejorados */
-  #modal-producto .space-y-4 {
-    space-y: 12px !important;
-  }
-
   #modal-producto button {
     padding: 14px 16px !important;
-    font-size: 16px !important; /* Tamaño mínimo para iOS */
-    min-height: 50px !important; /* Target táctil mínimo */
+    font-size: 16px !important;
+    min-height: 50px !important;
     border-radius: 12px !important;
     width: 100% !important;
     margin: 4px 0 !important;
   }
 
   /* Especificaciones más compactas */
-  #modal-producto .space-y-3 {
-    space-y: 12px !important;
-  }
-
   #modal-producto .p-4 {
     padding: 16px !important;
   }
@@ -539,9 +527,17 @@
     padding: 8px !important;
   }
 
-  /* Mejorar espaciados generales */
-  #modal-producto .space-y-6 > * {
-    margin-bottom: 16px !important;
+  /* Mejorar espaciados generales - CORREGIDO */
+  #modal-producto .space-y-6 > * + * {
+    margin-top: 16px !important;
+  }
+
+  #modal-producto .space-y-4 > * + * {
+    margin-top: 12px !important;
+  }
+
+  #modal-producto .space-y-3 > * + * {
+    margin-top: 12px !important;
   }
 
   /* Texto más legible en móvil */
