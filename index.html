@@ -18,10 +18,7 @@
   <link rel="shortcut icon" href="png/favicon.png">
   <title>Innovakit - Kits de Electrónica en Paraguay</title>
   <meta name="keywords" content="innovakit paraguay, innovakit electrónica, kits arduino paraguay, proyectos electrónicos asunción, ferias científicas paraguay">
- <!-- BORRAR CACHE -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
+ 
   <!-- Meta tags mejorados -->
   <meta name="description" content="Innovakit ofrece kits de electrónica, asesorías técnicas y proyectos personalizados en Paraguay. Aprende, crea y destaca en ferias científicas y proyectos educativos.">
   <meta name="keywords" content="kits de electrónica, proyectos electrónicos, asesoría técnica, innovakit, Paraguay, ferias científicas, Arduino, programación">
@@ -450,7 +447,7 @@
       gap: 12px;
     }
 /* ============================================= */
-/* MEJORAS ESPECÍFICAS PARA MODAL EN MÓVIL - CORREGIDO */
+/* MEJORAS ESPECÍFICAS PARA MODAL EN MÓVIL */
 /* ============================================= */
 
 @media (max-width: 768px) {
@@ -474,6 +471,10 @@
   }
 
   /* Imágenes más compactas */
+  #modal-producto .space-y-6 {
+    space-y: 16px !important;
+  }
+
   #modal-producto .h-80 {
     height: 200px !important;
   }
@@ -501,16 +502,24 @@
   }
 
   /* Botones apilados verticalmente y mejorados */
+  #modal-producto .space-y-4 {
+    space-y: 12px !important;
+  }
+
   #modal-producto button {
     padding: 14px 16px !important;
-    font-size: 16px !important;
-    min-height: 50px !important;
+    font-size: 16px !important; /* Tamaño mínimo para iOS */
+    min-height: 50px !important; /* Target táctil mínimo */
     border-radius: 12px !important;
     width: 100% !important;
     margin: 4px 0 !important;
   }
 
   /* Especificaciones más compactas */
+  #modal-producto .space-y-3 {
+    space-y: 12px !important;
+  }
+
   #modal-producto .p-4 {
     padding: 16px !important;
   }
@@ -530,17 +539,9 @@
     padding: 8px !important;
   }
 
-  /* Mejorar espaciados generales - CORREGIDO */
-  #modal-producto .space-y-6 > * + * {
-    margin-top: 16px !important;
-  }
-
-  #modal-producto .space-y-4 > * + * {
-    margin-top: 12px !important;
-  }
-
-  #modal-producto .space-y-3 > * + * {
-    margin-top: 12px !important;
+  /* Mejorar espaciados generales */
+  #modal-producto .space-y-6 > * {
+    margin-bottom: 16px !important;
   }
 
   /* Texto más legible en móvil */
@@ -754,82 +755,38 @@
         filter: contrast(1.2) brightness(1.1);
       }
     }
-  /* ============================================= */
-/* HEADER RESPONSIVE PARA MÓVILES - CORREGIDO */
-/* ============================================= */
-
+    /* Header responsive para móviles */
 @media (max-width: 768px) {
-  /* HEADER COMPLETO - FLEX VERTICAL */
-  header {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    padding: 12px 16px !important;
+  /* Ocultar logo en móviles */
+  header .flex a img {
+    display: none;
   }
   
-  /* CONTENEDOR SUPERIOR: Logo + Carrito */
-  header > .flex.items-center {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
+  /* Mover "Innovakit" a la derecha */
+  header .flex a {
+    margin-left: auto;
+    order: 2;
+  }
+  
+  /* Mover carrito a la izquierda */
+  header .flex button[onclick="verCarrito()"] {
     order: 1;
+    margin-right: auto;
+    margin-left: 0;
   }
   
-  /* LOGO A LA IZQUIERDA */
-  header > .flex.items-center > a {
-    margin-left: 0 !important;
-    margin-right: auto !important;
-    display: flex !important;
-    align-items: center !important;
+  /* Ajustar el contenedor del header */
+  header .flex {
+    justify-content: space-between;
+    width: 100%;
   }
   
-  /* OCULTAR IMAGEN DEL LOGO EN MÓVIL */
-  header .mobile-logo {
-    display: none !important;
-  }
-  
-  /* CARRO A LA DERECHA */
-  header .mobile-cart-btn {
-    margin-left: auto !important;
-    margin-right: 0 !important;
-    order: 2;
-  }
-  
-  /* NAVEGACIÓN ABAJO - CENTRADA */
-  header .mobile-nav {
-    width: 100% !important;
-    margin-top: 12px !important;
-    justify-content: center !important;
-    order: 2;
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-  }
-}
-
-/* Reset para desktop */
-@media (min-width: 769px) {
-  header .mobile-logo {
-    display: block !important;
-  }
-}
-    /* Agrega esto al final de tu CSS para mejor soporte táctil */
-@media (max-width: 768px) {
-  /* Mejorar targets táctiles */
-  .btn-mobile, button, a {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  /* Prevenir zoom en iOS en inputs */
-  input, select, textarea {
-    font-size: 16px;
-  }
-  
-  /* Mejorar scrolling */
-  .modal-container {
-    -webkit-overflow-scrolling: touch;
+  /* Ajustar navegación para que ocupe toda la línea */
+  header nav {
+    order: 3;
+    width: 100%;
+    margin-top: 10px;
+    justify-content: center;
   }
 }
   </style>
@@ -837,9 +794,9 @@
 <body class="bg-gray-50 text-gray-800">
   <!-- Header mejorado con mejor semántica - MEJORADO FASE 5 -->
   <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20 backdrop-blur bg-white/95" role="banner">
-  <!-- Contenedor principal para logo y carrito - REORGANIZADO -->
-  <div class="flex items-center w-full justify-between sm:w-auto sm:justify-start">
-    <!-- Logo e Innovakit a la IZQUIERDA -->
+  <!-- Contenedor principal para logo y carrito -->
+  <div class="flex items-center w-full sm:w-auto justify-between sm:justify-start">
+    <!-- Logo como enlace semántico -->
     <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover" onclick="volverAlInicio(); return false;">
       <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1 mobile-logo" width="60" height="60">
       <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">
@@ -848,8 +805,8 @@
       <span class="sr-only">Página de inicio de Innovakit</span>
     </a>
     
-    <!-- Botón del carrito a la DERECHA -->
-    <button onclick="verCarrito()" class="bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover relative mobile-cart-btn" aria-label="Ver carrito de compras">
+    <!-- Botón del carrito que se mueve a la izquierda en móvil -->
+    <button onclick="verCarrito()" class="sm:ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover relative mobile-cart-btn" aria-label="Ver carrito de compras">
       🛒 Carrito <span id="carrito-count" aria-live="polite">0</span>
       <div id="cart-badge" class="cart-badge hidden">0</div>
     </button>
@@ -860,8 +817,8 @@
     <a href="#mision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Misión ǀ</a>
     <a href="#vision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Visión ǀ</a>
     <a href="#productos" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Productos ǀ</a>
-    <a href="#asesorias-preview" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Asesoría ǀ</a>
-    <a href="#contacto" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Contacto</a>
+    <a href="#contacto" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Contacto ǀ</a>
+    <a href="#asesorias-preview" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Asesoría</a>
   </nav>
 </header>
     <!-- BOTÓN MODO OSCURO DESHABILITADO TEMPORALMENTE -->
@@ -965,41 +922,40 @@
   </div>
 </section>
 <hr class="my-4 border-gray-300">
-    <!-- Productos - CORREGIDO -->
-<section id="productos" class="p-4 sm:p-6 bg-gray-200 scroll-mt-20 mt-6">
-  <h3 class="text-2xl sm:text-3xl font-bold text-center mb-6">Nuestros Productos</h3>
+    <!-- Productos -->
+<section id="productos" class="p-6 sm:p-6 bg-gray-200 scroll-mt-20 mt-6">
+  <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
-    
     <!-- Producto 1 -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
-      <img src="png/Kounshun.svg" alt="Kit de electrónica Innovakit" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
+      <img src="png/Kounshun.svg" alt="Kit de electrónica Innovakit" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Kit de Electrónica Básico</h4>
-      <p class="mb-3 text-center text-sm flex-grow">Incluye componentes esenciales para aprender electrónica desde cero.</p>
-      <button onclick="verProductosKit(1)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver más</button>
+      <p class="mb-3 text-center text-sm">Incluye componentes esenciales para aprender electrónica desde cero.</p>
+      <button onclick="verProductosKit(1)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
     </div>
     
     <!-- Producto 2 -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
-      <img src="png/kits_educativos.svg" alt="Kit de electrónica básico Innovakit" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
+      <img src="png/kits_educativos.svg" alt="Kit de electrónica básico Innovakit" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Kit de Electrónica Make</h4>
-      <p class="mb-3 text-center text-sm flex-grow">Perfecto para creadores que quieran comenzar con proyectos prácticos.</p>
-      <button onclick="verProductosKit(2)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver más</button>
+      <p class="mb-3 text-center text-sm">Perfecto para creadores que quieran comenzar con proyectos prácticos.</p>
+      <button onclick="verProductosKit(2)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
     </div>
     
     <!-- Producto 3 -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
-      <img src="png/Acebott.svg" alt="Kit de Robótica Acebott" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
+      <img src="png/Acebott.svg" alt="Kit de Robótica Acebott" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Kit de Robótica Acebott</h4>
-      <p class="mb-3 text-center text-sm flex-grow">Componentes avanzados para proyectos más complejos y creativos.</p>
-      <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver más</button>
+      <p class="mb-3 text-center text-sm">Componentes avanzados para proyectos más complejos y creativos.</p>
+      <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
     </div>
     
-    <!-- Producto 4 - CORREGIDO -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
-      <img src="png/Producto4.svg" alt="Componentes Sueltos" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
+    <!-- Producto 4 - CORREGIDO PARA MÓVILES -->
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
+      <img src="png/Producto4.svg" alt="Componentes Sueltos" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Componentes</h4>
-      <p class="mb-3 text-center text-sm flex-grow">Compra sensores, motores, displays y componentes varios, individuales.</p>
-      <button onclick="verComponentesSueltos()" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver componentes</button>
+      <p class="mb-3 text-center text-sm">Compra sensores, motores, displays y componentes varios, individuales.</p>
+      <button onclick="verComponentesSueltos()" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver componentes</button>
     </div>
   </div>
 </section>
@@ -1397,6 +1353,8 @@
       </div>
     </div>
 
+    <!-- Formulario de Contacto -->
+    <form class="max-w-lg mx-auto" action="https://formsubmit.co/innovakit.com@gmail.com" method="POST">
  <!-- Formulario de Asesorías - MEJORADO FASE 5 -->
 <form class="max-w-4xl mx-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-200" action="https://formsubmit.co/innovakit.com@gmail.com" method="POST">
   <!-- Campos ocultos para Formsubmit -->
@@ -1482,34 +1440,34 @@
     <div class="products-container">
       <div class="container mx-auto px-4 py-8">
   
-        <!-- Barra superior con búsqueda y filtros - VERSIÓN MEJORADA RESPONSIVE -->
+        <!-- Barra superior con búsqueda y filtros - VERSIÓN HÍBRIDA -->
 <div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
+  <!-- Móvil: columna / Desktop: fila (igual que tu versión móvil favorita) -->
   <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
     
-    <!-- Búsqueda - Ocupa todo el ancho en móvil -->
-    <div class="flex-1 w-full">
+    <!-- Búsqueda -->
+    <div class="flex-1">
       <div class="relative">
         <input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." 
-               class="w-full px-4 py-3 pl-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-sm">
-        <div class="absolute left-4 top-3.5 text-gray-400">
+               class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div class="absolute left-3 top-2.5 text-gray-400">
           <i class="fas fa-search"></i>
         </div>
       </div>
     </div>
 
-    <!-- Contenedor de filtros para móvil - MEJORADO -->
-    <div class="flex flex-col xs:flex-row gap-2 md:gap-3 w-full xs:w-auto">
-      
-      <!-- Filtro de Categorías - MEJORADO PARA MÓVIL -->
+    <!-- Contenedor de filtros para móvil / Desktop normal -->
+    <div class="flex flex-row gap-2 md:gap-3">
+      <!-- Filtro de Categorías -->
       <div class="relative group flex-1 md:flex-none" id="filtro-categoria-container">
-        <button class="w-full md:w-auto px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center justify-center md:justify-start gap-2 shadow-md hover:shadow-lg text-base md:text-base h-auto">
+     <button class="w-full md:w-auto px-3 md:px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center justify-center md:justify-start gap-2 shadow-md hover:shadow-lg text-sm md:text-base h-[42px] md:h-auto max-w-[200px] md:max-w-none">
           <i class="fas fa-layer-group"></i>
-          <span class="truncate">Categorías</span>
+          <span class="hidden xs:inline md:inline">Categorías</span>
           <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
         </button>
         
-        <!-- Dropdown de Categorías - POSICIÓN MEJORADA PARA MÓVIL -->
-        <div class="absolute top-full left-0 mt-2 w-full xs:w-64 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50 max-h-96 overflow-y-auto">
+        <!-- Dropdown de Categorías (MANTENER EXACTAMENTE IGUAL) -->
+        <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100 z-50">
           <div class="p-3">
             <!-- Lista de Categorías Principales -->
             <div class="space-y-1">
@@ -1518,35 +1476,35 @@
                 <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-sensor text-green-500"></i>
-                    <span class="truncate">Sensores</span>
+                    Sensores
                   </span>
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
                 
-                <!-- Subcategorías Sensores - POSICIÓN MEJORADA PARA MÓVIL -->
-                <div class="absolute left-0 xs:left-full top-0 xs:ml-1 w-full xs:w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top scale-95">
+                <!-- Subcategorías Sensores -->
+                <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
                   <div class="p-3">
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Sensores</div>
                     <div class="space-y-1">
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" 
                         onclick="aplicarFiltroCategoria('Temperatura')">
                         <i class="fas fa-thermometer-half text-orange-500"></i>
-                        <span class="truncate">Temperatura</span>
+                        Temperatura
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Humedad')">
                         <i class="fas fa-tint text-blue-500"></i>
-                        <span class="truncate">Humedad</span>
+                        Humedad
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Movimiento')">
                         <i class="fas fa-eye text-purple-500"></i>
-                        <span class="truncate">Movimiento</span>
+                        Movimiento
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Luz')">
                         <i class="fas fa-sun text-yellow-500"></i>
-                        <span class="truncate">Luz</span>
+                        Luz
                       </button>
                     </div>
                   </div>
@@ -1558,7 +1516,7 @@
                 <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-cog text-red-500"></i>
-                    <span class="truncate">Motores</span>
+                    Motores
                   </span>
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
@@ -1571,96 +1529,97 @@
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Servo Motores')">
                         <i class="fas fa-robot text-red-400"></i>
-                        <span class="truncate">Servo Motores</span>
+                        Servo Motores
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Stepper')">
                         <i class="fas fa-sync-alt text-red-400"></i>
-                        <span class="truncate">Stepper</span>
+                        Stepper
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('DC Motors')">
                         <i class="fas fa-bolt text-red-400"></i>
-                        <span class="truncate">DC Motors</span>
+                        DC Motors
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
 
-          <!-- Categoría Displays MEJORADA -->
-          <div class="relative subcategory-group">
-            <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 flex items-center justify-between group border border-transparent hover:border-blue-200">
-              <span class="flex items-center gap-3">
-                <i class="fas fa-tv text-purple-500 text-lg"></i>
-                <span class="font-semibold text-gray-800">Displays</span>
-              </span>
-              <i class="fas fa-chevron-right text-sm text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
-            </button>
-            
-            <!-- Subcategorías Displays MEJORADAS -->
-            <div class="absolute left-full top-0 ml-2 w-64 bg-white rounded-2xl shadow-2xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
-              <div class="p-4">
-                <div class="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wide border-b border-gray-100 pb-2">Tipos de Displays</div>
-                <div class="space-y-2">
-                  <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-purple-50 transition-all duration-300 text-sm flex items-center gap-3 border border-transparent hover:border-purple-200"
-                    onclick="aplicarFiltroCategoria('LCD 16x2')">
-                    <i class="fas fa-hashtag text-purple-400 text-base"></i>
-                    <span class="font-medium">LCD 16x2</span>
-                  </button>
-                  <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-purple-50 transition-all duration-300 text-sm flex items-center gap-3 border border-transparent hover:border-purple-200"
-                    onclick="aplicarFiltroCategoria('Matriz LED')">
-                    <i class="fas fa-th text-purple-400 text-base"></i>
-                    <span class="font-medium">Matriz LED</span>
-                  </button>
-                  <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-purple-50 transition-all duration-300 text-sm flex items-center gap-3 border border-transparent hover:border-purple-200"
-                    onclick="aplicarFiltroCategoria('OLED')">
-                    <i class="fas fa-mobile-alt text-purple-400 text-base"></i>
-                    <span class="font-medium">OLED</span>
-                  </button>
+              <!-- Categoría Displays -->
+              <div class="relative subcategory-group">
+                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
+                  <span class="flex items-center gap-2">
+                    <i class="fas fa-tv text-purple-500"></i>
+                    Displays
+                  </span>
+                  <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
+                </button>
+                
+                <!-- Subcategorías Displays -->
+                <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
+                  <div class="p-3">
+                    <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Displays</div>
+                    <div class="space-y-1">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('LCD 16x2')">
+                        <i class="fas fa-hashtag text-purple-400"></i>
+                        LCD 16x2
+                      </button>
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('Matriz LED')">
+                        <i class="fas fa-th text-purple-400"></i>
+                        Matriz LED
+                      </button>
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('OLED')">
+                        <i class="fas fa-mobile-alt text-purple-400"></i>
+                        OLED
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <!-- Otras categorías simples -->
+              <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+                      onclick="aplicarFiltroCategoria('Módulos')">
+                <i class="fas fa-microchip text-gray-500"></i>
+                Módulos
+              </button>
+              <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+                      onclick="aplicarFiltroCategoria('Placas')">
+                <i class="fas fa-plug text-orange-500"></i>
+                Placas
+              </button>
+              <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+                      onclick="aplicarFiltroCategoria('Raspberry Pi')">
+                <i class="fab fa-raspberry-pi text-red-500"></i>
+                Raspberry Pi
+              </button>
+
+              <!-- Divider -->
+              <div class="border-t my-2"></div>
+
+              <!-- Botón ver todos -->
+              <button onclick="limpiarFiltros()" class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700">
+                <i class="fas fa-th-list mr-2"></i>
+                Ver todas las categorías
+              </button>
             </div>
           </div>
-
-          <!-- Otras categorías simples MEJORADAS -->
-          <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 flex items-center gap-3 border border-transparent hover:border-blue-200"
-                  onclick="aplicarFiltroCategoria('Módulos')">
-            <i class="fas fa-microchip text-gray-500 text-lg"></i>
-            <span class="font-semibold text-gray-800">Módulos</span>
-          </button>
-          <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 flex items-center gap-3 border border-transparent hover:border-blue-200"
-                  onclick="aplicarFiltroCategoria('Placas')">
-            <i class="fas fa-plug text-orange-500 text-lg"></i>
-            <span class="font-semibold text-gray-800">Placas</span>
-          </button>
-          <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 flex items-center gap-3 border border-transparent hover:border-blue-200"
-                  onclick="aplicarFiltroCategoria('Raspberry Pi')">
-            <i class="fab fa-raspberry-pi text-red-500 text-lg"></i>
-            <span class="font-semibold text-gray-800">Raspberry Pi</span>
-          </button>
-
-          <!-- Divider MEJORADO -->
-          <div class="border-t border-gray-200 my-3"></div>
-
-          <!-- Botón ver todos MEJORADO -->
-          <button onclick="limpiarFiltros()" class="w-full text-center px-4 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all duration-300 text-sm font-semibold text-gray-700 border border-transparent hover:border-gray-300">
-            <i class="fas fa-th-list mr-2"></i>
-            Ver todas las categorías
-          </button>
         </div>
       </div>
-    </div>
-  </div>
 
-      <!-- Filtro de Precio - MEJORADO -->
-      <select id="filtro-precio" class="flex-1 md:flex-none px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 text-center md:text-base w-full md:w-48">
-        <option value="todos">💎 Todos los precios</option>
-        <option value="0-50000">💰 Gs. 0 - 50.000</option>
-        <option value="50000-100000">💵 Gs. 50.000 - 100.000</option>
-        <option value="100000-200000">💳 Gs. 100.000 - 200.000</option>
+      <!-- Filtro de Precio -->
+     <select id="filtro-precio" class="flex-1 md:flex-none px-3 md:px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 text-sm md:text-base w-auto max-w-[220px] md:max-w-[220px]">
+        <option value="todos">💎 <span class="hidden md:inline">Todos los </span><span class="md:hidden">precios</span></option>
+        <option value="0-50000">💰 <span class="hidden md:inline">Gs. 0 - 50.000</span><span class="md:hidden">0-50k</span></option>
+        <option value="50000-100000">💵 <span class="hidden md:inline">Gs. 50.000 - 100.000</span><span class="md:hidden">50-100k</span></option>
+        <option value="100000-200000">💳 <span class="hidden md:inline">Gs. 100.000 - 200.000</span><span class="md:hidden">100-200k</span></option>
       </select>
     </div>
+    
   </div>
 </div>
       <!-- Grid de productos (se mantiene igual) -->
@@ -2120,25 +2079,20 @@ async function cargarProductos() {
 document.addEventListener('DOMContentLoaded', cargarProductos);
 
 // Función para mostrar vista de componentes sueltos (MEJORADA)
+// Función para mostrar vista de componentes sueltos (MEJORADA)
 function verComponentesSueltos() {
-    navegarA('componentes');
-  }
-  console.log('🎯 Mostrando componentes sueltos...');
-   componentesSueltos.sort(() => Math.random() - 0.5);
-        
-    // Mostrar loading inmediatamente
-    const grid = document.getElementById('grid-componentes');
-    grid.innerHTML = `
-        <div class="col-span-full text-center py-8">
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <p class="mt-2 text-gray-600">Cargando productos...</p>
-        </div>
-    `;
+    console.log('🎯 Mostrando componentes sueltos...');
     
+    // Ocultar otras vistas y mostrar componentes sueltos
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('vista-productoskit').classList.add('hidden');
+    document.getElementById('vista-asesorias').classList.add('hidden');
+    document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+
     // Resetear a primera página
     paginaActual = 1;
     
-    console.log('📊 Productos cargados:', componentesSueltos.length);
+    console.log('📊 Productos en memoria:', componentesSueltos ? componentesSueltos.length : 0);
     
     // Si ya tenemos productos, renderizar inmediatamente
     if (componentesSueltos && componentesSueltos.length > 0) {
@@ -2146,17 +2100,39 @@ function verComponentesSueltos() {
         renderizarComponentesSueltos();
     } else {
         console.log('🔄 No hay productos, recargando...');
+        // Mostrar loading state
+        const grid = document.getElementById('grid-componentes');
+        grid.innerHTML = `
+            <div id="loading-componentes" class="col-span-full text-center py-16">
+                <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mb-6"></div>
+                <p class="text-gray-600 text-lg font-medium">Cargando componentes...</p>
+                <p class="text-gray-500 text-sm mt-2">Buscando los mejores productos para ti</p>
+            </div>
+        `;
+        
         // Forzar recarga de productos
         cargarProductos().then(() => {
             console.log('✅ Productos recargados, renderizando...');
             renderizarComponentesSueltos();
+        }).catch(error => {
+            console.error('❌ Error recargando productos:', error);
+            grid.innerHTML = `
+                <div class="col-span-full text-center py-8">
+                    <div class="text-red-500 text-4xl mb-2">⚠️</div>
+                    <p class="text-red-600 font-semibold">Error cargando productos</p>
+                    <p class="text-gray-600 text-sm mt-1">${error.message}</p>
+                    <button onclick="cargarProductos().then(() => renderizarComponentesSueltos())" 
+                            class="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                        Reintentar
+                    </button>
+                </div>
+            `;
         });
     }
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-
-// Función para renderizar componentes con filtros Y PAGINACIÓN (MEJORADA)
+}
+// Función para renderizar componentes con filtros Y PAGINACIÓN (CORREGIDA)
 function renderizarComponentesSueltos() {
     const grid = document.getElementById('grid-componentes');
     const loading = document.getElementById('loading-componentes');
@@ -2178,50 +2154,21 @@ function renderizarComponentesSueltos() {
         return;
     }
     
-   // Obtener valores de filtros de forma segura
-const buscarInput = document.getElementById('buscar-componente');
-const filtroCategoria = document.getElementById('filtro-categoria'); // ← ESTE puede ser null
-const filtroPrecio = document.getElementById('filtro-precio');
+    // Obtener valores de filtros
+    const buscarInput = document.getElementById('buscar-componente');
+    const filtroPrecio = document.getElementById('filtro-precio');
 
-const filtroTexto = buscarInput ? buscarInput.value.toLowerCase() : '';
-const filtroCategoriaValor = filtroCategoria ? filtroCategoria.value : 'todos'; // ← Manejar null
-const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
+    const filtroTexto = buscarInput ? buscarInput.value.toLowerCase() : '';
+    const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
     
-    console.log('🔍 Filtros - Texto:', filtroTexto, 'Categoría:', filtroCategoriaValor, 'Precio:', filtroPrecioValor);
+    console.log('🔍 Filtros - Texto:', filtroTexto, 'Precio:', filtroPrecioValor);
     
-    // MAPA DE CATEGORÍAS (COPIADO DE TU FUNCIÓN ORIGINAL)
-    const categoriasMap = {
-        // Sensores y sus subcategorías
-        'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20'],
-        'Humedad': ['humedad', 'dht11', 'dht22'],
-        'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio'],
-        'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible'],
-
-        // Motores y sus subcategorías
-        'Servo Motores': ['servo', 'sg90'],
-        'Stepper': ['stepper', 'paso a paso'],
-        'DC Motors': ['motor dc', 'motor corriente continua'],
-
-        // Displays y sus subcategorías
-        'LCD 16x2': ['lcd', '16x2', 'pantalla lcd'],
-        'Matriz LED': ['matriz led', 'max7219', '8x8'],
-        'OLED': ['oled', 'pantalla oled', 'display oled'],
-
-        // Categorías principales
-        'Módulos': ['módulo', 'module', 'shield'],
-        'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266'],
-        'Raspberry Pi': ['raspberry', 'pi', 'rpi'],
-
-        // Categorías generales
-        'Sensores': ['sensor', 'detector', 'medidor'],
-        'Motores': ['motor', 'servo', 'stepper'],
-        'Displays': ['display', 'pantalla', 'lcd', 'oled', 'led']
-    };
-    
+    // NO aplicamos filtro de categoría aquí porque se maneja por aplicarFiltroCategoria
     let componentesFiltrados = componentesSueltos.filter(comp => {
         // Filtro por texto
-        const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
-                     (comp.desc && comp.desc.toLowerCase().includes(filtroTexto));
+        const coincideTexto = !filtroTexto || 
+            comp.nombre.toLowerCase().includes(filtroTexto) || 
+            (comp.descripcion && comp.descripcion.toLowerCase().includes(filtroTexto));
         
         // Filtro por precio
         let coincidePrecio = true;
@@ -2231,27 +2178,11 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
             coincidePrecio = precioNum >= min && precioNum <= max;
         }
         
-        // FILTRO POR CATEGORÍA (¡ESTO ES LO QUE FALTABA!)
-        let coincideCategoria = true;
-        if (filtroCategoriaValor !== 'todos' && filtroCategoriaValor !== 'Categorías') {
-            const terminosBusqueda = categoriasMap[filtroCategoriaValor] || [filtroCategoriaValor.toLowerCase()];
-            const textoBusqueda = (
-                comp.nombre.toLowerCase() + ' ' + 
-                (comp.descripcion || '').toLowerCase() + ' ' +
-                (comp.categoria || '').toLowerCase() + ' ' +
-                (comp.especificaciones ? comp.especificaciones.join(' ').toLowerCase() : '')
-            );
-            
-            coincideCategoria = terminosBusqueda.some(termino => 
-                textoBusqueda.includes(termino.toLowerCase())
-            );
-        }
-        
-        return coincideTexto && coincidePrecio && coincideCategoria;
+        return coincideTexto && coincidePrecio;
     });
 
     console.log('📊 Productos filtrados:', componentesFiltrados.length);
-  
+
     // CALCULAR PAGINACIÓN
     const totalComponentes = componentesFiltrados.length;
     const totalPaginas = Math.ceil(totalComponentes / componentesPorPagina);
@@ -2266,6 +2197,9 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
                 <div class="text-gray-400 text-4xl mb-2">🔍</div>
                 <p class="text-gray-600 font-semibold">No se encontraron productos</p>
                 <p class="text-gray-500 text-sm mt-1">Prueba con otros filtros o términos de búsqueda</p>
+                <button onclick="limpiarFiltros()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Mostrar todos los productos
+                </button>
             </div>
         `;
     } else {
@@ -2277,6 +2211,7 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
               <div class="p-4 flex-grow min-h-[140px]">
                 <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-3 rounded" loading="lazy">
                 <h3 class="font-semibold text-lg line-clamp-2">${comp.nombre}</h3>
+                ${comp.categoria ? `<p class="text-sm text-gray-500 mt-1">${comp.categoria}</p>` : ''}
               </div>
               
               <!-- Sección 2: Precio -->
@@ -2306,7 +2241,7 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
     const botones = document.querySelectorAll('.pagination-fixed button');
 
     if (infoPaginacion) {
-        infoPaginacion.textContent = `Página ${paginaActual} de ${totalPaginas || 1}`;
+        infoPaginacion.innerHTML = `Página <span class="text-blue-600">${paginaActual}</span> de <span class="text-blue-600">${totalPaginas || 1}</span>`;
     }
 
     // Actualizar estado de botones
@@ -3002,66 +2937,84 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('🚀 Innovakit FASE 5 - UX/UI Mejorada');
     trackEvent('Navegación', 'Página Vista', 'Inicio');
 });
-      // =============================================
-    // HISTORY API PARA NAVEGACIÓN MÓVIL - FIX BOTÓN ATRÁS
-    // =============================================
+       // =============================================
+// HISTORY API PARA NAVEGACIÓN MÓVIL - CORREGIDO
+// =============================================
 
-    // Función para cambiar vista y actualizar history
-    function navegarA(vista, data = {}) {
-        console.log('🔄 Navegando a:', vista, data);
-        
-        // Ocultar todas las vistas
-        document.getElementById('main-content').style.display = 'none';
-        document.getElementById('vista-productoskit').classList.add('hidden');
-        document.getElementById('vista-asesorias').classList.add('hidden');
-        document.getElementById('vista-componentes-sueltos').classList.add('hidden');
-        
-        // Mostrar vista solicitada
-        switch(vista) {
-            case 'inicio':
-                document.getElementById('main-content').style.display = '';
-                history.pushState({vista: 'inicio'}, '', '#inicio');
-                break;
-            case 'productoskit':
-                document.getElementById('vista-productoskit').classList.remove('hidden');
-                history.pushState({vista: 'productoskit', data: data}, '', `#productoskit-${data.kitId}`);
-                // Llamar a la función original de productoskit
-                if (data.kitId) {
-                    setTimeout(() => verProductosKitOriginal(data.kitId), 50);
-                }
-                break;
-            case 'asesorias':
-                document.getElementById('vista-asesorias').classList.remove('hidden');
-                history.pushState({vista: 'asesorias'}, '', '#asesorias');
-                // Llamar a la función original de asesorías
-                setTimeout(verAsesoriasOriginal, 50);
-                break;
-            case 'componentes':
-                document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-                history.pushState({vista: 'componentes'}, '', '#componentes');
-                // Llamar a la función original de componentes
-                setTimeout(verComponentesSueltosOriginal, 50);
-                break;
-        }
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+// Variable para controlar si ya estamos en proceso de navegación
+let navegando = false;
+
+// Función para cambiar vista y actualizar history - CORREGIDA
+function navegarA(vista, data = {}) {
+    // Prevenir navegaciones múltiples simultáneas
+    if (navegando) return;
+    navegando = true;
+    
+    console.log('🔄 Navegando a:', vista, data);
+    
+    // Ocultar todas las vistas
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('vista-productoskit').classList.add('hidden');
+    document.getElementById('vista-asesorias').classList.add('hidden');
+    document.getElementById('vista-componentes-sueltos').classList.add('hidden');
+    
+    // Mostrar vista solicitada
+    switch(vista) {
+        case 'inicio':
+            document.getElementById('main-content').style.display = '';
+            history.pushState({vista: 'inicio'}, '', '#inicio');
+            break;
+        case 'productoskit':
+            document.getElementById('vista-productoskit').classList.remove('hidden');
+            history.pushState({vista: 'productoskit', data: data}, '', `#productoskit-${data.kitId}`);
+            // Llamar a la función original de productoskit SIN scroll automático
+            if (data.kitId) {
+                setTimeout(() => {
+                    verProductosKitOriginal(data.kitId);
+                    navegando = false; // Liberar el bloqueo después de la ejecución
+                }, 50);
+            }
+            break;
+        case 'asesorias':
+            document.getElementById('vista-asesorias').classList.remove('hidden');
+            history.pushState({vista: 'asesorias'}, '', '#asesorias');
+            // Llamar a la función original de asesorías SIN scroll automático
+            setTimeout(() => {
+                verAsesoriasOriginal();
+                navegando = false; // Liberar el bloqueo después de la ejecución
+            }, 50);
+            break;
+        case 'componentes':
+            document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+            history.pushState({vista: 'componentes'}, '', '#componentes');
+            // Llamar a la función original de componentes SIN scroll automático
+            setTimeout(() => {
+                verComponentesSueltosOriginal();
+                navegando = false; // Liberar el bloqueo después de la ejecución
+            }, 50);
+            break;
     }
+    
+    // Liberar el bloqueo después de un tiempo
+    setTimeout(() => {
+        navegando = false;
+    }, 100);
+}
 
-    // Manejar botón atrás/adelante del navegador
-    window.addEventListener('popstate', function(event) {
-        console.log('🔙 Popstate:', event.state);
-        if (event.state && event.state.vista) {
-            navegarA(event.state.vista, event.state.data || {});
-        } else {
-            // Si no hay state, volver al inicio
-            navegarA('inicio');
-        }
-    });
+// Manejar botón atrás/adelante del navegador - FUERA de la función navegarA
+window.addEventListener('popstate', function(event) {
+    console.log('🔙 Popstate:', event.state);
+    if (event.state && event.state.vista) {
+        navegarA(event.state.vista, event.state.data || {});
+    } else {
+        navegarA('inicio');
+    }
+});
 
-    // Guardar las funciones originales
-    const verProductosKitOriginal = verProductosKit;
-    const verAsesoriasOriginal = verAsesorias;
-    const verComponentesSueltosOriginal = verComponentesSueltos;
+// Guardar las funciones originales
+const verProductosKitOriginal = verProductosKit;
+const verAsesoriasOriginal = verAsesorias;
+const verComponentesSueltosOriginal = verComponentesSueltos;
 
     // =============================================
     // LAZY LOADING AVANZADO - FASE 2
@@ -3108,7 +3061,7 @@ function initAdvancedLazyLoading() {
         });
     }
 }
-   // =============================================
+  // =============================================
   // NUEVO SISTEMA DE FILTROS CON HOVER
   // =============================================
   // JavaScript para el nuevo sistema de filtros
@@ -3140,27 +3093,90 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function aplicarFiltroCategoria(categoria) {
     console.log('Filtrando por:', categoria);
-    
-    // 1. Ocultar el dropdown
+      mostrarNotificacion(`Filtrando por: ${categoria}`);
+    // Ocultar el dropdown
     const dropdowns = document.querySelectorAll('.subcategory-panel');
     dropdowns.forEach(panel => {
         panel.classList.add('opacity-0', 'invisible', 'scale-95');
     });
 
-    // 2. ESTA ES LA PARTE MÁS IMPORTANTE: Establecer el valor en el select existente
-    const filtroCategoria = document.getElementById('filtro-categoria');
-    if (filtroCategoria) {
-        filtroCategoria.value = categoria; // ← ¡Esto hace que el filtro funcione!
-    }
-
-    // 3. Resetear a primera página
+    // Resetear a primera página
     paginaActual = 1;
 
-    // 4. Llamar a tu función principal que YA SABE filtrar
-    renderizarComponentesSueltos();
-    
-    mostrarNotificacion(`Filtrando por: ${categoria}`);
+    // MAPA COMPLETO DE CATEGORÍAS Y SUBCATEGORÍAS
+    const categoriasMap = {
+        // Sensores y sus subcategorías
+        'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20'],
+        'Humedad': ['humedad', 'dht11', 'dht22'],
+        'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio'],
+        'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible'],
+
+        // Motores y sus subcategorías
+        'Servo Motores': ['servo', 'sg90'],
+        'Stepper': ['stepper', 'paso a paso'],
+        'DC Motors': ['motor dc', 'motor corriente continua'],
+
+        // Displays y sus subcategorías
+        'LCD 16x2': ['lcd', '16x2', 'pantalla lcd'],
+        'Matriz LED': ['matriz led', 'max7219', '8x8'],
+        'OLED': ['oled', 'pantalla oled', 'display oled'],
+
+        // Categorías principales
+        'Módulos': ['módulo', 'module', 'shield'],
+        'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266'],
+        'Raspberry Pi': ['raspberry', 'pi', 'rpi'],
+
+        // Categorías generales
+        'Sensores': ['sensor', 'detector', 'medidor'],
+        'Motores': ['motor', 'servo', 'stepper'],
+        'Displays': ['display', 'pantalla', 'lcd', 'oled', 'led']
+    };
+
+    // Obtener términos de búsqueda para esta categoría
+    const terminosBusqueda = categoriasMap[categoria] || [categoria.toLowerCase()];
+
+    console.log('Buscando términos:', terminosBusqueda);
+
+    // Filtrar productos
+    const productosFiltrados = componentesSueltos.filter(comp => {
+        const textoBusqueda = (
+            comp.nombre.toLowerCase() + ' ' + 
+            (comp.descripcion || '').toLowerCase() + ' ' +
+            (comp.categoria || '').toLowerCase() + ' ' +
+            (comp.especificaciones ? comp.especificaciones.join(' ').toLowerCase() : '')
+        );
+
+        return terminosBusqueda.some(termino => 
+            textoBusqueda.includes(termino.toLowerCase())
+        );
+    });
+
+    console.log(`Encontrados ${productosFiltrados.length} productos para "${categoria}"`);
+
+    // Actualizar la vista
+renderizarComponentesFiltradosConPaginacion(productosFiltrados, categoria);
+    mostrarNotificacion(`Filtrando por: ${categoria} (${productosFiltrados.length} productos)`);
 }
+
+// AGREGA ESTA NUEVA FUNCIÓN después de aplicarFiltroCategoria
+function renderizarComponentesFiltradosConPaginacion(productosFiltrados, categoriaFiltro = '') {
+    const grid = document.getElementById('grid-componentes');
+    const loading = document.getElementById('loading-componentes');
+    
+    // Ocultar loading
+    if (loading) loading.classList.add('hidden');
+    
+    // Mostrar información del filtro aplicado
+    const infoFiltro = categoriaFiltro ? 
+        `<div class="col-span-full mb-4 p-3 bg-blue-50 rounded-lg">
+            <div class="flex items-center justify-between">
+                <span class="font-semibold text-blue-800">Filtro aplicado: ${categoriaFiltro}</span>
+                <button onclick="limpiarFiltros()" class="text-blue-600 hover:text-blue-800 text-sm font-semibold">
+                    Limpiar filtro ×
+                </button>
+            </div>
+            <p class="text-sm text-blue-600 mt-1">Mostrando ${productosFiltrados.length} productos</p>
+        </div>` : '';
     
     // CALCULAR PAGINACIÓN (igual que en renderizarComponentesSueltos)
     const totalComponentes = productosFiltrados.length;
@@ -3223,7 +3239,7 @@ function aplicarFiltroCategoria(categoria) {
         botones[0].disabled = paginaActual === 1;
         botones[1].disabled = paginaActual === totalPaginas || totalPaginas === 0;
     }
-
+}
 function limpiarFiltros() {
     paginaActual = 1;
     
@@ -3509,3 +3525,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
