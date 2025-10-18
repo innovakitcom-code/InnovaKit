@@ -751,65 +751,82 @@
         filter: contrast(1.2) brightness(1.1);
       }
     }
-    /* ============================================= */
-/* HEADER RESPONSIVE PARA MÓVILES - FORZADO */
+  /* ============================================= */
+/* HEADER RESPONSIVE PARA MÓVILES - CORREGIDO */
 /* ============================================= */
 
 @media (max-width: 768px) {
-  /* Ocultar logo SOLO en móviles */
+  /* HEADER COMPLETO - FLEX VERTICAL */
+  header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 12px 16px !important;
+  }
+  
+  /* CONTENEDOR SUPERIOR: Logo + Carrito */
+  header > .flex.items-center {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    order: 1;
+  }
+  
+  /* LOGO A LA IZQUIERDA */
+  header > .flex.items-center > a {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  /* OCULTAR IMAGEN DEL LOGO EN MÓVIL */
   header .mobile-logo {
     display: none !important;
   }
   
-  /* Asegurar que el contenedor ocupe todo el ancho */
-  header > .flex.items-center {
-    width: 100% !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-  }
-  
-  /* Innovakit a la IZQUIERDA */
-  header > .flex.items-center > a {
-    margin-left: 0 !important;
-    margin-right: auto !important;
-  }
-  
-  /* Carrito a la DERECHA */
+  /* CARRO A LA DERECHA */
   header .mobile-cart-btn {
     margin-left: auto !important;
     margin-right: 0 !important;
     order: 2;
   }
   
-  /* Navegación ocupa línea completa */
+  /* NAVEGACIÓN ABAJO - CENTRADA */
   header .mobile-nav {
     width: 100% !important;
     margin-top: 12px !important;
     justify-content: center !important;
-    order: 3;
-  }
-  
-  /* Resetear cualquier flexbox que interfiera */
-  header {
+    order: 2;
     display: flex !important;
-    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
   }
 }
 
-/* Para pantallas grandes, resetear los estilos móviles */
+/* Reset para desktop */
 @media (min-width: 769px) {
   header .mobile-logo {
     display: block !important;
   }
-  
-  header > .flex.items-center {
-    width: auto !important;
-    justify-content: flex-start !important;
+}
+    /* Agrega esto al final de tu CSS para mejor soporte táctil */
+@media (max-width: 768px) {
+  /* Mejorar targets táctiles */
+  .btn-mobile, button, a {
+    min-height: 44px;
+    min-width: 44px;
   }
   
-  header .mobile-cart-btn {
-    margin-left: 1rem !important;
+  /* Prevenir zoom en iOS en inputs */
+  input, select, textarea {
+    font-size: 16px;
+  }
+  
+  /* Mejorar scrolling */
+  .modal-container {
+    -webkit-overflow-scrolling: touch;
   }
 }
   </style>
@@ -945,40 +962,41 @@
   </div>
 </section>
 <hr class="my-4 border-gray-300">
-    <!-- Productos -->
-<section id="productos" class="p-6 sm:p-6 bg-gray-200 scroll-mt-20 mt-6">
-  <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
+    <!-- Productos - CORREGIDO -->
+<section id="productos" class="p-4 sm:p-6 bg-gray-200 scroll-mt-20 mt-6">
+  <h3 class="text-2xl sm:text-3xl font-bold text-center mb-6">Nuestros Productos</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
+    
     <!-- Producto 1 -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
-      <img src="png/Kounshun.svg" alt="Kit de electrónica Innovakit" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
+      <img src="png/Kounshun.svg" alt="Kit de electrónica Innovakit" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Kit de Electrónica Básico</h4>
-      <p class="mb-3 text-center text-sm">Incluye componentes esenciales para aprender electrónica desde cero.</p>
-      <button onclick="verProductosKit(1)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
+      <p class="mb-3 text-center text-sm flex-grow">Incluye componentes esenciales para aprender electrónica desde cero.</p>
+      <button onclick="verProductosKit(1)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver más</button>
     </div>
     
     <!-- Producto 2 -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
-      <img src="png/kits_educativos.svg" alt="Kit de electrónica básico Innovakit" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
+      <img src="png/kits_educativos.svg" alt="Kit de electrónica básico Innovakit" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Kit de Electrónica Make</h4>
-      <p class="mb-3 text-center text-sm">Perfecto para creadores que quieran comenzar con proyectos prácticos.</p>
-      <button onclick="verProductosKit(2)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
+      <p class="mb-3 text-center text-sm flex-grow">Perfecto para creadores que quieran comenzar con proyectos prácticos.</p>
+      <button onclick="verProductosKit(2)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver más</button>
     </div>
     
     <!-- Producto 3 -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
-      <img src="png/Acebott.svg" alt="Kit de Robótica Acebott" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
+      <img src="png/Acebott.svg" alt="Kit de Robótica Acebott" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Kit de Robótica Acebott</h4>
-      <p class="mb-3 text-center text-sm">Componentes avanzados para proyectos más complejos y creativos.</p>
-      <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
+      <p class="mb-3 text-center text-sm flex-grow">Componentes avanzados para proyectos más complejos y creativos.</p>
+      <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver más</button>
     </div>
     
-    <!-- Producto 4 - CORREGIDO PARA MÓVILES -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
-      <img src="png/Producto4.svg" alt="Componentes Sueltos" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
+    <!-- Producto 4 - CORREGIDO -->
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
+      <img src="png/Producto4.svg" alt="Componentes Sueltos" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Componentes</h4>
-      <p class="mb-3 text-center text-sm">Compra sensores, motores, displays y componentes varios, individuales.</p>
-      <button onclick="verComponentesSueltos()" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver componentes</button>
+      <p class="mb-3 text-center text-sm flex-grow">Compra sensores, motores, displays y componentes varios, individuales.</p>
+      <button onclick="verComponentesSueltos()" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver componentes</button>
     </div>
   </div>
 </section>
