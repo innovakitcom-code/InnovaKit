@@ -2646,10 +2646,20 @@ document.addEventListener('DOMContentLoaded', function() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function volverAlInicio() {
+    // Función mejorada para volver al inicio
+function volverAlInicio() {
+    // Navegar a la vista de inicio
     navegarA('inicio');
+    
+    // Hacer scroll suave al inicio de la página
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    
+    // Track event para analytics
+    trackEvent('Navegación', 'Logo Click', 'Volver al inicio');
 }
-
     // Cerrar modal con tecla ESC
     document.onkeydown = function(evt) {
       evt = evt || window.event;
