@@ -2140,6 +2140,7 @@ function verComponentesSueltos() {
     console.log('🎯 Mostrando componentes sueltos...');
     
     // Ocultar otras vistas y mostrar componentes sueltos
+    componentesSueltos.sort(() => Math.random() - 0.5);
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('vista-productoskit').classList.add('hidden');
     document.getElementById('vista-asesorias').classList.add('hidden');
@@ -2219,12 +2220,11 @@ function renderizarComponentesSueltos() {
     
     console.log('🔍 Filtros - Texto:', filtroTexto, 'Precio:', filtroPrecioValor);
     
-    // NO aplicamos filtro de categoría aquí porque se maneja por aplicarFiltroCategoria
+    // Filtrar productos
     let componentesFiltrados = componentesSueltos.filter(comp => {
-        // Filtro por texto
+        // Filtro por texto - SOLO EN EL NOMBRE/TÍTULO
         const coincideTexto = !filtroTexto || 
-            comp.nombre.toLowerCase().includes(filtroTexto) || 
-            (comp.descripcion && comp.descripcion.toLowerCase().includes(filtroTexto));
+            comp.nombre.toLowerCase().includes(filtroTexto);
         
         // Filtro por precio
         let coincidePrecio = true;
@@ -2319,51 +2319,80 @@ function cambiarPagina(nuevaPagina) {
 // Funciones para el modal de producto
 function mostrarModalProducto(id) {
   const producto = componentesSueltos.find(comp => comp.id === id);
-  if (!producto) return;
-  
-  // Llenar modal con datos del producto
-  document.getElementById('modal-producto-nombre').textContent = producto.nombre;
-  document.getElementById('modal-producto-precio').textContent = producto.precio;
-  document.getElementById('modal-producto-descripcion').textContent = producto.descripcion;
-  document.getElementById('modal-producto-imagen').src = producto.imagen;
-  
-  // Stock
-  const stockElement = document.getElementById('modal-producto-stock');
-  stockElement.textContent = producto.stock === 'disponible' ? 'En stock' : 'Sin existencias';
-  stockElement.className = `ml-4 px-2 py-1 text-xs rounded-full ${producto.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
-  
-  // Especificaciones
-  const especElement = document.getElementById('modal-producto-especificaciones');
-  especElement.innerHTML = producto.especificaciones.map(spec => 
-    `<div class="flex"><span class="mr-2">•</span><span>${spec}</span></div>`
-  ).join('');
-  
-  // Thumbnails
-  producto.imagenes.forEach((img, index) => {
-    const thumb = document.getElementById(`modal-producto-thumb${index + 1}`);
-    if (thumb) {
-      thumb.src = img;
-      thumb.style.display = 'block';
-      thumb.onclick = () => document.getElementById('modal-producto-imagen').src = img;
-    }
-  });
-  
-  // Ocultar thumbs no utilizados
-  for (let i = producto.imagenes.length; i < 4; i++) {
-    const thumb = document.getElementById(`modal-producto-thumb${i + 1}`);
-    if (thumb) thumb.style.display = 'none';
+  if (!producto) {
+    console.error('Producto no encontrado con ID:', id);
+    mostrarNotificacion('❌ Producto no encontrado');
+    return;
   }
   
-  toggleModalProducto();
+  try {
+    // Llenar modal con datos del producto
+    document.getElementById('modal-producto-nombre').textContent = producto.nombre;
+    document.getElementById('modal-producto-precio').textContent = producto.precio;
+    document.getElementById('modal-producto-descripcion').textContent = producto.descripcion || 'Descripción no disponible';
+    document.getElementById('modal-producto-imagen').src = producto.imagen;
+    document.getElementById('modal-producto-imagen').alt = producto.nombre;
+    
+    // Stock
+    const stockElement = document.getElementById('modal-producto-stock');
+    const disponible = producto.stock === 'disponible';
+    stockElement.textContent = disponible ? 'En stock' : 'Sin existencias';
+    stockElement.className = `ml-4 px-2 py-1 text-xs rounded-full ${disponible ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+    
+    // Especificaciones
+    const especElement = document.getElementById('modal-producto-especificaciones');
+    if (producto.especificaciones && producto.especificaciones.length > 0) {
+        especElement.innerHTML = producto.especificaciones.map(spec => 
+            `<div class="flex"><span class="mr-2">•</span><span>${spec}</span></div>`
+        ).join('');
+    } else {
+        especElement.innerHTML = '<p class="text-gray-500">No hay especificaciones disponibles</p>';
+    }
+    
+    // Thumbnails
+    const imagenes = producto.imagenes || [producto.imagen];
+    imagenes.forEach((img, index) => {
+        const thumb = document.getElementById(`modal-producto-thumb${index + 1}`);
+        if (thumb) {
+            thumb.src = img;
+            thumb.alt = `${producto.nombre} - vista ${index + 1}`;
+            thumb.style.display = 'block';
+            thumb.onclick = () => document.getElementById('modal-producto-imagen').src = img;
+        }
+    });
+    
+    // Ocultar thumbs no utilizados
+    for (let i = imagenes.length; i < 4; i++) {
+        const thumb = document.getElementById(`modal-producto-thumb${i + 1}`);
+        if (thumb) thumb.style.display = 'none';
+    }
+    
+    console.log('📦 Abriendo modal de producto:', producto.nombre);
+    toggleModalProducto();
+  } catch (error) {
+    console.error('Error mostrando modal:', error);
+    mostrarNotificacion('❌ Error al cargar detalles del producto');
+  }
 }
 
+// Función para abrir/cerrar modal de producto
 function toggleModalProducto() {
   const modal = document.getElementById('modal-producto');
+  const isOpening = modal.classList.contains('opacity-0');
+  
   modal.classList.toggle('opacity-0');
   modal.classList.toggle('pointer-events-none');
-  document.body.classList.toggle('modal-active');
+  document.body.classList.toggle('modal-active', isOpening);
+  
+  // En móvil, prevenir scroll del body cuando el modal está abierto
+  if (window.innerWidth <= 768) {
+    if (isOpening) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
 }
-
 function comprarProductoWhatsApp() {
   const producto = componentesSueltos.find(comp => 
     comp.nombre === document.getElementById('modal-producto-nombre').textContent
@@ -2826,6 +2855,82 @@ function volverAlInicio() {
     window.open(url, "_blank");
   }
 
+  // =============================================
+// INICIALIZACIÓN DE EVENTOS DEL MODAL
+// =============================================
+function initModalEvents() {
+  console.log('🔧 Inicializando eventos del modal...');
+  
+  // Cerrar modal de producto al hacer clic en la X
+  const modalCloseBtn = document.querySelector('#modal-producto .modal-close');
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('❌ Cerrar modal producto (X)');
+      toggleModalProducto();
+    });
+  }
+  
+  // Cerrar modal de producto al hacer clic fuera
+  const modalOverlay = document.querySelector('#modal-producto .modal-overlay');
+  if (modalOverlay) {
+    modalOverlay.addEventListener('click', function(e) {
+      if (e.target === this) {
+        console.log('❌ Cerrar modal producto (overlay)');
+        toggleModalProducto();
+      }
+    });
+  }
+  
+  // Cerrar modal de descripción al hacer clic en la X
+  const descModalClose = document.querySelector('#modal-descripcion .modal-close');
+  if (descModalClose) {
+    descModalClose.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleModal();
+    });
+  }
+  
+  // Cerrar modal de descripción al hacer clic fuera
+  const descModalOverlay = document.querySelector('#modal-descripcion .modal-overlay');
+  if (descModalOverlay) {
+    descModalOverlay.addEventListener('click', function(e) {
+      if (e.target === this) {
+        toggleModal();
+      }
+    });
+  }
+}
+
+// Cerrar modal con tecla ESC (CORREGIDO)
+document.addEventListener('keydown', function(evt) {
+  evt = evt || window.event;
+  let isEscape = false;
+  if ("key" in evt) {
+    isEscape = (evt.key === "Escape" || evt.key === "Esc");
+  } else {
+    isEscape = (evt.keyCode === 27);
+  }
+  
+  const modalDescripcion = document.getElementById('modal-descripcion');
+  const modalProducto = document.getElementById('modal-producto');
+  const modalCarrito = document.getElementById('modal-carrito');
+  
+  // Cerrar modal de producto si está abierto
+  if (isEscape && !modalProducto.classList.contains('pointer-events-none')) {
+    toggleModalProducto();
+  }
+  // Cerrar modal de descripción si está abierto
+  else if (isEscape && !modalDescripcion.classList.contains('pointer-events-none')) {
+    toggleModal();
+  }
+  // Cerrar modal de carrito si está abierto
+  else if (isEscape && !modalCarrito.classList.contains('pointer-events-none')) {
+    toggleModalCarrito(false);
+  }
+});
   // Cierre por overlay / botón ✕
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#modal-carrito .modal-overlay, #modal-carrito .modal-carrito-close')
@@ -2988,7 +3093,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+        // Inicializar eventos de modales
+    initModalEvents();
     console.log('✅ Innovakit inicializado correctamente');
   // Inicializar history state al cargar
     if (!history.state) {
