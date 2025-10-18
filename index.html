@@ -895,7 +895,7 @@
       <div class="animate-fade-in-up">
         <h1 id="hero-heading" class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4">Aprende electrónica de forma <span class="text-yellow-300 animate-pulse-soft">simple</span></h1>
         <p class="mt-4 text-lg sm:text-xl opacity-95 max-w-prose mx-auto md:mx-0 text-readable">
-          Con <strong>Innovakit</strong> SAMANIEGO VICTOR VILLAGRA DE SAMANIEGO VILLAGRA.</p>
+          Con <strong>Innovakit</strong> tienes kits completos, asesoría y soporte para transformar tus ideas en proyectos reales. Ideal para estudiantes, makers y emprendedores.</p>
 
         <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
           <a href="#productos"
@@ -940,7 +940,7 @@
 
     <hr class="my-6 border-gray-300">
 <!-- Visión -->
-    <section id="vision" class="p-6 sm:p-12 text-center bg-gray-200 scroll-mt-20 card-elevated mx-4">
+    <section id="vision" class="p-6 sm:p-12 text-center bg-gradient-to-br from-blue-50 to-indigo-100 scroll-mt-20 card-elevated mx-4">
       <i class="fas fa-lightbulb text-4xl sm:text-5xl text-yellow-500 mb-4 animate-bounce-subtle"></i>
       <h3 class="text-xl sm:text-2xl font-bold mb-2">Nuestra Visión</h3>
       <p class="max-w-2xl mx-auto text-base sm:text-lg text-readable">
@@ -978,7 +978,7 @@
 </section>
 <hr class="my-4 border-gray-300">
     <!-- Productos -->
-<section id="productos" class="p-6 sm:p-6 bg-gray-200 scroll-mt-20 mt-6">
+<section id="productos" class="p-6 sm:p-6 bg-gradient-to-br from-blue-50 to-indigo-100 scroll-mt-20 mt-6">
   <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
     <!-- Producto 1 -->
@@ -1016,7 +1016,7 @@
 </section>
 <hr class="my-6 border-gray-300">
 <!-- Asesorías Preview - MEJORADO FASE 5 -->
-<section id="asesorias-preview" class="p-6 sm:p-12 text-center scroll-mt-20 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl mx-4 mb-8">
+<section id="asesorias-preview" class="p-6 sm:p-12 text-center scroll-mt-20 bg-white rounded-2xl mx-4 mb-8">
   <i class="fas fa-chalkboard-teacher text-4xl sm:text-5xl text-blue-600 mb-6 animate-bounce-subtle"></i>
   <h3 class="text-2xl sm:text-3xl font-bold mb-6 animate-fade-in-up">Asesoría para Proyectos Técnicos</h3>
   <p class="max-w-2xl mx-auto text-lg sm:text-xl text-gray-700 mb-8 text-readable leading-relaxed">
@@ -1032,7 +1032,7 @@
 <hr class="my-8 border-gray-300">
 
 <!-- Testimonios de Clientes - MEJORADO FASE 5 -->
-<section id="testimonios" class="py-16 bg-gradient-to-b from-gray-100 to-white">
+<section id="testimonios" class="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
   <div class="max-w-6xl mx-auto px-4">
     <h3 class="text-2xl sm:text-3xl font-bold text-center mb-6 animate-fade-in-up">Lo que dicen nuestros clientes</h3>
     <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto text-lg text-readable">
@@ -1718,16 +1718,15 @@
 </section>
 
 <!-- Footer MEJORADO -->
-<footer class="bg-gradient-to-b from-gray-800 to-gray-900 text-white text-center p-8" role="contentinfo">
-  <div class="max-w-6xl mx-auto">
+<footer class="bg-gradient-to-b from-gray-800 to-gray-900 text-white text-center p-4" role="contentinfo">
+  <div class="max-w-5xl mx-auto">
     <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
-      <!-- Logo y nombre -->
-      <div class="flex items-center gap-3">
-        <img src="Icono.png" alt="Innovakit" class="h-10 w-10">
-        <span class="text-xl font-bold">
-          <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-400">kit</span>
-        </span>
-      </div>
+      <!-- Solo nombre - más grande -->
+<div class="flex items-center">
+  <span class="text-4xl font-bold">
+    <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-400">kit</span>
+  </span>
+</div>
       
       <!-- Enlaces rápidos -->
       <div class="flex flex-wrap justify-center gap-6 text-sm">
@@ -1744,7 +1743,7 @@
     <!-- Copyright y info -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
       <p>&copy; 2025 Innovakit. <strong>Todos los derechos reservados.</strong></p>
-      <p>Kits de electrónica y robótica educativa en Paraguay</p>
+      <p class="md:ml-auto">Kits de electrónica y robótica educativa en Paraguay</p>
       <div class="flex gap-4">
         <a href="https://www.facebook.com/share/15HSQmpG2Z8/" target="_blank" class="hover:text-blue-400 transition-colors duration-300">
           <i class="fab fa-facebook text-lg"></i>
@@ -2512,13 +2511,24 @@ document.addEventListener('DOMContentLoaded', function() {
       return html;
     }
 
-    // Modal ON/OFF
-    function toggleModal() {
-      const modal = document.getElementById('modal-descripcion');
-      modal.classList.toggle('opacity-0');
-      modal.classList.toggle('pointer-events-none');
-      document.body.classList.toggle('modal-active');
+    // Modal ON/OFF - CORREGIDO
+function toggleModal() {
+  const modal = document.getElementById('modal-descripcion');
+  const isOpening = modal.classList.contains('opacity-0');
+  
+  modal.classList.toggle('opacity-0');
+  modal.classList.toggle('pointer-events-none');
+  document.body.classList.toggle('modal-active', isOpening);
+  
+  // En móvil, prevenir scroll del body cuando el modal está abierto
+  if (window.innerWidth <= 768) {
+    if (isOpening) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
+  }
+}
 
     // Mostrar modal con descripción + componentes
     function mostrarDescripcionCompleta(producto) {
@@ -2689,30 +2699,6 @@ function volverAlInicio() {
     // Track event para analytics
     trackEvent('Navegación', 'Logo Click', 'Volver al inicio');
 }
-    // Cerrar modal con tecla ESC
-    document.onkeydown = function(evt) {
-      evt = evt || window.event;
-      let isEscape = false;
-      if ("key" in evt) {
-        isEscape = (evt.key === "Escape" || evt.key === "Esc");
-      } else {
-        isEscape = (evt.keyCode === 27);
-      }
-      const modal = document.getElementById('modal-descripcion');
-      const oculto = modal.classList.contains('pointer-events-none');
-      if (isEscape && !oculto) {
-        toggleModal();
-      }
-    };
-
-    // Cerrar modal al hacer clic fuera del contenido
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelector('.modal-overlay').addEventListener('click', () => {
-        const modal = document.getElementById('modal-descripcion');
-        if (!modal.classList.contains('pointer-events-none')) toggleModal();
-      });
-      document.querySelector('.modal-close').addEventListener('click', toggleModal);
-    });
 
     // =============================================
     // FUNCIONES PARA LA SECCIÓN DE ASESORÍAS
@@ -2855,8 +2841,8 @@ function volverAlInicio() {
     window.open(url, "_blank");
   }
 
-  // =============================================
-// INICIALIZACIÓN DE EVENTOS DEL MODAL
+ // =============================================
+// INICIALIZACIÓN DE EVENTOS DEL MODAL - VERSIÓN COMPLETA
 // =============================================
 function initModalEvents() {
   console.log('🔧 Inicializando eventos del modal...');
@@ -2889,6 +2875,7 @@ function initModalEvents() {
     descModalClose.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
+      console.log('❌ Cerrar modal descripción (X)');
       toggleModal();
     });
   }
@@ -2898,13 +2885,36 @@ function initModalEvents() {
   if (descModalOverlay) {
     descModalOverlay.addEventListener('click', function(e) {
       if (e.target === this) {
+        console.log('❌ Cerrar modal descripción (overlay)');
         toggleModal();
+      }
+    });
+  }
+  
+  // Cerrar modal de carrito al hacer clic en la X
+  const carritoCloseBtns = document.querySelectorAll('#modal-carrito .modal-carrito-close');
+  carritoCloseBtns.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('❌ Cerrar modal carrito (X)');
+      toggleModalCarrito(false);
+    });
+  });
+  
+  // Cerrar modal de carrito al hacer clic fuera
+  const carritoOverlay = document.querySelector('#modal-carrito .modal-overlay');
+  if (carritoOverlay) {
+    carritoOverlay.addEventListener('click', function(e) {
+      if (e.target === this) {
+        console.log('❌ Cerrar modal carrito (overlay)');
+        toggleModalCarrito(false);
       }
     });
   }
 }
 
-// Cerrar modal con tecla ESC (CORREGIDO)
+// Cerrar modal con tecla ESC - VERSIÓN COMPLETA
 document.addEventListener('keydown', function(evt) {
   evt = evt || window.event;
   let isEscape = false;
@@ -2914,20 +2924,27 @@ document.addEventListener('keydown', function(evt) {
     isEscape = (evt.keyCode === 27);
   }
   
+  if (!isEscape) return;
+  
   const modalDescripcion = document.getElementById('modal-descripcion');
   const modalProducto = document.getElementById('modal-producto');
   const modalCarrito = document.getElementById('modal-carrito');
   
+  console.log('⌨️ Tecla ESC presionada');
+  
   // Cerrar modal de producto si está abierto
-  if (isEscape && !modalProducto.classList.contains('pointer-events-none')) {
+  if (modalProducto && !modalProducto.classList.contains('pointer-events-none')) {
+    console.log('❌ Cerrando modal producto con ESC');
     toggleModalProducto();
   }
   // Cerrar modal de descripción si está abierto
-  else if (isEscape && !modalDescripcion.classList.contains('pointer-events-none')) {
+  else if (modalDescripcion && !modalDescripcion.classList.contains('pointer-events-none')) {
+    console.log('❌ Cerrando modal descripción con ESC');
     toggleModal();
   }
   // Cerrar modal de carrito si está abierto
-  else if (isEscape && !modalCarrito.classList.contains('pointer-events-none')) {
+  else if (modalCarrito && !modalCarrito.classList.contains('pointer-events-none')) {
+    console.log('❌ Cerrando modal carrito con ESC');
     toggleModalCarrito(false);
   }
 });
