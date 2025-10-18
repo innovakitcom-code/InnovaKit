@@ -69,52 +69,24 @@
             'innovakit-green': '#7eb74a',
             'innovakit-yellow': '#fdc344',
             'innovakit-blue': '#3b82f6'
-          },
-          animation: {
-            'fade-in-up': 'fadeInUp 0.6s ease-out',
-            'slide-in-right': 'slideInRight 0.5s ease-out',
-            'bounce-subtle': 'bounceSubtle 2s infinite',
-            'pulse-soft': 'pulseSoft 3s infinite',
-          },
-          keyframes: {
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(20px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' }
-            },
-            slideInRight: {
-              '0%': { opacity: '0', transform: 'translateX(20px)' },
-              '100%': { opacity: '1', transform: 'translateX(0)' }
-            },
-            bounceSubtle: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-5px)' }
-            },
-            pulseSoft: {
-              '0%, 100%': { opacity: '1' },
-              '50%': { opacity: '0.8' }
-            }
           }
         }
       }
     }
   </script>
 
-  <!-- Estilos CSS optimizados - FASE 5: MEJORAS UX/UI -->
+  <!-- Estilos CSS optimizados -->
   <style>
     /* Variables CSS para consistencia */
     :root {
-      --transition-standard: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-standard: all 0.3s ease;
       --shadow-standard: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      --shadow-card: 0 8px 25px -8px rgba(0, 0, 0, 0.15);
-      --border-radius-card: 16px;
-      --border-radius-btn: 12px;
     }
 
     body { 
       font-family: 'Inter', sans-serif;
       line-height: 1.6;
-      scroll-behavior: smooth;
     }
 
     /* Mejoras de accesibilidad */
@@ -130,31 +102,14 @@
       border: 0;
     }
 
-    /* Efectos de hover optimizados - MEJORADOS */
+    /* Efectos de hover optimizados */
     .btn-hover {
       transition: var(--transition-standard);
-      position: relative;
-      overflow: hidden;
     }
     
     .btn-hover:hover {
       transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
-    }
-
-    .btn-hover::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn-hover:hover::after {
-      left: 100%;
     }
 
     /* Animación de gradiente optimizada */
@@ -170,7 +125,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Mejoras para el sistema de filtros - MEJORADO */
+    /* Mejoras para el sistema de filtros */
     .subcategory-group:hover .subcategory-panel {
       opacity: 1 !important;
       visibility: visible !important;
@@ -193,23 +148,17 @@
     }
 
     .swiper-button-next, .swiper-button-prev {
-      background-color: rgba(255,255,255,0.9);
-      width: 40px;
-      height: 40px;
+      background-color: rgba(255,255,255,0.8);
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       color: #3b82f6;
       padding: 15px;
       box-shadow: var(--shadow-standard);
-      transition: var(--transition-standard);
-    }
-    
-    .swiper-button-next:hover, .swiper-button-prev:hover {
-      transform: scale(1.1);
-      box-shadow: var(--shadow-hover);
     }
     
     .swiper-button-next::after, .swiper-button-prev::after {
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
 
     /* Estructura de página mejorada */
@@ -233,16 +182,14 @@
       justify-content: space-between;
       align-items: center;
       margin-top: 20px;
-      backdrop-filter: blur(10px);
     }
 
-    /* Mejoras para modales - MEJORADOS */
+    /* Mejoras para modales */
     .modal {
       transition: opacity 0.25s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(5px);
     }
 
     body.modal-active {
@@ -253,11 +200,9 @@
     .modal-container {
       max-height: 90vh;
       overflow-y: auto;
-      border-radius: var(--border-radius-card);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     }
 
-    /* Portada sin márgenes - MEJORADA */
+    /* Portada sin márgenes */
     .portada-sin-margenes {
       width: 100vw;
       margin-left: calc(-50vw + 50%);
@@ -271,46 +216,24 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-
-    .portada-sin-margenes:hover img {
-      transform: scale(1.05);
     }
 
     /* Mejoras de accesibilidad para enlaces */
     a:focus, button:focus {
       outline: 2px solid #3b82f6;
       outline-offset: 2px;
-      border-radius: 4px;
     }
 
     /* Mejoras de rendimiento para imágenes */
     img {
       max-width: 100%;
       height: auto;
-      transition: opacity 0.3s ease;
-    }
-
-    img[data-src] {
-      opacity: 0;
-    }
-
-    img.loaded {
-      opacity: 1;
     }
 
     /* Clase utilitaria para texto truncado */
     .line-clamp-2 {
       display: -webkit-box;
       -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .line-clamp-3 {
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -329,18 +252,14 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-
-    /* ============================================= */
-    /* MEJORAS TOUCH MOBILE - FASE 5 OPTIMIZADAS */
+        /* ============================================= */
+    /* MEJORAS TOUCH MOBILE - FASE 3 */
     /* ============================================= */
     
     /* Mejorar targets táctiles (mínimo 44px recomendado) */
     .touch-target {
       min-height: 44px;
       min-width: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
     
     /* Prevenir zoom en inputs en iOS */
@@ -353,13 +272,10 @@
       -webkit-overflow-scrolling: touch;
     }
     
-    /* Optimizar botones para touch - MEJORADOS */
+    /* Optimizar botones para touch */
     .btn-mobile {
-      padding: 14px 22px;
+      padding: 12px 20px;
       font-size: 16px;
-      border-radius: var(--border-radius-btn);
-      font-weight: 600;
-      transition: var(--transition-standard);
     }
     
     /* Prevenir highlight azul en tap */
@@ -372,16 +288,6 @@
       .transform-mobile {
         will-change: transform;
       }
-      
-      /* Optimizar cards para móvil */
-      .product-card-mobile {
-        border-radius: 12px;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      
-      .product-card-mobile:active {
-        transform: scale(0.98);
-      }
     }
     
     /* Safe areas para iPhone X+ */
@@ -392,475 +298,33 @@
     .safe-bottom {
       padding-bottom: env(safe-area-inset-bottom);
     }
-
-    /* ============================================= */
-    /* NUEVAS MEJORAS UX/UI - FASE 5 */
-    /* ============================================= */
-
-    /* Efecto de elevación para cards */
-    .card-elevated {
-      background: white;
-      border-radius: var(--border-radius-card);
-      box-shadow: var(--shadow-card);
-      transition: var(--transition-standard);
-      overflow: hidden;
-    }
-
-    .card-elevated:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Gradientes modernos */
-    .gradient-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    .gradient-success {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    }
-
-    .gradient-warning {
-      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-    }
-
-    /* Mejoras de legibilidad */
-    .text-readable {
-      line-height: 1.7;
-      letter-spacing: -0.01em;
-    }
-
-    /* Efectos de desvanecimiento para transiciones de página */
-    .page-transition {
-      animation: fadeInUp 0.6s ease-out;
-    }
-
-    /* Botones con iconos mejorados */
-    .btn-icon {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: var(--transition-standard);
-    }
-
-    .btn-icon:hover {
-      gap: 12px;
-    }
-/* ============================================= */
-/* MEJORAS ESPECÍFICAS PARA MODAL EN MÓVIL - CORREGIDO */
-/* ============================================= */
-
-@media (max-width: 768px) {
-  /* Modal de producto - COMPLETAMENTE REDISEÑADO PARA MÓVIL */
-  #modal-producto .modal-container {
-    width: 95% !important;
-    max-width: 95% !important;
-    margin: 10px auto !important;
-    max-height: 95vh !important;
-    border-radius: 16px !important;
-  }
-
-  #modal-producto .modal-content {
-    padding: 16px !important;
-  }
-
-  /* Layout de una sola columna en móvil */
-  #modal-producto .grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-
-  /* Imágenes más compactas */
-  #modal-producto .h-80 {
-    height: 200px !important;
-  }
-
-  /* Thumbnails en fila horizontal */
-  #modal-producto .grid-cols-4 {
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 8px !important;
-  }
-
-  #modal-producto .h-20 {
-    height: 60px !important;
-  }
-
-  /* Textos más compactos */
-  #modal-producto .text-2xl,
-  #modal-producto .text-3xl {
-    font-size: 1.25rem !important;
-    line-height: 1.3 !important;
-  }
-
-  #modal-producto .text-3xl,
-  #modal-producto .text-4xl {
-    font-size: 1.5rem !important;
-  }
-
-  /* Botones apilados verticalmente y mejorados */
-  #modal-producto button {
-    padding: 14px 16px !important;
-    font-size: 16px !important;
-    min-height: 50px !important;
-    border-radius: 12px !important;
-    width: 100% !important;
-    margin: 4px 0 !important;
-  }
-
-  /* Especificaciones más compactas */
-  #modal-producto .p-4 {
-    padding: 16px !important;
-  }
-
-  /* Asegurar que el contenido sea scrollable */
-  #modal-producto .modal-container {
-    overflow-y: auto !important;
-  }
-
-  /* Header del modal más compacto */
-  #modal-producto .modal-close {
-    top: 8px !important;
-    right: 8px !important;
-  }
-
-  #modal-producto .modal-close div {
-    padding: 8px !important;
-  }
-
-  /* Mejorar espaciados generales - CORREGIDO */
-  #modal-producto .space-y-6 > * + * {
-    margin-top: 16px !important;
-  }
-
-  #modal-producto .space-y-4 > * + * {
-    margin-top: 12px !important;
-  }
-
-  #modal-producto .space-y-3 > * + * {
-    margin-top: 12px !important;
-  }
-
-  /* Texto más legible en móvil */
-  #modal-producto .text-readable {
-    font-size: 14px !important;
-    line-height: 1.5 !important;
-  }
-
-  /* Precio y stock en línea */
-  #modal-producto .flex.items-center {
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-  }
-
-  #modal-producto .ml-4 {
-    margin-left: 0 !important;
-  }
-}
-
-/* Para pantallas muy pequeñas (iPhone SE, etc) */
-@media (max-width: 375px) {
-  #modal-producto .modal-container {
-    width: 98% !important;
-    margin: 5px auto !important;
-  }
-
-  #modal-producto .h-80 {
-    height: 180px !important;
-  }
-
-  #modal-producto .h-20 {
-    height: 50px !important;
-  }
-
-  #modal-producto button {
-    padding: 12px 14px !important;
-    min-height: 48px !important;
-    font-size: 15px !important;
-  }
-}
-
-/* Asegurar que el modal sea usable en landscape */
-@media (max-width: 768px) and (orientation: landscape) {
-  #modal-producto .modal-container {
-    max-height: 85vh !important;
-  }
-  
-  #modal-producto .grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 12px !important;
-  }
-  
-  #modal-producto .h-80 {
-    height: 150px !important;
-  }
-}
-    /* Mejoras para formularios */
-    .form-input-enhanced {
-      border: 2px solid #e2e8f0;
-      border-radius: var(--border-radius-btn);
-      padding: 12px 16px;
-      transition: var(--transition-standard);
-      font-size: 16px;
-    }
-
-    .form-input-enhanced:focus {
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    /* Notificaciones mejoradas */
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 16px 20px;
-      border-radius: var(--border-radius-btn);
-      box-shadow: var(--shadow-card);
-      z-index: 1000;
-      animation: slideInRight 0.5s ease-out;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      max-width: 400px;
-    }
-
-    .notification-success {
-      background: #10b981;
-      color: white;
-    }
-
-    .notification-error {
-      background: #ef4444;
-      color: white;
-    }
-
-    .notification-warning {
-      background: #f59e0b;
-      color: white;
-    }
-
-    /* Mejoras de navegación */
-    .nav-link {
-      position: relative;
-      padding: 8px 12px;
-      border-radius: 8px;
-      transition: var(--transition-standard);
-    }
-
-    .nav-link:hover {
-      background: rgba(59, 130, 246, 0.1);
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: #3b82f6;
-      transition: var(--transition-standard);
-      transform: translateX(-50%);
-    }
-
-    .nav-link:hover::after {
-      width: 80%;
-    }
-
-    /* Efectos de skeleton loading */
-    .skeleton {
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
-      border-radius: 4px;
-    }
-
-    @keyframes loading {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    /* Mejoras para el carrito */
-    .cart-badge {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: #ef4444;
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: bold;
-      animation: pulseSoft 2s infinite;
-    }
-
-    /* Mejoras para precios */
-    .price-tag {
-      background: linear-gradient(135deg, #10b981, #34d399);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-      display: inline-block;
-    }
-
-    /* Efectos de hover para productos */
-    .product-hover {
-      transition: var(--transition-standard);
-      cursor: pointer;
-    }
-
-    .product-hover:hover {
-      transform: translateY(-5px) scale(1.02);
-    }
-
-    /* Mejoras de contraste para accesibilidad */
-    .contrast-enhanced {
-      filter: contrast(1.1);
-    }
-
-    /* Efectos de blur para fondos */
-    .backdrop-blur {
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.8);
-    }
-
-    /* Responsive improvements */
-    @media (max-width: 640px) {
-      .mobile-stack {
-        flex-direction: column;
-      }
-      
-      .mobile-center {
-        text-align: center;
-        justify-content: center;
-      }
-      
-      .mobile-padding {
-        padding: 1rem;
-      }
-    }
-
-    /* Dark mode improvements */
-    @media (prefers-color-scheme: dark) {
-      .dark\:auto-contrast {
-        filter: contrast(1.2) brightness(1.1);
-      }
-    }
-  /* ============================================= */
-/* HEADER RESPONSIVE PARA MÓVILES - CORREGIDO */
-/* ============================================= */
-
-@media (max-width: 768px) {
-  /* HEADER COMPLETO - FLEX VERTICAL */
-  header {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    padding: 12px 16px !important;
-  }
-  
-  /* CONTENEDOR SUPERIOR: Logo + Carrito */
-  header > .flex.items-center {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
-    order: 1;
-  }
-  
-  /* LOGO A LA IZQUIERDA */
-  header > .flex.items-center > a {
-    margin-left: 0 !important;
-    margin-right: auto !important;
-    display: flex !important;
-    align-items: center !important;
-  }
-  
-  /* OCULTAR IMAGEN DEL LOGO EN MÓVIL */
-  header .mobile-logo {
-    display: none !important;
-  }
-  
-  /* CARRO A LA DERECHA */
-  header .mobile-cart-btn {
-    margin-left: auto !important;
-    margin-right: 0 !important;
-    order: 2;
-  }
-  
-  /* NAVEGACIÓN ABAJO - CENTRADA */
-  header .mobile-nav {
-    width: 100% !important;
-    margin-top: 12px !important;
-    justify-content: center !important;
-    order: 2;
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-  }
-}
-
-/* Reset para desktop */
-@media (min-width: 769px) {
-  header .mobile-logo {
-    display: block !important;
-  }
-}
-    /* Agrega esto al final de tu CSS para mejor soporte táctil */
-@media (max-width: 768px) {
-  /* Mejorar targets táctiles */
-  .btn-mobile, button, a {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  /* Prevenir zoom en iOS en inputs */
-  input, select, textarea {
-    font-size: 16px;
-  }
-  
-  /* Mejorar scrolling */
-  .modal-container {
-    -webkit-overflow-scrolling: touch;
-  }
-}
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-  <!-- Header mejorado con mejor semántica - MEJORADO FASE 5 -->
-  <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20 backdrop-blur bg-white/95" role="banner">
-  <!-- Contenedor principal para logo y carrito - REORGANIZADO -->
-  <div class="flex items-center w-full justify-between sm:w-auto sm:justify-start">
-    <!-- Logo e Innovakit a la IZQUIERDA -->
-    <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover" onclick="volverAlInicio(); return false;">
-      <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1 mobile-logo" width="60" height="60">
+  <!-- Header mejorado con mejor semántica -->
+  <header class="bg-white shadow-md p-4 flex flex-col items-center sm:flex-row sm:justify-between sm:items-center sticky top-0 z-20" role="banner">
+    <!-- Logo como enlace semántico -->
+    <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded" onclick="volverAlInicio(); return false;">
+      <img src="Icono.png" alt="Logo Innovakit" class="h-14 sm:h-20 lg:h-16 mr-1" width="60" height="60">
       <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">
         <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
       </h1>
       <span class="sr-only">Página de inicio de Innovakit</span>
     </a>
     
-    <!-- Botón del carrito a la DERECHA -->
-    <button onclick="verCarrito()" class="bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover relative mobile-cart-btn" aria-label="Ver carrito de compras">
-      🛒 Carrito <span id="carrito-count" aria-live="polite">0</span>
-      <div id="cart-badge" class="cart-badge hidden">0</div>
-    </button>
-  </div>
-
-  <!-- Navegación -->
-  <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-xs sm:text-base overflow-x-auto mt-2 sm:mt-0 mobile-nav" aria-label="Navegación principal">
-    <a href="#mision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Misión ǀ</a>
-    <a href="#vision" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Visión ǀ</a>
-    <a href="#productos" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Productos ǀ</a>
-    <a href="#asesorias-preview" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Asesoría ǀ</a>
-    <a href="#contacto" onclick="volverAlInicio()" class="nav-link hover:text-blue-600 focus:text-blue-600 p-1 rounded">Contacto</a>
-  </nav>
-</header>
+    <nav class="flex flex-row flex-wrap justify-center gap-2 items-center text-xs sm:text-base overflow-x-auto" aria-label="Navegación principal">
+      <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Misión ǀ</a>
+      <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Visión ǀ</a>
+      <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Productos ǀ</a>
+      <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Contacto ǀ</a>
+      <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 p-1 rounded">Asesoría</a>
+      
+      <!-- Botón del carrito con mejor accesibilidad -->
+      <button onclick="verCarrito()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500" aria-label="Ver carrito de compras">
+        🛒 Carrito (<span id="carrito-count" aria-live="polite">0</span>)
+      </button>
+    </nav>
+  </header>
     <!-- BOTÓN MODO OSCURO DESHABILITADO TEMPORALMENTE -->
   <!--
   <button id="toggle-dark-mode" class="ml-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-3 py-2 rounded-lg shadow hover:bg-gray-300 dark:hover:bg-gray-600 transition">
@@ -868,42 +332,44 @@
   <i class="fas fa-sun hidden" id="light-icon"></i>
 </button>
   -->
-   <!-- CONTENIDO PRINCIPAL -->
-  <main id="main-content" role="main" class="page-transition">
-   <!-- HERO MEJORADO - FASE 5 -->
+    <!-- CONTENIDO PRINCIPAL -->
+  <main id="main-content" role="main">
+   <!-- HERO MEJORADO -->
 <section id="hero" class="relative overflow-hidden bg-animated text-white min-h-[51vh] flex items-center" aria-labelledby="hero-heading">
   <!-- Añadir overlay para mejor contraste -->
   <div class="absolute inset-0 bg-black/20" aria-hidden="true"></div>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 relative z-10 w-full">
     <div class="grid md:grid-cols-2 gap-8 items-center">
       <!-- Texto -->
-      <div class="animate-fade-in-up">
-        <h1 id="hero-heading" class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4">Aprende electrónica de forma <span class="text-yellow-300 animate-pulse-soft">simple</span></h1>
-        <p class="mt-4 text-lg sm:text-xl opacity-95 max-w-prose mx-auto md:mx-0 text-readable">
+      <div>
+        <h1 id="hero-heading" class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4">Aprende electrónica de forma <span class="text-yellow-300">simple</span></h1>
+<p class="mt-4 text-lg sm:text-xl opacity-95 max-w-prose mx-auto md:mx-0">
           Con <strong>Innovakit</strong> tienes kits completos, asesoría y soporte para transformar tus ideas en proyectos reales. Ideal para estudiantes, makers y emprendedores.</p>
 
         <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-          <a href="#productos"
-             class="btn-hover inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-blue-700 hover:bg-blue-800
-                    text-white font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-300 btn-icon">
-            <span>Ver nuestros kits</span>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </a>
-          <a href="#asesorias-preview"
-             class="btn-hover inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-[#FFD84D] hover:bg-yellow-400
-                    text-gray-900 font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-yellow-300 btn-icon">
-            <span>Solicita asesoría</span>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
-          </a>
-        </div>
+  <a href="#productos"
+     class="btn-hover inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-blue-700 hover:bg-blue-800
+            text-white font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-blue-300">
+    <span>Ver nuestros kits</span>
+    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </a>
+  <a href="#asesorias-preview"
+     class="btn-hover inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-[#FFD84D] hover:bg-yellow-400
+            text-gray-900 font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-yellow-300">
+    <span>Solicita asesoría</span>
+    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+    </svg>
+  </a>
+</div>
       </div>
+
       <!-- Ilustración (muestra en desktop) -->
-      <div class="hidden md:block animate-slide-in-right" aria-hidden="true">
-        <img src="png/vector-electrónica.svg" alt="" class="w-64 md:w-80 h-auto object-contain drop-shadow-xl mx-auto contrast-enhanced">
+      <div class="hidden md:block" aria-hidden="true">
+        <!-- Reemplaza el src por tu vector/ilustración -->
+        <img src="png/vector-electrónica.svg" alt="" class="w-64 md:w-80 h-auto object-contain drop-shadow-xl mx-auto">
       </div>
     </div>
   </div>
@@ -914,134 +380,120 @@
   </div>
 </section>
     <hr class="my-6 border-gray-300">
-  
-    <!-- Misión - MEJORADO FASE 5 -->
-    <section id="mision" class="p-6 sm:p-12 text-center bg-white scroll-mt-20 card-elevated mx-4">
-      <i class="fas fa-bullseye text-4xl sm:text-5xl text-green-600 mb-4 animate-bounce-subtle"></i>
+    <!-- Misión -->
+    <section id="mision" class="p-6 sm:p-12 text-center bg-white scroll-mt-20">
+      <i class="fas fa-bullseye text-4xl sm:text-5xl text-green-600 mb-4"></i>
       <h3 class="text-xl sm:text-2xl font-bold mb-2">Nuestra Misión</h3>
-      <p class="max-w-2xl mx-auto text-base sm:text-lg text-readable">
-        Nuestra misión es <strong>hacer que aprender electrónica sea accesible y emocionante</strong>, brindando herramientas prácticas que impulsen la creatividad en estudiantes, makers y emprendedores.</p>
+      <p class="max-w-2xl mx-auto text-base sm:text-lg">
+  Nuestra misión es <strong>hacer que aprender electrónica sea accesible y emocionante</strong>, brindando herramientas prácticas que impulsen la creatividad en estudiantes, makers y emprendedores.</p>
     </section>
-
-    <hr class="my-6 border-gray-300">
-<!-- Visión -->
-    <section id="vision" class="p-6 sm:p-12 text-center bg-gray-200 scroll-mt-20 card-elevated mx-4">
-      <i class="fas fa-lightbulb text-4xl sm:text-5xl text-yellow-500 mb-4 animate-bounce-subtle"></i>
+<hr class="my-6 border-gray-300">
+    <!-- Visión -->
+    <section id="vision" class="p-6 sm:p-12 text-center bg-gray-200 scroll-mt-20">
+      <i class="fas fa-lightbulb text-4xl sm:text-5xl text-yellow-500 mb-4"></i>
       <h3 class="text-xl sm:text-2xl font-bold mb-2">Nuestra Visión</h3>
-      <p class="max-w-2xl mx-auto text-base sm:text-lg text-readable">
+      <p class="max-w-2xl mx-auto text-base sm:text-lg">
   Queremos ser <strong>referentes en educación tecnológica en Paraguay</strong>, inspirando a nuevas generaciones a desarrollar proyectos reales con electrónica y programación.</p>
     </section>
-    
 <hr class="my-6 border-gray-300">
-<!-- Beneficios - MEJORADO FASE 5 -->
+<!-- Sección Beneficios -->
 <section class="p-6 sm:p-12 text-center bg-white mb-12">
-  <h3 class="text-2xl sm:text-3xl font-bold mb-8 animate-fade-in-up">¿Por qué elegir Innovakit?</h3>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-    
-    <!-- Beneficio 1 - Educativo -->
-    <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover text-center">
-      <i class="fas fa-graduation-cap text-blue-600 text-4xl mb-6 animate-bounce-subtle"></i>
-      <h4 class="font-bold text-xl mb-4">Educativo</h4>
-      <p class="text-readable text-gray-600 leading-relaxed">Material diseñado para aprender electrónica paso a paso, desde cero hasta proyectos avanzados.</p>
+  <h3 class="text-2xl sm:text-3xl font-bold mb-6">¿Por qué elegir Innovakit?</h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="p-6 bg-gray-100 rounded-xl shadow hover:shadow-lg transition duration-300">
+      <i class="fas fa-graduation-cap text-blue-600 text-3xl mb-4"></i>
+      <h4 class="font-bold mb-2">Educativo</h4>
+      <p>Material diseñado para aprender paso a paso.</p>
     </div>
-    
-    <!-- Beneficio 2 - Tecnología Real -->
-    <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover text-center">
-      <i class="fas fa-microchip text-green-600 text-4xl mb-6 animate-bounce-subtle"></i>
-      <h4 class="font-bold text-xl mb-4">Tecnología Real</h4>
-      <p class="text-readable text-gray-600 leading-relaxed">Componentes de calidad profesional listos para proyectos reales y aplicaciones prácticas.</p>
+    <div class="p-6 bg-gray-100 rounded-xl shadow hover:shadow-lg transition duration-300">
+      <i class="fas fa-microchip text-green-600 text-3xl mb-4"></i>
+      <h4 class="font-bold mb-2">Tecnología Real</h4>
+      <p>Componentes de calidad listos para proyectos.</p>
     </div>
-    
-    <!-- Beneficio 3 - Soporte -->
-    <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover text-center">
-      <i class="fas fa-handshake text-yellow-500 text-4xl mb-6 animate-bounce-subtle"></i>
-      <h4 class="font-bold text-xl mb-4">Soporte Personalizado</h4>
-      <p class="text-readable text-gray-600 leading-relaxed">Acompañamiento técnico en cada etapa de tu proyecto, desde la idea hasta la implementación.</p>
+    <div class="p-6 bg-gray-100 rounded-xl shadow hover:shadow-lg transition duration-300">
+      <i class="fas fa-handshake text-yellow-500 text-3xl mb-4"></i>
+      <h4 class="font-bold mb-2">Soporte</h4>
+      <p>Acompañamiento en tu proyecto en cada etapa.</p>
     </div>
-    
   </div>
 </section>
 <hr class="my-4 border-gray-300">
-    <!-- Productos - CORREGIDO -->
-<section id="productos" class="p-4 sm:p-6 bg-gray-200 scroll-mt-20 mt-6">
-  <h3 class="text-2xl sm:text-3xl font-bold text-center mb-6">Nuestros Productos</h3>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
-    
+    <!-- Productos -->
+   <!-- Reemplaza la sección de productos actual por esta: -->
+<section id="productos" class="p-6 sm:p-6 bg-gray-200 scroll-mt-20 mt-6">
+  <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-4 place-items-center">
     <!-- Producto 1 -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
-      <img src="png/Kounshun.svg" alt="Kit de electrónica Innovakit" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
+      <img src="png/Kounshun.svg" alt="Kit de electrónica Innovakit" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Kit de Electrónica Básico</h4>
-      <p class="mb-3 text-center text-sm flex-grow">Incluye componentes esenciales para aprender electrónica desde cero.</p>
-      <button onclick="verProductosKit(1)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver más</button>
+      <p class="mb-3 text-center text-sm">Incluye componentes esenciales para aprender electrónica desde cero.</p>
+      <button onclick="verProductosKit(1)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
     </div>
     
     <!-- Producto 2 -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
-      <img src="png/kits_educativos.svg" alt="Kit de electrónica básico Innovakit" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
+      <img src="png/kits_educativos.svg" alt="Kit de electrónica básico Innovakit" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Kit de Electrónica Make</h4>
-      <p class="mb-3 text-center text-sm flex-grow">Perfecto para creadores que quieran comenzar con proyectos prácticos.</p>
-      <button onclick="verProductosKit(2)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver más</button>
+      <p class="mb-3 text-center text-sm">Perfecto para creadores que quieran comenzar con proyectos prácticos.</p>
+      <button onclick="verProductosKit(2)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
     </div>
     
     <!-- Producto 3 -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
-      <img src="png/Acebott.svg" alt="Kit de Robótica Acebott" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
+      <img src="png/Acebott.svg" alt="Kit de Robótica Acebott" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Kit de Robótica Acebott</h4>
-      <p class="mb-3 text-center text-sm flex-grow">Componentes avanzados para proyectos más complejos y creativos.</p>
-      <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver más</button>
+      <p class="mb-3 text-center text-sm">Componentes avanzados para proyectos más complejos y creativos.</p>
+      <button onclick="verProductosKit(3)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
     </div>
     
-    <!-- Producto 4 - CORREGIDO -->
-    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto h-auto min-h-[320px]">
-      <img src="png/Producto4.svg" alt="Componentes Sueltos" class="w-40 h-40 object-contain mb-3 rounded-lg" loading="lazy">
+    <!-- Producto 4 -->
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
+      <img src="png/Producto4.svg" alt="Componentes Sueltos" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
       <h4 class="text-lg font-bold mb-2 text-center">Componentes</h4>
-      <p class="mb-3 text-center text-sm flex-grow">Compra sensores, motores, displays y componentes varios, individuales.</p>
-      <button onclick="verComponentesSueltos()" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 text-sm btn-hover">Ver componentes</button>
+      <p class="mb-3 text-center text-sm">Compra sensores, motores, displays y componentes varios, individuales.</p>
+      <button onclick="verComponentesSueltos()" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver componentes</button>
     </div>
   </div>
 </section>
 <hr class="my-6 border-gray-300">
-<!-- Asesorías Preview - MEJORADO FASE 5 -->
-<section id="asesorias-preview" class="p-6 sm:p-12 text-center scroll-mt-20 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl mx-4 mb-8">
-  <i class="fas fa-chalkboard-teacher text-4xl sm:text-5xl text-blue-600 mb-6 animate-bounce-subtle"></i>
-  <h3 class="text-2xl sm:text-3xl font-bold mb-6 animate-fade-in-up">Asesoría para Proyectos Técnicos</h3>
-  <p class="max-w-2xl mx-auto text-lg sm:text-xl text-gray-700 mb-8 text-readable leading-relaxed">
-    ¿Vas a una <strong class="text-blue-700">feria científica</strong> o necesitas presentar un proyecto técnico? 
-    Con nuestra asesoría tendrás <strong class="text-blue-700">acompañamiento profesional</strong> para que tu idea destaque, usando nuestros kits y experiencia.
-  </p>
-  <button onclick="verAsesorias()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300 transform hover:scale-105">
-    <i class="fas fa-calendar-check mr-2"></i>
+<!-- Sección de Asesorías en página principal -->
+<section id="asesorias-preview" class="p-6 sm:p-12 text-center scroll-mt-20">
+  <i class="fas fa-chalkboard-teacher text-4xl sm:text-5xl text-blue-600 mb-4"></i>
+  <h3 class="text-2xl sm:text-3xl font-bold mb-4">Asesoría para Proyectos Técnicos</h3>
+  <p class="max-w-2xl mx-auto text-base sm:text-lg mb-6">
+  ¿Vas a una <strong>feria científica</strong> o necesitas presentar un proyecto técnico? 
+  Con nuestra asesoría tendrás <strong>acompañamiento profesional</strong> para que tu idea destaque, usando nuestros kits y experiencia.
+</p>
+  <button onclick="verAsesorias()" class="bg-yellow-500 text-white px-6 py-3 rounded-lg shadow hover:bg-yellow-700 font-semibold">
     Solicitar asesoría
   </button>
 </section>
-
-<hr class="my-8 border-gray-300">
-
-<!-- Testimonios de Clientes - MEJORADO FASE 5 -->
-<section id="testimonios" class="py-16 bg-gradient-to-b from-gray-100 to-white">
+<hr class="my-6 border-gray-300">
+<!-- Testimonios de Clientes -->
+<section id="testimonios" class="py-12 bg-gray-200">
   <div class="max-w-6xl mx-auto px-4">
-    <h3 class="text-2xl sm:text-3xl font-bold text-center mb-6 animate-fade-in-up">Lo que dicen nuestros clientes</h3>
-    <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto text-lg text-readable">
+    <h3 class="text-2xl sm:text-3xl font-bold text-center mb-4">Lo que dicen nuestros clientes</h3>
+    <p class="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
       Estudiantes, makers y emprendedores que han transformado sus ideas en proyectos reales con Innovakit
     </p>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- Testimonio 1 -->
-      <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover">
-        <div class="flex items-center mb-6">
-          <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-4 shadow-md">
-            <span class="text-white font-bold text-lg">MG</span>
+      <div class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-lg transition duration-300">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+            <span class="text-blue-600 font-bold">MG</span>
           </div>
           <div>
-            <p class="font-semibold text-gray-800 text-lg">María González</p>
+            <p class="font-semibold">María González</p>
             <p class="text-sm text-gray-500">Colegio Nacional · Asunción</p>
           </div>
         </div>
-        <p class="text-gray-700 italic text-readable leading-relaxed mb-6">
+        <p class="text-gray-600 italic">
           "El kit de robótica me ayudó a ganar el primer puesto en la feria científica. La asesoría fue clave para entender cada componente."
         </p>
-        <div class="flex text-yellow-400 text-lg">
+        <div class="flex text-yellow-400 mt-3">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
@@ -1051,20 +503,20 @@
       </div>
 
       <!-- Testimonio 2 -->
-      <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover">
-        <div class="flex items-center mb-6">
-          <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mr-4 shadow-md">
-            <span class="text-white font-bold text-lg">CL</span>
+      <div class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-lg transition duration-300">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+            <span class="text-green-600 font-bold">CL</span>
           </div>
           <div>
-            <p class="font-semibold text-gray-800 text-lg">Carlos López</p>
+            <p class="font-semibold">Carlos López</p>
             <p class="text-sm text-gray-500">Universidad Nacional · San Lorenzo</p>
           </div>
         </div>
-        <p class="text-gray-700 italic text-readable leading-relaxed mb-6">
+        <p class="text-gray-600 italic">
           "Compré componentes sueltos para mi proyecto de IoT. La calidad es excelente y el envío fue super rápido. ¡Totalmente recomendado!"
         </p>
-        <div class="flex text-yellow-400 text-lg">
+        <div class="flex text-yellow-400 mt-3">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
@@ -1074,20 +526,20 @@
       </div>
 
       <!-- Testimonio 3 -->
-      <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover">
-        <div class="flex items-center mb-6">
-          <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mr-4 shadow-md">
-            <span class="text-white font-bold text-lg">AP</span>
+      <div class="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-lg transition duration-300">
+        <div class="flex items-center mb-4">
+          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+            <span class="text-purple-600 font-bold">AP</span>
           </div>
           <div>
-            <p class="font-semibold text-gray-800 text-lg">Ana Pérez</p>
+            <p class="font-semibold">Ana Pérez</p>
             <p class="text-sm text-gray-500">Profesora · Colegio Técnico</p>
           </div>
         </div>
-        <p class="text-gray-700 italic text-readable leading-relaxed mb-6">
+        <p class="text-gray-600 italic">
           "Usamos los kits en mis clases de electrónica. Los estudiantes están fascinados y aprenden mucho más rápido con material práctico."
         </p>
-        <div class="flex text-yellow-400 text-lg">
+        <div class="flex text-yellow-400 mt-3">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
@@ -1095,229 +547,175 @@
           <i class="fas fa-star-half-alt"></i>
         </div>
       </div>
-      
     </div>
   </div>
 </section>
 <hr class="my-6 border-gray-300">
 
-<!-- Contacto - MEJORADO FASE 5 -->
-<section id="contacto" class="p-6 bg-gradient-to-br from-white to-gray-50 sm:p-12 text-center rounded-2xl mx-4 mb-8">
-  <h3 class="text-2xl sm:text-3xl font-bold mb-8 animate-fade-in-up">Contáctanos</h3>
-  <p class="mb-8 text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto text-readable leading-relaxed">
-    ¿Quieres más información o una <strong class="text-blue-600">cotización rápida</strong>? 
-    Escríbenos ahora y te respondemos lo antes posible.
-  </p>
+<!-- Contacto -->
+<section id="contacto" class="p-6 bg-white sm:p-12 text-center">
+  <h3 class="text-2xl sm:text-3xl font-bold mb-6">Contáctanos</h3>
+  <p class="mb-4 text-base sm:text-lg">
+  ¿Quieres más información o una <strong>cotización rápida</strong>? 
+  Escríbenos ahora y te respondemos lo antes posible.</p>
   
-  <!-- Íconos y botón - MEJORADOS -->
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-8">
-    
+  <!-- Íconos y botón -->
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
     <!-- Facebook -->
     <a href="https://www.facebook.com/share/15HSQmpG2Z8/" target="_blank"
-       class="text-blue-600 text-5xl hover:text-blue-700 transition-all duration-300 transform hover:scale-110 product-hover"
-       aria-label="Síguenos en Facebook">
+       class="text-blue-600 text-4xl hover:text-blue-800">
        <i class="fab fa-facebook"></i>
     </a>
 
     <!-- WhatsApp -->
-    <a href="https://wa.me/595972292392" target="_blank"
-       class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg flex items-center justify-center btn-hover touch-target btn-icon transition-all duration-300 transform hover:scale-105"
-       aria-label="Chatear por WhatsApp">
-       <i class="fab fa-whatsapp mr-3 text-xl"></i>WhatsApp
-    </a>
+   <a href="https://wa.me/595972292392" target="_blank"
+   class="w-full sm:w-auto bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-600 font-semibold text-lg flex items-center justify-center">
+   <i class="fab fa-whatsapp mr-2"></i>WhatsApp
+</a>
+
 
     <!-- Instagram -->
     <a href="https://www.instagram.com/innovakit_ofc?igsh=N2ZsNjh4YWo4MDBs" target="_blank"
-       class="text-pink-500 text-5xl hover:text-pink-600 transition-all duration-300 transform hover:scale-110 product-hover"
-       aria-label="Síguenos en Instagram">
+       class="text-pink-500 text-4xl hover:text-pink-700">
        <i class="fab fa-instagram"></i>
     </a>
-    
   </div>
 </section>
-
-<!-- Chat WhatsApp Flotante - MEJORADO FASE 5 -->
-<div class="fixed bottom-6 right-6 z-50 animate-bounce-subtle">
-  <a href="https://wa.me/595972292392?text=¡Hola! Quiero más información sobre los kits de Innovakit" 
-     target="_blank"
-     class="bg-green-500 hover:bg-green-600 text-white p-5 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center justify-center w-16 h-16 btn-hover touch-target"
-     aria-label="Chatear por WhatsApp">
-    <i class="fab fa-whatsapp text-2xl"></i>
-  </a>
-  <div class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-7 h-7 flex items-center justify-center animate-pulse-soft shadow-md">
-    💬
+  <!-- Chat WhatsApp Flotante -->
+  <div class="fixed bottom-6 right-6 z-50 animate-bounce">
+    <a href="https://wa.me/595972292392?text=¡Hola! Quiero más información sobre los kits de Innovakit" 
+       target="_blank"
+       class="bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 flex items-center justify-center w-14 h-14"
+       aria-label="Chatear por WhatsApp">
+      <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+    <div class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
+      💬
+    </div>
   </div>
-</div>
-</main>    
+</main>
+  </main>    
  
- <!-- Vista de productos individuales - MEJORADO FASE 5 -->
-<section id="vista-productoskit" class="hidden p-6 sm:p-12 bg-gradient-to-br from-gray-50 to-white min-h-screen">
-  <div id="productoskit-content" class="max-w-7xl mx-auto"></div>
-  <div class="mt-12 flex justify-center animate-fade-in-up">
-    <button onclick="volverAlInicio()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300">
-      <i class="fas fa-arrow-left mr-2"></i>
-      Volver al inicio
-    </button>
-  </div>
-</section>
+  <!-- Vista de productos individuales (oculta al inicio) -->
+  <section id="vista-productoskit" class="hidden p-6 sm:p-12 bg-gray-100 min-h-screen">
+    <div id="productoskit-content"></div>
+    <div class="mt-8 flex justify-center">
+      <button onclick="volverAlInicio()" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">Volver al inicio</button>
+    </div>
+  </section>
 
-<!-- Modal para descripción completa - MEJORADO FASE 5 -->
-<div id="modal-descripcion" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 backdrop-blur-sm">
-  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-60 transition-opacity duration-300"></div>
+  <!-- Modal para descripción completa -->
+  <div id="modal-descripcion" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
-  <div class="modal-container bg-white w-11/12 md:max-w-4xl mx-auto rounded-2xl shadow-2xl z-50 overflow-y-auto transform transition-all duration-300 scale-95">
+    <div class="modal-container bg-white w-11/12 md:max-w-4xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
 
-    <div class="modal-close absolute top-4 right-4 cursor-pointer flex flex-col items-center text-white text-sm z-50 btn-hover">
-      <div class="bg-gray-700 hover:bg-gray-800 rounded-full p-3 transition-all duration-300">
-        <svg class="fill-current text-white w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+      <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+        <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
           <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
         </svg>
-      </div>
-      <span class="text-xs mt-1 text-gray-300">(Esc)</span>
-    </div>
-
-    <div class="modal-content py-6 text-left px-8">
-      <!-- Titulo -->
-      <div class="flex justify-between items-center pb-4 mb-6 border-b border-gray-200">
-        <p class="text-2xl md:text-3xl font-bold text-gray-800" id="modal-titulo"></p>
+        <span class="text-sm">(Esc)</span>
       </div>
 
-      <!-- Contenido -->
-      <div id="modal-contenido" class="mb-8 text-readable text-gray-700 leading-relaxed"></div>
+      <div class="modal-content py-4 text-left px-6">
+        <!-- Titulo -->
+        <div class="flex justify-between items-center pb-3">
+          <p class="text-2xl font-bold" id="modal-titulo"></p>
+        </div>
 
-      <!-- Documentos descargables -->
-      <div id="modal-documentos" class="mb-8 p-6 bg-blue-50 rounded-xl border border-blue-200">
-        <h3 class="text-lg font-semibold mb-4 text-blue-800 flex items-center">
-          <i class="fas fa-file-download mr-2"></i>
-          Documentos del producto
-        </h3>
-        <div id="documentos-lista" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-      </div>
+        <!-- Contenido -->
+        <div id="modal-contenido" class="mb-6"></div>
 
-      <!-- Botones -->
-      <div class="flex flex-col sm:flex-row justify-end gap-4 pt-6 border-t border-gray-200">
-        <button class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl font-semibold transition-all duration-300 btn-hover" onclick="toggleModal()">
-          <i class="fas fa-times mr-2"></i>
-          Cerrar
-        </button>
-        <a id="modal-whatsapp" href="#" target="_blank" class="px-6 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold flex items-center justify-center btn-hover touch-target btn-icon transition-all duration-300">
-          <i class="fab fa-whatsapp mr-2"></i>
-          Comprar por WhatsApp
-        </a>
+        <!-- Documentos descargables -->
+        <div id="modal-documentos" class="mb-6">
+          <h3 class="text-lg font-semibold mb-2">Documentos del producto</h3>
+          <div id="documentos-lista" class="grid grid-cols-1 md:grid-cols-2 gap-2"></div>
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-end pt-2">
+          <button class="px-4 bg-transparent p-3 rounded-lg text-blue-500 hover:bg-gray-100 hover:text-blue-400 mr-2" onclick="toggleModal()">Cerrar</button>
+          <a id="modal-whatsapp" href="#" target="_blank" class="px-4 p-3 rounded-lg bg-green-500 text-white hover:bg-green-600">Comprar por WhatsApp</a>
+        </div>
+
       </div>
     </div>
   </div>
-</div>
-<!-- Modal Carrito - MEJORADO FASE 5 -->
-<div id="modal-carrito" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 backdrop-blur-sm">
-  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-60 transition-opacity duration-300"></div>
-  <div class="modal-container bg-white w-11/12 md:max-w-2xl mx-auto rounded-2xl shadow-2xl z-50 overflow-y-auto transform transition-all duration-300 scale-95 max-h-[90vh]">
-    <div class="py-6 px-8">
-      <!-- Header -->
-      <div class="flex justify-between items-center pb-4 mb-6 border-b border-gray-200">
-        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 flex items-center">
-          <i class="fas fa-shopping-cart mr-3 text-blue-600"></i>
-          Tu carrito
-        </h2>
-        <button class="modal-carrito-close text-gray-500 hover:text-gray-700 text-2xl font-bold transition-colors duration-300 btn-hover p-2 rounded-full hover:bg-gray-100">
-          ✕
-        </button>
+<!-- Modal Carrito -->
+<div id="modal-carrito" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+  <div class="modal-container bg-white w-11/12 md:max-w-2xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
+    <div class="py-4 px-6">
+      <div class="flex justify-between items-center pb-2">
+        <h2 class="text-2xl font-bold">Tu carrito</h2>
+        <button class="modal-carrito-close text-gray-500 hover:text-gray-700 text-xl font-bold">✕</button>
       </div>
 
-      <!-- Lista de productos -->
-      <div id="carrito-lista" class="divide-y divide-gray-200 max-h-96 overflow-y-auto"></div>
+      <div id="carrito-lista" class="divide-y"></div>
 
-      <!-- Footer con total y botones -->
-      <div class="flex flex-col sm:flex-row items-center justify-between mt-8 pt-6 border-t border-gray-200 gap-4">
-        <div class="text-xl font-bold text-gray-800">
-          Total: <span id="carrito-total" class="text-green-600 text-2xl">Gs. 0</span>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-          <button onclick="vaciarCarrito()" class="px-6 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold flex items-center justify-center btn-hover touch-target transition-all duration-300">
-            <i class="fas fa-trash mr-2"></i>
-            Vaciar
-          </button>
-          <button onclick="enviarCarritoWhatsApp()" class="px-6 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold flex items-center justify-center btn-hover touch-target btn-icon transition-all duration-300">
-            <i class="fab fa-whatsapp mr-2"></i>
-            Enviar por WhatsApp
-          </button>
-          <button class="modal-carrito-close px-6 py-3 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold transition-all duration-300 btn-hover">
-            Cerrar
-          </button>
+      <div class="flex items-center justify-between mt-4 pt-4 border-t">
+        <div class="text-lg font-semibold">Total: <span id="carrito-total">Gs. 0</span></div>
+        <div class="space-x-2">
+          <button onclick="vaciarCarrito()" class="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-700">Vaciar</button>
+          <button onclick="enviarCarritoWhatsApp()" class="px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600">Enviar por WhatsApp</button>
+          <button class="modal-carrito-close px-4 py-2 rounded bg-gray-200  hover:bg-gray-300">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- Modal de producto individual -->
+<div id="modal-producto" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
-<!-- Modal de producto individual - MEJORADO FASE 5 -->
-<div id="modal-producto" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 backdrop-blur-sm">
-  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-60 transition-opacity duration-300"></div>
+  <div class="modal-container bg-white w-11/12 md:max-w-4xl mx-auto rounded shadow-lg z-50 overflow-y-auto max-h-screen">
 
-  <div class="modal-container bg-white w-11/12 md:max-w-5xl mx-auto rounded-2xl shadow-2xl z-50 overflow-y-auto max-h-screen transform transition-all duration-300 scale-95">
-
-    <div class="modal-close absolute top-4 right-4 cursor-pointer flex flex-col items-center text-white text-sm z-50 btn-hover">
-      <div class="bg-gray-700 hover:bg-gray-800 rounded-full p-3 transition-all duration-300">
-        <svg class="fill-current text-white w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-          <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
-        </svg>
-      </div>
-      <span class="text-xs mt-1 text-gray-300">(Esc)</span>
+    <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+      <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+      </svg>
     </div>
 
-    <div class="modal-content py-6 text-left px-8">
-      <div class="grid md:grid-cols-2 gap-10">
-        
-        <!-- Columna izquierda - Imágenes MEJORADA -->
-        <div class="space-y-6">
-          <img id="modal-producto-imagen" src="" alt="" class="w-full h-80 object-contain rounded-2xl bg-gray-50 shadow-inner contrast-enhanced transition-all duration-500">
-          <div class="grid grid-cols-4 gap-3">
-            <img id="modal-producto-thumb1" src="" alt="" class="h-20 object-contain rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-all duration-300 product-hover">
-            <img id="modal-producto-thumb2" src="" alt="" class="h-20 object-contain rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-all duration-300 product-hover">
-            <img id="modal-producto-thumb3" src="" alt="" class="h-20 object-contain rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-all duration-300 product-hover">
-            <img id="modal-producto-thumb4" src="" alt="" class="h-20 object-contain rounded-xl border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-all duration-300 product-hover">
+    <div class="modal-content py-4 text-left px-6">
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Columna izquierda - Imágenes -->
+        <div>
+          <img id="modal-producto-imagen" src="" alt="" class="w-full h-64 object-contain rounded-lg bg-gray-100 mb-4">
+          <div class="grid grid-cols-4 gap-2">
+            <img id="modal-producto-thumb1" src="" alt="" class="h-16 object-contain rounded border cursor-pointer hover:border-blue-500">
+            <img id="modal-producto-thumb2" src="" alt="" class="h-16 object-contain rounded border cursor-pointer hover:border-blue-500">
+            <img id="modal-producto-thumb3" src="" alt="" class="h-16 object-contain rounded border cursor-pointer hover:border-blue-500">
+            <img id="modal-producto-thumb4" src="" alt="" class="h-16 object-contain rounded border cursor-pointer hover:border-blue-500">
           </div>
         </div>
 
-        <!-- Columna derecha - Información MEJORADA -->
-        <div class="space-y-6">
-          <div>
-            <h2 id="modal-producto-nombre" class="text-2xl md:text-3xl font-bold text-gray-800 mb-4"></h2>
-            <div class="flex items-center mb-6">
-              <span id="modal-producto-precio" class="text-3xl md:text-4xl font-bold text-green-600"></span>
-              <span id="modal-producto-stock" class="ml-4 px-3 py-1.5 text-sm rounded-full bg-green-100 text-green-800 font-semibold border border-green-200"></span>
-            </div>
+        <!-- Columna derecha - Información -->
+        <div>
+          <h2 id="modal-producto-nombre" class="text-2xl font-bold mb-2"></h2>
+          <div class="flex items-center mb-4">
+            <span id="modal-producto-precio" class="text-3xl font-bold text-green-600"></span>
+            <span id="modal-producto-stock" class="ml-4 px-2 py-1 text-xs rounded-full bg-green-100 text-green-800"></span>
           </div>
 
-          <div class="space-y-6">
-            <div>
-              <p id="modal-producto-descripcion" class="text-gray-700 text-readable leading-relaxed text-lg"></p>
-            </div>
+          <div class="mb-6">
+            <p id="modal-producto-descripcion" class="text-gray-700 mb-4"></p>
             
-            <!-- Especificaciones MEJORADAS -->
-            <div id="modal-producto-especificaciones" class="space-y-3 p-4 bg-blue-50 rounded-xl border border-blue-200">
-              <h4 class="font-semibold text-blue-800 text-lg flex items-center">
-                <i class="fas fa-list-ul mr-2"></i>
-                Especificaciones
-              </h4>
-              <div class="space-y-2 text-sm text-gray-700">
-                <!-- Se llena con JavaScript -->
-              </div>
+            <!-- Especificaciones -->
+            <div id="modal-producto-especificaciones" class="text-sm text-gray-600 space-y-1">
+              <!-- Se llena con JavaScript -->
             </div>
           </div>
 
-          <!-- Botones de acción MEJORADOS -->
-          <div class="space-y-4 pt-4">
-            <button onclick="comprarProductoWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg flex items-center justify-center btn-hover touch-target btn-icon transition-all duration-300">
-              <i class="fab fa-whatsapp mr-3 text-xl"></i> 
-              Comprar por WhatsApp
+          <!-- Botones de acción -->
+          <div class="space-y-3">
+            <button onclick="comprarProductoWhatsApp()" class="w-full bg-green-500 text-white px-6 py-3 rounded-lg shadow hover:bg-green-600 font-semibold flex items-center justify-center">
+              <i class="fab fa-whatsapp mr-2"></i> Comprar por WhatsApp
             </button>
-            <button onclick="agregarProductoAlCarrito()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg flex items-center justify-center btn-hover touch-target btn-icon transition-all duration-300">
-              <i class="fas fa-cart-plus mr-3 text-xl"></i>
+            <button onclick="agregarProductoAlCarrito()" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">
               Agregar al carrito
             </button>
-            <button onclick="toggleModalProducto()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-4 rounded-xl shadow font-semibold text-lg transition-all duration-300 btn-hover">
-              Seguir viendo productos
+            <button onclick="toggleModalProducto()" class="w-full bg-gray-200 text-gray-800 px-6 py-3 rounded-lg shadow hover:bg-gray-300 font-semibold">
+              Seguir viendo
             </button>
           </div>
         </div>
@@ -1325,107 +723,95 @@
     </div>
   </div>
 </div>
-<!-- Vista de Asesorías - MEJORADO FASE 5 -->
-<section id="vista-asesorias" class="hidden p-6 sm:p-12 bg-cover bg-center bg-fixed min-h-screen" style="background-image: url('png/Fondo_web.svg');">
-  <div class="bg-white bg-opacity-90 rounded-2xl p-8 backdrop-blur-sm border border-gray-200">
-    
-    <!-- Header MEJORADO -->
-    <div class="flex flex-col lg:flex-row justify-between items-center mb-12 gap-6">
-      <div class="text-center lg:text-left">
-        <h3 class="text-2xl sm:text-4xl font-bold text-gray-800 mb-4 animate-fade-in-up">Asesoría para Proyectos Técnicos</h3>
-        <p class="text-lg text-gray-600 max-w-2xl text-readable leading-relaxed">
-          ¿Participas en una feria científica o expo técnica? Nuestros expertos te ayudan a desarrollar 
-          tu proyecto con Innovakit.
-        </p>
-      </div>
-      <button onclick="volverAlInicio()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg flex items-center btn-hover touch-target btn-icon transition-all duration-300 whitespace-nowrap">
-        <i class="fas fa-arrow-left mr-3"></i>
+<!-- Vista de Asesorías (oculta al inicio) -->
+<section id="vista-asesorias" class="hidden p-6 sm:p-12 bg-cover bg-center bg-fixed" style="background-image: url('png/Fondo_web.svg');">
+  <div class="bg-gray-50 bg-opacity-73 rounded-xl p-6">
+    <div class="flex justify-between items-center mb-8">
+      <h3 class="text-center sm:text-3xl font-bold">Asesoría para Proyectos Técnicos</h3>
+      <button onclick="volverAlInicio()" class="bg-blue-300 hover:bg-blue-400 text-gray-800 px-4 py-2 rounded-lg font-semibold">
         Volver al inicio
       </button>
     </div>
 
-    <!-- Panel de Asesores MEJORADO -->
-    <div class="mb-16">
-      <h4 class="text-2xl sm:text-3xl font-bold mb-12 text-center text-gray-800 animate-fade-in-up">Nuestros Asesores</h4>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <!-- Asesor 1 - MEJORADO -->
-        <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover text-center">
-          <div class="w-36 h-36 rounded-full mx-auto mb-6 overflow-hidden border-4 border-blue-200 shadow-lg">
-            <img src="asesores/icono_hombre.jpg" alt="Ing. Carlos Mendoza" class="w-full h-full object-cover object-top contrast-enhanced" loading="lazy">
-          </div>
-          <h5 class="font-bold text-xl text-gray-800 mb-3">Ing. Carlos Mendoza</h5>
-          <p class="text-sm text-blue-600 font-semibold mb-4">Especialista en Robótica Educativa</p>
-          <p class="text-gray-600 text-readable leading-relaxed mb-6">+5 años asesorando proyectos escolares. Experto en Arduino y automatización.</p>
-          <div class="flex justify-center space-x-3">
-            <span class="bg-blue-100 text-blue-800 text-xs px-3 py-2 rounded-full font-semibold border border-blue-200">Electrónica</span>
-            <span class="bg-green-100 text-green-800 text-xs px-3 py-2 rounded-full font-semibold border border-green-200">Programación</span>
+    <p class="text-center mb-8 max-w-2xl mx-auto">
+      ¿Participas en una feria científica o expo técnica? Nuestros expertos te ayudan a desarrollar 
+      tu proyecto con Innovakit.
+    </p>
+
+    <!-- Panel de Asesores -->
+    <div class="mb-12">
+      <h4 class="text-xl font-bold mb-6 text-center">Nuestros Asesores</h4>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Asesor 1 -->
+       <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
+  <img src="asesores/icono_hombre.jpg" alt="Ing. Carlos Mendoza" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top" loading="lazy">
+          <h5 class="font-bold text-lg text-center">Ing. Carlos Mendoza</h5>
+          <p class="text-sm text-gray-600 text-center mb-2">Especialista en Robótica Educativa</p>
+          <p class="text-sm">+5 años asesorando proyectos escolares. Experto en Arduino y automatización.</p>
+          <div class="mt-3 flex justify-center space-x-2">
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Electrónica</span>
+            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Programación</span>
           </div>
         </div>
 
-        <!-- Asesor 2 - MEJORADO -->
-        <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover text-center">
-          <div class="w-36 h-36 rounded-full mx-auto mb-6 overflow-hidden border-4 border-purple-200 shadow-lg">
-            <img src="asesores/icono_mujer.jpg" alt="Lic. Ana Torres" class="w-full h-full object-cover object-top contrast-enhanced" loading="lazy">
-          </div>
-          <h5 class="font-bold text-xl text-gray-800 mb-3">Lic. Ana Torres</h5>
-          <p class="text-sm text-purple-600 font-semibold mb-4">Pedagoga Tecnológica</p>
-          <p class="text-gray-600 text-readable leading-relaxed mb-6">Especializada en metodologías de aprendizaje STEM para proyectos educativos.</p>
-          <div class="flex justify-center space-x-3">
-            <span class="bg-purple-100 text-purple-800 text-xs px-3 py-2 rounded-full font-semibold border border-purple-200">STEM</span>
-            <span class="bg-yellow-100 text-yellow-800 text-xs px-3 py-2 rounded-full font-semibold border border-yellow-200">Metodología</span>
+        <!-- Asesor 2 -->
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
+  <img src="asesores/icono_mujer.jpg" alt="Lic. Ana Torres" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top" loading="lazy">
+          <h5 class="font-bold text-lg text-center">Lic. Ana Torres</h5>
+          <p class="text-sm text-gray-600 text-center mb-2">Pedagoga Tecnológica</p>
+          <p class="text-sm">Especializada en metodologías de aprendizaje STEM para proyectos educativos.</p>
+          <div class="mt-3 flex justify-center space-x-2">
+            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">STEM</span>
+            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Metodología</span>
           </div>
         </div>
 
-        <!-- Asesor 3 - MEJORADO -->
-        <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover text-center">
-          <div class="w-36 h-36 rounded-full mx-auto mb-6 overflow-hidden border-4 border-red-200 shadow-lg">
-            <img src="asesores/icono_hombre2.jpg" alt="Ing. Roberto Díaz" class="w-full h-full object-cover object-top contrast-enhanced" loading="lazy">
-          </div>
-          <h5 class="font-bold text-xl text-gray-800 mb-3">Ing. Roberto Díaz</h5>
-          <p class="text-sm text-red-600 font-semibold mb-4">Experto en IoT</p>
-          <p class="text-gray-600 text-readable leading-relaxed mb-6">Desarrollador de proyectos con sensores y aplicaciones IoT para ferias científicas.</p>
-          <div class="flex justify-center space-x-3">
-            <span class="bg-red-100 text-red-800 text-xs px-3 py-2 rounded-full font-semibold border border-red-200">IoT</span>
-            <span class="bg-indigo-100 text-indigo-800 text-xs px-3 py-2 rounded-full font-semibold border border-indigo-200">Sensores</span>
+        <!-- Asesor 3 -->
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6">
+  <img src="asesores/icono_hombre2.jpg" alt="Ing. Roberto Díaz" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-top"loading="lazy">
+          <h5 class="font-bold text-lg text-center">Ing. Roberto Díaz</h5>
+          <p class="text-sm text-gray-600 text-center mb-2">Experto en IoT</p>
+          <p class="text-sm">Desarrollador de proyectos con sensores y aplicaciones IoT para ferias científicas.</p>
+          <div class="mt-3 flex justify-center space-x-2">
+            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">IoT</span>
+            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">Sensores</span>
           </div>
         </div>
-        
       </div>
     </div>
 
- <!-- Formulario de Asesorías - MEJORADO FASE 5 -->
-<form class="max-w-4xl mx-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-200" action="https://formsubmit.co/innovakit.com@gmail.com" method="POST">
+    <!-- Formulario de Contacto -->
+    <form class="max-w-lg mx-auto" action="https://formsubmit.co/innovakit.com@gmail.com" method="POST">
   <!-- Campos ocultos para Formsubmit -->
   <input type="hidden" name="_subject" value="Nueva solicitud de asesoría - Innovakit">
   <input type="hidden" name="_template" value="table">
   <input type="hidden" name="_next" value="https://tuweb.com/gracias.html">
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <div class="space-y-2">
-      <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre completo</label>
-      <input type="text" name="nombre" class="form-input-enhanced w-full" required>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">Nombre completo</label>
+      <input type="text" name="nombre" class="w-full px-3 py-2 border rounded-lg" required>
     </div>
-    <div class="space-y-2">
-      <label class="block text-sm font-semibold text-gray-700 mb-2">Colegio/Institución</label>
-      <input type="text" name="institucion" class="form-input-enhanced w-full" required>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <div class="space-y-2">
-      <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-      <input type="email" name="email" class="form-input-enhanced w-full" required>
-    </div>
-    <div class="space-y-2">
-      <label class="block text-sm font-semibold text-gray-700 mb-2">Teléfono</label>
-      <input type="tel" name="telefono" class="form-input-enhanced w-full" required>
+    <div>
+      <label class="block text-sm font-medium mb-1">Colegio/Institución</label>
+      <input type="text" name="institucion" class="w-full px-3 py-2 border rounded-lg" required>
     </div>
   </div>
 
-  <div class="mb-6">
-    <label class="block text-sm font-semibold text-gray-700 mb-3">Tipo de proyecto</label>
-    <select name="tipo_proyecto" class="form-input-enhanced w-full">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">Email</label>
+      <input type="email" name="email" class="w-full px-3 py-2 border rounded-lg" required>
+    </div>
+    <div>
+      <label class="block text-sm font-medium mb-1">Teléfono</label>
+      <input type="tel" name="telefono" class="w-full px-3 py-2 border rounded-lg" required>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-sm font-medium mb-1">Tipo de proyecto</label>
+    <select name="tipo_proyecto" class="w-full px-3 py-2 border rounded-lg">
       <option>Feria científica</option>
       <option>Expo técnica</option>
       <option>Proyecto escolar</option>
@@ -1434,79 +820,73 @@
     </select>
   </div>
 
-  <div class="mb-6">
-    <label class="block text-sm font-semibold text-gray-700 mb-3">Describe tu proyecto o idea</label>
-    <textarea name="proyecto" rows="5" class="form-input-enhanced w-full resize-none" placeholder="Qué quieres hacer, qué materiales tienes, qué necesitas..." required></textarea>
+  <div class="mb-4">
+    <label class="block text-sm font-medium mb-1">Describe tu proyecto o idea</label>
+    <textarea name="proyecto" rows="4" class="w-full px-3 py-2 border rounded-lg" placeholder="Qué quieres hacer, qué materiales tienes, qué necesitas..." required></textarea>
   </div>
 
-  <div class="mb-8">
-    <label class="block text-sm font-semibold text-gray-700 mb-3">Fecha límite (si aplica)</label>
-    <input type="date" name="fecha_limite" class="form-input-enhanced w-full">
+  <div class="mb-4">
+    <label class="block text-sm font-medium mb-1">Fecha límite (si aplica)</label>
+    <input type="date" name="fecha_limite" class="w-full px-3 py-2 border rounded-lg">
   </div>
 
-  <div class="flex flex-col sm:flex-row gap-4">
-    <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300">
-      <i class="fas fa-paper-plane mr-3"></i>
+  <div class="flex gap-4">
+    <button type="submit" class="flex-1 bg-blue-600 text-white py-3 rounded-lg shadow hover:bg-blue-700 font-semibold">
       Enviar solicitud
     </button>
-    <button type="button" onclick="enviarPorWhatsApp()" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300">
-      <i class="fab fa-whatsapp mr-3"></i>
+    <button type="button" onclick="enviarPorWhatsApp()" class="flex-1 bg-green-500 text-white py-3 rounded-lg shadow hover:bg-green-600 font-semibold">
       Contactar por WhatsApp
     </button>
+        <!-- Espacio para que no se superponga con el footer -->
+    <div class="h-20"></div>
   </div>
-  
-  <!-- Espacio para que no se superponga con el footer -->
-  <div class="h-12"></div>
+</section>
+  </div>
 </form>
-
-<!-- Vista de Componentes Sueltos - MEJORADO FASE 5 -->
-<section id="vista-componentes-sueltos" class="hidden bg-gradient-to-b from-gray-50 to-white min-h-screen">
-  <!-- Header con breadcrumb MEJORADO -->
+  <!-- Vista de Componentes Sueltos -->
+<section id="vista-componentes-sueltos" class="hidden bg-gray-50">
+  <!-- Header con breadcrumb -->
   <div class="bg-white shadow-sm border-b">
-    <div class="container mx-auto px-4 py-6">
-      <nav class="text-sm text-gray-600 flex items-center space-x-2">
-        <a href="#" onclick="volverAlInicio()" class="hover:text-blue-600 transition-colors duration-300 flex items-center">
-          <i class="fas fa-home mr-2"></i>
-          Inicio
-        </a>
-        <span class="text-gray-400">/</span>
-        <span class="text-gray-800 font-semibold">Componentes Sueltos</span>
+    <div class="container mx-auto px-4 py-4">
+      <nav class="text-sm text-gray-500">
+        <a href="#" onclick="volverAlInicio()" class="hover:text-blue-600">Inicio</a> / 
+        <span class="text-gray-800 font-medium">Componentes Sueltos</span>
       </nav>
     </div>
   </div>
 
   <div class="page-container">
     <div class="products-container">
-      <div class="container mx-auto px-4 py-8">
+      <div class="container mx-auto px-4 py-6">
   
-        <!-- Barra superior con búsqueda y filtros - VERSIÓN MEJORADA RESPONSIVE -->
+<!-- Barra superior con búsqueda y filtros - VERSIÓN HÍBRIDA -->
 <div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
+  <!-- Móvil: columna / Desktop: fila (igual que tu versión móvil favorita) -->
   <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
     
-    <!-- Búsqueda - Ocupa todo el ancho en móvil -->
-    <div class="flex-1 w-full">
+    <!-- Búsqueda -->
+    <div class="flex-1">
       <div class="relative">
         <input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." 
-               class="w-full px-4 py-3 pl-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base md:text-sm">
-        <div class="absolute left-4 top-3.5 text-gray-400">
+               class="w-full px-4 py-2 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div class="absolute left-3 top-2.5 text-gray-400">
           <i class="fas fa-search"></i>
         </div>
       </div>
     </div>
 
-    <!-- Contenedor de filtros para móvil - MEJORADO -->
-    <div class="flex flex-col xs:flex-row gap-2 md:gap-3 w-full xs:w-auto">
-      
-      <!-- Filtro de Categorías - MEJORADO PARA MÓVIL -->
+    <!-- Contenedor de filtros para móvil / Desktop normal -->
+    <div class="flex flex-row gap-2 md:gap-3">
+      <!-- Filtro de Categorías -->
       <div class="relative group flex-1 md:flex-none" id="filtro-categoria-container">
-        <button class="w-full md:w-auto px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center justify-center md:justify-start gap-2 shadow-md hover:shadow-lg text-base md:text-base h-auto">
+     <button class="w-full md:w-auto px-3 md:px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center justify-center md:justify-start gap-2 shadow-md hover:shadow-lg text-sm md:text-base h-[42px] md:h-auto max-w-[200px] md:max-w-none">
           <i class="fas fa-layer-group"></i>
-          <span class="truncate">Categorías</span>
+          <span class="hidden xs:inline md:inline">Categorías</span>
           <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
         </button>
         
-        <!-- Dropdown de Categorías - POSICIÓN MEJORADA PARA MÓVIL -->
-        <div class="absolute top-full left-0 mt-2 w-full xs:w-64 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50 max-h-96 overflow-y-auto">
+        <!-- Dropdown de Categorías (MANTENER EXACTAMENTE IGUAL) -->
+        <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100 z-50">
           <div class="p-3">
             <!-- Lista de Categorías Principales -->
             <div class="space-y-1">
@@ -1515,35 +895,35 @@
                 <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-sensor text-green-500"></i>
-                    <span class="truncate">Sensores</span>
+                    Sensores
                   </span>
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
                 
-                <!-- Subcategorías Sensores - POSICIÓN MEJORADA PARA MÓVIL -->
-                <div class="absolute left-0 xs:left-full top-0 xs:ml-1 w-full xs:w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top scale-95">
+                <!-- Subcategorías Sensores -->
+                <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
                   <div class="p-3">
                     <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Sensores</div>
                     <div class="space-y-1">
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" 
                         onclick="aplicarFiltroCategoria('Temperatura')">
                         <i class="fas fa-thermometer-half text-orange-500"></i>
-                        <span class="truncate">Temperatura</span>
+                        Temperatura
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Humedad')">
                         <i class="fas fa-tint text-blue-500"></i>
-                        <span class="truncate">Humedad</span>
+                        Humedad
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Movimiento')">
                         <i class="fas fa-eye text-purple-500"></i>
-                        <span class="truncate">Movimiento</span>
+                        Movimiento
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Luz')">
                         <i class="fas fa-sun text-yellow-500"></i>
-                        <span class="truncate">Luz</span>
+                        Luz
                       </button>
                     </div>
                   </div>
@@ -1555,7 +935,7 @@
                 <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
                   <span class="flex items-center gap-2">
                     <i class="fas fa-cog text-red-500"></i>
-                    <span class="truncate">Motores</span>
+                    Motores
                   </span>
                   <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
                 </button>
@@ -1568,181 +948,144 @@
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Servo Motores')">
                         <i class="fas fa-robot text-red-400"></i>
-                        <span class="truncate">Servo Motores</span>
+                        Servo Motores
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('Stepper')">
                         <i class="fas fa-sync-alt text-red-400"></i>
-                        <span class="truncate">Stepper</span>
+                        Stepper
                       </button>
                       <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2"
                         onclick="aplicarFiltroCategoria('DC Motors')">
                         <i class="fas fa-bolt text-red-400"></i>
-                        <span class="truncate">DC Motors</span>
+                        DC Motors
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
 
-          <!-- Categoría Displays MEJORADA -->
-          <div class="relative subcategory-group">
-            <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 flex items-center justify-between group border border-transparent hover:border-blue-200">
-              <span class="flex items-center gap-3">
-                <i class="fas fa-tv text-purple-500 text-lg"></i>
-                <span class="font-semibold text-gray-800">Displays</span>
-              </span>
-              <i class="fas fa-chevron-right text-sm text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
-            </button>
-            
-            <!-- Subcategorías Displays MEJORADAS -->
-            <div class="absolute left-full top-0 ml-2 w-64 bg-white rounded-2xl shadow-2xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
-              <div class="p-4">
-                <div class="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wide border-b border-gray-100 pb-2">Tipos de Displays</div>
-                <div class="space-y-2">
-                  <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-purple-50 transition-all duration-300 text-sm flex items-center gap-3 border border-transparent hover:border-purple-200"
-                    onclick="aplicarFiltroCategoria('LCD 16x2')">
-                    <i class="fas fa-hashtag text-purple-400 text-base"></i>
-                    <span class="font-medium">LCD 16x2</span>
-                  </button>
-                  <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-purple-50 transition-all duration-300 text-sm flex items-center gap-3 border border-transparent hover:border-purple-200"
-                    onclick="aplicarFiltroCategoria('Matriz LED')">
-                    <i class="fas fa-th text-purple-400 text-base"></i>
-                    <span class="font-medium">Matriz LED</span>
-                  </button>
-                  <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-purple-50 transition-all duration-300 text-sm flex items-center gap-3 border border-transparent hover:border-purple-200"
-                    onclick="aplicarFiltroCategoria('OLED')">
-                    <i class="fas fa-mobile-alt text-purple-400 text-base"></i>
-                    <span class="font-medium">OLED</span>
-                  </button>
+              <!-- Categoría Displays -->
+              <div class="relative subcategory-group">
+                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
+                  <span class="flex items-center gap-2">
+                    <i class="fas fa-tv text-purple-500"></i>
+                    Displays
+                  </span>
+                  <i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>
+                </button>
+                
+                <!-- Subcategorías Displays -->
+                <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95">
+                  <div class="p-3">
+                    <div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Displays</div>
+                    <div class="space-y-1">
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('LCD 16x2')">
+                        <i class="fas fa-hashtag text-purple-400"></i>
+                        LCD 16x2
+                      </button>
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('Matriz LED')">
+                        <i class="fas fa-th text-purple-400"></i>
+                        Matriz LED
+                      </button>
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 text-sm flex items-center gap-2"
+                        onclick="aplicarFiltroCategoria('OLED')">
+                        <i class="fas fa-mobile-alt text-purple-400"></i>
+                        OLED
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <!-- Otras categorías simples -->
+              <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+                      onclick="aplicarFiltroCategoria('Módulos')">
+                <i class="fas fa-microchip text-gray-500"></i>
+                Módulos
+              </button>
+              <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+                      onclick="aplicarFiltroCategoria('Placas')">
+                <i class="fas fa-plug text-orange-500"></i>
+                Placas
+              </button>
+              <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2"
+                      onclick="aplicarFiltroCategoria('Raspberry Pi')">
+                <i class="fab fa-raspberry-pi text-red-500"></i>
+                Raspberry Pi
+              </button>
+
+              <!-- Divider -->
+              <div class="border-t my-2"></div>
+
+              <!-- Botón ver todos -->
+              <button onclick="limpiarFiltros()" class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700">
+                <i class="fas fa-th-list mr-2"></i>
+                Ver todas las categorías
+              </button>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- Otras categorías simples MEJORADAS -->
-          <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 flex items-center gap-3 border border-transparent hover:border-blue-200"
-                  onclick="aplicarFiltroCategoria('Módulos')">
-            <i class="fas fa-microchip text-gray-500 text-lg"></i>
-            <span class="font-semibold text-gray-800">Módulos</span>
-          </button>
-          <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 flex items-center gap-3 border border-transparent hover:border-blue-200"
-                  onclick="aplicarFiltroCategoria('Placas')">
-            <i class="fas fa-plug text-orange-500 text-lg"></i>
-            <span class="font-semibold text-gray-800">Placas</span>
-          </button>
-          <button class="w-full text-left px-4 py-3 rounded-xl hover:bg-blue-50 transition-all duration-300 flex items-center gap-3 border border-transparent hover:border-blue-200"
-                  onclick="aplicarFiltroCategoria('Raspberry Pi')">
-            <i class="fab fa-raspberry-pi text-red-500 text-lg"></i>
-            <span class="font-semibold text-gray-800">Raspberry Pi</span>
-          </button>
+      <!-- Filtro de Precio -->
+     <select id="filtro-precio" class="flex-1 md:flex-none px-3 md:px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 text-sm md:text-base w-auto max-w-[220px] md:max-w-[220px]">
+        <option value="todos">💎 <span class="hidden md:inline">Todos los </span><span class="md:hidden">precios</span></option>
+        <option value="0-50000">💰 <span class="hidden md:inline">Gs. 0 - 50.000</span><span class="md:hidden">0-50k</span></option>
+        <option value="50000-100000">💵 <span class="hidden md:inline">Gs. 50.000 - 100.000</span><span class="md:hidden">50-100k</span></option>
+        <option value="100000-200000">💳 <span class="hidden md:inline">Gs. 100.000 - 200.000</span><span class="md:hidden">100-200k</span></option>
+      </select>
+    </div>
+    
+  </div>
+</div>
+        <!-- Grid de productos -->
+        <div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <!-- Los productos se cargan aquí con JavaScript -->
+        </div>
 
-          <!-- Divider MEJORADO -->
-          <div class="border-t border-gray-200 my-3"></div>
-
-          <!-- Botón ver todos MEJORADO -->
-          <button onclick="limpiarFiltros()" class="w-full text-center px-4 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all duration-300 text-sm font-semibold text-gray-700 border border-transparent hover:border-gray-300">
-            <i class="fas fa-th-list mr-2"></i>
-            Ver todas las categorías
-          </button>
+        <!-- Loading state -->
+        <div id="loading-componentes" class="text-center py-8 hidden">
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <p class="mt-2 text-gray-600">Cargando componentes...</p>
         </div>
       </div>
     </div>
-  </div>
 
-      <!-- Filtro de Precio - MEJORADO -->
-      <select id="filtro-precio" class="flex-1 md:flex-none px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 text-center md:text-base w-full md:w-48">
-        <option value="todos">💎 Todos los precios</option>
-        <option value="0-50000">💰 Gs. 0 - 50.000</option>
-        <option value="50000-100000">💵 Gs. 50.000 - 100.000</option>
-        <option value="100000-200000">💳 Gs. 100.000 - 200.000</option>
-      </select>
-    </div>
-  </div>
-</div>
-      <!-- Grid de productos (se mantiene igual) -->
-<div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-  <!-- Los productos se cargan aquí con JavaScript -->
-</div>
-
-<!-- Loading state MEJORADO -->
-<div id="loading-componentes" class="text-center py-16 hidden">
-  <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mb-6"></div>
-  <p class="text-gray-600 text-lg font-medium">Cargando componentes...</p>
-  <p class="text-gray-500 text-sm mt-2">Buscando los mejores productos para ti</p>
-</div>
-      </div>
-    </div>
-
-    <!-- PAGINACIÓN FIJA MEJORADA -->
-    <div class="pagination-fixed backdrop-blur bg-white/90 border-t border-gray-200 shadow-lg">
+    <!-- PAGINACIÓN FIJA -->
+    <div class="pagination-fixed">
       <div class="container mx-auto px-4">
-        <div class="flex justify-center items-center space-x-6">
+        <div class="flex justify-center items-center space-x-4">
           <button onclick="cambiarPagina(paginaActual - 1)" 
-                  class="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-xl shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 btn-hover font-semibold flex items-center gap-2">
-            <i class="fas fa-chevron-left text-sm"></i>
-            Anterior
+                  class="px-4 py-2 bg-yellow-200 rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            Anterior ‹
           </button>
           
-          <span id="info-paginacion" class="text-base text-gray-700 font-semibold bg-gray-100 px-4 py-2 rounded-lg">
-            Página <span class="text-blue-600">1</span> de <span class="text-blue-600">1</span>
+          <span id="info-paginacion" class="text-sm text-gray-600">
+            Página 1 de 1
           </span>
           
           <button onclick="cambiarPagina(paginaActual + 1)" 
-                  class="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-xl shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 btn-hover font-semibold flex items-center gap-2">
-            Siguiente
-            <i class="fas fa-chevron-right text-sm"></i>
+                  class="px-4 py-2 bg-yellow-200 rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            Siguiente ›
           </button>
         </div>
       </div>
     </div>
   </div>
 </section>
+    <!-- Footer mejorado -->
+  <footer class="bg-gray-800 text-white text-center p-4" role="contentinfo">
+    <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
+  </footer>
 
-<!-- Footer MEJORADO -->
-<footer class="bg-gradient-to-b from-gray-800 to-gray-900 text-white text-center p-8" role="contentinfo">
-  <div class="max-w-6xl mx-auto">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
-      <!-- Logo y nombre -->
-      <div class="flex items-center gap-3">
-        <img src="Icono.png" alt="Innovakit" class="h-10 w-10">
-        <span class="text-xl font-bold">
-          <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-400">kit</span>
-        </span>
-      </div>
-      
-      <!-- Enlaces rápidos -->
-      <div class="flex flex-wrap justify-center gap-6 text-sm">
-        <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Misión</a>
-        <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Productos</a>
-        <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Contacto</a>
-        <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Asesorías</a>
-      </div>
-    </div>
-    
-    <!-- Línea divisoria -->
-    <div class="border-t border-gray-700 my-6"></div>
-    
-    <!-- Copyright y info -->
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-      <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
-      <p>Kits de electrónica y robótica educativa en Paraguay</p>
-      <div class="flex gap-4">
-        <a href="https://www.facebook.com/share/15HSQmpG2Z8/" target="_blank" class="hover:text-blue-400 transition-colors duration-300">
-          <i class="fab fa-facebook text-lg"></i>
-        </a>
-        <a href="https://www.instagram.com/innovakit_ofc?igsh=N2ZsNjh4YWo4MDBs" target="_blank" class="hover:text-pink-400 transition-colors duration-300">
-          <i class="fab fa-instagram text-lg"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-</footer>
+  <!-- Swiper JS (para el carrusel) -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<!-- Swiper JS (para el carrusel) -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<script>
+  <script>
     // Detectar soporte para WebP
 function supportsWebP() {
     return new Promise(resolve => {
@@ -2118,10 +1461,16 @@ document.addEventListener('DOMContentLoaded', cargarProductos);
 
 // Función para mostrar vista de componentes sueltos (MEJORADA)
 function verComponentesSueltos() {
-    navegarA('componentes');
-  }
-  console.log('🎯 Mostrando componentes sueltos...');
-   componentesSueltos.sort(() => Math.random() - 0.5);
+    console.log('🎯 Mostrando componentes sueltos...');
+    
+    // Ocultar otras vistas y mostrar componentes sueltos
+    componentesSueltos.sort(() => Math.random() - 0.5);
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('vista-productoskit').classList.add('hidden');
+    document.getElementById('vista-asesorias').classList.add('hidden');
+    document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+
+
         
     // Mostrar loading inmediatamente
     const grid = document.getElementById('grid-componentes');
@@ -2151,7 +1500,7 @@ function verComponentesSueltos() {
     }
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
+}
 
 // Función para renderizar componentes con filtros Y PAGINACIÓN (MEJORADA)
 function renderizarComponentesSueltos() {
@@ -2184,40 +1533,11 @@ const filtroTexto = buscarInput ? buscarInput.value.toLowerCase() : '';
 const filtroCategoriaValor = filtroCategoria ? filtroCategoria.value : 'todos'; // ← Manejar null
 const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
     
-    console.log('🔍 Filtros - Texto:', filtroTexto, 'Categoría:', filtroCategoriaValor, 'Precio:', filtroPrecioValor);
-    
-    // MAPA DE CATEGORÍAS (COPIADO DE TU FUNCIÓN ORIGINAL)
-    const categoriasMap = {
-        // Sensores y sus subcategorías
-        'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20'],
-        'Humedad': ['humedad', 'dht11', 'dht22'],
-        'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio'],
-        'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible'],
-
-        // Motores y sus subcategorías
-        'Servo Motores': ['servo', 'sg90'],
-        'Stepper': ['stepper', 'paso a paso'],
-        'DC Motors': ['motor dc', 'motor corriente continua'],
-
-        // Displays y sus subcategorías
-        'LCD 16x2': ['lcd', '16x2', 'pantalla lcd'],
-        'Matriz LED': ['matriz led', 'max7219', '8x8'],
-        'OLED': ['oled', 'pantalla oled', 'display oled'],
-
-        // Categorías principales
-        'Módulos': ['módulo', 'module', 'shield'],
-        'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266'],
-        'Raspberry Pi': ['raspberry', 'pi', 'rpi'],
-
-        // Categorías generales
-        'Sensores': ['sensor', 'detector', 'medidor'],
-        'Motores': ['motor', 'servo', 'stepper'],
-        'Displays': ['display', 'pantalla', 'lcd', 'oled', 'led']
-    };
+    console.log('🔍 Filtros - Texto:', filtroTexto, 'Precio:', filtroPrecioValor);
     
     let componentesFiltrados = componentesSueltos.filter(comp => {
         // Filtro por texto
-        const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
+     const coincideTexto = comp.nombre.toLowerCase().includes(filtroTexto) || 
                      (comp.desc && comp.desc.toLowerCase().includes(filtroTexto));
         
         // Filtro por precio
@@ -2228,27 +1548,11 @@ const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
             coincidePrecio = precioNum >= min && precioNum <= max;
         }
         
-        // FILTRO POR CATEGORÍA (¡ESTO ES LO QUE FALTABA!)
-        let coincideCategoria = true;
-        if (filtroCategoriaValor !== 'todos' && filtroCategoriaValor !== 'Categorías') {
-            const terminosBusqueda = categoriasMap[filtroCategoriaValor] || [filtroCategoriaValor.toLowerCase()];
-            const textoBusqueda = (
-                comp.nombre.toLowerCase() + ' ' + 
-                (comp.descripcion || '').toLowerCase() + ' ' +
-                (comp.categoria || '').toLowerCase() + ' ' +
-                (comp.especificaciones ? comp.especificaciones.join(' ').toLowerCase() : '')
-            );
-            
-            coincideCategoria = terminosBusqueda.some(termino => 
-                textoBusqueda.includes(termino.toLowerCase())
-            );
-        }
-        
-        return coincideTexto && coincidePrecio && coincideCategoria;
+        return coincideTexto && coincidePrecio;
     });
 
     console.log('📊 Productos filtrados:', componentesFiltrados.length);
-  
+
     // CALCULAR PAGINACIÓN
     const totalComponentes = componentesFiltrados.length;
     const totalPaginas = Math.ceil(totalComponentes / componentesPorPagina);
@@ -2547,7 +1851,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Render productos del kit (con carrusel)
     function verProductosKit(idx) {
-    navegarA('productoskit', { kitId: idx });
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('vista-productoskit').classList.remove('hidden');
       const productos = productosKits[idx - 1];
 
       const portadas = [
@@ -2653,8 +1958,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function volverAlInicio() {
-    navegarA('inicio');
-}
+      document.getElementById('main-content').style.display = '';
+      document.getElementById('vista-productoskit').classList.add('hidden');
+      document.getElementById('vista-asesorias').classList.add('hidden');
+      document.getElementById('vista-componentes-sueltos').classList.add('hidden');
+      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // Cerrar modal con tecla ESC
     document.onkeydown = function(evt) {
@@ -2686,9 +1995,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
 
     function verAsesorias() {
-    navegarA('asesorias');
-}
-    
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('vista-productoskit').classList.add('hidden');
+      document.getElementById('vista-asesorias').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function enviarPorWhatsApp() {
       const nombre = document.querySelector('input[name="nombre"]').value;
       const institucion = document.querySelector('input[name="institucion"]').value;
@@ -2717,10 +2029,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function agregarAlCarrito(nombre, precio) {
     carrito.push({ nombre, precio });
     actualizarContador();
-    proporcionarFeedbackTactil();
+    // Mostrar notificación bonita
     mostrarNotificacion(`${nombre} agregado al carrito ✅`);
-    trackEvent('Carrito', 'Agregar Producto', nombre);
-}
+  }
 
   function mostrarNotificacion(mensaje) {
     // Crear elemento de notificación
@@ -2941,129 +2252,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof initDarkMode === 'function') {
         initDarkMode();
     }
-   
-    // Event listeners para filtros (mejorados)
-    const buscarInput = document.getElementById('buscar-componente');
-    if (buscarInput) {
-        let searchTimeout;
-        buscarInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                paginaActual = 1;
-                renderizarComponentesSueltos();
-            }, 300);
-        });
-    }
-    
-    // Filtros
-    const filtroCategoria = document.getElementById('filtro-categoria');
-    const filtroPrecio = document.getElementById('filtro-precio');
-    
-    [filtroCategoria, filtroPrecio].forEach(filter => {
-        if (filter) {
-            filter.addEventListener('change', function() {
-                paginaActual = 1;
-                renderizarComponentesSueltos();
-            });
-        }
-    });
-    
-    // Cerrar modales
-    document.querySelectorAll('.modal-overlay, .modal-close').forEach(el => {
-        el.addEventListener('click', function() {
-            const modal = this.closest('.modal');
-            if (modal.id === 'modal-producto') {
-                toggleModalProducto();
-            }
-        });
-    });
-    
-    console.log('✅ Innovakit inicializado correctamente');
-  // Inicializar history state al cargar
-    if (!history.state) {
-        history.replaceState({vista: 'inicio'}, '', '#inicio');
-    }
-    
-    // Manejar hash en URL al cargar (por si alguien viene con un enlace directo)
-    if (window.location.hash) {
-        const hash = window.location.hash;
-        if (hash.includes('productoskit')) {
-            const kitId = hash.split('-')[1];
-            if (kitId) navegarA('productoskit', { kitId: parseInt(kitId) });
-        } else if (hash === '#asesorias') {
-            navegarA('asesorias');
-        } else if (hash === '#componentes') {
-            navegarA('componentes');
-        }
-    }
-  console.log('🚀 Innovakit FASE 5 - UX/UI Mejorada');
-    trackEvent('Navegación', 'Página Vista', 'Inicio');
-});
-      // =============================================
-    // HISTORY API PARA NAVEGACIÓN MÓVIL - FIX BOTÓN ATRÁS
-    // =============================================
-
-    // Función para cambiar vista y actualizar history
-    function navegarA(vista, data = {}) {
-        console.log('🔄 Navegando a:', vista, data);
-        
-        // Ocultar todas las vistas
-        document.getElementById('main-content').style.display = 'none';
-        document.getElementById('vista-productoskit').classList.add('hidden');
-        document.getElementById('vista-asesorias').classList.add('hidden');
-        document.getElementById('vista-componentes-sueltos').classList.add('hidden');
-        
-        // Mostrar vista solicitada
-        switch(vista) {
-            case 'inicio':
-                document.getElementById('main-content').style.display = '';
-                history.pushState({vista: 'inicio'}, '', '#inicio');
-                break;
-            case 'productoskit':
-                document.getElementById('vista-productoskit').classList.remove('hidden');
-                history.pushState({vista: 'productoskit', data: data}, '', `#productoskit-${data.kitId}`);
-                // Llamar a la función original de productoskit
-                if (data.kitId) {
-                    setTimeout(() => verProductosKitOriginal(data.kitId), 50);
-                }
-                break;
-            case 'asesorias':
-                document.getElementById('vista-asesorias').classList.remove('hidden');
-                history.pushState({vista: 'asesorias'}, '', '#asesorias');
-                // Llamar a la función original de asesorías
-                setTimeout(verAsesoriasOriginal, 50);
-                break;
-            case 'componentes':
-                document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-                history.pushState({vista: 'componentes'}, '', '#componentes');
-                // Llamar a la función original de componentes
-                setTimeout(verComponentesSueltosOriginal, 50);
-                break;
-        }
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Manejar botón atrás/adelante del navegador
-    window.addEventListener('popstate', function(event) {
-        console.log('🔙 Popstate:', event.state);
-        if (event.state && event.state.vista) {
-            navegarA(event.state.vista, event.state.data || {});
-        } else {
-            // Si no hay state, volver al inicio
-            navegarA('inicio');
-        }
-    });
-
-    // Guardar las funciones originales
-    const verProductosKitOriginal = verProductosKit;
-    const verAsesoriasOriginal = verAsesorias;
-    const verComponentesSueltosOriginal = verComponentesSueltos;
-
-    // =============================================
-    // LAZY LOADING AVANZADO - FASE 2
-    // =============================================
-  // Lazy Loading Avanzado con Intersection Observer
+    // Lazy Loading Avanzado con Intersection Observer
 function initAdvancedLazyLoading() {
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -3105,6 +2294,44 @@ function initAdvancedLazyLoading() {
         });
     }
 }
+    // Event listeners para filtros (mejorados)
+    const buscarInput = document.getElementById('buscar-componente');
+    if (buscarInput) {
+        let searchTimeout;
+        buscarInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                paginaActual = 1;
+                renderizarComponentesSueltos();
+            }, 300);
+        });
+    }
+    
+    // Filtros
+    const filtroCategoria = document.getElementById('filtro-categoria');
+    const filtroPrecio = document.getElementById('filtro-precio');
+    
+    [filtroCategoria, filtroPrecio].forEach(filter => {
+        if (filter) {
+            filter.addEventListener('change', function() {
+                paginaActual = 1;
+                renderizarComponentesSueltos();
+            });
+        }
+    });
+    
+    // Cerrar modales
+    document.querySelectorAll('.modal-overlay, .modal-close').forEach(el => {
+        el.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal.id === 'modal-producto') {
+                toggleModalProducto();
+            }
+        });
+    });
+    
+    console.log('✅ Innovakit inicializado correctamente');
+});
    // =============================================
   // NUEVO SISTEMA DE FILTROS CON HOVER
   // =============================================
@@ -3137,27 +2364,90 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function aplicarFiltroCategoria(categoria) {
     console.log('Filtrando por:', categoria);
-    
-    // 1. Ocultar el dropdown
+      mostrarNotificacion(`Filtrando por: ${categoria}`);
+    // Ocultar el dropdown
     const dropdowns = document.querySelectorAll('.subcategory-panel');
     dropdowns.forEach(panel => {
         panel.classList.add('opacity-0', 'invisible', 'scale-95');
     });
 
-    // 2. ESTA ES LA PARTE MÁS IMPORTANTE: Establecer el valor en el select existente
-    const filtroCategoria = document.getElementById('filtro-categoria');
-    if (filtroCategoria) {
-        filtroCategoria.value = categoria; // ← ¡Esto hace que el filtro funcione!
-    }
-
-    // 3. Resetear a primera página
+    // Resetear a primera página
     paginaActual = 1;
 
-    // 4. Llamar a tu función principal que YA SABE filtrar
-    renderizarComponentesSueltos();
-    
-    mostrarNotificacion(`Filtrando por: ${categoria}`);
+    // MAPA COMPLETO DE CATEGORÍAS Y SUBCATEGORÍAS
+    const categoriasMap = {
+        // Sensores y sus subcategorías
+        'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20'],
+        'Humedad': ['humedad', 'dht11', 'dht22'],
+        'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio'],
+        'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible'],
+
+        // Motores y sus subcategorías
+        'Servo Motores': ['servo', 'sg90'],
+        'Stepper': ['stepper', 'paso a paso'],
+        'DC Motors': ['motor dc', 'motor corriente continua'],
+
+        // Displays y sus subcategorías
+        'LCD 16x2': ['lcd', '16x2', 'pantalla lcd'],
+        'Matriz LED': ['matriz led', 'max7219', '8x8'],
+        'OLED': ['oled', 'pantalla oled', 'display oled'],
+
+        // Categorías principales
+        'Módulos': ['módulo', 'module', 'shield'],
+        'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266'],
+        'Raspberry Pi': ['raspberry', 'pi', 'rpi'],
+
+        // Categorías generales
+        'Sensores': ['sensor', 'detector', 'medidor'],
+        'Motores': ['motor', 'servo', 'stepper'],
+        'Displays': ['display', 'pantalla', 'lcd', 'oled', 'led']
+    };
+
+    // Obtener términos de búsqueda para esta categoría
+    const terminosBusqueda = categoriasMap[categoria] || [categoria.toLowerCase()];
+
+    console.log('Buscando términos:', terminosBusqueda);
+
+    // Filtrar productos
+    const productosFiltrados = componentesSueltos.filter(comp => {
+        const textoBusqueda = (
+            comp.nombre.toLowerCase() + ' ' + 
+            (comp.descripcion || '').toLowerCase() + ' ' +
+            (comp.categoria || '').toLowerCase() + ' ' +
+            (comp.especificaciones ? comp.especificaciones.join(' ').toLowerCase() : '')
+        );
+
+        return terminosBusqueda.some(termino => 
+            textoBusqueda.includes(termino.toLowerCase())
+        );
+    });
+
+    console.log(`Encontrados ${productosFiltrados.length} productos para "${categoria}"`);
+
+    // Actualizar la vista
+renderizarComponentesFiltradosConPaginacion(productosFiltrados, categoria);
+    mostrarNotificacion(`Filtrando por: ${categoria} (${productosFiltrados.length} productos)`);
 }
+
+// AGREGA ESTA NUEVA FUNCIÓN después de aplicarFiltroCategoria
+function renderizarComponentesFiltradosConPaginacion(productosFiltrados, categoriaFiltro = '') {
+    const grid = document.getElementById('grid-componentes');
+    const loading = document.getElementById('loading-componentes');
+    
+    // Ocultar loading
+    if (loading) loading.classList.add('hidden');
+    
+    // Mostrar información del filtro aplicado
+    const infoFiltro = categoriaFiltro ? 
+        `<div class="col-span-full mb-4 p-3 bg-blue-50 rounded-lg">
+            <div class="flex items-center justify-between">
+                <span class="font-semibold text-blue-800">Filtro aplicado: ${categoriaFiltro}</span>
+                <button onclick="limpiarFiltros()" class="text-blue-600 hover:text-blue-800 text-sm font-semibold">
+                    Limpiar filtro ×
+                </button>
+            </div>
+            <p class="text-sm text-blue-600 mt-1">Mostrando ${productosFiltrados.length} productos</p>
+        </div>` : '';
     
     // CALCULAR PAGINACIÓN (igual que en renderizarComponentesSueltos)
     const totalComponentes = productosFiltrados.length;
@@ -3220,7 +2510,7 @@ function aplicarFiltroCategoria(categoria) {
         botones[0].disabled = paginaActual === 1;
         botones[1].disabled = paginaActual === totalPaginas || totalPaginas === 0;
     }
-
+}
 function limpiarFiltros() {
     paginaActual = 1;
     
@@ -3238,81 +2528,80 @@ function limpiarFiltros() {
 }
    // =============================================
     // Función para lazy loading de imágenes (AGREGAR AL FINAL DEL SCRIPT)
-    // =============================================
-    function initLazyLoading() {
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.remove('lazy');
-                        imageObserver.unobserve(img);
-                    }
-                });
-            });
+  // =============================================
+  function initLazyLoading() {
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+              imageObserver.unobserve(img);
+            }
+          });
+        });
 
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                imageObserver.observe(img);
-            });
-        }
+        document.querySelectorAll('img[data-src]').forEach(img => {
+          imageObserver.observe(img);
+        });
+      }
     }
 
     // Inicialización mejorada cuando carga la página (REEMPLAZA la actual)
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('🚀 Inicializando Innovakit...');
-        
-        // Inicializar lazy loading
-        initLazyLoading();
-        
-        // Cargar productos automáticamente
-        cargarProductos();
-        
-        // Inicializar modo oscuro si existe
-        if (typeof initDarkMode === 'function') {
-            initDarkMode();
-        }
-        
-        // Event listeners para filtros (mejorados)
-        const buscarInput = document.getElementById('buscar-componente');
-        if (buscarInput) {
-            let searchTimeout;
-            buscarInput.addEventListener('input', function() {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    paginaActual = 1;
-                    renderizarComponentesSueltos();
-                }, 300);
-            });
-        }
-        
-        // Filtros
-        const filtroCategoria = document.getElementById('filtro-categoria');
-        const filtroPrecio = document.getElementById('filtro-precio');
-        
-        [filtroCategoria, filtroPrecio].forEach(filter => {
-            if (filter) {
-                filter.addEventListener('change', function() {
-                    paginaActual = 1;
-                    renderizarComponentesSueltos();
-                });
-            }
+      console.log('🚀 Inicializando Innovakit...');
+      
+      // Inicializar lazy loading
+      initLazyLoading();
+      
+      // Cargar productos automáticamente
+      cargarProductos();
+      
+      // Inicializar modo oscuro si existe
+      if (typeof initDarkMode === 'function') {
+        initDarkMode();
+      }
+      
+      // Event listeners para filtros (mejorados)
+      const buscarInput = document.getElementById('buscar-componente');
+      if (buscarInput) {
+        let searchTimeout;
+        buscarInput.addEventListener('input', function() {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            paginaActual = 1;
+            renderizarComponentesSueltos();
+          }, 300);
         });
-        
-        // Cerrar modales
-        document.querySelectorAll('.modal-overlay, .modal-close').forEach(el => {
-            el.addEventListener('click', function() {
-                const modal = this.closest('.modal');
-                if (modal.id === 'modal-producto') {
-                    toggleModalProducto();
-                }
-            });
+      }
+      
+      // Filtros
+      const filtroCategoria = document.getElementById('filtro-categoria');
+      const filtroPrecio = document.getElementById('filtro-precio');
+      
+      [filtroCategoria, filtroPrecio].forEach(filter => {
+        if (filter) {
+          filter.addEventListener('change', function() {
+            paginaActual = 1;
+            renderizarComponentesSueltos();
+          });
+        }
+      });
+      
+      // Cerrar modales
+      document.querySelectorAll('.modal-overlay, .modal-close').forEach(el => {
+        el.addEventListener('click', function() {
+          const modal = this.closest('.modal');
+          if (modal.id === 'modal-producto') {
+            toggleModalProducto();
+          }
         });
-        
-        console.log('✅ Innovakit inicializado correctamente');
-    });   // 🎯 CIERRE CORRECTO DEL DOMContentLoaded
-
-    // =============================================
+      });
+      
+      console.log('✅ Innovakit inicializado correctamente');
+    });
+      // =============================================
     // SERVICE WORKER PARA CACHE - FASE 2
     // =============================================
     
@@ -3329,7 +2618,8 @@ function limpiarFiltros() {
         });
     }
 
-    // =============================================
+
+      // =============================================
     // PWA INSTALL PROMPT - FASE 3
     // =============================================
     
@@ -3338,170 +2628,54 @@ function limpiarFiltros() {
     
     // Crear botón de instalación
     function createInstallButton() {
-        installButton.innerHTML = '📲 Instalar App';
-        installButton.className = 'fixed bottom-24 right-6 z-50 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hidden';
-        installButton.onclick = installPWA;
-        
-        document.body.appendChild(installButton);
+      installButton.innerHTML = '📲 Instalar App';
+      installButton.className = 'fixed bottom-24 right-6 z-50 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hidden';
+      installButton.onclick = installPWA;
+      
+      document.body.appendChild(installButton);
     }
     
     // Mostrar prompt de instalación
     window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        
-        // Mostrar botón después de 5 segundos
-        setTimeout(() => {
-            installButton.classList.remove('hidden');
-            installButton.classList.add('animate-bounce');
-        }, 5000);
-        
-        // Ocultar después de 15 segundos
-        setTimeout(() => {
-            installButton.classList.add('hidden');
-        }, 15000);
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Mostrar botón después de 5 segundos
+      setTimeout(() => {
+        installButton.classList.remove('hidden');
+        installButton.classList.add('animate-bounce');
+      }, 5000);
+      
+      // Ocultar después de 15 segundos
+      setTimeout(() => {
+        installButton.classList.add('hidden');
+      }, 15000);
     });
     
     // Instalar PWA
     async function installPWA() {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            
-            if (outcome === 'accepted') {
-                console.log('✅ Usuario instaló la PWA');
-                installButton.classList.add('hidden');
-            }
-            
-            deferredPrompt = null;
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+          console.log('✅ Usuario instaló la PWA');
+          installButton.classList.add('hidden');
         }
+        
+        deferredPrompt = null;
+      }
     }
     
     // Detectar si ya está instalado
     window.addEventListener('appinstalled', () => {
-        console.log('🎉 PWA instalada correctamente');
-        installButton.classList.add('hidden');
+      console.log('🎉 PWA instalada correctamente');
+      installButton.classList.add('hidden');
     });
     
     // Inicializar botón de instalación
     createInstallButton();
-// =============================================
-// MEJORAS UX/UI - FASE 5
-// =============================================
-
-// 1. Sistema de notificaciones mejorado
-function mostrarNotificacion(mensaje, tipo = 'success', duracion = 4000) {
-    const notificacion = document.createElement('div');
-    notificacion.className = `notification notification-${tipo}`;
-    notificacion.innerHTML = `
-        <i class="fas fa-${tipo === 'success' ? 'check-circle' : tipo === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-        <span>${mensaje}</span>
-    `;
-    
-    document.body.appendChild(notificacion);
-    
-    setTimeout(() => {
-        notificacion.style.animation = 'slideInRight 0.5s ease-out reverse';
-        setTimeout(() => {
-            if (document.body.contains(notificacion)) {
-                document.body.removeChild(notificacion);
-            }
-        }, 500);
-    }, duracion);
-}
-
-// 2. Mejoras para el carrito (badge animado)
-function actualizarContador() {
-    const count = carrito.length;
-    document.getElementById("carrito-count").textContent = count;
-    
-    // Crear o actualizar badge
-    let badge = document.getElementById('cart-badge');
-    if (!badge) {
-        badge = document.createElement('div');
-        badge.id = 'cart-badge';
-        badge.className = 'cart-badge hidden';
-        document.querySelector('button[onclick="verCarrito()"]').appendChild(badge);
-    }
-    
-    if (count > 0) {
-        badge.textContent = count;
-        badge.classList.remove('hidden');
-    } else {
-        badge.classList.add('hidden');
-    }
-}
-
-// 3. Feedback táctil (solo en móviles)
-function proporcionarFeedbackTactil() {
-    if ('vibrate' in navigator) {
-        navigator.vibrate(50);
-    }
-}
-
-// 4. Analytics mejorado
-function trackEvent(categoria, accion, etiqueta = '') {
-    if (typeof gtag !== 'undefined') {
-        gtag('event', accion, {
-            'event_category': categoria,
-            'event_label': etiqueta
-        });
-    }
-    console.log(`📊 Analytics: ${categoria} - ${accion} - ${etiqueta}`);
-}
-  // =============================================
-// MEJORAS ESPECÍFICAS PARA MÓVIL - MODAL DE PRODUCTO
-// =============================================
-
-function toggleModalProducto() {
-  const modal = document.getElementById('modal-producto');
-  const isOpening = modal.classList.contains('opacity-0');
   
-  modal.classList.toggle('opacity-0');
-  modal.classList.toggle('pointer-events-none');
-  document.body.classList.toggle('modal-active', isOpening);
-  
-  // En móvil, prevenir scroll del body cuando el modal está abierto
-  if (window.innerWidth <= 768) {
-    if (isOpening) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  }
-}
-
-// Cerrar modal al hacer clic fuera (mejorado para móvil)
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelector('#modal-producto .modal-overlay').addEventListener('click', function(e) {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    toggleModalProducto();
-  });
-  
-  document.querySelector('#modal-producto .modal-close').addEventListener('click', function(e) {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    toggleModalProducto();
-  });
-});
-
-// Prevenir problemas de zoom en iOS en inputs
-document.addEventListener('DOMContentLoaded', function() {
-  if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-    document.addEventListener('focus', function(e) {
-      if (e.target.matches('input, select, textarea')) {
-        setTimeout(() => {
-          e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
-      }
-    }, true);
-  }
-});
 </script>
 
 </body>
