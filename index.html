@@ -846,33 +846,36 @@
       <button onclick="verCarrito()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover" aria-label="Ver carrito de compras">
   🛒 Carrito (<span id="carrito-count-desktop" aria-live="polite">0</span>)
 </button>
-
+</nav> 
+  </div>  
   <!-- Móvil: Mi diseño (oculto en desktop) -->
   <div class="sm:hidden">
-    <!-- Primera línea: Logo + Carrito -->
-    <div class="flex justify-between items-center mb-3">
-      <!-- Logo -->
-      <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover" onclick="volverAlInicio(); return false;">
-        <img src="Icono.png" alt="Logo Innovakit" class="h-14 mr-1" width="60" height="60">
+  <!-- Fila 1: Logo (izquierda) + Carrito (derecha) -->
+  <div class="flex justify-between items-center mb-3">
+    <!-- Logo ocupa espacio izquierdo -->
+    <div class="flex-1">
+      <a href="#main-content" class="flex items-center" onclick="volverAlInicio(); return false;">
         <h1 class="text-2xl font-bold">
           <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
         </h1>
       </a>
-
-      <!-- Carrito Móvil -->
-      <button onclick="verCarrito()" class="bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover" aria-label="Ver carrito de compras">
-  🛒 <span class="carrito-text">Carrito</span> (<span id="carrito-count-mobile" aria-live="polite">0</span>)
-</button>
-
-    <!-- Segunda línea: Navegación -->
-    <nav class="flex flex-wrap justify-center gap-1 items-center text-sm overflow-x-auto" aria-label="Navegación móvil">
-      <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Misión |</a>
-      <a href="#vision" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Visión |</a>
-      <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Productos |</a>
-      <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Contacto |</a>
-      <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-1">Asesoría</a>
-    </nav>
+    </div>
+    
+    <!-- Carrito fijo a la derecha -->
+    <button onclick="verCarrito()" class="bg-yellow-300 text-gray-900 px-2 py-1 rounded-lg text-sm font-semibold ml-4">
+      🛍️ (<span id="carrito-count-mobile">0</span>)
+    </button>
   </div>
+
+  <!-- Fila 2: Navegación centrada -->
+  <nav class="flex justify-center gap-1 items-center text-sm">
+    <a href="#mision" onclick="volverAlInicio()" class="px-1 hover:text-blue-600">Misión |</a>
+    <a href="#vision" onclick="volverAlInicio()" class="px-1 hover:text-blue-600">Visión |</a>
+    <a href="#productos" onclick="volverAlInicio()" class="px-1 hover:text-blue-600">Productos |</a>
+    <a href="#contacto" onclick="volverAlInicio()" class="px-1 hover:text-blue-600">Contacto |</a>
+    <a href="#asesorias-preview" onclick="volverAlInicio()" class="px-1 hover:text-blue-600">Asesoría</a>
+  </nav>
+</div>
 
 </header>
     <!-- BOTÓN MODO OSCURO DESHABILITADO TEMPORALMENTE -->
@@ -1716,43 +1719,53 @@
   </div>
 </section>
 
-<!-- Footer MEJORADO -->
+<!-- Footer MEJORADO - Responsive -->
 <footer class="bg-gradient-to-b from-gray-800 to-gray-900 text-white text-center p-4" role="contentinfo">
-  <div class="max-w-5xl mx-auto">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
-      <!-- Solo nombre - más grande -->
-<div class="flex items-center">
-  <span class="text-4xl font-bold">
-    <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-400">kit</span>
-  </span>
-</div>
-      
-      <!-- Enlaces rápidos -->
-      <div class="flex flex-wrap justify-center gap-6 text-sm">
-        <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Misión</a>
-        <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Productos</a>
-        <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Contacto</a>
-        <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Asesorías</a>
+  
+  <!-- Desktop: Footer completo (oculto en móvil) -->
+  <div class="hidden sm:block">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
+        <!-- Solo nombre - más grande -->
+        <div class="flex items-center">
+          <span class="text-4xl font-bold">
+            <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-400">kit</span>
+          </span>
+        </div>
+        
+        <!-- Enlaces rápidos -->
+        <div class="flex flex-wrap justify-center gap-6 text-sm">
+          <a href="#mision" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Misión</a>
+          <a href="#productos" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Productos</a>
+          <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Contacto</a>
+          <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-300 transition-colors duration-300">Asesorías</a>
+        </div>
       </div>
-    </div>
-    
-    <!-- Línea divisoria -->
-    <div class="border-t border-gray-700 my-6"></div>
-    
-    <!-- Copyright y info -->
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-      <p>&copy; 2025 Innovakit. <strong>Todos los derechos reservados.</strong></p>
-      <p class="md:ml-auto">Kits de electrónica y robótica educativa en Paraguay</p>
-      <div class="flex gap-4">
-        <a href="https://www.facebook.com/share/15HSQmpG2Z8/" target="_blank" class="hover:text-blue-400 transition-colors duration-300">
-          <i class="fab fa-facebook text-lg"></i>
-        </a>
-        <a href="https://www.instagram.com/innovakit_ofc?igsh=N2ZsNjh4YWo4MDBs" target="_blank" class="hover:text-pink-400 transition-colors duration-300">
-          <i class="fab fa-instagram text-lg"></i>
-        </a>
+      
+      <!-- Línea divisoria -->
+      <div class="border-t border-gray-700 my-6"></div>
+      
+      <!-- Copyright y info -->
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+        <p>&copy; 2025 Innovakit. <strong>Todos los derechos reservados.</strong></p>
+        <p class="md:ml-auto">Kits de electrónica y robótica educativa en Paraguay</p>
+        <div class="flex gap-4">
+          <a href="https://www.facebook.com/share/15HSQmpG2Z8/" target="_blank" class="hover:text-blue-400 transition-colors duration-300">
+            <i class="fab fa-facebook text-lg"></i>
+          </a>
+          <a href="https://www.instagram.com/innovakit_ofc?igsh=N2ZsNjh4YWo4MDBs" target="_blank" class="hover:text-pink-400 transition-colors duration-300">
+            <i class="fab fa-instagram text-lg"></i>
+          </a>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Móvil: Solo copyright (oculto en desktop) -->
+  <div class="sm:hidden text-sm text-gray-400">
+    <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
+  </div>
+
 </footer>
 <!-- Swiper JS (para el carrusel) -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
