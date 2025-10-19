@@ -829,8 +829,7 @@
   <div class="hidden sm:flex justify-between items-center">
     <!-- Logo -->
     <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover" onclick="volverAlInicio(); return false;">
-      <img src="Icono.png" alt="Logo Innovakit" class="h-14 lg:h-16 mr-1" width="60" height="60">
-      <h1 class="text-2xl lg:text-3xl font-bold">
+      <h1 class="text-3xl lg:text-4xl font-bold">
         <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
       </h1>
     </a>
@@ -1116,7 +1115,7 @@
 <hr class="my-6 border-gray-300">
 
 <!-- Contacto - MEJORADO FASE 5 -->
-<section id="contacto" class="p-6 bg-gradient-to-br from-white to-gray-50 sm:p-12 text-center rounded-2xl mx-4 mb-8">
+<section id="contacto" class="p-3 bg-gradient-to-br from-white to-gray-50 sm:p-6 text-center rounded-2xl mx-4 mb-4">
   <h3 class="text-2xl sm:text-3xl font-bold mb-8 animate-fade-in-up">Contáctanos</h3>
   <p class="mb-8 text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto text-readable leading-relaxed">
     ¿Quieres más información o una <strong class="text-blue-600">cotización rápida</strong>? 
@@ -2259,34 +2258,34 @@ function renderizarComponentesSueltos() {
         `;
     } else {
         grid.innerHTML = componentesPagina.map(comp => `
-            <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full min-h-[370px]" 
-                 onclick="mostrarModalProducto(${comp.id})">
-              
-              <!-- Sección 1: Imagen y nombre -->
-              <div class="p-4 flex-grow min-h-[140px]">
-                <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-48 object-contain mb-3 rounded" loading="lazy">
-                <h3 class="font-semibold text-lg line-clamp-2">${comp.nombre}</h3>
-                ${comp.categoria ? `<p class="text-sm text-gray-500 mt-1">${comp.categoria}</p>` : ''}
-              </div>
-              
-              <!-- Sección 2: Precio -->
-              <div class="px-4">
-                <p class="text-green-600 font-bold text-lg">${comp.precio}</p>
-              </div>
-              
-              <!-- Sección 3: Stock y botón -->
-              <div class="p-4 pt-1">
-                <div class="flex items-center justify-between">
-                  <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                    ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
-                  </span>
-                  <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm">
-                    Ver detalles ›
-                  </button>
-                </div>
-              </div>
-            </div>
-        `).join('');
+    <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full min-h-[350px]" 
+         onclick="mostrarModalProducto(${comp.id})">
+      
+      <!-- Sección 1: Imagen y nombre -->
+      <div class="p-3 flex-grow min-h-[130px]">
+        <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded" loading="lazy">
+        <h3 class="font-semibold text-base line-clamp-2">${comp.nombre}</h3>
+        ${comp.categoria ? `<p class="text-xs text-gray-500 mt-1">${comp.categoria}</p>` : ''}
+      </div>
+      
+      <!-- Sección 2: Precio -->
+      <div class="px-3">
+        <p class="text-green-600 font-bold text-base">${comp.precio}</p>
+      </div>
+      
+      <!-- Sección 3: Stock y botón -->
+      <div class="p-3 pt-1">
+        <div class="flex items-center justify-between">
+          <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+            ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
+          </span>
+          <button class="text-blue-600 hover:text-blue-800 font-semibold text-xs">
+            Ver detalles ›
+          </button>
+        </div>
+      </div>
+    </div>
+`).join('');
             
         console.log('✅ Productos renderizados:', componentesPagina.length);
     }
