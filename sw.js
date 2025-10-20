@@ -1,22 +1,30 @@
-// sw.js - Service Worker para cache
-const CACHE_NAME = 'innovakit-v2.1.0';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/productos.json',
-  '/png/favicon.png'
-];
+// sw.js - NUEVO: ELIMINA CACHE EXISTENTE Y NO GUARDA NADA NUEVO
+self.addEventListener('install', function(event) {
+  // Saltar espera - activar inmediatamente
+  self.skipWaiting();
+  console.log('🚀 Nuevo Service Worker instalado');
+});
 
-self.addEventListener('install', event => {
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+    // ELIMINAR TODOS LOS CACHES EXISTENTES
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          console.log('🗑️ Eliminando cache viejo:', cacheName);
+          return caches.delete(cacheName);
+        })
+      );
+    }).then(function() {
+      console.log('✅ Todos los caches antiguos eliminados');
+      // Tomar control inmediato de todas las pestañas
+      return self.clients.claim();
+    })
   );
 });
 
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
-  );
+// ESTRATEGIA: NUNCA CACHEAR, SIEMPRE IR A INTERNET
+self.addEventListener('fetch', function(event) {
+  // Siempre buscar en la red, nunca en cache
+  event.respondWith(fetch(event.request));
 });
