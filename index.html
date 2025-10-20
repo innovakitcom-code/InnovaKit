@@ -755,36 +755,36 @@
         filter: contrast(1.2) brightness(1.1);
       }
     }
-    /* Header responsive para móviles */
-/* ELIMINAR ESTE BLOQUE COMPLETO - Causa problemas con la posición del carrito */
-/*
-@media (max-width: 768px) {
-  header .flex a img {
-    display: none;
-  }
-  
-  header .flex a {
-    margin-left: auto;
-    order: 2;
-  }
-  
-  header .flex button[onclick="verCarrito()"] {
-    order: 1;
-    margin-right: auto;
-    margin-left: 0;
-  }
-  
-  header .flex {
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  header nav {
-    order: 3;
-    width: 100%;
-    margin-top: 10px;
-    justify-content: center;
-  }
+    /* SOLUCIÓN ESPECÍFICA PARA COMPONENTES SUELTOS - ELIMINAR ESPACIO BLANCO */
+#vista-componentes-sueltos .page-container,
+#vista-componentes-sueltos .products-container,
+#vista-componentes-sueltos .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#vista-componentes-sueltos .max-w-7xl {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Asegurar que el grid ocupe todo el ancho */
+#vista-componentes-sueltos #grid-componentes {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Corregir el padding del contenedor principal */
+#vista-componentes-sueltos {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+#vista-componentes-sueltos > div {
+    width: 100% !important;
+    max-width: 100% !important;
 }
 */@media (max-width: 768px) {
   /* Ocultar logo en móviles */
@@ -819,6 +819,7 @@
     justify-content: center;
   }
 }
+        /* termina aqui */
 /* Mejoras específicas para modal en móvil */
 @media (max-width: 768px) {
   #modal-producto .modal-container {
