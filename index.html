@@ -836,6 +836,18 @@
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
+  <!-- ESTE SCRIPT ELIMINA EL SW VIEJO -->
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for(let registration of registrations) {
+        registration.unregister();
+        console.log('🗑️ Service Worker viejo eliminado');
+      }
+    });
+  }
+  </script>
+  <!-- TU CÓDIGO NORMAL -
  <!-- Header MEJORADO - Tu diseño desktop + Mi diseño móvil -->
 <header class="bg-white shadow-md p-4 sticky top-0 z-20 backdrop-blur bg-white/95" role="banner">
   
