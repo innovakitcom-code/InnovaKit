@@ -755,69 +755,57 @@
         filter: contrast(1.2) brightness(1.1);
       }
     }
-    /* SOLUCIÓN ESPECÍFICA PARA COMPONENTES SUELTOS - ELIMINAR ESPACIO BLANCO */
-#vista-componentes-sueltos .page-container,
-#vista-componentes-sueltos .products-container,
-#vista-componentes-sueltos .container {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
+   /* VISTA SOLO PARA COMPONENTE SUELTOS - No afecta desktop */
+@media (max-width: 768px) {
+    /* Solo en vista componentes sueltos en móvil */
+    #vista-componentes-sueltos .container {
+        max-width: 100% !important;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+    
+    /* Asegurar que el grid no se desborde */
+    #vista-componentes-sueltos .products-container {
+        overflow-x: hidden;
+        width: 100%;
+    }
+    
+    /* Paginación fija corregida solo en móvil */
+    .pagination-fixed {
+        left: 0;
+        right: 0;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    /* Botones de paginación con tamaño mínimo */
+    .pagination-fixed button {
+        min-width: 70px;
+    }
+    
+    /* Grid con márgenes seguros en móvil */
+    #grid-componentes {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+        gap: 0.75rem;
+    }
 }
 
-#vista-componentes-sueltos .max-w-7xl {
-    max-width: 100% !important;
-    width: 100% !important;
-}
-
-/* Asegurar que el grid ocupe todo el ancho */
-#vista-componentes-sueltos #grid-componentes {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-
-/* Corregir el padding del contenedor principal */
-#vista-componentes-sueltos {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-#vista-componentes-sueltos > div {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-*/@media (max-width: 768px) {
-  /* Ocultar logo en móviles */
-  header .flex a img {
-    display: none;
-  }
-  
-  /* Mover "Innovakit" a la derecha */
-  header .flex a {
-    margin-left: auto;
-    order: 2;
-  }
-  
-  /* Mover carrito a la izquierda */
-  header .flex button[onclick="verCarrito()"] {
-    order: 1;
-    margin-right: auto;
-    margin-left: 0;
-  }
-  
-  /* Ajustar el contenedor del header */
-  header .flex {
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  /* Ajustar navegación para que ocupe toda la línea */
-  header nav {
-    order: 3;
-    width: 100%;
-    margin-top: 10px;
-    justify-content: center;
-  }
+/* Para móviles muy pequeños (iPhone SE) - corrección extra */
+@media (max-width: 375px) {
+    #vista-componentes-sueltos .container {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    
+    .pagination-fixed {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    #grid-componentes {
+        gap: 0.5rem;
+    }
 }
         /* termina aqui */
 /* Mejoras específicas para modal en móvil */
@@ -1742,24 +1730,24 @@
       </button>
     </div>
 
-    <!-- MÓVIL: Versión compacta (oculta en desktop) -->
-    <div class="sm:hidden flex justify-between items-center py-2">
-      <button onclick="cambiarPagina(paginaActual - 1)" 
-              class="px-3 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:opacity-50 transition-all font-semibold text-sm flex items-center touch-target">
-        <i class="fas fa-chevron-left mr-1"></i>
-        Ant.
-      </button>
-      
-      <span id="info-paginacion-mobile" class="text-sm text-gray-700 font-medium px-3 py-1 bg-gray-100 rounded">
-        <span class="text-blue-600">1</span>/<span class="text-blue-600">1</span>
-      </span>
-      
-      <button onclick="cambiarPagina(paginaActual + 1)" 
-              class="px-3 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:opacity-50 transition-all font-semibold text-sm flex items-center touch-target">
-        Sig.
-        <i class="fas fa-chevron-right ml-1"></i>
-      </button>
-    </div>
+   <!-- MÓVIL: Versión compacta (oculta en desktop) CORREGIDA -->
+<div class="sm:hidden flex justify-between items-center py-2 px-3">
+  <button onclick="cambiarPagina(paginaActual - 1)" 
+          class="px-3 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:opacity-50 transition-all font-semibold text-sm flex items-center touch-target min-w-[70px] justify-center">
+    <i class="fas fa-chevron-left mr-1"></i>
+    Ant.
+  </button>
+  
+  <span id="info-paginacion-mobile" class="text-sm text-gray-700 font-medium px-3 py-1 bg-gray-100 rounded">
+    <span class="text-blue-600">1</span>/<span class="text-blue-600">1</span>
+  </span>
+  
+  <button onclick="cambiarPagina(paginaActual + 1)" 
+          class="px-3 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:opacity-50 transition-all font-semibold text-sm flex items-center touch-target min-w-[70px] justify-center">
+    Sig.
+    <i class="fas fa-chevron-right ml-1"></i>
+  </button>
+</div>
 
   </div>
 </div>
