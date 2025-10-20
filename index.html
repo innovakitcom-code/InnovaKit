@@ -446,6 +446,116 @@
     .btn-icon:hover {
       gap: 12px;
     }
+    /* ============================================= */
+/* ESTILOS PARA SISTEMA DE REVIEWS Y ADMIN */
+/* ============================================= */
+
+.rating-stars {
+    display: inline-flex;
+    gap: 2px;
+}
+
+.rating-stars .star {
+    color: #d1d5db;
+    font-size: 1.2rem;
+}
+
+.rating-stars .star.filled {
+    color: #fbbf24;
+}
+
+.review-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+    border: 1px solid #f3f4f6;
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.verified-badge {
+    background: #10b981;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pending-badge {
+    background: #f59e0b;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Modal para agregar reviews */
+#review-modal .modal-container {
+    max-width: 500px;
+    margin: 20px;
+}
+
+.rating-input .star {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.rating-input .star:hover {
+    transform: scale(1.2);
+}
+
+/* Panel de administración */
+.admin-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    z-index: 10000;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    width: 600px;
+}
+
+.admin-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+}
+
+.review-pending-item {
+    border: 2px solid #fbbf24;
+    background: #fffbeb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.review-pending-item .rating-stars {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
 /* ============================================= */
 /* MEJORAS ESPECÍFICAS PARA MODAL EN MÓVIL */
 /* ============================================= */
@@ -1335,6 +1445,13 @@
             </div>
           </div>
 
+          <!-- Sección de Reviews - AGREGAR ESTO -->
+          <div class="reviews-section mt-6 pt-4 border-t border-gray-200">
+              <div id="modal-producto-reviews">
+                  <!-- Los reviews se cargan aquí automáticamente -->
+              </div>
+          </div>
+
           <!-- Botones de acción OPTIMIZADOS -->
           <div class="space-y-3 pt-2">
             <button onclick="comprarProductoWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg font-semibold text-sm md:text-base flex items-center justify-center btn-hover touch-target">
@@ -1824,7 +1941,7 @@ function toWebP(path) {
 
     // --- Aquí defines todos los productos de cada kit ---
     const productosKits = [
-      // Kit 1: Electrónica Básico (7 productos)
+      // Kit 1: Electrónica Básico ( productos)
       [
         { 
           img: ["img/AE101_PORT.png", "webP/AE101-1.webp", "webP/AE101-2.webp", "webP/AE101-3.webp", "webP/AE101-3.webp", "webP/AE101-4.webp", "img/AE101_2.png", "img/AE101_22.png", "img/AE101_3.png", "img/AE101_4.png"], 
@@ -2117,7 +2234,55 @@ function parseGs(str) {
 }
 // Base de datos de componentes sueltos
 let componentesSueltos = [];
+// =============================================
+// SISTEMA DE SEGURIDAD ADMIN - CONFIGURAR!
+// =============================================
 
+const SISTEMA_SEGURIDAD = {
+    // ⚠️ ¡CAMBIAR ESTOS VALORES! ⚠️
+    password: "KitElectronica2024",           // Cambia esta contraseña
+    codigoSecreto: "9722",                    // Últimos 4 dígitos de tu WhatsApp
+    urlToken: "innovakit_paraguay_admin",     // Cambia este token
+    intentos: 0,
+    maxIntentos: 3
+};
+
+// =============================================
+// SISTEMA DE REVIEWS CON APROBACIÓN MANUAL
+// =============================================
+
+let reviews = JSON.parse(localStorage.getItem('innovakit_reviews')) || [
+    {
+        id: 1,
+        nombre: "Carlos Mendoza",
+        rating: 5,
+        comentario: "El kit AE101 es perfecto para empezar en electrónica. Los componentes son de buena calidad y el manual muy claro.",
+        producto: "37 SENSOR KIT (AE101)",
+        fecha: "2024-01-15",
+        verified: true,
+        pending: false
+    },
+    {
+        id: 2,
+        nombre: "Ana Torres",
+        rating: 4,
+        comentario: "Buenísima calidad de componentes. El envío fue rápido y todo bien embalado. Recomendado!",
+        producto: "ESP32 Basic STARTER KIT (AE312)", 
+        fecha: "2024-01-12",
+        verified: true,
+        pending: false
+    },
+    {
+        id: 3,
+        nombre: "Roberto Díaz",
+        rating: 5,
+        comentario: "Excelente soporte técnico. Me ayudaron con mi proyecto de la feria científica y gané el primer puesto!",
+        producto: "Kit de Robótica Acebott",
+        fecha: "2024-01-08",
+        verified: true,
+        pending: false
+    }
+];
 // Variables globales para paginación
 let paginaActual = 1;
 const componentesPorPagina = 8; // ← AGREGA ESTA LÍNEA
@@ -2828,6 +2993,561 @@ function volverAlInicio() {
   function parseGs(str) { return Number(String(str).replace(/[^\d]/g,'')) || 0; }
   function formatearGs(n) { return 'Gs. ' + n.toLocaleString('es-PY'); }
 
+
+  
+// =============================================
+// SISTEMA DE SEGURIDAD - FUNCIONES PRINCIPALES
+// =============================================
+
+function inicializarSistemaSeguridad() {
+    const parametros = new URLSearchParams(window.location.search);
+    if (parametros.get('admin') === SISTEMA_SEGURIDAD.urlToken) {
+        window.accesoAdminPermitido = true;
+        history.replaceState({}, '', window.location.pathname);
+        console.log('✅ Acceso admin concedido vía URL secreta');
+    }
+}
+
+function mostrarPanelReviewsSeguro() {
+    // Verificar si ya tiene acceso por URL
+    if (!window.accesoAdminPermitido) {
+        // Verificar intentos
+        if (SISTEMA_SEGURIDAD.intentos >= SISTEMA_SEGURIDAD.maxIntentos) {
+            mostrarNotificacion('🚫 Demasiados intentos fallidos. Acceso bloqueado.', 'error');
+            return;
+        }
+        
+        // Solicitar autenticación
+        const metodo = prompt(
+            "🔐 ACCESO RESTRINGIDO - INNOVAKIT ADMIN\n\n" +
+            "Método de verificación:\n" +
+            "1 - Contraseña principal\n" +
+            "2 - Código personal\n\n" +
+            "Ingresa 1 o 2:"
+        );
+        
+        let acceso = false;
+        
+        if (metodo === "1") {
+            const input = prompt("🔑 Contraseña de administrador:");
+            acceso = (input === SISTEMA_SEGURIDAD.password);
+        } else if (metodo === "2") {
+            const input = prompt("🔢 Código personal de 4 dígitos:");
+            acceso = (input === SISTEMA_SEGURIDAD.codigoSecreto);
+        } else {
+            mostrarNotificacion('❌ Opción no válida', 'error');
+            return;
+        }
+        
+        if (!acceso) {
+            SISTEMA_SEGURIDAD.intentos++;
+            const restantes = SISTEMA_SEGURIDAD.maxIntentos - SISTEMA_SEGURIDAD.intentos;
+            mostrarNotificacion(`❌ Acceso denegado. ${restantes} intentos restantes.`, 'error');
+            return;
+        }
+    }
+    
+    // Resetear intentos si accedió correctamente
+    SISTEMA_SEGURIDAD.intentos = 0;
+    window.accesoAdminPermitido = true;
+    
+    // MOSTRAR EL PANEL
+    const reviewsPendientes = reviews.filter(r => r.pending);
+    const reviewsAprobados = reviews.filter(r => r.verified && !r.pending);
+    
+    const panelHTML = `
+        <div class="admin-overlay" onclick="cerrarPanelReviews()"></div>
+        <div class="admin-panel">
+            <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800">
+                    👑 Panel de Reseñas
+                    <span class="text-sm font-normal text-green-600 ml-2">● Conectado</span>
+                </h2>
+                <button onclick="cerrarPanelReviews()" class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">
+                        ${reviewsPendientes.length} Pendientes
+                    </div>
+                    <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                        ${reviewsAprobados.length} Aprobados
+                    </div>
+                </div>
+                
+                ${reviewsPendientes.length > 0 ? `
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">📝 Reseñas Pendientes</h3>
+                    <div class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        ${reviewsPendientes.map(review => `
+                            <div class="review-pending-item">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div class="flex-1">
+                                        <div class="rating-stars mb-2">
+                                            ${renderStars(review.rating)}
+                                        </div>
+                                        <h4 class="font-semibold text-gray-800">${review.nombre}</h4>
+                                        <p class="text-sm text-gray-600 mt-1">${review.producto}</p>
+                                    </div>
+                                    <span class="pending-badge">
+                                        <i class="fas fa-clock"></i> Pendiente
+                                    </span>
+                                </div>
+                                <p class="text-gray-700 text-sm mb-4 leading-relaxed">"${review.comentario}"</p>
+                                <div class="flex gap-2 justify-end">
+                                    <button onclick="aprobarReview(${review.id})" 
+                                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition btn-hover">
+                                        <i class="fas fa-check mr-1"></i> Aprobar
+                                    </button>
+                                    <button onclick="rechazarReview(${review.id})" 
+                                            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition btn-hover">
+                                        <i class="fas fa-times mr-1"></i> Rechazar
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : `
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-check-circle text-4xl mb-3 text-green-400"></i>
+                        <p class="font-semibold">No hay reseñas pendientes</p>
+                        <p class="text-sm mt-1">Todo está al día</p>
+                    </div>
+                `}
+            </div>
+            
+            <div class="text-center border-t pt-4">
+                <button onclick="cerrarSesionAdmin()" 
+                        class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition btn-hover mr-2">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
+                </button>
+                <button onclick="cerrarPanelReviews()" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition btn-hover">
+                    <i class="fas fa-times mr-2"></i>Cerrar Panel
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', panelHTML);
+}
+
+function cerrarSesionAdmin() {
+    window.accesoAdminPermitido = false;
+    SISTEMA_SEGURIDAD.intentos = 0;
+    cerrarPanelReviews();
+    mostrarNotificacion('🔒 Sesión admin cerrada', 'success');
+}
+
+function cerrarPanelReviews() {
+    const overlay = document.querySelector('.admin-overlay');
+    const panel = document.querySelector('.admin-panel');
+    
+    if (overlay) overlay.remove();
+    if (panel) panel.remove();
+}
+
+function aprobarReview(id) {
+    const reviewIndex = reviews.findIndex(r => r.id === id);
+    if (reviewIndex !== -1) {
+        reviews[reviewIndex].verified = true;
+        reviews[reviewIndex].pending = false;
+        localStorage.setItem('innovakit_reviews', JSON.stringify(reviews));
+        mostrarNotificacion('✅ Reseña aprobada y publicada', 'success');
+        cerrarPanelReviews();
+        
+        // Recargar panel después de un momento si hay más pendientes
+        setTimeout(() => {
+            const pendientes = reviews.filter(r => r.pending);
+            if (pendientes.length > 0) {
+                mostrarPanelReviewsSeguro();
+            }
+        }, 1500);
+    }
+}
+
+function rechazarReview(id) {
+    if (confirm('¿Estás seguro de que quieres rechazar esta reseña? Esta acción no se puede deshacer.')) {
+        reviews = reviews.filter(r => r.id !== id);
+        localStorage.setItem('innovakit_reviews', JSON.stringify(reviews));
+        mostrarNotificacion('❌ Reseña rechazada', 'error');
+        cerrarPanelReviews();
+    }
+}
+
+// =============================================
+// FUNCIONES PRINCIPALES DEL SISTEMA DE REVIEWS
+// =============================================
+
+// Función para renderizar estrellas
+function renderStars(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= rating) {
+            stars += '<i class="fas fa-star star filled"></i>';
+        } else {
+            stars += '<i class="far fa-star star"></i>';
+        }
+    }
+    return stars;
+}
+
+// Función para mostrar reviews de un producto específico
+function mostrarReviewsProducto(productoNombre) {
+    const reviewsProducto = reviews.filter(review => 
+        (review.producto.toLowerCase().includes(productoNombre.toLowerCase()) ||
+         productoNombre.toLowerCase().includes(review.producto.toLowerCase())) &&
+        !review.pending // No mostrar reviews pendientes
+    );
+    
+    return reviewsProducto;
+}
+
+// Función para calcular rating promedio
+function calcularRatingPromedio(productoNombre) {
+    const reviewsProducto = mostrarReviewsProducto(productoNombre);
+    if (reviewsProducto.length === 0) return 0;
+    
+    const total = reviewsProducto.reduce((sum, review) => sum + review.rating, 0);
+    return (total / reviewsProducto.length).toFixed(1);
+}
+
+// Función para renderizar reviews en el modal de producto
+function renderizarReviewsEnModal(productoNombre) {
+    const reviewsProducto = mostrarReviewsProducto(productoNombre);
+    const promedio = calcularRatingPromedio(productoNombre);
+    const totalReviews = reviewsProducto.length;
+    
+    let html = `
+        <div class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <div class="flex items-center gap-4 mb-3">
+                <div class="text-3xl font-bold text-gray-800">${promedio}</div>
+                <div class="flex-1">
+                    <div class="rating-stars text-lg mb-1">
+                        ${renderStars(Math.round(promedio))}
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        ${totalReviews} ${totalReviews === 1 ? 'reseña' : 'reseñas'} • ${promedio} de 5
+                    </div>
+                </div>
+            </div>
+            <button onclick="mostrarModalReview('${productoNombre.replace(/'/g, "\\'")}')" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition btn-hover">
+                <i class="fas fa-plus mr-2"></i>Escribir Reseña
+            </button>
+        </div>
+    `;
+    
+    if (totalReviews > 0) {
+        html += '<div class="space-y-4 max-h-64 overflow-y-auto pr-2">';
+        
+        // Ordenar por fecha (más recientes primero)
+        reviewsProducto.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+        
+        reviewsProducto.forEach(review => {
+            html += `
+                <div class="review-card">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex-1">
+                            <div class="rating-stars mb-2">
+                                ${renderStars(review.rating)}
+                            </div>
+                            <h4 class="font-semibold text-gray-800">${review.nombre}</h4>
+                        </div>
+                        ${review.verified ? 
+                            '<span class="verified-badge"><i class="fas fa-check"></i> Verificado</span>' : 
+                            ''
+                        }
+                    </div>
+                    <p class="text-gray-700 text-sm mb-3 leading-relaxed">${review.comentario}</p>
+                    <div class="text-xs text-gray-500 flex justify-between items-center">
+                        <span>${new Date(review.fecha).toLocaleDateString('es-PY', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                        })}</span>
+                        <span class="text-blue-600">${review.producto}</span>
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+    } else {
+        html += `
+            <div class="text-center py-8 text-gray-500">
+                <i class="fas fa-comments text-4xl mb-3 text-gray-300"></i>
+                <p class="font-semibold">Aún no hay reseñas</p>
+                <p class="text-sm mt-1">Sé el primero en compartir tu experiencia</p>
+            </div>
+        `;
+    }
+    
+    return html;
+}
+
+// Variables globales para el sistema de rating
+let currentRating = 0;
+
+// Función para mostrar modal de agregar review
+function mostrarModalReview(productoNombre) {
+    // Cerrar modal de producto si está abierto
+    toggleModalProducto();
+    
+    const modalHTML = `
+        <div id="review-modal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 backdrop-blur-sm">
+            <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-60"></div>
+            
+            <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-2xl shadow-2xl z-50 transform transition-all duration-300 scale-95">
+                <div class="modal-content py-6 text-left px-6">
+                    <div class="flex justify-between items-center pb-4 border-b border-gray-200 mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">Escribe tu Reseña</h3>
+                        <button onclick="cerrarModalReview()" class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition">
+                            <i class="fas fa-times text-lg"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                        <p class="text-sm text-blue-800 font-semibold">Producto:</p>
+                        <p class="text-blue-900">${productoNombre}</p>
+                    </div>
+                    
+                    <form id="form-review" onsubmit="agregarReview(event, '${productoNombre.replace(/'/g, "\\'")}')">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tu nombre *</label>
+                            <input type="text" id="review-nombre" required 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                                   placeholder="Ej: María González">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tu calificación *</label>
+                            <div class="rating-input flex gap-1 text-2xl mb-2 justify-center">
+                                ${[1,2,3,4,5].map(i => 
+                                    `<i class="far fa-star cursor-pointer text-gray-300 hover:text-yellow-400 transition" 
+                                        data-rating="${i}"
+                                        onmouseover="previewStars(${i})"
+                                        onmouseout="resetStars()"
+                                        onclick="setRating(${i})"></i>`
+                                ).join('')}
+                            </div>
+                            <input type="hidden" id="review-rating" required value="0">
+                            <div id="rating-text" class="text-center text-sm text-gray-500">Selecciona las estrellas</div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tu experiencia *</label>
+                            <textarea id="review-comentario" required rows="4"
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
+                                      placeholder="Comparte tu experiencia con este producto... ¿Qué te gustó? ¿Cómo lo usaste?"></textarea>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button type="button" onclick="cerrarModalReview()" 
+                                    class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 rounded-lg font-semibold transition btn-hover">
+                                Cancelar
+                            </button>
+                            <button type="submit" id="submit-review" disabled
+                                    class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold transition btn-hover opacity-50 cursor-not-allowed">
+                                <i class="fas fa-paper-plane mr-2"></i>Enviar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Agregar modal al body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Mostrar modal con animación
+    setTimeout(() => {
+        const modal = document.getElementById('review-modal');
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.querySelector('.modal-container').classList.remove('scale-95');
+    }, 10);
+    
+    // Resetear rating
+    currentRating = 0;
+}
+
+// Funciones auxiliares para el sistema de rating
+function previewStars(rating) {
+    const stars = document.querySelectorAll('.rating-input .fa-star');
+    const ratingText = document.getElementById('rating-text');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('fas', 'text-yellow-400');
+            star.classList.remove('far', 'text-gray-300');
+        } else {
+            star.classList.add('far', 'text-gray-300');
+            star.classList.remove('fas', 'text-yellow-400');
+        }
+    });
+    
+    // Actualizar texto descriptivo
+    const textos = [
+        "Selecciona las estrellas",
+        "Malo",
+        "Regular", 
+        "Bueno",
+        "Muy bueno",
+        "Excelente"
+    ];
+    if (ratingText) {
+        ratingText.textContent = textos[rating];
+        ratingText.className = `text-center text-sm ${rating > 0 ? 'text-yellow-600 font-semibold' : 'text-gray-500'}`;
+    }
+}
+
+function resetStars() {
+    if (currentRating === 0) {
+        const stars = document.querySelectorAll('.rating-input .fa-star');
+        stars.forEach(star => {
+            star.classList.add('far', 'text-gray-300');
+            star.classList.remove('fas', 'text-yellow-400');
+        });
+        const ratingText = document.getElementById('rating-text');
+        if (ratingText) {
+            ratingText.textContent = "Selecciona las estrellas";
+            ratingText.className = "text-center text-sm text-gray-500";
+        }
+    } else {
+        previewStars(currentRating);
+    }
+}
+
+function setRating(rating) {
+    currentRating = rating;
+    document.getElementById('review-rating').value = rating;
+    
+    // Habilitar botón de enviar
+    const submitBtn = document.getElementById('submit-review');
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        submitBtn.classList.add('hover:bg-blue-700', 'cursor-pointer');
+    }
+    
+    previewStars(rating);
+}
+
+function cerrarModalReview() {
+    const modal = document.getElementById('review-modal');
+    if (modal) {
+        modal.querySelector('.modal-container').classList.add('scale-95');
+        setTimeout(() => {
+            modal.remove();
+        }, 300);
+    }
+    
+    // Reabrir modal de producto si existía
+    const productoModal = document.getElementById('modal-producto');
+    if (productoModal && !productoModal.classList.contains('pointer-events-none')) {
+        // Ya está abierto, no hacer nada
+    } else {
+        // Volver a la vista anterior
+        setTimeout(() => {
+            if (window.location.hash.includes('componentes')) {
+                document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+            }
+        }, 350);
+    }
+}
+
+// Función principal para agregar review
+function agregarReview(event, productoNombre) {
+    event.preventDefault();
+    
+    const nombre = document.getElementById('review-nombre').value.trim();
+    const rating = parseInt(document.getElementById('review-rating').value);
+    const comentario = document.getElementById('review-comentario').value.trim();
+    
+    if (rating === 0) {
+        mostrarNotificacion('Por favor selecciona una calificación', 'error');
+        return;
+    }
+    
+    if (nombre.length < 2) {
+        mostrarNotificacion('Por favor ingresa tu nombre', 'error');
+        return;
+    }
+    
+    if (comentario.length < 10) {
+        mostrarNotificacion('Por favor escribe una reseña más detallada (mínimo 10 caracteres)', 'error');
+        return;
+    }
+    
+    const nuevoReview = {
+        id: Date.now(),
+        nombre: nombre,
+        rating: rating,
+        comentario: comentario,
+        producto: productoNombre,
+        fecha: new Date().toISOString().split('T')[0],
+        verified: false,
+        pending: true  // ← IMPORTANTE: Pendiente de aprobación
+    };
+    
+    reviews.push(nuevoReview);
+    localStorage.setItem('innovakit_reviews', JSON.stringify(reviews));
+    
+    // 🔔 NOTIFICACIÓN PARA TI
+    notificarReviewPendiente(nuevoReview);
+    
+    mostrarNotificacion('¡Gracias por tu reseña! La revisaremos y publicaremos pronto. 📝', 'success');
+    cerrarModalReview();
+    
+    // Track event para analytics
+    trackEvent('Reviews', 'Agregar Reseña', productoNombre);
+}
+
+// 🔔 FUNCIÓN PARA NOTIFICARTE DE REVIEWS NUEVOS
+function notificarReviewPendiente(review) {
+    const mensaje = `📝 NUEVA RESEÑA PENDIENTE:\n\nProducto: ${review.producto}\nCliente: ${review.nombre}\nRating: ${'⭐'.repeat(review.rating)}\nComentario: ${review.comentario}\n\nRevisa el panel de administración para aprobarla.`;
+    
+    console.log('🔔 REVIEW PENDIENTE:', mensaje);
+    console.log('Para aprobar/ver reviews pendientes, ejecuta en la consola: mostrarPanelReviews()');
+    
+    // También puedes mostrarlo como notificación en la página
+    setTimeout(() => {
+        if (confirm('📝 Tienes una nueva reseña pendiente de aprobación. ¿Quieres revisarla ahora?')) {
+            mostrarPanelReviewsSeguro();
+        }
+    }, 2000);
+}
+
+// =============================================
+// BOTÓN ADMIN SEGURO
+// =============================================
+
+function agregarBotonAdminSeguro() {
+    const boton = document.createElement('button');
+    boton.innerHTML = '👑';
+    boton.className = 'fixed bottom-24 left-6 z-50 bg-purple-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-purple-700 transition-all duration-300 hidden';
+    boton.onclick = mostrarPanelReviewsSeguro;
+    boton.title = 'Panel Admin (Acceso Restringido)';
+    boton.id = 'boton-admin-secreto';
+    document.body.appendChild(boton);
+    
+    // Mostrar con combinación de teclas
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.altKey && e.key === 'i') { // Ctrl+Alt+I
+            document.getElementById('boton-admin-secreto').classList.toggle('hidden');
+            setTimeout(() => {
+                document.getElementById('boton-admin-secreto').classList.add('hidden');
+            }, 10000); // Ocultar después de 10 segundos
+        }
+    });
+}
+
+// REEMPLAZA tu función actual por esta versión segura
+function mostrarPanelReviews() {
+    mostrarPanelReviewsSeguro();
+}
+
   function toggleModalCarrito(forceOpen = null) {
     const modal = document.getElementById('modal-carrito');
     const willOpen = forceOpen === null ? modal.classList.contains('opacity-0') : forceOpen;
@@ -3112,10 +3832,27 @@ function mostrarModalProducto(id) {
         console.error('Error mostrando modal:', error);
         mostrarNotificacion('❌ Error al cargar detalles del producto');
     }
+    // Llenar sección de reviews
+    setTimeout(() => {
+        const reviewsContainer = document.getElementById('modal-producto-reviews');
+        if (reviewsContainer) {
+            reviewsContainer.innerHTML = renderizarReviewsEnModal(producto.nombre);
+        }
+    }, 100);
 }
 
 // Inicialización mejorada cuando carga la página
 document.addEventListener('DOMContentLoaded', function() {
+    // =============================================
+    // INICIALIZAR SISTEMA DE SEGURIDAD Y REVIEWS
+    // =============================================
+    inicializarSistemaSeguridad();
+    agregarBotonAdminSeguro();
+    console.log('✅ Sistema de reviews y seguridad inicializado');
+    console.log('🔑 Métodos de acceso admin:');
+    console.log('   - URL secreta: ?admin=innovakit_paraguay_admin');
+    console.log('   - Teclas: Ctrl+Alt+I (muestra botón 👑)');
+    console.log('   - Consola: mostrarPanelReviews()');
     console.log('🚀 Inicializando Innovakit...');
     
     // Cargar productos automáticamente
