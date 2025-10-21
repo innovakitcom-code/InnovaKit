@@ -1138,49 +1138,43 @@
     overflow: hidden;
   }
 }
- /* ============================================= */
-/* CONTACTO MÓVIL - SOLO ÍCONOS */
+/* ============================================= */
+/* WHATSAPP - 2 VERSIONES (Desktop vs Móvil) */
 /* ============================================= */
 
+/* MÓVIL: Mostrar solo ícono redondo, ocultar botón desktop */
 @media (max-width: 768px) {
-  .contactos-movil {
-    flex-direction: row !important;
-    gap: 1.5rem !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-  
-  /* WhatsApp - círculo con SOLO el ícono */
-  .contactos-movil a[href*="wa.me"] {
-    background: #25D366 !important;
-    color: white !important;
-    width: 60px !important;
-    height: 60px !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-    font-size: 1.8rem !important;
-  }
-  
-  /* OCULTAR TODO el contenido de texto y mostrar SOLO el ícono */
-  .contactos-movil a[href*="wa.me"] * {
+  .whatsapp-desktop {
     display: none !important;
   }
   
-  /* MOSTRAR SOLO el ícono de WhatsApp */
-  .contactos-movil a[href*="wa.me"] i.fa-whatsapp {
-    display: block !important;
-    margin: 0 !important;
-    font-size: 1.8rem !important;
+  .whatsapp-movil {
+    display: flex !important;
+    width: 60px !important;
+    height: 60px !important;
   }
   
-  /* Facebook e Instagram - solo íconos */
-  .contactos-movil a[href*="facebook"] i,
-  .contactos-movil a[href*="instagram"] i {
+  /* Los 3 en fila */
+  .contactos-movil {
+    flex-direction: row !important;
+    gap: 1.5rem !important;
+  }
+  
+  /* Facebook e Instagram normales */
+  .contactos-movil a[href*="facebook"],
+  .contactos-movil a[href*="instagram"] {
     font-size: 2.5rem !important;
-    margin: 0 !important;
+  }
+}
+
+/* DESKTOP: Mostrar botón completo, ocultar ícono redondo */
+@media (min-width: 769px) {
+  .whatsapp-movil {
+    display: none !important;
+  }
+  
+  .whatsapp-desktop {
+    display: flex !important;
   }
 }
   </style>
@@ -1452,12 +1446,20 @@
        <i class="fab fa-facebook"></i>
     </a>
 
-    <!-- WhatsApp -->
-    <a href="https://wa.me/595972292392" target="_blank"
-       class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg flex items-center justify-center btn-hover touch-target btn-icon transition-all duration-300 transform hover:scale-105"
-       aria-label="Chatear por WhatsApp">
-       <i class="fab fa-whatsapp mr-3 text-xl"></i>WhatsApp
-    </a>
+    <!-- WhatsApp Desktop (visible en desktop) -->
+<a href="https://wa.me/595972292392" target="_blank"
+   class="whatsapp-desktop bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg flex items-center justify-center btn-hover touch-target btn-icon transition-all duration-300 transform hover:scale-105"
+   aria-label="Chatear por WhatsApp">
+   <i class="fab fa-whatsapp mr-3 text-xl"></i>WhatsApp
+</a>
+
+<!-- WhatsApp Móvil (visible en móvil) -->
+<a href="https://wa.me/595972292392" target="_blank"
+   class="whatsapp-movil bg-green-500 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300"
+   aria-label="Chatear por WhatsApp"
+   style="display: none;">
+   <i class="fab fa-whatsapp text-2xl"></i>
+</a>
 
     <!-- Instagram -->
     <a href="https://www.instagram.com/innovakit_ofc?igsh=N2ZsNjh4YWo4MDBs" target="_blank"
