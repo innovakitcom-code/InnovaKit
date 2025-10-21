@@ -915,7 +915,7 @@
     margin-bottom: 1.5rem !important;
   }
 }
-    /* ============================================= */
+   /* ============================================= */
 /* SOLUCIÓN FONDO ASESORÍAS MÓVIL */
 /* ============================================= */
 
@@ -1013,7 +1013,7 @@
   }
 }
 /* ============================================= */
-/* OPTIMIZACIÓN ASESORES PARA MÓVIL */
+/* OPTIMIZACIÓN ASESORES PARA MÓVIL - CORREGIDO */
 /* ============================================= */
 
 @media (max-width: 768px) {
@@ -1023,72 +1023,55 @@
     padding: 1.5rem;
   }
   
-  /* Grid de asesores - 2 columnas en móvil */
-  #vista-asesorias .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+  /* Grid de asesores - 2 columnas en móvil - SELECTOR CORREGIDO */
+  #vista-asesorias .grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3,
+  #vista-asesorias .grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
   }
   
   /* Cards de asesores más compactos */
   #vista-asesorias .card-elevated {
-    padding: 1.5rem;
+    padding: 1.5rem !important;
     margin: 0;
   }
   
   /* Imagen de asesor más pequeña */
+  #vista-asesorias .w-24,
   #vista-asesorias .w-36 {
-    width: 5rem;
-    height: 5rem;
+    width: 5rem !important;
+    height: 5rem !important;
   }
   
   /* Textos más compactos */
   #vista-asesorias .font-bold.text-xl {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem !important;
   }
   
   #vista-asesorias .text-sm {
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
   }
   
   #vista-asesorias .text-gray-600 {
-    font-size: 0.85rem;
-    line-height: 1.4;
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
   }
   
   /* Badges más compactos */
   #vista-asesorias .flex.justify-center.space-x-3 {
-    gap: 0.5rem;
+    gap: 0.5rem !important;
   }
   
   #vista-asesorias .text-xs.px-3.py-2 {
-    padding: 0.25rem 0.75rem;
-    font-size: 0.7rem;
+    padding: 0.25rem 0.75rem !important;
+    font-size: 0.7rem !important;
   }
   
   /* Botones del header más compactos */
-  #vista-asesorias .flex-col.lg\:flex-row .bg-blue-600 {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
-  }
-  
-  /* Formulario más compacto */
-  #vista-asesorias form.max-w-4xl {
-    padding: 1.5rem;
-  }
-  
-  #vista-asesorias .form-input-enhanced {
-    padding: 0.75rem;
-    font-size: 14px;
-  }
-  
-  /* Botones del formulario apilados */
-  #vista-asesorias .flex-col.sm\:flex-row.gap-4 {
-    flex-direction: column;
-  }
-  
-  #vista-asesorias .flex-col.sm\:flex-row.gap-4 button {
-    margin-bottom: 0.5rem;
+  #vista-asesorias .bg-blue-600 {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.9rem !important;
   }
 }
 
