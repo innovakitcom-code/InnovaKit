@@ -1138,6 +1138,45 @@
     overflow: hidden;
   }
 }
+    /* ============================================= */
+/* CONTACTO MÓVIL - 3 ICONOS EN FILA */
+/* ============================================= */
+
+@media (max-width: 768px) {
+  .contactos-movil {
+    flex-direction: row !important;
+    gap: 1rem !important;
+  }
+  
+  .contactos-movil a[href*="wa.me"] {
+    background: #25D366 !important;
+    color: white !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+  
+  /* Ocultar texto "WhatsApp" */
+  .contactos-movil a[href*="wa.me"] span {
+    display: none !important;
+  }
+  
+  /* Asegurar que el ícono de WhatsApp se vea bien */
+  .contactos-movil a[href*="wa.me"] i {
+    margin: 0 !important;
+    font-size: 1.5rem !important;
+  }
+  
+  /* Facebook e Instagram - mismos tamaños */
+  .contactos-movil a[href*="facebook"],
+  .contactos-movil a[href*="instagram"] {
+    font-size: 2.2rem !important;
+  }
+}
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -1398,7 +1437,7 @@
   </p>
   
   <!-- Íconos y botón - MEJORADOS -->
-  <div class="flex flex-col sm:flex-row items-center justify-center gap-8">
+  <div class="contactos-movil flex flex-col sm:flex-row items-center justify-center gap-8">
     
     <!-- Facebook -->
     <a href="https://www.facebook.com/share/15HSQmpG2Z8/" target="_blank"
