@@ -1726,65 +1726,42 @@
   </div>
 </div>
 
-<!-- MODAL DE FILTROS PARA MÓVIL -->
+<!-- MODAL DE FILTROS PARA MÓVIL - VERSIÓN JERÁRQUICA -->
 <div id="modal-filtros" class="fixed inset-0 z-50 hidden">
   <div class="absolute inset-0 bg-black bg-opacity-50" onclick="cerrarModalFiltros()"></div>
   <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto">
-    <div class="flex justify-between items-center mb-6 pb-4 border-b">
-      <h3 class="text-xl font-bold">Filtros</h3>
+    
+    <!-- HEADER DINÁMICO -->
+    <div class="flex items-center mb-6 pb-4 border-b">
+      <button id="btn-volver-categorias" class="text-gray-500 mr-3 hidden">
+        <i class="fas fa-chevron-left text-xl"></i>
+      </button>
+      <h3 id="modal-filtros-titulo" class="text-xl font-bold flex-1">Filtros</h3>
       <button onclick="cerrarModalFiltros()" class="text-gray-500 text-2xl">×</button>
     </div>
 
-    <!-- Categorías en móvil - VERTICAL -->
-    <div class="mb-6">
-      <h4 class="font-semibold mb-3 text-lg">📁 Categorías</h4>
-      <div class="space-y-2">
-        <button onclick="aplicarFiltroCategoria('Sensores')" class="w-full text-left p-3 border rounded-lg hover:bg-blue-50 flex items-center gap-3">
-          <i class="fas fa-microchip text-green-500"></i>
-          <span>Sensores</span>
-        </button>
-        
-        <button onclick="aplicarFiltroCategoria('Temperatura')" class="w-full text-left p-3 border rounded-lg hover:bg-green-50 flex items-center gap-3 ml-4">
-          <i class="fas fa-thermometer-half text-orange-500"></i>
-          <span>Temperatura</span>
-        </button>
-        
-        <button onclick="aplicarFiltroCategoria('Humedad')" class="w-full text-left p-3 border rounded-lg hover:bg-green-50 flex items-center gap-3 ml-4">
-          <i class="fas fa-tint text-blue-500"></i>
-          <span>Humedad</span>
-        </button>
+    <!-- CONTENIDO PRINCIPAL - DINÁMICO -->
+    <div id="contenido-filtros">
+      <!-- Aquí se carga dinámicamente el contenido -->
+    </div>
 
-        <button onclick="aplicarFiltroCategoria('Motores')" class="w-full text-left p-3 border rounded-lg hover:bg-blue-50 flex items-center gap-3">
-          <i class="fas fa-cog text-red-500"></i>
-          <span>Motores</span>
-        </button>
-
-        <button onclick="aplicarFiltroCategoria('Displays')" class="w-full text-left p-3 border rounded-lg hover:bg-blue-50 flex items-center gap-3">
-          <i class="fas fa-tv text-purple-500"></i>
-          <span>Displays</span>
-        </button>
-
-        <button onclick="limpiarFiltros()" class="w-full text-center p-3 bg-gray-100 rounded-lg hover:bg-gray-200 font-semibold mt-4">
-          <i class="fas fa-times mr-2"></i>
-          Limpiar Filtros
-        </button>
+    <!-- PIE DEL MODAL -->
+    <div class="mt-6 pt-4 border-t">
+      <!-- Precio en móvil -->
+      <div class="mb-6">
+        <h4 class="font-semibold mb-3 text-lg">💰 Precio</h4>
+        <select id="filtro-precio-mobile" class="w-full p-3 border rounded-lg text-base">
+          <option value="todos">💎 Todos los precios</option>
+          <option value="0-50000">💰 Gs. 0 - 50.000</option>
+          <option value="50000-100000">💵 Gs. 50.000 - 100.000</option>
+          <option value="100000-200000">💳 Gs. 100.000 - 200.000</option>
+        </select>
       </div>
-    </div>
 
-    <!-- Precio en móvil -->
-    <div class="mb-6">
-      <h4 class="font-semibold mb-3 text-lg">💰 Precio</h4>
-      <select id="filtro-precio-mobile" class="w-full p-3 border rounded-lg text-base">
-        <option value="todos">💎 Todos los precios</option>
-        <option value="0-50000">💰 Gs. 0 - 50.000</option>
-        <option value="50000-100000">💵 Gs. 50.000 - 100.000</option>
-        <option value="100000-200000">💳 Gs. 100.000 - 200.000</option>
-      </select>
+      <button onclick="aplicarFiltrosMovil()" class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg">
+        Aplicar Filtros
+      </button>
     </div>
-
-    <button onclick="aplicarFiltrosMovil()" class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg">
-      Aplicar Filtros
-    </button>
   </div>
 </div>
       <!-- Grid de productos (se mantiene igual) -->
@@ -4778,19 +4755,144 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
       // =============================================
-// NUEVO SISTEMA DE FILTROS MÓVIL
+// SISTEMA DE FILTROS MÓVIL JERÁRQUICO
 // =============================================
+
+// Datos de categorías y subcategorías
+const categoriasMovil = {
+  'Sensores': {
+    icono: 'fas fa-microchip',
+    color: 'text-green-500',
+    subcategorias: {
+      'Temperatura': { icono: 'fas fa-thermometer-half', color: 'text-orange-500' },
+      'Humedad': { icono: 'fas fa-tint', color: 'text-blue-500' },
+      'Movimiento': { icono: 'fas fa-running', color: 'text-purple-500' },
+      'Luz': { icono: 'fas fa-sun', color: 'text-yellow-500' },
+      'Sonido': { icono: 'fas fa-volume-up', color: 'text-red-500' },
+      'Distancia': { icono: 'fas fa-arrows-alt-h', color: 'text-indigo-500' },
+      'Gas': { icono: 'fas fa-wind', color: 'text-gray-500' }
+    }
+  },
+  'Motores': {
+    icono: 'fas fa-cog',
+    color: 'text-red-500', 
+    subcategorias: {
+      'Servo Motores': { icono: 'fas fa-robot', color: 'text-red-400' },
+      'Stepper': { icono: 'fas fa-sync-alt', color: 'text-red-400' },
+      'DC Motors': { icono: 'fas fa-bolt', color: 'text-red-400' }
+    }
+  },
+  'Displays': {
+    icono: 'fas fa-tv',
+    color: 'text-purple-500',
+    subcategorias: {
+      'LCD 16x2': { icono: 'fas fa-hashtag', color: 'text-purple-400' },
+      'Matriz LED': { icono: 'fas fa-th', color: 'text-purple-400' },
+      'OLED': { icono: 'fas fa-mobile-alt', color: 'text-purple-400' },
+      '7 Segmentos': { icono: 'fas fa-square', color: 'text-purple-400' }
+    }
+  },
+  'Placas': {
+    icono: 'fas fa-microchip',
+    color: 'text-gray-500',
+    subcategorias: {
+      'Arduino': { icono: 'fas fa-microchip', color: 'text-blue-400' },
+      'ESP32': { icono: 'fas fa-wifi', color: 'text-green-400' },
+      'Raspberry Pi': { icono: 'fab fa-raspberry-pi', color: 'text-red-500' }
+    }
+  },
+  'Módulos': {
+    icono: 'fas fa-puzzle-piece',
+    color: 'text-yellow-500',
+    subcategorias: {
+      'RFID': { icono: 'fas fa-id-card', color: 'text-yellow-400' },
+      'Bluetooth': { icono: 'fas fa-bluetooth', color: 'text-blue-400' },
+      'WiFi': { icono: 'fas fa-wifi', color: 'text-green-400' },
+      'Relé': { icono: 'fas fa-toggle-on', color: 'text-red-400' }
+    }
+  }
+};
+
+let categoriaActual = null;
 
 function mostrarModalFiltros() {
   console.log('📱 Abriendo modal de filtros móvil');
   document.getElementById('modal-filtros').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+  mostrarCategoriasPrincipales();
 }
 
 function cerrarModalFiltros() {
   console.log('📱 Cerrando modal de filtros móvil');
   document.getElementById('modal-filtros').classList.add('hidden');
   document.body.style.overflow = '';
+  categoriaActual = null;
+}
+
+function mostrarCategoriasPrincipales() {
+  categoriaActual = null;
+  const contenido = document.getElementById('contenido-filtros');
+  const titulo = document.getElementById('modal-filtros-titulo');
+  const btnVolver = document.getElementById('btn-volver-categorias');
+  
+  titulo.textContent = 'Categorías';
+  btnVolver.classList.add('hidden');
+  
+  let html = '<div class="space-y-3">';
+  
+  Object.keys(categoriasMovil).forEach(categoria => {
+    const cat = categoriasMovil[categoria];
+    const tieneSubcategorias = Object.keys(cat.subcategorias).length > 0;
+    
+    html += `
+      <button onclick="${tieneSubcategorias ? `mostrarSubcategorias('${categoria}')` : `aplicarFiltroCategoria('${categoria}')`}" 
+              class="w-full text-left p-4 border rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group">
+        <div class="flex items-center gap-3">
+          <i class="${cat.icono} ${cat.color} text-lg"></i>
+          <span class="font-medium">${categoria}</span>
+        </div>
+        ${tieneSubcategorias ? '<i class="fas fa-chevron-right text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i>' : ''}
+      </button>
+    `;
+  });
+  
+  html += `
+    <button onclick="limpiarFiltros()" class="w-full text-center p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200 font-semibold text-gray-700 mt-4">
+      <i class="fas fa-times mr-2"></i>
+      Limpiar Filtros
+    </button>
+  </div>`;
+  
+  contenido.innerHTML = html;
+}
+
+function mostrarSubcategorias(categoria) {
+  categoriaActual = categoria;
+  const contenido = document.getElementById('contenido-filtros');
+  const titulo = document.getElementById('modal-filtros-titulo');
+  const btnVolver = document.getElementById('btn-volver-categorias');
+  
+  titulo.textContent = categoria;
+  btnVolver.classList.remove('hidden');
+  btnVolver.onclick = mostrarCategoriasPrincipales;
+  
+  const cat = categoriasMovil[categoria];
+  let html = '<div class="space-y-3">';
+  
+  Object.keys(cat.subcategorias).forEach(subcategoria => {
+    const sub = cat.subcategorias[subcategoria];
+    
+    html += `
+      <button onclick="aplicarFiltroCategoria('${subcategoria}'); cerrarModalFiltros();" 
+              class="w-full text-left p-4 border rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-3">
+        <i class="${sub.icono} ${sub.color} text-lg"></i>
+        <span class="font-medium">${subcategoria}</span>
+      </button>
+    `;
+  });
+  
+  html += '</div>';
+  contenido.innerHTML = html;
 }
 
 function aplicarFiltrosMovil() {
