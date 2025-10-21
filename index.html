@@ -915,7 +915,118 @@
     margin-bottom: 1.5rem !important;
   }
 }
+/* ============================================= */
+/* OPTIMIZACIÓN ASESORES PARA MÓVIL */
+/* ============================================= */
 
+@media (max-width: 768px) {
+  /* Contenedor principal más compacto */
+  #vista-asesorias .bg-white {
+    margin: 0.5rem;
+    padding: 1.5rem;
+  }
+  
+  /* Grid de asesores - 2 columnas en móvil */
+  #vista-asesorias .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  /* Cards de asesores más compactos */
+  #vista-asesorias .card-elevated {
+    padding: 1.5rem;
+    margin: 0;
+  }
+  
+  /* Imagen de asesor más pequeña */
+  #vista-asesorias .w-36 {
+    width: 5rem;
+    height: 5rem;
+  }
+  
+  /* Textos más compactos */
+  #vista-asesorias .font-bold.text-xl {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  #vista-asesorias .text-sm {
+    font-size: 0.8rem;
+  }
+  
+  #vista-asesorias .text-gray-600 {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  
+  /* Badges más compactos */
+  #vista-asesorias .flex.justify-center.space-x-3 {
+    gap: 0.5rem;
+  }
+  
+  #vista-asesorias .text-xs.px-3.py-2 {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.7rem;
+  }
+  
+  /* Botones del header más compactos */
+  #vista-asesorias .flex-col.lg\:flex-row .bg-blue-600 {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Formulario más compacto */
+  #vista-asesorias form.max-w-4xl {
+    padding: 1.5rem;
+  }
+  
+  #vista-asesorias .form-input-enhanced {
+    padding: 0.75rem;
+    font-size: 14px;
+  }
+  
+  /* Botones del formulario apilados */
+  #vista-asesorias .flex-col.sm\:flex-row.gap-4 {
+    flex-direction: column;
+  }
+  
+  #vista-asesorias .flex-col.sm\:flex-row.gap-4 button {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Para pantallas muy pequeñas (iPhone SE) */
+@media (max-width: 375px) {
+  #vista-asesorias .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  #vista-asesorias .card-elevated {
+    padding: 1rem;
+  }
+  
+  #vista-asesorias .w-36 {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+/* Botones del formulario en móvil */
+@media (max-width: 768px) {
+  #vista-asesorias .btn-hover.touch-target {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    min-height: auto;
+  }
+  
+  #vista-asesorias .btn-icon {
+    gap: 0.5rem;
+  }
+  
+  #vista-asesorias .btn-icon:hover {
+    gap: 0.75rem;
+  }
+}
 /* Para móviles muy pequeños (iPhone SE) - corrección extra */
 @media (max-width: 375px) {
     #vista-componentes-sueltos .container {
@@ -1450,11 +1561,11 @@
     <!-- Panel de Asesores MEJORADO -->
     <div class="mb-16">
       <h4 class="text-2xl sm:text-3xl font-bold mb-12 text-center text-gray-800 animate-fade-in-up">Nuestros Asesores</h4>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
         
         <!-- Asesor 1 - MEJORADO -->
         <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover text-center">
-          <div class="w-36 h-36 rounded-full mx-auto mb-6 overflow-hidden border-4 border-blue-200 shadow-lg">
+          <div class="w-24 h-24 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6 overflow-hidden border-4 border-blue-200 shadow-lg">
             <img src="asesores/icono_hombre.jpg" alt="Ing. Carlos Mendoza" class="w-full h-full object-cover object-top contrast-enhanced" loading="lazy">
           </div>
           <h5 class="font-bold text-xl text-gray-800 mb-3">Ing. Carlos Mendoza</h5>
@@ -1468,7 +1579,7 @@
 
         <!-- Asesor 2 - MEJORADO -->
         <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover text-center">
-          <div class="w-36 h-36 rounded-full mx-auto mb-6 overflow-hidden border-4 border-purple-200 shadow-lg">
+          <div class="w-24 h-24 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6 overflow-hidden border-4 border-blue-200 shadow-lg">
             <img src="asesores/icono_mujer.jpg" alt="Lic. Ana Torres" class="w-full h-full object-cover object-top contrast-enhanced" loading="lazy">
           </div>
           <h5 class="font-bold text-xl text-gray-800 mb-3">Lic. Ana Torres</h5>
@@ -1482,7 +1593,7 @@
 
         <!-- Asesor 3 - MEJORADO -->
         <div class="card-elevated p-8 rounded-2xl transition duration-300 product-hover text-center">
-          <div class="w-36 h-36 rounded-full mx-auto mb-6 overflow-hidden border-4 border-red-200 shadow-lg">
+          <div class="w-24 h-24 md:w-36 md:h-36 rounded-full mx-auto mb-4 md:mb-6 overflow-hidden border-4 border-blue-200 shadow-lg">
             <img src="asesores/icono_hombre2.jpg" alt="Ing. Roberto Díaz" class="w-full h-full object-cover object-top contrast-enhanced" loading="lazy">
           </div>
           <h5 class="font-bold text-xl text-gray-800 mb-3">Ing. Roberto Díaz</h5>
