@@ -1139,44 +1139,48 @@
   }
 }
  /* ============================================= */
-/* CONTACTO MÓVIL - 3 ICONOS EN FILA CON ÍCONO WhatsApp */
+/* CONTACTO MÓVIL - SOLO ÍCONOS */
 /* ============================================= */
 
 @media (max-width: 768px) {
   .contactos-movil {
     flex-direction: row !important;
-    gap: 1rem !important;
+    gap: 1.5rem !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   
+  /* WhatsApp - círculo con SOLO el ícono */
   .contactos-movil a[href*="wa.me"] {
     background: #25D366 !important;
     color: white !important;
-    width: 50px !important;
-    height: 50px !important;
+    width: 60px !important;
+    height: 60px !important;
     border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 0 !important;
-    font-size: 1.5rem !important;
+    font-size: 1.8rem !important;
   }
   
-  /* Ocultar texto "WhatsApp" */
-  .contactos-movil a[href*="wa.me"] span {
+  /* OCULTAR TODO el contenido de texto y mostrar SOLO el ícono */
+  .contactos-movil a[href*="wa.me"] * {
     display: none !important;
   }
   
-  /* Mostrar y centrar el ícono de WhatsApp */
-  .contactos-movil a[href*="wa.me"] i {
+  /* MOSTRAR SOLO el ícono de WhatsApp */
+  .contactos-movil a[href*="wa.me"] i.fa-whatsapp {
     display: block !important;
     margin: 0 !important;
-    font-size: 1.5rem !important;
+    font-size: 1.8rem !important;
   }
   
-  /* Facebook e Instagram - mismos tamaños */
-  .contactos-movil a[href*="facebook"],
-  .contactos-movil a[href*="instagram"] {
-    font-size: 2.2rem !important;
+  /* Facebook e Instagram - solo íconos */
+  .contactos-movil a[href*="facebook"] i,
+  .contactos-movil a[href*="instagram"] i {
+    font-size: 2.5rem !important;
+    margin: 0 !important;
   }
 }
   </style>
