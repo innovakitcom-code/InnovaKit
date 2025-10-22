@@ -2285,9 +2285,22 @@
   </div>
 
   <!-- Móvil: Solo copyright (oculto en desktop) -->
-  <div class="sm:hidden text-sm text-gray-400">
+  <!-- MÓVIL: Botón Instalar App + Copyright -->
+<div class="sm:hidden">
+  <!-- Botón Instalar App -->
+  <div class="text-center mb-4">
+    <button onclick="instalarPWA()" 
+            class="text-sm text-blue-400 hover:text-blue-300 font-semibold transition mb-1">
+      📲 Instalar App
+    </button>
+    <p class="text-xs text-gray-500">Acceso rápido desde tu celular</p>
+  </div>
+
+  <!-- Copyright -->
+  <div class="text-sm text-gray-400">
     <p>&copy; 2025 Innovakit. Todos los derechos reservados.</p>
   </div>
+</div>
 
 </footer>
 <!-- Swiper JS (para el carrusel) -->
@@ -5354,6 +5367,60 @@ function aplicarFiltrosMovil() {
   paginaActual = 1;
   renderizarComponentesSueltos();
 }
+  // =============================================
+// PWA SEGURO - SIN SERVICE WORKER (FASE 6)
+// =============================================
+
+// NOTIFICACIONES LOCALES SEGURAS
+function initPWANotifications() {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    console.log('🔔 Notificaciones PWA activas');
+  }
+}
+
+// Mostrar notificación local
+function mostrarNotificacionPWA(titulo, mensaje) {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(titulo, {
+      body: mensaje,
+      icon: 'png/favicon.png'
+    });
+  }
+}
+
+// BOTÓN DE INSTALACIÓN OPCIONAL
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Mostrar botón opcional después de interacción del usuario
+  console.log('📱 PWA disponible para instalación');
+});
+
+// Instalar PWA
+function instalarPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('✅ Usuario instaló Innovakit como app');
+        gtag('event', 'pwa_install', {
+          'event_category': 'pwa',
+          'event_label': 'app_instalada'
+        });
+      }
+      deferredPrompt = null;
+    });
+  }
+}
+
+// Inicializar PWA
+document.addEventListener('DOMContentLoaded', function() {
+  initPWANotifications();
+});
+
+console.log('🚀 PWA seguro cargado - Sin Service Worker');
 </script>
 
 </body>
