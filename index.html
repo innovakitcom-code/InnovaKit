@@ -1281,6 +1281,35 @@
   }
 }
 
+/* Para tablets en VERTICAL (más altas que anchas) */
+@media (min-width: 769px) and (max-width: 1024px) and (max-height: 1366px) {
+  #hero {
+    min-height: 60vh !important;  /* Más compacto que móvil */
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  
+  #hero-heading {
+    font-size: 2.2rem !important;  /* Intermedio entre móvil y desktop */
+    margin-bottom: 1.5rem !important;
+  }
+  
+  #hero .text-readable {
+    font-size: 1.1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  #hero .flex-col {
+    gap: 1rem !important;
+  }
+  
+  .bg-animated {
+    animation: moveGradientTablet 12s ease infinite !important;
+    background: linear-gradient(270deg, #1e40af, #059669, #3b82f6) !important;
+    background-size: 200% 200% !important;
+  }
+}
+    
 /* Para tablets */
 @media (min-width: 769px) and (max-width: 1024px) {
   .bg-animated {
