@@ -1191,10 +1191,10 @@
 
 /* Animación tablet */
 @keyframes moveGradientTablet {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+  0% { background-size: 200% 200%; }
+  50% { background-size: 210% 210%; }
+  100% { background-size: 200% 200%; }
+}  
 
 /* Animación desktop */
 @keyframes moveGradient {
@@ -1203,10 +1203,10 @@
   100% { background-position: 0% 50%; }
 }
 
-/* AHORA SÍ - MEDIA QUERIES CORRECTAMENTE ESTRUCTURADOS */
-
-/* Para móvil */
-@media (max-width: 768px) {
+/* ============================================= */
+/* MÓVIL REAL - smartphones */
+/* ============================================= */
+@media (max-width: 767px) {
   /* Hero principal optimizado para móvil */
   #hero {
     min-height: 80vh !important;
