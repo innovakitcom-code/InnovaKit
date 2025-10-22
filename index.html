@@ -1178,6 +1178,179 @@
     display: flex !important;
   }
 }
+    * ============================================= */
+/* MEJORAS HERO SECTION PARA MÓVIL - FASE 1 */
+/* ============================================= */
+
+@media (max-width: 768px) {
+  /* Hero principal optimizado para móvil */
+  #hero {
+    min-height: 65vh !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    position: relative;
+  }
+  
+  /* Overlay más oscuro para mejor contraste en móvil */
+  #hero .absolute.inset-0 {
+    background: rgba(0, 0, 0, 0.4) !important;
+  }
+  
+  /* Título optimizado para móvil */
+  #hero-heading {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+    text-align: center;
+  }
+  
+  #hero-heading .text-yellow-300 {
+    display: inline-block; /* Evita salto de línea no deseado */
+  }
+  
+  /* Texto descriptivo mejorado */
+  #hero .text-readable {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1.5rem !important;
+    text-align: center;
+  }
+  
+  /* Contenedor de botones optimizado */
+  #hero .flex-col {
+    gap: 0.75rem !important;
+    width: 100%;
+  }
+  
+  /* Botones mejorados para touch móvil */
+  #hero .btn-hover {
+    padding: 1rem 1.5rem !important;
+    font-size: 1rem !important;
+    min-height: 54px !important;
+    border-radius: 12px !important;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  
+  /* Efectos hover más suaves en móvil */
+  #hero .btn-hover:hover {
+    transform: translateY(-2px) !important; /* Menos movimiento en móvil */
+  }
+  
+  /* Animación INTELIGENTE - solo en dispositivos que pueden manejarla */
+@media (max-width: 768px) {
+  .bg-animated {
+    /* Para móviles normales: animación más lenta y simple */
+    animation: moveGradientMobile 12s ease infinite !important;
+    background: linear-gradient(270deg, #1e40af, #059669, #3b82f6) !important;
+    background-size: 200% 200% !important;
+  }
+  
+  /* Animación móvil optimizada */
+  @keyframes moveGradientMobile {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}
+
+/* Para tablets - animación intermedia */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bg-animated {
+    animation: moveGradientTablet 10s ease infinite !important;
+  }
+}
+
+/* Para desktop - animación completa */
+@media (min-width: 1025px) {
+  .bg-animated {
+    animation: moveGradient 8s ease infinite !important; /* Tu animación original */
+  }
+}
+  
+  /* Ajustar padding del contenedor principal */
+  #hero .max-w-6xl.mx-auto {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  /* Ocultar elemento decorativo en móvil para más espacio */
+  #hero .pointer-events-none.absolute.-top-16.-right-16 {
+    display: none;
+  }
+}
+
+/* Ajustes específicos para móviles muy pequeños (iPhone SE) */
+@media (max-width: 375px) {
+  #hero {
+    min-height: 70vh !important;
+  }
+  
+  #hero-heading {
+    font-size: 1.6rem !important;
+    padding: 0 0.5rem;
+  }
+  
+  #hero .text-readable {
+    font-size: 0.9rem !important;
+    padding: 0 0.5rem;
+  }
+  
+  #hero .btn-hover {
+    padding: 0.875rem 1.25rem !important;
+    font-size: 0.9rem !important;
+    min-height: 50px !important;
+    max-width: 260px;
+  }
+}
+
+/* Mejoras para tablets pequeñas */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #hero {
+    min-height: 55vh !important;
+  }
+  
+  #hero-heading {
+    font-size: 2.5rem !important;
+  }
+}
+/* Feedback visual de búsqueda - PROFESIONAL */
+.buscando {
+  position: relative;
+  padding-right: 40px;
+}
+
+.buscando::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #3b82f6;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  transform: translateY(-50%);
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- ESTE SCRIPT ELIMINA EL SW VIEJO -->
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for(let registration of registrations) {
+        registration.unregister();
+        console.log('🗑️ Service Worker viejo eliminado');
+      }
+    });
+  }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -3085,19 +3258,34 @@ function toggleModal() {
       html += `</div></div>`;
       document.getElementById('productoskit-content').innerHTML = html;
       
-      // Inicializar Swipers para cada producto
-      productos.forEach((_, i) => {
-        new Swiper(`.swiper-producto-${i}`, {
-          loop: true,
-          navigation: {
-            nextEl: `.swiper-producto-${i} .swiper-button-next`,
-            prevEl: `.swiper-producto-${i} .swiper-button-prev`,
-          },
-          preventClicks: true,
-          preventClicksPropagation: true,
-          touchStartPreventDefault: true
-        });
+      // Inicializar Swipers para cada producto CON MANEJO DE ERRORES
+productos.forEach((_, i) => {
+  const swiperSelector = `.swiper-producto-${i}`;
+  const swiperElement = document.querySelector(swiperSelector);
+  
+  // VERIFICAR SI EL ELEMENTO EXISTE ANTES DE INICIALIZAR
+  if (swiperElement) {
+    try {
+      new Swiper(swiperElement, {
+        loop: true,
+        navigation: {
+          nextEl: `${swiperSelector} .swiper-button-next`,
+          prevEl: `${swiperSelector} .swiper-button-prev`,
+        },
+        preventClicks: true,
+        preventClicksPropagation: true,
+        touchStartPreventDefault: true
       });
+      
+      console.log(`✅ Swiper ${i} inicializado correctamente`);
+    } catch (error) {
+      console.warn(`⚠️ Error en Swiper ${i}, mostrando imágenes estáticas:`, error);
+      // Fallback silencioso - no hace nada, las imágenes se muestran normales
+    }
+  } else {
+    console.warn(`🔍 Elemento Swiper no encontrado: ${swiperSelector}`);
+  }
+});
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
