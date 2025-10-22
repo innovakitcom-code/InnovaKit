@@ -1338,19 +1338,7 @@
 @keyframes spin {
   to { transform: translateY(-50%) rotate(360deg); }
 }
-  </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
-  <!-- ESTE SCRIPT ELIMINA EL SW VIEJO -->
-  <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      for(let registration of registrations) {
-        registration.unregister();
-        console.log('🗑️ Service Worker viejo eliminado');
-      }
-    });
-  }
+ 
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
