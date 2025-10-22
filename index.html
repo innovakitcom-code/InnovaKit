@@ -1282,42 +1282,14 @@
 }
 
 /* ============================================= */
-/* TABLETS (768px - 1024px) - TODAS */
+/* TABLETS (768px - 1024px) - CON DEBUG */
 /* ============================================= */
 @media (min-width: 768px) and (max-width: 1024px) {
   #hero {
-    min-height: 30vh !important;
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-  }
-  
-  #hero-heading {
-    font-size: 2.3rem !important;
-    line-height: 1.3 !important;
-    margin-bottom: 1.5rem !important;
-    text-align: center;
-  }
-  
-  #hero .text-readable {
-    font-size: 1.1rem !important;
-    line-height: 1.5 !important;
-    margin-bottom: 1.5rem !important;
-    text-align: center;
-  }
-  
-  #hero .flex-col {
-    gap: 1rem !important;
-    width: 100%;
-  }
-  
-  #hero .btn-hover {
-    padding: 1rem 1.5rem !important;
-    font-size: 1rem !important;
-    min-height: 54px !important;
-    border-radius: 12px !important;
-    width: 100%;
-    max-width: 280px;
-    margin: 0 auto;
+    border: 5px solid red !important; /* ← DEBUG TEMPORAL */
+    min-height: 45vh !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
   }
   
   .bg-animated {
@@ -1326,7 +1298,15 @@
     background-size: 200% 200% !important;
   }
 }
-
+    /* DEBUG - ver qué se está aplicando */
+@media (min-width: 768px) and (max-width: 1024px) {
+  #hero {
+    border: 5px solid red !important; /* ← Si ves borde rojo, el CSS está cargando */
+    min-height: 45vh !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+}
 /* Para desktop */
 @media (min-width: 1025px) {
   .bg-animated {
