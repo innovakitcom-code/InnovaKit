@@ -1282,11 +1282,11 @@
 }
 
 /* ============================================= */
-/* TABLETS (768px - 1024px) - CON DEBUG */
+/* TABLETS (768px - 1024px) - SUPER ESPECÍFICO */
 /* ============================================= */
 @media (min-width: 768px) and (max-width: 1024px) {
-  #hero {
-    border: 5px solid red !important; /* ← DEBUG TEMPORAL */
+  /* ELIMINA el border debug y usa esto: */
+  section#hero.bg-animated {
     min-height: 45vh !important;
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
@@ -1296,15 +1296,6 @@
     animation: moveGradientTablet 12s ease infinite !important;
     background: linear-gradient(270deg, #1e40af, #059669, #3b82f6) !important;
     background-size: 200% 200% !important;
-  }
-}
-    /* DEBUG - ver qué se está aplicando */
-@media (min-width: 768px) and (max-width: 1024px) {
-  #hero {
-    border: 5px solid red !important; /* ← Si ves borde rojo, el CSS está cargando */
-    min-height: 45vh !important;
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
   }
 }
 /* Para desktop */
