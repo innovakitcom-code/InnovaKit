@@ -17,11 +17,10 @@
   <link rel="apple-touch-icon" href="png/favicon.png">
   <link rel="shortcut icon" href="png/favicon.png">
   <title>Innovakit - Kits de Electrónica en Paraguay</title>
-  <meta name="keywords" content="innovakit paraguay, innovakit electrónica, kits arduino paraguay, proyectos electrónicos asunción, ferias científicas paraguay">
- 
+  
   <!-- Meta tags mejorados -->
-  <meta name="description" content="Innovakit ofrece kits de electrónica, asesorías técnicas y proyectos personalizados en Paraguay. Aprende, crea y destaca en ferias científicas y proyectos educativos.">
-  <meta name="keywords" content="kits de electrónica, proyectos electrónicos, asesoría técnica, innovakit, Paraguay, ferias científicas, Arduino, programación">
+  <meta name="description" content="🤖 Innovakit - Kits de electrónica en Paraguay ✅ Arduino, Motores, Sensores, robótica educativa ✅ Envíos a Asunción y todo el país ✅ Asesoría técnica para proyectos y ferias científicas">
+<meta name="keywords" content="Arduino paraguay, kits electrónica Asunción, sensores, motores, robótica educativa, componentes electrónicos Paraguay, feria científica, proyectos escolares, innovakit Paraguay">
   <meta name="author" content="Innovakit">
   <meta name="robots" content="index, follow">
 
@@ -3346,11 +3345,21 @@ function volverAlInicio() {
   let carrito = [];
 
   function agregarAlCarrito(nombre, precio) {
-    carrito.push({ nombre, precio });
-    actualizarContador();
-    proporcionarFeedbackTactil();
-    mostrarNotificacion(`${nombre} agregado ✅`);
-    trackEvent('Carrito', 'Agregar Producto', nombre);
+  carrito.push({ nombre, precio });
+  actualizarContador();
+  
+  // AGREGAR ESTO PARA ANALYTICS:
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'add_to_cart', {
+      'event_category': 'carrito',
+      'event_label': nombre,
+      'value': parseGs(precio)
+    });
+  }
+  
+  proporcionarFeedbackTactil();
+  mostrarNotificacion(`${nombre} agregado ✅`);
+  trackEvent('Carrito', 'Agregar Producto', nombre);
 }
 
   function mostrarNotificacion(mensaje) {
@@ -4306,6 +4315,14 @@ function mostrarPanelReviews() {
       mostrarNotificacion("Tu carrito está vacío 🛒"); 
       return; 
     }
+     // AGREGAR ESTO PARA ANALYTICS:
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'whatsapp_checkout', {
+      'event_category': 'conversion',
+      'event_label': 'carrito_completo',
+      'value': carrito.reduce((sum, p) => sum + parseGs(p.precio), 0)
+    });
+  }
     const numero = "595972292392";
     const cuerpo = carrito.map((p, i) => `${i+1}. ${p.nombre} - ${p.precio}`).join('%0A');
     const total = carrito.reduce((sum, p) => sum + parseGs(p.precio), 0);
