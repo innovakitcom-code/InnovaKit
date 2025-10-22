@@ -1298,6 +1298,21 @@
     background-size: 200% 200% !important;
   }
 }
+    /* ============================================= */
+/* TABLETS (768px - 1024px) - IMAGEN DIFERENTE */
+/* ============================================= */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Ocultar imagen desktop */
+  #hero .hidden.md\\:block {
+    display: none !important;
+  }
+  
+  /* Mostrar imagen tablet */
+  #hero .imagen-tablet {
+    display: block !important;
+  }
+}
+    
 /* Para desktop */
 @media (min-width: 1025px) {
   .bg-animated {
@@ -1475,10 +1490,15 @@
           </a>
         </div>
       </div>
-      <!-- Ilustración (muestra en desktop) -->
-      <div class="hidden md:block animate-slide-in-right" aria-hidden="true">
-        <img src="vector-electrónica.svg" alt="" class="w-64 md:w-80 h-auto object-contain drop-shadow-xl mx-auto contrast-enhanced">
-      </div>
+      <!-- Ilustración DESKTOP -->
+<div class="hidden md:block animate-slide-in-right" aria-hidden="true">
+  <img src="vector-electrónica-tablet.svg" alt="Electrónica desktop" class="w-64 md:w-80 h-auto object-contain drop-shadow-xl mx-auto contrast-enhanced">
+</div>
+
+<!-- Ilustración TABLET -->
+<div class="imagen-tablet hidden md:hidden lg:hidden animate-slide-in-right" aria-hidden="true">
+  <img src="vector-electrónica.svg" alt="Electrónica tablet" class="w-56 h-auto object-contain drop-shadow-xl mx-auto contrast-enhanced">
+</div>
     </div>
   </div>
 
