@@ -1178,10 +1178,35 @@
     display: flex !important;
   }
 }
-    * ============================================= */
+    /* ============================================= */
 /* MEJORAS HERO SECTION PARA MÓVIL - FASE 1 */
 /* ============================================= */
 
+/* ANIMACIONES PRIMERO - FUERA de los media queries */
+/* Animación móvil optimizada */
+@keyframes moveGradientMobile {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animación tablet */
+@keyframes moveGradientTablet {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animación desktop */
+@keyframes moveGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* AHORA SÍ - MEDIA QUERIES CORRECTAMENTE ESTRUCTURADOS */
+
+/* Para móvil */
 @media (max-width: 768px) {
   /* Hero principal optimizado para móvil */
   #hero {
@@ -1205,7 +1230,7 @@
   }
   
   #hero-heading .text-yellow-300 {
-    display: inline-block; /* Evita salto de línea no deseado */
+    display: inline-block;
   }
   
   /* Texto descriptivo mejorado */
@@ -1235,39 +1260,15 @@
   
   /* Efectos hover más suaves en móvil */
   #hero .btn-hover:hover {
-    transform: translateY(-2px) !important; /* Menos movimiento en móvil */
+    transform: translateY(-2px) !important;
   }
   
-  /* Animación INTELIGENTE - solo en dispositivos que pueden manejarla */
-@media (max-width: 768px) {
+  /* ANIMACIÓN MÓVIL CON COLORES OSCUROS */
   .bg-animated {
-    /* Para móviles normales: animación más lenta y simple */
-    animation: moveGradientMobile 12s ease infinite !important;
-    background: linear-gradient(270deg, #1e40af, #059669, #3b82f6) !important;
+    animation: moveGradientMobile 15s ease infinite !important;
+    background: linear-gradient(270deg, #1e3a8a, #065f46, #1e40af) !important;
     background-size: 200% 200% !important;
   }
-  
-  /* Animación móvil optimizada */
-  @keyframes moveGradientMobile {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-}
-
-/* Para tablets - animación intermedia */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .bg-animated {
-    animation: moveGradientTablet 10s ease infinite !important;
-  }
-}
-
-/* Para desktop - animación completa */
-@media (min-width: 1025px) {
-  .bg-animated {
-    animation: moveGradient 8s ease infinite !important; /* Tu animación original */
-  }
-}
   
   /* Ajustar padding del contenedor principal */
   #hero .max-w-6xl.mx-auto {
@@ -1278,6 +1279,24 @@
   /* Ocultar elemento decorativo en móvil para más espacio */
   #hero .pointer-events-none.absolute.-top-16.-right-16 {
     display: none;
+  }
+}
+
+/* Para tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bg-animated {
+    animation: moveGradientTablet 12s ease infinite !important;
+    background: linear-gradient(270deg, #1e40af, #059669, #3b82f6) !important;
+    background-size: 200% 200% !important;
+  }
+}
+
+/* Para desktop */
+@media (min-width: 1025px) {
+  .bg-animated {
+    animation: moveGradient 8s ease infinite !important;
+    background: linear-gradient(270deg, #34d399, #6ee7b7, #3b82f6) !important;
+    background-size: 200% 200% !important;
   }
 }
 
@@ -1428,7 +1447,7 @@
       <div class="animate-fade-in-up">
         <h1 id="hero-heading" class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight mb-4">Aprende electrónica de forma <span class="text-yellow-300 animate-pulse-soft">simple</span></h1>
         <p class="mt-4 text-lg sm:text-xl opacity-95 max-w-prose mx-auto md:mx-0 text-readable">
-          Con <strong>Innovakit</strong> SAMANIEGO VICTOR Ideal para estudiantes, makers y emprendedores.</p>
+          Con <strong>Innovakit</strong> tienes kits completos, asesoría y soporte para transformar tus ideas en proyectos reales. Ideal para estudiantes, makers y emprendedores.</p>
 
         <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
           <a href="#productos"
