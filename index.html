@@ -1396,7 +1396,11 @@
 @keyframes spin {
   to { transform: translateY(-50%) rotate(360deg); }
 }
- 
+
+/* CSS para sección de asesoría */
+.scroll-smooth-instant {
+    scroll-behavior: smooth;
+}
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -1904,8 +1908,8 @@
           tu proyecto con Innovakit.
         </p>
       </div>
-      <button onclick="volverAlInicio()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg flex items-center btn-hover touch-target btn-icon transition-all duration-300 whitespace-nowrap">
-        <i class="fas fa-arrow-left mr-3"></i>
+     <button onclick="volverAlInicio()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg flex items-center btn-hover touch-target btn-icon transition-all duration-300 whitespace-nowrap">
+        <i class="fas fa-arrow-left mr-2"></i>
         Volver al inicio
       </button>
     </div>
@@ -5466,6 +5470,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log('🚀 PWA seguro cargado - Sin Service Worker');
+
+  // Scroll automático ASESROÍA
+function verAsesorias() {
+    navegarA('asesorias');
+    
+    // Scroll al inicio después de un pequeño delay
+    setTimeout(() => {
+        const asesoriasSection = document.getElementById('vista-asesorias');
+        if (asesoriasSection) {
+            asesoriasSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }, 100);
+}
 </script>
 
 </body>
