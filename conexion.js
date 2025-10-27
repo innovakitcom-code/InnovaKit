@@ -111,69 +111,69 @@ class ESP32Connection {
         document.getElementById('connectionModal').style.display = 'none';
     }
 
-    // ==================== CONEXIÓN BLUETOOTH BLE ====================
-    async connectViaBluetooth() {
-        console.log('🔵 Iniciando conexión Bluetooth...');
-        // VERIFICAR PERMISOS PRIMERO
+   // ==================== CONEXIÓN BLUETOOTH BLE ====================
+async connectViaBluetooth() {
+    console.log('🔵 Iniciando conexión Bluetooth...');
+    
     try {
         await permissionManager.checkBluetoothPermission();
     } catch (error) {
         this.updateConnectionUI('error', error.message);
         return;
     }
-        this.updateConnectionUI('connecting', 'Conectando vía Bluetooth...');
+    
+    this.updateConnectionUI('connecting', 'Buscando dispositivos Bluetooth...');
+    
+    try {
+        // ✅ VERSIÓN CORRECTA - sin duplicados
+        const device = await navigator.bluetooth.requestDevice({
+            acceptAllDevices: true,  // ← ESTO ES CLAVE
+            optionalServices: [
+                '4fafc201-1fb5-459e-8fcc-c5c9c331914b',
+                'beb5483e-36e1-4688-b7f5-ea07361b26a8',
+                'generic_access'
+            ]
+        });
         
-        try {
-            // Especificar el servicio BLE del ESP32
-            const device = await navigator.bluetooth.requestDevice({
-                filters: [
-                    { name: 'ESP32_Laser_Control' }, // Nombre de tu ESP32
-                    { services: ['4fafc201-1fb5-459e-8fcc-c5c9c331914b'] } // UUID del servicio
-                ],
-                optionalServices: [
-                    '4fafc201-1fb5-459e-8fcc-c5c9c331914b',
-                    'beb5483e-36e1-4688-b7f5-ea07361b26a8'
-                ]
-            });
-            
-            this.device = device;
-            
-            // Listeners de eventos del dispositivo
-            device.addEventListener('gattserverdisconnected', () => {
-                this.onDisconnected();
-            });
-            
-            // Conectar al GATT server
-            const server = await device.gatt.connect();
-            this.server = server;
-            
-            // Obtener el servicio
-            const service = await server.getPrimaryService('4fafc201-1fb5-459e-8fcc-c5c9c331914b');
-            this.service = service;
-            
-            // Obtener características
-            this.characteristic = await service.getCharacteristic('beb5483e-36e1-4688-b7f5-ea07361b26a8');
-            
-            // Configurar notificaciones
-            await this.characteristic.startNotifications();
-            this.characteristic.addEventListener('characteristicvaluechanged', 
-                (event) => this.handleIncomingData(event));
-            
-            this.connectionType = 'bluetooth';
-            this.isConnected = true;
-            this.reconnectAttempts = 0;
-            
-            console.log('✅ Conexión Bluetooth establecida');
-            this.updateConnectionUI('connected', 'Conectado vía Bluetooth');
-            this.onConnected();
-            
-        } catch (error) {
-            console.error('❌ Error en conexión Bluetooth:', error);
-            this.updateConnectionUI('error', `Error: ${error.message}`);
-            this.handleConnectionError(error);
-        }
+        console.log('📱 Dispositivo seleccionado:', device.name);
+        this.device = device;
+        
+        // Listeners de eventos del dispositivo
+        device.addEventListener('gattserverdisconnected', () => {
+            this.onDisconnected();
+        });
+        
+        // ... el resto de tu código original sigue igual ...
+        // Conectar al GATT server
+        const server = await device.gatt.connect();
+        this.server = server;
+        
+        // Obtener el servicio
+        const service = await server.getPrimaryService('4fafc201-1fb5-459e-8fcc-c5c9c331914b');
+        this.service = service;
+        
+        // Obtener características
+        this.characteristic = await service.getCharacteristic('beb5483e-36e1-4688-b7f5-ea07361b26a8');
+        
+        // Configurar notificaciones
+        await this.characteristic.startNotifications();
+        this.characteristic.addEventListener('characteristicvaluechanged', 
+            (event) => this.handleIncomingData(event));
+        
+        this.connectionType = 'bluetooth';
+        this.isConnected = true;
+        this.reconnectAttempts = 0;
+        
+        console.log('✅ Conexión Bluetooth establecida');
+        this.updateConnectionUI('connected', 'Conectado vía Bluetooth');
+        this.onConnected();
+        
+    } catch (error) {
+        console.error('❌ Error en conexión Bluetooth:', error);
+        this.updateConnectionUI('error', `Error: ${error.message}`);
+        this.handleConnectionError(error);
     }
-
+}
     // ==================== CONEXIÓN WiFi ====================
     async connectViaWiFi() {
         console.log('🟡 Iniciando conexión WiFi...');
@@ -554,5 +554,6 @@ const connectionStyles = `
 }
 </style>
 `;
+
 
 document.head.insertAdjacentHTML('beforeend', connectionStyles);
