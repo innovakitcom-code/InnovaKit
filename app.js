@@ -40,64 +40,48 @@ class LaserControlSystem {
         // Almacenamiento local de presets personalizados
         this.customPresets = JSON.parse(localStorage.getItem('laserPresets') || '{}');
         
+        this.sensorInterval = null; // ← IMPORTANTE: agregar esto
+        
         this.initializeSystem();
     }
-// ==================== SIMULACIÓN DE SENSOR ====================
-startSensorSimulation() {
-    console.log('📊 Iniciando simulación de sensor...');
-    
-    // Simular datos del sensor cada 2 segundos
-    this.sensorInterval = setInterval(() => {
-        if (this.systemState.connected) {
-            // Simular lectura de sensor entre 100-500 mm
-            const simulatedDistance = 100 + Math.random() * 400;
-            this.updateSensorDisplay(simulatedDistance);
-        }
-    }, 2000);
-}
 
-stopSensorSimulation() {
-    if (this.sensorInterval) {
-        clearInterval(this.sensorInterval);
-        console.log('📊 Simulación de sensor detenida');
-    }
-}
-
-updateSensorDisplay(distance) {
-    const sensorElement = document.getElementById('sensorDistance');
-    if (sensorElement) {
-        sensorElement.textContent = distance.toFixed(1);
-    }
-    
-    // También actualizar la gráfica si existe
-    if (this.updateGraph) {
-        this.updateGraph(distance);
-    }
-}
-
-// ==================== INICIALIZACIÓN ACTUALIZADA ====================
-initializeSystem() {
-    console.log('🔧 Inicializando Sistema de Control Láser...');
-    this.calculateStepConversions();
-    this.loadUserSettings();
-    this.setupEventListeners();
-    
-    // ✅ INICIALIZAR SIMULACIÓN DE SENSOR (esto falta)
-    this.startSensorSimulation();
-    
-    // En producción, aquí se inicializa la conexión con ESP32
-    this.initializeHardwareConnection();
-}
     // ==================== INICIALIZACIÓN ====================
     initializeSystem() {
         console.log('🔧 Inicializando Sistema de Control Láser...');
         this.calculateStepConversions();
         this.loadUserSettings();
-        this.startSensorSimulation();
         this.setupEventListeners();
+        
+        // ✅ INICIALIZAR SIMULACIÓN DE SENSOR
+        this.startSensorSimulation();
         
         // En producción, aquí se inicializa la conexión con ESP32
         this.initializeHardwareConnection();
+    }
+
+    // ==================== SIMULACIÓN DE SENSOR ====================
+    startSensorSimulation() {
+        console.log('📊 Iniciando simulación de sensor...');
+        
+        // Simular datos del sensor cada 2 segundos
+        this.sensorInterval = setInterval(() => {
+            const simulatedDistance = (100 + Math.random() * 400).toFixed(1);
+            this.updateSensorDisplay(simulatedDistance);
+        }, 2000);
+    }
+
+    stopSensorSimulation() {
+        if (this.sensorInterval) {
+            clearInterval(this.sensorInterval);
+            console.log('📊 Simulación de sensor detenida');
+        }
+    }
+
+    updateSensorDisplay(distance) {
+        const sensorElement = document.getElementById('sensorDistance');
+        if (sensorElement) {
+            sensorElement.textContent = distance;
+        }
     }
 
     calculateStepConversions() {
@@ -485,5 +469,4 @@ function setSpeed(value) {
     if (window.laserSystem) {
         laserSystem.setSpeed(value);
     }
-
 }
