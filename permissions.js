@@ -139,15 +139,19 @@ class PermissionManager {
 
     // Verificar permisos antes de acciones críticas
     async checkBluetoothPermission() {
-        if (!this.permissions.bluetooth) {
-            throw new Error('Permisos Bluetooth no concedidos');
+    return new Promise((resolve, reject) => {
+        console.log('🔵 Verificando Bluetooth...');
+        
+        // SOLO verificar disponibilidad, NO permisos
+        if (!navigator.bluetooth) {
+            reject(new Error('Web Bluetooth no disponible'));
+            return;
         }
-        return true;
-    }
 
-    getPermissionsStatus() {
-        return this.permissions;
-    }
+        // ✅ PERMITIR que requestDevice() maneje los permisos
+        console.log('✅ Bluetooth disponible - permisos se pedirán al conectar');
+        resolve(true);
+    });
 }
 
 // Inicializar gestor de permisos
@@ -221,3 +225,4 @@ const permissionStyles = `
 
 document.head.insertAdjacentHTML('beforeend', permissionStyles);
 document.head.insertAdjacentHTML('beforeend', permissionStyles);
+
