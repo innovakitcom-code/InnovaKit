@@ -408,15 +408,22 @@ async connectViaBluetooth() {
 
     // ==================== INTERFAZ DE USUARIO ====================
     updateConnectionUI(status, message) {
-        const statusElement = document.getElementById('connectionStatus');
-        if (statusElement) {
-            const indicator = statusElement.querySelector('.status-indicator');
-            const text = statusElement.querySelector('span');
-            
-            indicator.className = 'status-indicator ' + status;
-            text.textContent = message;
-        }
+    // ✅ VERIFICAR SI LOS ELEMENTOS EXISTEN
+    ensureModalExists();
+    
+    const statusElement = document.getElementById('connectionStatusText');
+    const indicator = document.querySelector('.status-indicator');
+    
+    if (statusElement) {
+        statusElement.textContent = message;
     }
+    
+    if (indicator) {
+        indicator.className = 'status-indicator ' + status;
+    }
+    
+    console.log('🔧 Estado actualizado:', status, '-', message);
+}
 
     showNotification(message, type = 'info') {
         // Usar el sistema de notificaciones del app.js
@@ -588,4 +595,5 @@ const connectionStyles = `
 
 
 document.head.insertAdjacentHTML('beforeend', connectionStyles);
+
 
