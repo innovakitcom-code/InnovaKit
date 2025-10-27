@@ -124,14 +124,14 @@ class ESP32Connection {
    // ==================== CONEXIÓN BLUETOOTH BLE ====================
 async connectViaBluetooth() {
     console.log('🔵 Iniciando conexión Bluetooth...');
-    
+     /*
     try {
         await permissionManager.checkBluetoothPermission();
     } catch (error) {
         this.updateConnectionUI('error', error.message);
         return;
     }
-    
+      */
     this.updateConnectionUI('connecting', 'Buscando dispositivos Bluetooth...');
     
     try {
@@ -571,6 +571,7 @@ const connectionStyles = `
 
 
 document.head.insertAdjacentHTML('beforeend', connectionStyles);
+
 
 
 
