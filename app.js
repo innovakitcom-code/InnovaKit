@@ -102,12 +102,20 @@ class LaserControlSystem {
         }, 1000);
     }
 
-    updateConnectionStatus(status) {
-        this.systemState.connectionStatus = status;
-        document.getElementById('connectionStatus').textContent = 
+    // ✅ VERSIÓN CORREGIDA:
+updateConnectionStatus(status) {
+    this.systemState.connectionStatus = status;
+    
+    // ✅ BUSCAR EL ELEMENTO CORRECTO: 'globalConnectionStatus'
+    const statusElement = document.getElementById('globalConnectionStatus');
+    if (statusElement) {
+        statusElement.textContent = 
             status === 'connected' ? '🟢 Conectado' : 
             status === 'connecting' ? '🟡 Conectando...' : '🔴 Desconectado';
+    } else {
+        console.log('⚠️ Elemento globalConnectionStatus no encontrado');
     }
+}
 
     // ==================== CONTROL MANUAL ====================
     moveZ(direction) {
@@ -470,3 +478,4 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
+
