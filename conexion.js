@@ -387,9 +387,6 @@ async connectViaBluetooth() {
 
     // ==================== INTERFAZ DE USUARIO ====================
     updateConnectionUI(status, message) {
-    // ✅ VERIFICAR SI LOS ELEMENTOS EXISTEN
-    ensureModalExists();
-    
     const statusElement = document.getElementById('connectionStatusText');
     const indicator = document.querySelector('.status-indicator');
     
@@ -574,6 +571,7 @@ const connectionStyles = `
 
 
 document.head.insertAdjacentHTML('beforeend', connectionStyles);
+
 
 
 
