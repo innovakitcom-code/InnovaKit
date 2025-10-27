@@ -1,4 +1,4 @@
-// permissions.js - Gestión de permisos para Bluetooth/WiFi
+// permissions.js - VERSIÓN CORREGIDA - Gestión de permisos para Bluetooth/WiFi
 class PermissionManager {
     constructor() {
         this.permissions = {
@@ -12,16 +12,13 @@ class PermissionManager {
         console.log('🔐 Inicializando permisos...');
         
         try {
-            // Verificar y solicitar permisos Bluetooth
-            await this.requestBluetoothPermission();
-            
-            // Solicitar permisos de notificaciones
+            // Solo notificaciones, Bluetooth se maneja diferente
             await this.requestNotificationPermission();
             
             // Verificar compatibilidad del navegador
             this.checkBrowserCompatibility();
             
-            console.log('✅ Todos los permisos configurados');
+            console.log('✅ Permisos configurados');
             return true;
             
         } catch (error) {
@@ -41,28 +38,8 @@ class PermissionManager {
         }
 
         try {
-            // Verificar permisos existentes
-            const permissionStatus = await navigator.permissions.query({
-                name: 'bluetooth'
-            });
-
-            console.log('📊 Estado permiso Bluetooth:', permissionStatus.state);
-
-            if (permissionStatus.state === 'granted') {
-                this.permissions.bluetooth = true;
-                return true;
-            }
-
-            if (permissionStatus.state === 'denied') {
-                throw new Error(
-                    'Permiso Bluetooth denegado. ' +
-                    'Ve a configuraciones del navegador y permite Bluetooth.'
-                );
-            }
-
-            // Para solicitar permisos, necesitamos intentar una conexión
-            // Esto activará el diálogo nativo del navegador
-            console.log('🔵 Bluetooth disponible, permisos se solicitarán al conectar');
+            // LOS PERMISOS BLUETOOTH SE SOLICITAN AUTOMÁTICAMENTE AL CONECTAR
+            console.log('🔵 Bluetooth disponible - permisos se solicitarán al conectar');
             this.permissions.bluetooth = true;
             return true;
 
@@ -242,4 +219,5 @@ const permissionStyles = `
 </style>
 `;
 
+document.head.insertAdjacentHTML('beforeend', permissionStyles);
 document.head.insertAdjacentHTML('beforeend', permissionStyles);
