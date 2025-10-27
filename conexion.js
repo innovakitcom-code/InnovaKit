@@ -1,6 +1,37 @@
 // conexion.js - COMUNICACIÓN CON ESP32
 // Soporte para Bluetooth BLE y WiFi
-
+// VERIFICACIÓN DE ELEMENTOS DEL MODAL
+function ensureModalExists() {
+    if (!document.getElementById('connectionModal')) {
+        console.log('🔄 Creando modal de conexión...');
+        const modalHTML = `
+        <div id="connectionModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h3>🔗 Conectar al Sistema Láser</h3>
+                <p>Selecciona el método de conexión:</p>
+                
+                <div class="connection-options">
+                    <button id="bluetoothBtn" class="connection-btn">
+                        <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem;">📱</span>
+                        <span style="font-weight: 600; display: block;">Bluetooth</span>
+                        <span style="font-size: 0.9rem; color: #8e8e93; display: block;">Conectar vía BLE</span>
+                    </button>
+                </div>
+                
+                <div class="connection-status">
+                    <div class="status-indicator disconnected"></div>
+                    <span id="connectionStatusText">Desconectado</span>
+                </div>
+                
+                <div class="modal-actions">
+                    <button id="cancelBtn" class="btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+}
 class ESP32Connection {
     constructor() {
         this.connectionType = null; // 'bluetooth' | 'wifi'
@@ -557,3 +588,4 @@ const connectionStyles = `
 
 
 document.head.insertAdjacentHTML('beforeend', connectionStyles);
+
