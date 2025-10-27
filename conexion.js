@@ -1,37 +1,5 @@
 // conexion.js - COMUNICACIÓN CON ESP32
 // Soporte para Bluetooth BLE y WiFi
-// VERIFICACIÓN DE ELEMENTOS DEL MODAL
-function ensureModalExists() {
-    if (!document.getElementById('connectionModal')) {
-        console.log('🔄 Creando modal de conexión...');
-        const modalHTML = `
-        <div id="connectionModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <h3>🔗 Conectar al Sistema Láser</h3>
-                <p>Selecciona el método de conexión:</p>
-                
-                <div class="connection-options">
-                    <button id="bluetoothBtn" class="connection-btn">
-                        <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem;">📱</span>
-                        <span style="font-weight: 600; display: block;">Bluetooth</span>
-                        <span style="font-size: 0.9rem; color: #8e8e93; display: block;">Conectar vía BLE</span>
-                    </button>
-                </div>
-                
-                <div class="connection-status">
-                    <div class="status-indicator disconnected"></div>
-                    <span id="connectionStatusText">Desconectado</span>
-                </div>
-                
-                <div class="modal-actions">
-                    <button id="cancelBtn" class="btn-secondary">Cancelar</button>
-                </div>
-            </div>
-        </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-    }
-}
 class ESP32Connection {
     constructor() {
         this.connectionType = null; // 'bluetooth' | 'wifi'
@@ -99,8 +67,15 @@ class ESP32Connection {
                     <span style="font-weight: 600; display: block;">Bluetooth</span>
                     <span style="font-size: 0.9rem; color: #8e8e93; display: block;">Conectar vía BLE</span>
                 </button>
-            </div>
-            
+
+               <!-- ✅ AGREGA ESTE BOTÓN WiFi -->
+            <button id="wifiBtn" class="connection-btn" style="padding: 1.5rem; border: 2px solid #e5e5e7; border-radius: 12px; background: white; cursor: pointer; text-align: left;">
+                <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem;">🌐</span>
+                <span style="font-weight: 600; display: block;">WiFi</span>
+                <span style="font-size: 0.9rem; color: #8e8e93; display: block;">Conectar vía red local</span>
+            </button>
+        </div>
+        
             <div class="connection-status">
                 <div class="status-indicator disconnected"></div>
                 <span id="connectionStatusText">Desconectado</span>
@@ -111,7 +86,17 @@ class ESP32Connection {
             </div>
         </div>
     </div>`;
-    
+
+        // En createConnectionModal(), después del listener de Bluetooth:
+document.getElementById('wifiBtn').addEventListener('click', () => {
+    console.log('🌐 WiFi clickeado');
+    this.connectViaWiFi();
+});
+
+document.getElementById('retryBtn').addEventListener('click', () => {
+    this.retryConnection();
+});
+                // En createConnectionModal(), después del listener de Bluetooth:
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     
     // ✅ EVENT LISTENERS DIRECTOS - SIN DEPENDER DE SETUPMODALEVENTS()
@@ -589,6 +574,7 @@ const connectionStyles = `
 
 
 document.head.insertAdjacentHTML('beforeend', connectionStyles);
+
 
 
 
