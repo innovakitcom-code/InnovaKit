@@ -79,60 +79,54 @@ class ESP32Connection {
     }
 
     createConnectionModal() {
-        const modalHTML = `
-        <div id="connectionModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <h3>🔗 Conectar al Sistema Láser</h3>
-                <p>Selecciona el método de conexión:</p>
-                
-                <div class="connection-options">
-                    <button id="bluetoothBtn" class="connection-btn bluetooth-btn">
-                        <span class="btn-icon">📱</span>
-                        <span class="btn-text">Bluetooth</span>
-                        <span class="btn-desc">Conectar vía BLE</span>
-                    </button>
-                    
-                    <button id="wifiBtn" class="connection-btn wifi-btn">
-                        <span class="btn-icon">🌐</span>
-                        <span class="btn-text">WiFi</span>
-                        <span class="btn-desc">Conectar vía red local</span>
-                    </button>
-                </div>
-                
-                <div class="connection-status" id="connectionStatus">
-                    <div class="status-indicator disconnected"></div>
-                    <span>Desconectado</span>
-                </div>
-                
-                <div class="modal-actions">
-                    <button id="cancelBtn" class="btn-secondary">Cancelar</button>
-                    <button id="retryBtn" class="btn-primary" style="display: none;">Reintentar</button>
-                </div>
+    console.log('🔧 Creando modal de conexión...');
+    
+    // Eliminar modal existente si hay
+    const existingModal = document.getElementById('connectionModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    const modalHTML = `
+    <div id="connectionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>🔗 Conectar al Sistema Láser</h3>
+            <p>Selecciona el método de conexión:</p>
+            
+            <div class="connection-options">
+                <button id="bluetoothBtn" class="connection-btn" style="padding: 1.5rem; border: 2px solid #e5e5e7; border-radius: 12px; background: white; cursor: pointer; text-align: left;">
+                    <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem;">📱</span>
+                    <span style="font-weight: 600; display: block;">Bluetooth</span>
+                    <span style="font-size: 0.9rem; color: #8e8e93; display: block;">Conectar vía BLE</span>
+                </button>
+            </div>
+            
+            <div class="connection-status">
+                <div class="status-indicator disconnected"></div>
+                <span id="connectionStatusText">Desconectado</span>
+            </div>
+            
+            <div class="modal-actions">
+                <button id="cancelBtn" class="btn-secondary">Cancelar</button>
             </div>
         </div>
-        `;
-        
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-        this.setupModalEvents();
-    }
-
-    setupModalEvents() {
-        document.getElementById('bluetoothBtn').addEventListener('click', () => {
-            this.connectViaBluetooth();
-        });
-        
-        document.getElementById('wifiBtn').addEventListener('click', () => {
-            this.connectViaWiFi();
-        });
-        
-        document.getElementById('cancelBtn').addEventListener('click', () => {
-            this.hideConnectionModal();
-        });
-        
-        document.getElementById('retryBtn').addEventListener('click', () => {
-            this.retryConnection();
-        });
-    }
+    </div>`;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // ✅ EVENT LISTENERS DIRECTOS - SIN DEPENDER DE SETUPMODALEVENTS()
+    document.getElementById('bluetoothBtn').addEventListener('click', () => {
+        console.log('🔵 Bluetooth clickeado');
+        this.connectViaBluetooth();
+    });
+    
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+        this.hideConnectionModal();
+    });
+    
+    console.log('✅ Modal creado correctamente');
+}
+   
 
     showConnectionModal() {
         document.getElementById('connectionModal').style.display = 'flex';
@@ -595,5 +589,6 @@ const connectionStyles = `
 
 
 document.head.insertAdjacentHTML('beforeend', connectionStyles);
+
 
 
