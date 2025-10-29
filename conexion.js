@@ -166,9 +166,7 @@ async connectViaBluetooth() {
         this.characteristic = await service.getCharacteristic('beb5483e-36e1-4688-b7f5-ea07361b26a8');
         
         // Configurar notificaciones
-        await this.characteristic.startNotifications();
-        this.characteristic.addEventListener('characteristicvaluechanged', 
-            (event) => this.handleIncomingData(event));
+       
         
         this.connectionType = 'bluetooth';
         this.isConnected = true;
@@ -571,6 +569,7 @@ const connectionStyles = `
 
 
 document.head.insertAdjacentHTML('beforeend', connectionStyles);
+
 
 
 
