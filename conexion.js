@@ -107,19 +107,46 @@ class ESP32Connection {
 function showSection(sectionName) {
     console.log('🔍 Intentando mostrar sección:', sectionName);
     
-    // Oculta todas las secciones primero
-    const sections = document.querySelectorAll('.section');
+    // ✅ CORREGIDO: Oculta todas las secciones con clase .content-section
+    const sections = document.querySelectorAll('.content-section');
     sections.forEach(section => {
         section.style.display = 'none';
+        section.classList.remove('active'); // También quita la clase active
     });
     
-    // Muestra la sección solicitada
+    // ✅ Muestra solo la sección solicitada
     const targetSection = document.getElementById(sectionName);
     if (targetSection) {
         targetSection.style.display = 'block';
+        targetSection.classList.add('active'); // Agrega clase active
         console.log('✅ Sección mostrada:', sectionName);
+        
+        // ✅ También actualiza los botones del scroll horizontal
+        updateActiveFunctionCard(sectionName);
     } else {
         console.error('❌ Sección no encontrada:', sectionName);
+    }
+}
+
+// ✅ Función para actualizar el botón activo en el scroll horizontal
+function updateActiveFunctionCard(sectionName) {
+    const functionCards = document.querySelectorAll('.function-card');
+    functionCards.forEach(card => {
+        card.classList.remove('active');
+    });
+    
+    // Mapeo de secciones a botones
+    const sectionToButton = {
+        'manualSection': 0,
+        'positionSection': 1, 
+        'sensorSection': 2,
+        'homingSection': 3,
+        'presetsSection': 4,
+        'configSection': 5
+    };
+    
+    if (sectionToButton[sectionName] !== undefined) {
+        functionCards[sectionToButton[sectionName]].classList.add('active');
     }
 }
 // Inicializar
@@ -128,4 +155,5 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
+
 
