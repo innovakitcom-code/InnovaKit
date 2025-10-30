@@ -504,18 +504,16 @@
     </div>
 </div>
 
-    <!-- Menú lateral -->
-    <div class="side-menu" id="sideMenu">
+    <!-- Menú lateral CORREGIDO -->
+<div class="side-menu" id="sideMenu">
     <h3 style="color: #1d1d1f; margin-bottom: 1rem;">Menú</h3>
     <ul class="menu-items">
-        <li><a href="#" onclick="showSection('manual')">Control Manual</a></li>
-        <li><a href="#" onclick="showSection('position')">Posición</a></li>
-        <li><a href="#" onclick="showSection('homing')">Homing</a></li>
-        <li><a href="#" onclick="showSection('presets')">Presets</a></li>
-        <li><a href="#" onclick="showSection('positionSection')">Sensor</a></li>
-        <li><a href="#" onclick="showSection('config')">Configuración</a></li>
+        <li><a href="#" onclick="showSection('manualSection')">Control Manual</a></li>
+        <li><a href="#" onclick="showSection('positionSection')">Posición y Sensor</a></li>
+        <li><a href="#" onclick="showSection('homingSection')">Homing</a></li>
+        <li><a href="#" onclick="showSection('presetsSection')">Presets</a></li>
+        <li><a href="#" onclick="showSection('configSection')">Configuración</a></li>
         <li><a href="#" onclick="showSection('help')">Ayuda</a></li>
-        <!-- NUEVO ITEM -->
         <li><a href="#" onclick="disconnectDevice()">Desconectar</a></li>
     </ul>
 </div>
@@ -527,38 +525,33 @@
     <div class="main-container">
         <h2 class="section-title">Funciones Principales</h2>
         
-        <!-- Scroll horizontal de funciones -->
-        <div class="functions-scroll" id="functionsScroll">
-            <div class="function-card active" onclick="showSection('manual')">
-                <div class="function-icon">⚙️</div>
-                <div class="function-title">Manual</div>
-            </div>
+        <!-- Scroll horizontal CORREGIDO -->
+<div class="functions-scroll" id="functionsScroll">
+    <div class="function-card active" onclick="showSection('manualSection')">
+        <div class="function-icon">⚙️</div>
+        <div class="function-title">Manual</div>
+    </div>
 
-            <div class="function-card" onclick="showSection('position')">
-                <div class="function-icon">🎯</div>
-                <div class="function-title">Posición</div>
-            </div>
+    <div class="function-card" onclick="showSection('positionSection')">
+        <div class="function-icon">📊</div>
+        <div class="function-title">Sensor</div>
+    </div>
 
-            <div class="function-card" onclick="showSection('homing')">
-                <div class="function-icon">🏠</div>
-                <div class="function-title">Homing</div>
-            </div>
+    <div class="function-card" onclick="showSection('homingSection')">
+        <div class="function-icon">🏠</div>
+        <div class="function-title">Homing</div>
+    </div>
 
-            <div class="function-card" onclick="showSection('presets')">
-                <div class="function-icon">💾</div>
-                <div class="function-title">Presets</div>
-            </div>
+    <div class="function-card" onclick="showSection('presetsSection')">
+        <div class="function-icon">💾</div>
+        <div class="function-title">Presets</div>
+    </div>
 
-            <div class="function-card" onclick="showSection('positionSection')">
-                <div class="function-icon">📊</div>
-                <div class="function-title">Sensor</div>
-            </div>
-
-            <div class="function-card" onclick="showSection('config')">
-                <div class="function-icon">⚡</div>
-                <div class="function-title">Config</div>
-            </div>
-        </div>
+    <div class="function-card" onclick="showSection('configSection')">
+        <div class="function-icon">⚡</div>
+        <div class="function-title">Config</div>
+    </div>
+</div>
 
         <!-- Sección Control Manual -->
         <div class="content-section active" id="manualSection">
