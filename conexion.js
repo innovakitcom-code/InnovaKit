@@ -1,4 +1,4 @@
-// conexion.js - VERSIÓN QUE FUNCIONA
+// conexion.js - VERSIÓN CORREGIDA
 class ESP32Connection {
     constructor() {
         this.isConnected = false;
@@ -44,7 +44,6 @@ class ESP32Connection {
         console.log('🔵 Conectando Bluetooth...');
         
         try {
-            // ✅ ESTO SABEMOS QUE FUNCIONA (de la prueba en consola)
             this.device = await navigator.bluetooth.requestDevice({
                 acceptAllDevices: true,
                 optionalServices: ['4fafc201-1fb5-459e-8fcc-c5c9c331914b']
@@ -62,7 +61,6 @@ class ESP32Connection {
             this.hideConnectionModal();
             this.showNotification('Bluetooth conectado', 'success');
             
-            // Actualizar estado en la app principal
             if (window.laserSystem) {
                 window.laserSystem.updateConnectionStatus('connected');
             }
@@ -101,19 +99,17 @@ class ESP32Connection {
 
     showNotification(message, type) {
         console.log(`[${type}] ${message}`);
-        // Puedes implementar notificaciones visuales aquí
     }
-}
+} // ✅ ESTE } ESTABA FALTANDO - CIERRA LA CLASE ESP32Connection
+
 function showSection(sectionName) {
     console.log('🔍 Intentando mostrar sección:', sectionName);
     
-    // 1. Oculta todas las secciones
     const sections = document.querySelectorAll('.content-section');
     sections.forEach(section => {
         section.style.display = 'none';
     });
     
-    // 2. Muestra la sección solicitada
     const targetSection = document.getElementById(sectionName);
     if (targetSection) {
         targetSection.style.display = 'block';
@@ -123,13 +119,9 @@ function showSection(sectionName) {
         return;
     }
     
-    // 3. ✅ ENFOQUE INTELIGENTE: Encuentra el botón correcto por su onclick
     const functionCards = document.querySelectorAll('.function-card');
     functionCards.forEach(card => {
-        // Remover active de todos
         card.classList.remove('active');
-        
-        // Verificar si este botón corresponde a la sección mostrada
         const onclickAttr = card.getAttribute('onclick');
         if (onclickAttr && onclickAttr.includes(sectionName)) {
             card.classList.add('active');
@@ -143,5 +135,3 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
-
-
