@@ -107,26 +107,23 @@ class ESP32Connection {
 function showSection(sectionName) {
     console.log('🔍 Intentando mostrar sección:', sectionName);
     
-    // Oculta todas las secciones primero
+    // 1. Oculta todas las secciones
     const sections = document.querySelectorAll('.content-section');
     sections.forEach(section => {
         section.style.display = 'none';
     });
     
-    // Muestra la sección solicitada
+    // 2. Muestra la sección solicitada
     const targetSection = document.getElementById(sectionName);
     if (targetSection) {
         targetSection.style.display = 'block';
         console.log('✅ Sección mostrada:', sectionName);
-        
-        // ✅ CORREGIDO: Actualiza los botones del scroll horizontal
-        updateActiveFunctionCard(sectionName);
     } else {
         console.error('❌ Sección no encontrada:', sectionName);
+        return;
     }
-}
-
-// 3. ✅ ENFOQUE INTELIGENTE: Encuentra el botón correcto por su onclick
+    
+    // 3. ✅ ENFOQUE INTELIGENTE: Encuentra el botón correcto por su onclick
     const functionCards = document.querySelectorAll('.function-card');
     functionCards.forEach(card => {
         // Remover active de todos
@@ -139,14 +136,12 @@ function showSection(sectionName) {
         }
     });
 }
+
 // Inicializar
 let esp32Connection;
 document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
-
-
-
 
 
