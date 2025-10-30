@@ -55,6 +55,9 @@ class ESP32Connection {
             const service = await server.getPrimaryService('4fafc201-1fb5-459e-8fcc-c5c9c331914b');
             this.characteristic = await service.getCharacteristic('beb5483e-36e1-4688-b7f5-ea07361b26a8');
 
+            // ✅ NUEVO: Configurar escucha de notificaciones
+            await this.setupNotifications();
+            
             this.isConnected = true;
             console.log('✅ Bluetooth CONECTADO');
             
@@ -68,6 +71,31 @@ class ESP32Connection {
         } catch (error) {
             console.error('❌ Error:', error);
             this.showNotification('Error: ' + error.message, 'error');
+        }
+    }
+
+    // ✅ AGREGAR ESTA FUNCIÓN DENTRO DE LA CLASE (después de connectViaBluetooth)
+    async setupNotifications() {
+        this.characteristic.addEventListener('characteristicvaluechanged', event => {
+            const value = new TextDecoder().decode(event.target.value);
+            console.log('📡 Datos recibidos:', value);
+            this.processESP32Data(value);
+        });
+
+        await this.characteristic.startNotifications();
+        console.log('🔔 Notificaciones BLE activadas');
+    }
+
+    // ✅ AGREGAR ESTA FUNCIÓN DENTRO DE LA CLASE (después de setupNotifications)
+    processESP32Data(data) {
+        if (data.startsWith('SENSOR:')) {
+            const distance = parseFloat(data.split(':')[1]);
+            console.log('📊 Distancia recibida:', distance);
+            
+            // Enviar datos al sistema principal
+            if (window.laserSystem) {
+                window.laserSystem.processRealSensorData(distance);
+            }
         }
     }
 
@@ -100,7 +128,7 @@ class ESP32Connection {
     showNotification(message, type) {
         console.log(`[${type}] ${message}`);
     }
-} // ✅ ESTE } ESTABA FALTANDO - CIERRA LA CLASE ESP32Connection
+} // ✅ ESTE } CIERRA LA CLASE ESP32Connection
 
 function showSection(sectionName) {
     console.log('🔍 Intentando mostrar sección:', sectionName);
