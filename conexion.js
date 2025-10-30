@@ -108,7 +108,7 @@ function showSection(sectionName) {
     console.log('🔍 Intentando mostrar sección:', sectionName);
     
     // Oculta todas las secciones primero
-    const sections = document.querySelectorAll('.section'); // ← ESTÁ MAL
+    const sections = document.querySelectorAll('.content-section');
     sections.forEach(section => {
         section.style.display = 'none';
     });
@@ -118,8 +118,43 @@ function showSection(sectionName) {
     if (targetSection) {
         targetSection.style.display = 'block';
         console.log('✅ Sección mostrada:', sectionName);
+        
+        // ✅ CORREGIDO: Actualiza los botones del scroll horizontal
+        updateActiveFunctionCard(sectionName);
     } else {
         console.error('❌ Sección no encontrada:', sectionName);
+    }
+}
+
+// ✅ FUNCIÓN CORREGIDA - Sin errores
+function updateActiveFunctionCard(activeSection) {
+    // Busca todos los botones del scroll horizontal
+    const functionCards = document.querySelectorAll('.function-card');
+    
+    // Si no hay botones, salir silenciosamente
+    if (!functionCards.length) {
+        return;
+    }
+    
+    // Remover clase 'active' de todos los botones
+    functionCards.forEach(card => {
+        card.classList.remove('active');
+    });
+    
+    // Mapeo simple de secciones a botones (basado en el orden)
+    const sectionToIndex = {
+        'manualSection': 0,
+        'positionSection': 1,
+        'sensorSection': 2, 
+        'homingSection': 3,
+        'presetsSection': 4,
+        'configSection': 5
+    };
+    
+    // Activar el botón correspondiente si existe
+    const buttonIndex = sectionToIndex[activeSection];
+    if (buttonIndex !== undefined && functionCards[buttonIndex]) {
+        functionCards[buttonIndex].classList.add('active');
     }
 }
 // Inicializar
@@ -128,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
+
 
 
 
