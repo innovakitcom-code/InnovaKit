@@ -52,24 +52,96 @@ class LaserControlSystem {
         this.loadUserSettings();
         this.setupEventListeners();
         
-        // ✅ INICIALIZAR SIMULACIÓN DE SENSOR
-        this.startSensorSimulation();
+        // ✅ INICIALIZAR LECTURA REAL DE SENSOR
+this.startRealSensorReading();
         
         // En producción, aquí se inicializa la conexión con ESP32
         this.initializeHardwareConnection();
     }
 
-    // ==================== SIMULACIÓN DE SENSOR ====================
-    startSensorSimulation() {
-        console.log('📊 Iniciando simulación de sensor...');
-        
-        // Simular datos del sensor cada 2 segundos
-        this.sensorInterval = setInterval(() => {
-            const simulatedDistance = (100 + Math.random() * 400).toFixed(1);
-            this.updateSensorDisplay(simulatedDistance);
-        }, 2000);
-    }
+  // ==================== SENSOR EN TIEMPO REAL ====================
+startRealSensorReading() {
+    console.log('📊 Esperando datos reales del sensor...');
+    // Los datos vendrán por Bluetooth automáticamente
+    this.sensorData = []; // Inicializar array para la gráfica
+    this.maxDataPoints = 50; // Mantener últimos 50 puntos
+}
 
+// ✅ NUEVA FUNCIÓN: Procesar datos reales del sensor
+processRealSensorData(distance) {
+    console.log('📊 Procesando dato real:', distance);
+    this.updateSensorDisplay(distance);
+    this.updateSensorGraph(distance);
+}
+
+// ✅ NUEVA FUNCIÓN: Actualizar gráfica en tiempo real
+updateSensorGraph(distance) {
+    if (!this.sensorData) {
+        this.sensorData = [];
+        this.maxDataPoints = 50;
+    }
+    
+    // Agregar nuevo dato
+    this.sensorData.push({
+        timestamp: Date.now(),
+        distance: distance
+    });
+    
+    // Mantener solo los últimos puntos
+    if (this.sensorData.length > this.maxDataPoints) {
+        this.sensorData.shift();
+    }
+    
+    // Dibujar gráfica
+    this.drawSensorGraph();
+}
+
+// ✅ NUEVA FUNCIÓN: Dibujar la gráfica
+drawSensorGraph() {
+    const canvas = document.getElementById('sensorGraph');
+    if (!canvas) {
+        console.log('⚠️ Canvas no encontrado');
+        return;
+    }
+    
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Limpiar canvas
+    ctx.clearRect(0, 0, width, height);
+    
+    if (!this.sensorData || this.sensorData.length < 2) {
+        // Mostrar mensaje si no hay datos
+        ctx.fillStyle = '#8e8e93';
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Esperando datos del sensor...', width / 2, height / 2);
+        return;
+    }
+    
+    // Configurar estilo de la línea
+    ctx.strokeStyle = '#007aff';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    
+    // Dibujar línea
+    const xStep = width / (this.maxDataPoints - 1);
+    
+    this.sensorData.forEach((point, index) => {
+        const x = index * xStep;
+        // Normalizar distancia (0-500mm a 0-height)
+        const y = height - (point.distance / 500) * height;
+        
+        if (index === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    });
+    
+    ctx.stroke();
+}
     stopSensorSimulation() {
         if (this.sensorInterval) {
             clearInterval(this.sensorInterval);
@@ -478,4 +550,5 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
+
 
