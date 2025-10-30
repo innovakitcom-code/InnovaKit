@@ -104,10 +104,28 @@ class ESP32Connection {
         // Puedes implementar notificaciones visuales aquí
     }
 }
-
+function showSection(sectionName) {
+    console.log('🔍 Intentando mostrar sección:', sectionName);
+    
+    // Oculta todas las secciones primero
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Muestra la sección solicitada
+    const targetSection = document.getElementById(sectionName);
+    if (targetSection) {
+        targetSection.style.display = 'block';
+        console.log('✅ Sección mostrada:', sectionName);
+    } else {
+        console.error('❌ Sección no encontrada:', sectionName);
+    }
+}
 // Inicializar
 let esp32Connection;
 document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
+
