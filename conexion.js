@@ -126,36 +126,18 @@ function showSection(sectionName) {
     }
 }
 
-// ✅ FUNCIÓN CORREGIDA - Sin errores
-function updateActiveFunctionCard(activeSection) {
-    // Busca todos los botones del scroll horizontal
+// 3. ✅ ENFOQUE INTELIGENTE: Encuentra el botón correcto por su onclick
     const functionCards = document.querySelectorAll('.function-card');
-    
-    // Si no hay botones, salir silenciosamente
-    if (!functionCards.length) {
-        return;
-    }
-    
-    // Remover clase 'active' de todos los botones
     functionCards.forEach(card => {
+        // Remover active de todos
         card.classList.remove('active');
+        
+        // Verificar si este botón corresponde a la sección mostrada
+        const onclickAttr = card.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes(sectionName)) {
+            card.classList.add('active');
+        }
     });
-    
-    // Mapeo simple de secciones a botones (basado en el orden)
-    const sectionToIndex = {
-        'manualSection': 0,
-        'positionSection': 1,
-        'sensorSection': 2, 
-        'homingSection': 3,
-        'presetsSection': 4,
-        'configSection': 5
-    };
-    
-    // Activar el botón correspondiente si existe
-    const buttonIndex = sectionToIndex[activeSection];
-    if (buttonIndex !== undefined && functionCards[buttonIndex]) {
-        functionCards[buttonIndex].classList.add('active');
-    }
 }
 // Inicializar
 let esp32Connection;
@@ -163,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
+
 
 
 
