@@ -397,21 +397,25 @@ updateConnectionStatus(status) {
         }
     }
 
-    // ==================== COMUNICACIÓN ESP32 ====================
-    async sendCommandToESP32(command) {
-        // EN PRODUCCIÓN: Implementar comunicación real vía Bluetooth/WiFi
-        
-        console.log(`📡 Enviando comando a ESP32: ${command}`);
-        
-        // Simular envío exitoso
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                console.log(`✅ Comando ejecutado: ${command}`);
-                resolve(`ACK:${command}`);
-            }, 100);
-        });
+    // ==================== COMUNICACIÓN ESP32 REAL ====================
+async sendCommandToESP32(command) {
+    console.log(`📡 Enviando comando REAL a ESP32: ${command}`);
+    
+    // ✅ USAR LA CONEXIÓN BLUETOOTH REAL
+    if (window.esp32Connection && window.esp32Connection.isConnected) {
+        try {
+            await window.esp32Connection.sendCommand(command);
+            console.log(`✅ Comando enviado correctamente: ${command}`);
+            return `ACK:${command}`;
+        } catch (error) {
+            console.error(`❌ Error enviando comando: ${error}`);
+            throw error;
+        }
+    } else {
+        console.error('❌ No hay conexión Bluetooth disponible');
+        throw new Error('No hay conexión Bluetooth');
     }
-
+}
     // ==================== UTILIDADES ====================
     stepsToMM(steps) {
         return steps / this.stepsPerMM;
@@ -550,5 +554,6 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
+
 
 
