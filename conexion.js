@@ -87,17 +87,7 @@ class ESP32Connection {
     }
 
     // ✅ AGREGAR ESTA FUNCIÓN DENTRO DE LA CLASE (después de setupNotifications)
-    // ✅ REEMPLAZAR ESTA FUNCIÓN EN conexion.js
-processESP32Data(data) {
-    console.log('📡 Datos recibidos:', data);
-    
-    // ✅ NUEVO: Procesar confirmaciones de comandos
-    if (data.startsWith('RECIBIDO:')) {
-        const comando = data.split(':')[1];
-        console.log('✅ ESP32 confirmó recepción:', comando);
-        return; // No procesar más, es solo confirmación
-    }
-    
+    processESP32Data(data) {
     if (data.startsWith('SENSOR:')) {
         const distance = parseFloat(data.split(':')[1]);
         console.log('📊 Distancia recibida:', distance);
@@ -107,6 +97,7 @@ processESP32Data(data) {
             window.laserSystem.processRealSensorData(distance);
         }
     }
+}
     
     // ✅ NUEVO: También procesar mensajes de posición
     if (data.startsWith('POS:')) {
@@ -185,4 +176,5 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
+
 
