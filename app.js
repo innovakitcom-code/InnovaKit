@@ -57,6 +57,8 @@ this.startRealSensorReading();
         
         // En producción, aquí se inicializa la conexión con ESP32
         this.initializeHardwareConnection();
+        // ✅ NUEVO: Iniciar sistema de sincronización
+    this.setupStateSync();
     }
 
   // ==================== SENSOR EN TIEMPO REAL ====================
@@ -486,7 +488,35 @@ async sendCommandToESP32(command) {
         }
     }
 }
+// ==================== SINCRONIZACIÓN ====================
+setupStateSync() {
+    console.log('🔄 Configurando sincronización automática...');
+    
+    // Sincronizar cuando se conecte el Bluetooth
+    if (window.esp32Connection) {
+        // Esperar a que esté conectado y luego sincronizar
+        setTimeout(() => {
+            this.syncWithESP32();
+        }, 3000);
+    }
+}
 
+async syncWithESP32() {
+    try {
+        console.log('🔄 Sincronizando estado con ESP32...');
+        
+        // Solicitar posición actual al ESP32
+        await this.sendCommandToESP32('GET_POSITION');
+        console.log('✅ Solicitud de sincronización enviada');
+        
+        // El ESP32 responderá con "POS:XXX" y se procesará automáticamente
+        // gracias a los cambios que ya hicimos en processESP32Data
+        
+    } catch (error) {
+        console.log('⚠️ Sincronización falló:', error);
+        // No es crítico - el sistema sigue funcionando
+    }
+}
 // ==================== INICIALIZACIÓN GLOBAL ====================
 let laserSystem;
 
@@ -554,6 +584,7 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
+
 
 
 
