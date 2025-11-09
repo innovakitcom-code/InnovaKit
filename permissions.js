@@ -224,5 +224,5 @@ const permissionStyles = `
 `;
 
 document.head.insertAdjacentHTML('beforeend', permissionStyles);
-document.head.insertAdjacentHTML('beforeend', permissionStyles);
+
 
