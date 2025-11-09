@@ -554,8 +554,3 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
-
-
-
-
-
