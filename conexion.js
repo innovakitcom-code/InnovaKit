@@ -88,29 +88,16 @@ class ESP32Connection {
 
     // ✅ AGREGAR ESTA FUNCIÓN DENTRO DE LA CLASE (después de setupNotifications)
     processESP32Data(data) {
-    if (data.startsWith('SENSOR:')) {
-        const distance = parseFloat(data.split(':')[1]);
-        console.log('📊 Distancia recibida:', distance);
-        
-        // Enviar datos al sistema principal
-        if (window.laserSystem) {
-            window.laserSystem.processRealSensorData(distance);
+        if (data.startsWith('SENSOR:')) {
+            const distance = parseFloat(data.split(':')[1]);
+            console.log('📊 Distancia recibida:', distance);
+            
+            // Enviar datos al sistema principal
+            if (window.laserSystem) {
+                window.laserSystem.processRealSensorData(distance);
+            }
         }
     }
-}
-    
-    // ✅ NUEVO: También procesar mensajes de posición
-    if (data.startsWith('POS:')) {
-        const position = parseInt(data.split(':')[1]);
-        console.log('📏 Posición recibida:', position);
-        
-        if (window.laserSystem) {
-            // Actualizar posición en el sistema web
-            window.laserSystem.systemState.currentPosition = position;
-            window.laserSystem.updatePositionDisplays();
-        }
-    }
-}
 
     async sendCommand(command) {
         if (!this.isConnected || !this.characteristic) {
@@ -176,5 +163,3 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
-
-
