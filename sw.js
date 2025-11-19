@@ -1,24 +1,19 @@
-// sw.js - Service Worker para PWA
 const CACHE_NAME = 'laser-control-v1.0.0';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/conexion.js',
-  '/pwa.js',
-  '/manifest.json',
-  // Agregar aquí otros recursos estáticos
-];
 
-// Instalación
+// Instalación - SOLO cachear lo esencial
 self.addEventListener('install', event => {
   console.log('🔧 Service Worker instalando...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('✅ Cache abierto');
-        return cache.addAll(urlsToCache);
+        // Cachear solo los archivos CRÍTICOS que SABEMOS que existen
+        return cache.addAll([
+          '/',
+          '/index.html'
+        ]).catch(error => {
+          console.log('⚠️ Algunos recursos no se pudieron cachear:', error);
+        });
       })
   );
 });
@@ -40,17 +35,17 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch - Estrategia Cache First
+// Fetch - Estrategia más robusta
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
         // Devuelve cache si existe, sino hace fetch
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
+        return response || fetch(event.request);
+      })
+      .catch(error => {
+        console.log('❌ Error en fetch:', error);
+        // Puedes retornar una página offline aquí
+      })
   );
 });
