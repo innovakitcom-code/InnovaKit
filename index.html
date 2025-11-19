@@ -34,8 +34,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 1.5rem;
-            background: #ffffff;
-            border-bottom: 1px solid #e5e5e7;
+            background: #03287c;
+            border-bottom: 1px solid #1e4db6;
             backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
@@ -45,7 +45,7 @@
         .menu-btn {
             background: none;
             border: none;
-            color: #007aff;
+            color: #ffffff;
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
@@ -59,7 +59,7 @@
         .app-title {
             font-size: 1.3rem;
             font-weight: 600;
-            color: #1d1d1f;
+            color: #ffffff;
         }
         
         .connection-indicator {
@@ -81,7 +81,7 @@
             left: -280px;
             width: 280px;
             height: 100%;
-            background: #ffffff;
+            background: #b4e2ff;
             transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
             padding: 2rem 1.5rem;
@@ -128,7 +128,7 @@
         }
 
         .menu-items a:hover {
-            background: #f5f5f7;
+            background: #ffffff;
         }
 
         /* Contenido principal */
@@ -184,9 +184,9 @@
         }
 
         .function-card.active {
-            background: #007aff;
+            background: #238fff;
             color: #ffffff;
-            border-color: #007aff;
+            border-color: #238fff;
         }
 
         .function-card.active .function-title {
@@ -208,12 +208,13 @@
         /* Secciones de contenido */
         .content-section {
             display: none;
-            background: #ffffff;
+            background: #03287c;
             border-radius: 16px;
             padding: 1.5rem;
             margin-bottom: 1rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            border: 1px solid #f0f0f0;
+            border: 1px solid #238fff;
+            color: #ffffff;
         }
 
         .content-section.active {
@@ -228,7 +229,7 @@
         .control-label {
             display: block;
             margin-bottom: 0.8rem;
-            color: #1d1d1f;
+            color: #ffffff;
             font-weight: 500;
             font-size: 1rem;
         }
@@ -238,12 +239,12 @@
             font-weight: 600;
             text-align: center;
             margin: 1.5rem 0;
-            color: #1d1d1f;
+            color: #ffffff;
             font-family: 'SF Mono', 'Courier New', monospace;
-            background: #f8f9fa;
+            background: #238fff;
             padding: 1.5rem;
             border-radius: 12px;
-            border: 1px solid #e5e5e7;
+            border: 1px solid #ffffff;
         }
 
         .btn {
@@ -254,7 +255,7 @@
             cursor: pointer;
             transition: all 0.2s;
             font-weight: 500;
-            background: #007aff;
+            background: #238fff;
             color: #ffffff;
             margin: 0.2rem;
         }
@@ -291,7 +292,8 @@
         }
 
         .btn-outline:hover {
-            background: #f5f5f7;
+            background: #ffffff;  /* ← Fondo blanco al hover */
+            color: #03287c;
         }
 
         .btn-group {
@@ -555,7 +557,7 @@
 
         <!-- Sección Control Manual -->
         <div class="content-section active" id="manualSection">
-            <h3 style="color: #1d1d1f; margin-bottom: 1.5rem;">Control Manual</h3>
+            <h3 style="color: #ffffff; margin-bottom: 1.5rem;">Control Manual</h3>
             
             <div class="control-group">
                 <label class="control-label">Paso de movimiento</label>
@@ -592,7 +594,7 @@
 
         <!-- Sección Posición y Sensor -->
         <div class="content-section" id="positionSection">
-            <h3 style="color: #1d1d1f; margin-bottom: 1.5rem;">Posición y Sensor</h3>
+            <h3 style="color: #ffffff; margin-bottom: 1.5rem;">Posición y Sensor</h3>
             
             <div class="control-group">
                 <div class="value-display">
@@ -616,7 +618,7 @@
 
         <!-- Sección Homing -->
         <div class="content-section" id="homingSection">
-            <h3 style="color: #1d1d1f; margin-bottom: 1.5rem;">Homing</h3>
+            <h3 style="color: #ffffff; margin-bottom: 1.5rem;">Homing</h3>
             
             <div class="control-group">
                 <div class="value-display">
@@ -639,7 +641,7 @@
 
         <!-- Sección Presets -->
         <div class="content-section" id="presetsSection">
-            <h3 style="color: #1d1d1f; margin-bottom: 1.5rem;">Presets de Altura</h3>
+            <h3 style="color: #ffffff; margin-bottom: 1.5rem;">Presets de Altura</h3>
             
             <div class="control-group">
                 <label class="control-label">Presets Guardados</label>
@@ -667,7 +669,7 @@
 
         <!-- Sección Configuración -->
         <div class="content-section" id="configSection">
-            <h3 style="color: #1d1d1f; margin-bottom: 1.5rem;">Configuración</h3>
+            <h3 style="color: #ffffff; margin-bottom: 1.5rem;">Configuración</h3>
             
             <div class="control-group">
                 <label class="control-label">Velocidad de Movimiento</label>
