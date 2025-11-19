@@ -497,6 +497,31 @@
         }
     </style>
 </head>
+    <!-- Footer estilo Innovakit -->
+<footer style="
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(3, 40, 124, 0.9);
+    color: white;
+    padding: 0.8rem 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border-top: 1px solid #1e4db6;
+    backdrop-filter: blur(10px);
+    z-index: 99;
+">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 0.3rem;">
+        <!-- Icono de instalación PWA -->
+        <span onclick="showInstallInstructions()" style="cursor: pointer; padding: 0.3rem 0.8rem; border: 1px solid #4a7de0; border-radius: 6px; font-size: 0.7rem;">
+            📱 Instalar App
+        </span>
+    </div>
+    <div style="font-size: 0.7rem; opacity: 0.8;">
+        © 2024 Control Láser. Todos los derechos reservados.
+    </div>
+</footer>
 <body>
     <!-- Header -->
     <div class="header">
@@ -733,6 +758,23 @@
                 .then(registration => console.log('✅ Service Worker registrado'))
                 .catch(error => console.log('❌ Error Service Worker:', error));
         }
+        // Mostrar instrucciones de instalación
+function showInstallInstructions() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    
+    let message = '';
+    
+    if (isIOS) {
+        message = 'Para instalar: Toca el botón compartir 📤 y selecciona "Agregar a pantalla de inicio"';
+    } else if (isAndroid) {
+        message = 'Para instalar: Abre el menú de 3 puntos ⋮ y selecciona "Instalar app"';
+    } else {
+        message = 'Para instalar: Busca el botón "Instalar" en la barra de direcciones de tu navegador';
+    }
+    
+    alert('📱 Instalar Aplicación\n\n' + message + '\n\n¡Disfruta de la experiencia completa!');
+}
     </script>
 </body>
 </html>
