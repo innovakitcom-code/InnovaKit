@@ -495,6 +495,45 @@
             border-radius: 8px;
             cursor: pointer;
         }
+        /* ==================== SPLASH SCREEN ==================== */
+#splashScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #03287c;
+    background-image: url('splash-image.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.8s ease;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+.splash-text {
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
     </style>
 </head>
     <!-- Footer estilo Innovakit -->
@@ -523,6 +562,16 @@
     </div>
 </footer>
 <body>
+    <!-- Splash Screen -->
+    <div id="splashScreen">
+        <div class="loading-spinner"></div>
+        <div class="splash-text">
+            <div style="font-size: 2rem; margin-bottom: 10px;">⚡</div>
+            Control Láser Profesional<br>
+            <span style="font-size: 0.9rem; opacity: 0.8;">Inicializando sistema...</span>
+        </div>
+    </div>
+    
     <!-- Header -->
     <div class="header">
         <button class="menu-btn" id="menuToggle">☰</button>
@@ -758,23 +807,18 @@
                 .then(registration => console.log('✅ Service Worker registrado'))
                 .catch(error => console.log('❌ Error Service Worker:', error));
         }
-        // Mostrar instrucciones de instalación
-function showInstallInstructions() {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isAndroid = /Android/.test(navigator.userAgent);
-    
-    let message = '';
-    
-    if (isIOS) {
-        message = 'Para instalar: Toca el botón compartir 📤 y selecciona "Agregar a pantalla de inicio"';
-    } else if (isAndroid) {
-        message = 'Para instalar: Abre el menú de 3 puntos ⋮ y selecciona "Instalar app"';
-    } else {
-        message = 'Para instalar: Busca el botón "Instalar" en la barra de direcciones de tu navegador';
-    }
-    
-    alert('📱 Instalar Aplicación\n\n' + message + '\n\n¡Disfruta de la experiencia completa!');
-}
+        // Ocultar splash screen cuando cargue todo
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        const splashScreen = document.getElementById('splashScreen');
+        if (splashScreen) {
+            splashScreen.style.opacity = '0';
+            setTimeout(function() {
+                splashScreen.remove();
+            }, 800); // Mismo tiempo que la transición CSS
+        }
+    }, 2500); // Mostrar durante 2.5 segundos
+});
     </script>
 </body>
 </html>
