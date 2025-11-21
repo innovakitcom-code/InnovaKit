@@ -10,7 +10,7 @@ class ESP32Connection {
     initializeConnectionManager() {
         console.log('🔌 Inicializando conexión...');
         this.createConnectionModal();
-        setTimeout(() => this.showConnectionModal(), 1000);
+        setTimeout(() => this.showConnectionModal(), 3500);
     }
 
     createConnectionModal() {
@@ -163,3 +163,4 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
+
