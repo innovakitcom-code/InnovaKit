@@ -814,18 +814,17 @@ window.addEventListener('load', function() {
             splashScreen.style.opacity = '0';
             setTimeout(function() {
                 splashScreen.remove();
+                
+                // ✅ MOSTRAR VENTANA BLUETOOTH DESPUÉS del splash
+                setTimeout(function() {
+                    if (window.esp32Connection) {
+                        window.esp32Connection.showConnectionModal();
+                    }
+                }, 100);
+                
             }, 800);
         }
-        
-        // ✅ AGREGAR ESTO: Mostrar ventana Bluetooth 1 segundo después del splash
-        setTimeout(function() {
-            if (window.esp32Connection) {
-                window.esp32Connection.showConnectionModal();
-            }
-        }, 1000); // 1 segundo después de que empiece a desaparecer el splash
-        
-    }, 2500); // El splash dura 2.5 segundos
-});
-    </script>
+    }, 2500);
+});/script>
 </body>
 </html>
