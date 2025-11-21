@@ -4,7 +4,7 @@ class ESP32Connection {
         this.isConnected = false;
         this.device = null;
         this.characteristic = null;
-       // this.initializeConnectionManager();
+        this.initializeConnectionManager();
     }
 
     initializeConnectionManager() {
@@ -163,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
+
 
 
 
