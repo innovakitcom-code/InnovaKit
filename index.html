@@ -806,6 +806,16 @@
                 .then(registration => console.log('✅ Service Worker registrado'))
                 .catch(error => console.log('❌ Error Service Worker:', error));
         }
+        function setStepSize(size) {
+    if (window.laserSystem) {
+        window.laserSystem.setStepSize(size);
+    }
+    // ACTUALIZAR DIRECTAMENTE por si las moscas
+    const currentStepElement = document.getElementById('currentStep');
+    if (currentStepElement) {
+        currentStepElement.textContent = size;
+    }
+}
         // Ocultar splash screen cuando cargue todo
 window.addEventListener('load', function() {
     setTimeout(function() {
