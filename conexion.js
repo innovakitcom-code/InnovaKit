@@ -4,14 +4,13 @@ class ESP32Connection {
         this.isConnected = false;
         this.device = null;
         this.characteristic = null;
-       // this.initializeConnectionManager();
+        this.initializeConnectionManager();
     }
 
     initializeConnectionManager() {
         console.log('🔌 Inicializando conexión...');
-       // this.createConnectionModal();
-       // setTimeout(() => this.showConnectionModal(), 5500);
-        this.showConnectionModal();
+        this.createConnectionModal();
+        setTimeout(() => this.showConnectionModal(), 5500);
     }
 
     createConnectionModal() {
@@ -164,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
+
 
 
 
