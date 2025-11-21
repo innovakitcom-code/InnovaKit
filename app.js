@@ -165,14 +165,14 @@ drawSensorGraph() {
     }
 
     // ==================== CONEXIÓN HARDWARE ====================
-    initializeHardwareConnection() {
+   // initializeHardwareConnection() {
         // En producción: Conexión real con ESP32
         // Por ahora simulamos conexión exitosa
-        setTimeout(() => {
-            this.updateConnectionStatus('connected');
-            this.showNotification('Sistema conectado y listo', 'success');
-        }, 1000);
-    }
+     //   setTimeout(() => {
+         //   this.updateConnectionStatus('connected');
+       //     this.showNotification('Sistema conectado y listo', 'success');
+     //   }, 1000);
+    // }
 
     // ✅ VERSIÓN CORREGIDA:
 updateConnectionStatus(status) {
@@ -554,3 +554,4 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
+
