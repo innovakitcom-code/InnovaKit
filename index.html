@@ -807,17 +807,6 @@
                 .catch(error => console.log('❌ Error Service Worker:', error));
         }
         // Ocultar splash screen cuando cargue todo
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        const splashScreen = document.getElementById('splashScreen');
-        if (splashScreen) {
-            splashScreen.style.opacity = '0';
-            setTimeout(function() {
-                splashScreen.remove();
-            }, 800); // Mismo tiempo que la transición CSS
-        }
-    }, 2500); // Mostrar durante 2.5 segundos
-});
         window.addEventListener('load', function() {
     setTimeout(function() {
         const splashScreen = document.getElementById('splashScreen');
