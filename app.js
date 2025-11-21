@@ -56,7 +56,7 @@ class LaserControlSystem {
 this.startRealSensorReading();
         
         // En producción, aquí se inicializa la conexión con ESP32
-        this.initializeHardwareConnection();
+      //  this.initializeHardwareConnection();
     }
 
   // ==================== SENSOR EN TIEMPO REAL ====================
@@ -554,6 +554,7 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
+
 
 
 
