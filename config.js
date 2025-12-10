@@ -31,7 +31,7 @@ const ESP32Config = {
     MOTOR: {
         STEPS_PER_REV: 200,      // NEMA17 típico
         MICROSTEPPING: 16,       // DRV8825 en 1/16
-        MM_PER_REV: 4.0,         // Tornillo 4mm por vuelta
+        MM_PER_REV: 2.0,         // Tornillo 2mm por vuelta
         MAX_SPEED: 1000,         // steps/segundo máximo
         ACCELERATION: 500,       // steps/segundo²
         
@@ -119,5 +119,6 @@ ESP32Config.validateConfig();
 
 // Hacer disponible globalmente
 window.ESP32Config = ESP32Config;
+
 
 console.log('⚙️ config.js cargado - Sistema Laser ESP32');
