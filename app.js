@@ -7,7 +7,7 @@ class LaserControlSystem {
         this.motorConfig = {
             stepsPerRevolution: 200,    // NEMA 17 típico
             microstepping: 16,          // DRV8825 configurable
-            mmPerRevolution: 4,         // Tornillo 4mm por vuelta
+            mmPerRevolution: 2,         // Tornillo 2mm por vuelta
             maxSpeed: 1000,             // steps/segundo
             acceleration: 500           // steps/segundo²
         };
@@ -554,6 +554,7 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
+
 
 
 
