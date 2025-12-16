@@ -230,7 +230,7 @@ updateConnectionStatus(status) {
         // Simulación suave del movimiento
         const startPosition = this.systemState.currentPosition;
         const distance = targetSteps - startPosition;
-        const duration = Math.abs(distance) * 10; // ms
+        const duration = Math.abs(distance) * 0.125; // ms
         
         let startTime = null;
         
@@ -554,6 +554,7 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
+
 
 
 
