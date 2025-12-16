@@ -87,17 +87,44 @@ class ESP32Connection {
     }
 
     // ✅ AGREGAR ESTA FUNCIÓN DENTRO DE LA CLASE (después de setupNotifications)
-    processESP32Data(data) {
-        if (data.startsWith('SENSOR:')) {
-            const distance = parseFloat(data.split(':')[1]);
-            console.log('📊 Distancia recibida:', distance);
-            
-            // Enviar datos al sistema principal
-            if (window.laserSystem) {
-                window.laserSystem.processRealSensorData(distance);
+  processESP32Data(data) {
+    console.log('📡 Datos recibidos:', data); // ← Esta línea YA la tienes
+    
+    // ⚡ FILTRAR: Si es posición DURANTE movimiento, IGNORAR
+    if (window.laserSystem && window.laserSystem.systemState.isMoving) {
+        if (data.startsWith('POS:')) {
+            console.log('⏭️ Ignorando POS durante movimiento');
+            return; // ← ¡NO PROCESAR!
+        }
+    }
+    
+    // Procesar normalmente
+    if (data.startsWith('SENSOR:')) {
+        const distance = parseFloat(data.split(':')[1]);
+        console.log('📊 Distancia recibida:', distance);
+        
+        if (window.laserSystem) {
+            window.laserSystem.processRealSensorData(distance);
+        }
+    }
+    // ⚡ AGREGAR para manejar STATUS:READY
+    else if (data.startsWith('STATUS:READY') || data.startsWith('READY:')) {
+        console.log('✅ Movimiento completado en ESP32');
+        if (window.laserSystem) {
+            window.laserSystem.systemState.isMoving = false;
+            // Sincronizar posición final si viene en READY:8000
+            if (data.startsWith('READY:')) {
+                const finalPos = parseInt(data.split(':')[1]);
+                window.laserSystem.systemState.currentPosition = finalPos;
+                window.laserSystem.updatePositionDisplays();
             }
         }
     }
+    else if (data.startsWith('STATUS:MOVING')) {
+        console.log('🔄 ESP32 empezó movimiento');
+        // No hacer nada, ya sabemos que se mueve
+    }
+}
 
     async sendCommand(command) {
         if (!this.isConnected || !this.characteristic) {
@@ -163,6 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
     esp32Connection = new ESP32Connection();
     window.esp32Connection = esp32Connection;
 });
+
 
 
 
