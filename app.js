@@ -235,23 +235,26 @@ updateConnectionStatus(status) {
         let startTime = null;
         
         const animate = (timestamp) => {
-            if (!startTime) startTime = timestamp;
-            const progress = (timestamp - startTime) / duration;
-            
-            if (progress < 1) {
-                this.systemState.currentPosition = startPosition + (distance * progress);
-                this.updatePositionDisplays();
-                requestAnimationFrame(animate);
-            } else {
-                this.systemState.currentPosition = targetSteps;
-                this.systemState.isMoving = false;
-                this.updatePositionDisplays();
-                this.showNotification('Movimiento completado', 'success');
-            }
-        };
+        if (!startTime) startTime = timestamp;
+        const progress = (timestamp - startTime) / duration;
         
-        requestAnimationFrame(animate);
-    }
+        if (progress < 1) {
+            // Actualizar posición SIMULADA (suave)
+            const simulatedPos = startPosition + (distance * progress);
+            this.systemState.currentPosition = Math.round(simulatedPos);
+            this.updatePositionDisplays();
+            requestAnimationFrame(animate);
+        } else {
+            // Al final, sincronizar con posición REAL que vendrá por BLE
+            this.systemState.currentPosition = targetSteps;
+            this.systemState.isMoving = false;
+            this.updatePositionDisplays();
+            // El "STATUS:READY" del ESP32 será la confirmación final
+        }
+    };
+    
+    requestAnimationFrame(animate);
+}
 
     // ==================== AUTO-FOCUS AUTOMÁTICO ====================
     async startAutoFocus() {
@@ -554,6 +557,7 @@ function setSpeed(value) {
         laserSystem.setSpeed(value);
     }
 }
+
 
 
 
