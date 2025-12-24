@@ -14,7 +14,7 @@
         ],
         "especificaciones": ["37 sensores en 1 kit", "Compatible con Arduino UNO R3", "Incluye manual completo", "Ideal para proyectos escolares"]
       }
-      // AQUÍ puedes agregar MÁS productos del Kit Básico si los tienes
+
     ]
   },
   {
@@ -32,7 +32,7 @@
         ],
         "especificaciones": ["Placa ESP32 incluida", "Kit básico para Internet de las Cosas (IoT)", "Incluye display OLED 0.96", "Más de 15 módulos diferentes"]
       }
-      // AQUÍ puedes agregar MÁS productos del Kit Make si los tienes
+    
     ]
   },
   {
@@ -53,3 +53,4 @@
     ]
   }
 ]
+
