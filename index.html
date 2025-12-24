@@ -2375,27 +2375,29 @@ async function cargarKitsDesdeJSON() {
         const respuesta = await fetch('kits.json');
         const todosLosKits = await respuesta.json();
         
-        // Reestructuramos los datos para que coincidan con lo que espera tu función verProductosKit
-        // Tu función espera un array de arrays: [[kit1_productos], [kit2_productos], [kit3_productos]]
-        // kits.json es un array de objetos: [{kit1}, {kit2}, {kit3}]
-        // Lo convertimos:
-        productosKits = todosLosKits.map(kit => {
-            // Convertimos el objeto de cada kit en el formato que usa tu modal
-            return [{
-                img: kit.imagenes, // El array de imágenes del JSON
-                nombre: kit.nombre,
-                desc: kit.descripcion_larga,
-                precio: kit.precio,
-                documentos: kit.documentos || [],
-                // Si necesitas más campos, los añades aquí
-            }];
+        // Inicializar array vacío para 3 kits
+        productosKits = [[], [], []];
+        
+        // Para cada kit en el JSON
+        todosLosKits.forEach(kit => {
+            if (kit.kit_id >= 1 && kit.kit_id <= 3) {
+                // Convertir CADA producto del kit al formato que espera verProductosKit()
+                productosKits[kit.kit_id - 1] = kit.productos.map(producto => ({
+                    img: producto.imagenes || [],
+                    nombre: producto.nombre,
+                    desc: producto.descripcion_larga,
+                    precio: producto.precio,
+                    documentos: producto.documentos || [],
+                    especificaciones: producto.especificaciones || []
+                    // Añade aquí otros campos si los necesitas
+                }));
+            }
         });
         
-        console.log('✅ Kits cargados desde JSON:', productosKits);
+        console.log('✅ Kits cargados y organizados:', productosKits);
         
     } catch (error) {
-        console.error('❌ Error cargando kits desde JSON:', error);
-        // Si hay error, mantenemos algún dato de respaldo
+        console.error('❌ Error cargando kits:', error);
         productosKits = [[], [], []];
     }
 }
