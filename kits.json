@@ -1,0 +1,47 @@
+[
+  {
+    "id": "AE101",
+    "nombre": "37 SENSOR KIT (AE101)",
+    "descripcion_corta": "Incluye componentes esenciales para aprender electrónica desde cero.",
+    "descripcion_larga": "Conjunto de componentes electrónicos variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como: Avoidance - RGB LED JOYSTICK - IR RECEIVER - 18B20 TEMP - Sensor Flame - Sensor Tracking - Photo Resistor - IR EMISSION - POWER SUPPLY MODULE - LCD 1602 Module (With PIN Header) - Relay - Linear Hall - Small Sound - SHOCK - HC-SR501 PIR MOTION SENSOR - PHOTO- INTERRUPTER TAP MODULE - Ultrasonic Sensor - DS-3231 RTC Module - GY-521 MODULE - 7 Color Flash - Button Module - Active Buzzer - Laser Emit - Membrane Switch - Big Sound - Water Level Sensor - Digital Temperature - Magnetic Spring - Mental Touch - SMD RGB - TILT - SWITCH - Rotary Encoder - Temp and Humidity - Two-Color",
+    "precio": "Gs. 485.000",
+    "precioNum": 485000,
+    "imagen_principal": "img/AE101_PORT.png",
+    "imagenes": ["img/AE101_PORT.png", "webP/AE101-1.webp", "webP/AE101-2.webp", "webP/AE101-3.webp", "webP/AE101-4.webp", "img/AE101_2.png", "img/AE101_22.png", "img/AE101_3.png", "img/AE101_4.png"],
+    "stock": "disponible",
+    "especificaciones": ["37 sensores en 1 kit", "Compatible con Arduino UNO R3", "Incluye manual completo", "Ideal para proyectos escolares"],
+    "documentos": [
+      {"nombre": "Descargar Manual AE101", "archivo": "https://drive.google.com/file/d/1Q5WFZhJhtsfK1D61rd2qJozNUP6JA4dx/view"}
+    ]
+  },
+  {
+    "id": "AE312",
+    "nombre": "ESP32 Basic STARTER KIT (AE312)",
+    "descripcion_corta": "Perfecto para creadores que quieran comenzar con proyectos prácticos de IoT.",
+    "descripcion_larga": "Conjunto de componentes electrónicos variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como: - ESP32 Development - 0.96 inch OLED - 830 Tie-Points Protoboard - Obstacle Avoidance Module - Photosensitive Resistor Module - DHT11 Temperature and Humidity Module - HC-SR501 PIR Motion Sensor - Potentiometer 10k - Micro-USB Cable - Resistor-220Ω 30PCS - Passive Buzzer - Active Buzzer - 5v2-Channel Relay Module - Button Switch - F-M DuPont Cable - F-F DuPont Cable - M-M DuPont Cable - LED-RGB - LED-RED - LED-YELLOW - LED-GREEN",
+    "precio": "Gs. 475.000",
+    "precioNum": 475000,
+    "imagen_principal": "img/AE312.png",
+    "imagenes": ["img/AE312.png", "img/AE312_1.png", "webP/AE312-1.webp", "webP/AE312-2.webp", "webP/AE312-3.webp", "webP/AE312-5.webp", "webP/AE312-6.webp", "webP/AE312-7.webp", "webP/AE312-8.webp"],
+    "stock": "disponible",
+    "especificaciones": ["Placa ESP32 incluida", "Kit básico para Internet de las Cosas (IoT)", "Incluye display OLED 0.96", "Más de 15 módulos diferentes"],
+    "documentos": [
+      {"nombre": "Descargar Manual AE312", "archivo": "https://drive.google.com/file/d/1CSoF6y669V5x2hSEUaIDeX4DvzB9C5Y7/view"}
+    ]
+  },
+  {
+    "id": "AE086",
+    "nombre": "The Most Complete STARTER KIT UNO R3 Project (AE086)",
+    "descripcion_corta": "El kit más completo para proyectos avanzados de robótica y automatización.",
+    "descripcion_larga": "Conjunto de componentes electrónicos variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como: - Controller Board 1PCS - LCD 1602 Module (With pin header) 1PCS - Powe Supply Module 1PCS - GY-521 Module 1PCS - Rc522 RFID Module 1PCS - ULN2003 Stepper Motor Driver Board 1PCS - Stepper Motor 1PCS - Joystick Module 1PCS - AM312 PIR Motion Sensor 1PCS - Sound Sensor Module 1PCS - Water Lever Detection Sensor Module 1PCS - Ultrasonic Sensor 1PCS - Servo Motor (SG90) 1PCS - DS1307 RTC Module 1PCS - IR Receiver Module 1PCS - Rotary Encoder Module 1PCS - DHT11 Temperature and Humidity Module 1PCS - MAX7219 Module 1PCS - Prototype Expansion Board 1PCS - Remote 1PCS - L293D 1PCS - 1 Digit 7-Segment Display - 4 Digit 7-Segment Display - Passive Buzzer 1PCS - 74HC595 1PCS - Active Buzzer 1PCS - Fan Blade and 3-6v Motor (with wire) each 1PCS - USB Cable 1PCS - 5v Relay Module 1PCS - Membrane Switch Module 1PCS - 9V 1A Adapter 1PCS - 830 Tie-Points Protoboard 1PCS - 9v Battery Connector With DC 1PCS - Button (Small) (SG90) 5PCS - 65Jumper Wire 1PCS - Female-to-Male Dupont Wire 20PCS - Tilt Ball Switch 1PCS - Potentiometer 10k 2PCS - Resistor 120PCS - Electrolytic Capacitor (10Mf 50v 2PCS) – Electrolytic Capacitor (100mF 50V) 2PCS - NPN Transistor (S8050) 5PCS - NPN Transistor (PN2222) 5PCS - 104pF Ceramic Capacitor 5PCS - 22pF Ceramic Capacitor 5PCS - Thermistor 1PCS - Diode Rectifier 5PCS - Photoresistor (Photocell) 2PCS - RGB LED 1PCS - LED RED 5PCS - LED YELLOW 5PCS - LED BLUE 5PCS - LED GREEN 5PCS - LED WHITE 5PCS",
+    "precio": "Gs. 890.000",
+    "precioNum": 890000,
+    "imagen_principal": "img/AE086.png",
+    "imagenes": ["img/AE086.png", "webP/AE086-11.webp", "webP/AE086-1.webp", "webP/AE086-2.webp", "webP/AE086-3.webp", "webP/AE086-4.webp", "webP/AE086-5.webp", "img/AE086_ultimo.png"],
+    "stock": "disponible",
+    "especificaciones": ["El kit más completo para UNO R3", "Incluye más de 200 componentes", "Ideal para proyectos avanzados", "Perfecto para ferias científicas"],
+    "documentos": [
+      {"nombre": "Descargar Manual AE086", "archivo": "https://drive.google.com/file/d/1hwtyzzmWVZ-bXp4gcJ-MmBQ6ZYFkNnmc/view"}
+    ]
+  }
+]
