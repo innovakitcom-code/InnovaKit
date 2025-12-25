@@ -3151,12 +3151,64 @@ function verProductosKit(idx) {
 }
 
 // NUEVA FUNCIÓN: Modal detallado con diseño de 2 columnas
+// AÑADE ESTAS FUNCIONES EN TU SCRIPT (antes de la función mostrarModalKitProducto)
+
+// Función para extraer solo la descripción introductoria (sin componentes)
+function obtenerDescripcionSinComponentes(descripcion) {
+    if (!descripcion) return '';
+    
+    // Buscar donde empiezan los componentes (después de "como:")
+    const idxComponentes = descripcion.toLowerCase().indexOf('como:');
+    
+    if (idxComponentes !== -1) {
+        return descripcion.substring(0, idxComponentes + 5).trim();
+    }
+    
+    return descripcion;
+}
+
+// Función para extraer los componentes individuales de la descripción
+function obtenerComponentesDeDescripcion(descripcion) {
+    if (!descripcion) return [];
+    
+    const componentes = [];
+    const texto = descripcion.replace(/\r/g, ' ');
+    
+    // Buscar la sección después de "como:"
+    const idxComo = texto.toLowerCase().indexOf('como:');
+    if (idxComo === -1) return [];
+    
+    const seccionComponentes = texto.substring(idxComo + 5).trim();
+    
+    // Dividir por guiones, puntos, saltos de línea, etc.
+    const separadores = /[-–—•]|\d+\./;
+    const partes = seccionComponentes.split(separadores);
+    
+    partes.forEach(parte => {
+        const componente = parte
+            .replace(/^[\s:;,.]*/, '')  // Quitar caracteres al inicio
+            .replace(/[\s:;,.]*$/, '')  // Quitar caracteres al final
+            .trim();
+        
+        if (componente && componente.length > 2 && !componente.match(/^\d+$/)) {
+            componentes.push(componente);
+        }
+    });
+    
+    return componentes;
+}
+
+// FUNCIÓN ACTUALIZADA: Modal detallado con diseño de 2 columnas (CORREGIDA)
 function mostrarModalKitProducto(kitId, productoIndex) {
     const kitIndex = kitId - 1;
     const productos = productosKits[kitIndex];
     if (!productos || !productos[productoIndex]) return;
     
     const producto = productos[productoIndex];
+    
+    // Extraer componentes de la descripción
+    const componentes = obtenerComponentesDeDescripcion(producto.desc);
+    const descripcionCorta = obtenerDescripcionSinComponentes(producto.desc);
     
     // Crear el HTML del modal en formato de 2 columnas
     let modalHTML = `
@@ -3220,22 +3272,39 @@ function mostrarModalKitProducto(kitId, productoIndex) {
                     
                     <!-- COLUMNA DERECHA: INFORMACIÓN -->
                     <div class="space-y-6">
-                        <!-- Descripción COMPLETA -->
+                        <!-- Descripción COMPLETA (solo intro) -->
                         <div>
                             <h4 class="text-lg font-semibold text-gray-800 mb-2">Descripción completa</h4>
                             <p class="text-gray-700 leading-relaxed">
-                                ${producto.desc || 'Sin descripción disponible.'}
+                                ${descripcionCorta || 'Sin descripción disponible.'}
                             </p>
                         </div>
                         
-                        <!-- Especificaciones como LISTA -->
+                        <!-- Componentes en LISTA DETALLADA -->
+                        ${componentes.length > 0 ? `
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800 mb-2">📦 Componentes incluidos</h4>
+                            <div class="bg-blue-50 rounded-lg p-4 max-h-60 overflow-y-auto">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                    ${componentes.map(componente => `
+                                        <div class="flex items-start">
+                                            <span class="text-blue-500 mr-2 mt-1">•</span>
+                                            <span class="text-gray-700 text-sm">${componente}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Especificaciones adicionales (del array especificaciones) -->
                         ${producto.especificaciones && producto.especificaciones.length > 0 ? `
                         <div>
-                            <h4 class="text-lg font-semibold text-gray-800 mb-2">📦 Características principales</h4>
+                            <h4 class="text-lg font-semibold text-gray-800 mb-2">✨ Características técnicas</h4>
                             <ul class="space-y-2">
                                 ${producto.especificaciones.map(spec => `
                                     <li class="flex items-start">
-                                        <span class="text-blue-500 mr-2 mt-1">•</span>
+                                        <span class="text-green-500 mr-2 mt-1">✓</span>
                                         <span class="text-gray-700">${spec}</span>
                                     </li>
                                 `).join('')}
@@ -3299,49 +3368,68 @@ function mostrarModalKitProducto(kitId, productoIndex) {
     // Insertar el modal en el body
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     
-    // Variables para controlar el carrusel de este producto
+    // INICIALIZAR LAS VARIABLES GLOBALES PARA EL CARRUSEL
     window.productoDetalleActual = {
         producto: producto,
         imagenIndex: 0,
         totalImagenes: producto.img ? producto.img.length : 0
     };
     
+    // También asignar a la variable global
+    productoDetalleActual = window.productoDetalleActual;
+    
+    // Inicializar miniaturas si existen
+    if (producto.img && producto.img.length > 1) {
+        setTimeout(() => {
+            actualizarMiniaturasActivas();
+        }, 100);
+    }
+    
     // Bloquear scroll del body
     document.body.style.overflow = 'hidden';
 }
 
-// =============================================
-// FUNCIONES AUXILIARES PARA EL MODAL
-// =============================================
-
-let productoDetalleActual = null;
-
-function cerrarModalKitDetalle() {
-    const modal = document.querySelector('.modal-kit-detalle');
-    const modalZoom = document.getElementById('modal-zoom-detalle');
-    if (modal) modal.remove();
-    if (modalZoom) modalZoom.classList.add('hidden');
-    document.body.style.overflow = '';
+// Función auxiliar para marcar miniatura activa
+function actualizarMiniaturasActivas() {
+    if (!productoDetalleActual) return;
+    
+    const miniaturas = document.querySelectorAll('#miniaturas-detalle img');
+    miniaturas.forEach((thumb, index) => {
+        thumb.classList.toggle('border-blue-500', index === productoDetalleActual.imagenIndex);
+        thumb.classList.toggle('border-transparent', index !== productoDetalleActual.imagenIndex);
+    });
 }
 
-// Funciones para el carrusel del detalle
+// FUNCIONES DEL CARRUSEL (CORREGIDAS - asegurar que usan la variable global)
 function cambiarImagenDetalle(direccion) {
-    if (!productoDetalleActual || !productoDetalleActual.producto.img) return;
+    console.log('Cambiando imagen, direccion:', direccion, 'productoDetalleActual:', productoDetalleActual);
+    
+    if (!productoDetalleActual || !productoDetalleActual.producto.img || productoDetalleActual.totalImagenes <= 1) {
+        console.log('No hay imágenes para cambiar');
+        return;
+    }
     
     const nuevoIndex = productoDetalleActual.imagenIndex + direccion;
     const total = productoDetalleActual.totalImagenes;
     
+    // Circular: si pasa del final, vuelve al inicio y viceversa
     productoDetalleActual.imagenIndex = (nuevoIndex + total) % total;
+    
+    console.log('Nuevo índice:', productoDetalleActual.imagenIndex);
     actualizarImagenDetalle();
 }
 
 function seleccionarImagenDetalle(index) {
+    console.log('Seleccionando imagen:', index, 'productoDetalleActual:', productoDetalleActual);
+    
     if (!productoDetalleActual) return;
     productoDetalleActual.imagenIndex = index;
     actualizarImagenDetalle();
 }
 
 function actualizarImagenDetalle() {
+    console.log('Actualizando imagen, índice actual:', productoDetalleActual?.imagenIndex);
+    
     if (!productoDetalleActual || !productoDetalleActual.producto.img) return;
     
     const nuevaImagen = productoDetalleActual.producto.img[productoDetalleActual.imagenIndex];
@@ -3350,20 +3438,26 @@ function actualizarImagenDetalle() {
     const imgPrincipal = document.getElementById('imagen-principal-detalle');
     if (imgPrincipal) {
         imgPrincipal.src = nuevaImagen;
+        imgPrincipal.alt = `${productoDetalleActual.producto.nombre} - Imagen ${productoDetalleActual.imagenIndex + 1}`;
         imgPrincipal.onclick = () => ampliarImagenDetalle(nuevaImagen);
+        console.log('Imagen principal actualizada:', nuevaImagen);
     }
     
     // Actualizar contador
     const contador = document.getElementById('contador-imagen-detalle');
     const total = document.getElementById('total-imagenes-detalle');
-    if (contador) contador.textContent = productoDetalleActual.imagenIndex + 1;
-    if (total) total.textContent = productoDetalleActual.totalImagenes;
+    if (contador) {
+        contador.textContent = productoDetalleActual.imagenIndex + 1;
+        console.log('Contador actualizado:', contador.textContent);
+    }
     
     // Actualizar miniaturas
     const miniaturas = document.querySelectorAll('#miniaturas-detalle img');
     miniaturas.forEach((thumb, index) => {
-        thumb.classList.toggle('border-blue-500', index === productoDetalleActual.imagenIndex);
-        thumb.classList.toggle('border-transparent', index !== productoDetalleActual.imagenIndex);
+        const estaActiva = index === productoDetalleActual.imagenIndex;
+        thumb.classList.toggle('border-blue-500', estaActiva);
+        thumb.classList.toggle('border-transparent', !estaActiva);
+        console.log(`Miniatura ${index}: ${estaActiva ? 'activa' : 'inactiva'}`);
     });
 }
 
