@@ -3031,7 +3031,8 @@ function toggleModal() {
     }
 
     // Render productos del kit (con carrusel)
-    function verProductosKit(idx) {
+    // Función para renderizar productos del kit (con carrusel MEJORADO)
+function verProductosKit(idx) {
     const kitIndex = idx - 1;
     const productos = productosKits[kitIndex];
     
@@ -3200,92 +3201,6 @@ function toggleModal() {
     // Bloquear scroll del body
     document.body.style.overflow = 'hidden';
 }
-// SEGUNDO PASOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-// Variables para controlar el carrusel
-let kitActual = null;
-
-// Función para cerrar el modal
-function cerrarModalKit() {
-    const modal = document.querySelector('.fixed.inset-0.bg-black.bg-opacity-75');
-    const modalZoom = document.getElementById('modal-zoom');
-    if (modal) modal.remove();
-    if (modalZoom) modalZoom.classList.add('hidden');
-}
-
-// Función para cambiar imagen en el carrusel
-function cambiarImagenKit(kitId, direccion) {
-    if (!kitActual || kitActual.idx !== kitId) return;
-    
-    const nuevoIndex = kitActual.imagenIndex + direccion;
-    const total = kitActual.totalImagenes;
-    
-    // Circular: si pasa del final, vuelve al inicio y viceversa
-    kitActual.imagenIndex = (nuevoIndex + total) % total;
-    
-    actualizarImagenKit(kitId);
-}
-
-// Función para seleccionar imagen desde miniatura
-function seleccionarImagenKit(kitId, index) {
-    if (!kitActual || kitActual.idx !== kitId) return;
-    
-    kitActual.imagenIndex = index;
-    actualizarImagenKit(kitId);
-}
-
-// Función para actualizar la imagen mostrada
-function actualizarImagenKit(kitId) {
-    if (!kitActual || kitActual.idx !== kitId) return;
-    
-    const productos = productosKits[kitActual.kitIndex];
-    if (!productos || !productos[0] || !productos[0].img) return;
-    
-    const nuevaImagen = productos[0].img[kitActual.imagenIndex];
-    
-    // Actualizar imagen principal
-    const imgPrincipal = document.getElementById(`imagen-principal-${kitId}`);
-    if (imgPrincipal) {
-        imgPrincipal.src = nuevaImagen;
-        imgPrincipal.onclick = () => ampliarImagen(nuevaImagen);
-    }
-    
-    // Actualizar contador
-    const contador = document.getElementById(`contador-imagen-${kitId}`);
-    const total = document.getElementById(`total-imagenes-${kitId}`);
-    if (contador) contador.textContent = kitActual.imagenIndex + 1;
-    if (total) total.textContent = kitActual.totalImagenes;
-    
-    // Actualizar miniaturas (marcar la activa)
-    const miniaturas = document.querySelectorAll(`#miniaturas-${kitId} img`);
-    miniaturas.forEach((thumb, index) => {
-        thumb.classList.toggle('border-blue-500', index === kitActual.imagenIndex);
-        thumb.classList.toggle('border-transparent', index !== kitActual.imagenIndex);
-    });
-}
-
-// Función para ampliar imagen (zoom)
-function ampliarImagen(src) {
-    const modalZoom = document.getElementById('modal-zoom');
-    const imgZoom = document.getElementById('imagen-zoom');
-    
-    if (modalZoom && imgZoom) {
-        imgZoom.src = src;
-        modalZoom.classList.remove('hidden');
-    }
-}
-
-// Función para cerrar el zoom
-function cerrarZoom() {
-    const modalZoom = document.getElementById('modal-zoom');
-    if (modalZoom) modalZoom.classList.add('hidden');
-}
-
-// Cerrar modal con tecla ESC
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        cerrarModalKit();
-    }
-});
 
     // Función mejorada para volver al inicio
 function volverAlInicio() {
