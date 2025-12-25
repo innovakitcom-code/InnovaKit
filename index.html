@@ -3035,137 +3035,137 @@ function toggleModal() {
 // Función para mostrar todos los productos del kit (reemplaza tu función actual)
 // Función para mostrar todos los productos del kit en modal
 function verProductosKit(idx) {
-    const kitIndex = idx - 1;
-    const productos = productosKits[kitIndex];
-    
-    if (!productos || productos.length === 0) {
-        console.error('No hay productos para este kit');
-        mostrarNotificacion('❌ No hay productos disponibles para este kit');
-        return;
-    }
+    navegarA('productoskit', { kitId: idx });
+    const productos = productosKits[idx - 1];
 
-    // Títulos de los kits
-    const titulos = {
-        1: "🔌 Kit de Electrónica Básico - Kuongshun",
-        2: "⚡ Kit de Proyectos - Learning",
-        3: "🤖 Kit de Robótica - Acebott"
-    };
+    const portadas = [
+        "png/portada_kit1.webp",
+        "png/portadados.webp", 
+        "png/portada_kit3.svg"
+    ];
 
-    // Crear el HTML del modal para mostrar todos los productos
-    let modalHTML = `
-    <div class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-kit-all">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
-            
-            <!-- HEADER con título y botón cerrar -->
-            <div class="flex justify-between items-center p-6 border-b">
-                <h3 class="text-2xl font-bold text-gray-800">${titulos[idx] || 'Productos del Kit'}</h3>
-                <button onclick="cerrarModalKitAll()" 
-                        class="text-gray-500 hover:text-gray-700 text-2xl p-2 hover:bg-gray-100 rounded-full transition">
-                    ×
-                </button>
-            </div>
+    const titulosPersonalizados = [
+        "🔌 Kits de Electrónica - Kuongshun",
+        "⚡ Kits Proyectos - Learning", 
+        "🤖 Kits de Robótica - Acebott"
+    ];
 
-            <!-- CONTENIDO PRINCIPAL - Grid de productos -->
-            <div class="flex-1 overflow-y-auto p-6">
-                <p class="text-gray-600 mb-6 text-center">Selecciona un producto para ver detalles</p>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    `;
-    
-    // Mostrar cada producto como una card
-    productos.forEach((producto, index) => {
-        const primeraImagen = producto.img && producto.img.length > 0 ? producto.img[0] : 'png/placeholder.png';
-        const descCorta = producto.desc ? (producto.desc.length > 100 ? producto.desc.substring(0, 100) + '...' : producto.desc) : 'Producto de electrónica';
-        
-        modalHTML += `
-                    <!-- Producto ${index + 1} -->
-                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-gray-200 cursor-pointer"
-                         onclick="mostrarDetalleProductoKitModal(${idx}, ${index})">
-                        
-                        <!-- Imagen -->
-                        <div class="p-4">
-                            <img src="${primeraImagen}" 
-                                 alt="${producto.nombre}"
-                                 class="w-full h-48 object-contain rounded-lg mb-3"
-                                 loading="lazy"
-                                 onerror="this.src='png/placeholder.png'">
-                        </div>
-                        
-                        <!-- Información -->
-                        <div class="p-4 pt-0">
-                            <h4 class="font-bold text-lg mb-2 line-clamp-2">${producto.nombre}</h4>
-                            <p class="text-gray-600 text-sm mb-3 line-clamp-2">${descCorta}</p>
-                            
-                            <!-- Precio y botón -->
-                            <div class="flex items-center justify-between mt-4">
-                                <span class="text-green-600 font-bold">${producto.precio || 'Consultar'}</span>
-                                <button class="text-blue-600 hover:text-blue-800 font-semibold text-sm">
-                                    Ver detalles ›
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-        `;
-    });
-    
-    modalHTML += `
-                </div>
-            </div>
-            
-            <!-- FOOTER con botones de acción -->
-            <div class="border-t p-6 bg-gray-50">
-                <div class="flex flex-col sm:flex-row gap-3 justify-between items-center">
-                    <div class="text-sm text-gray-600">
-                        <span class="font-semibold">${productos.length} productos</span> en este kit
-                    </div>
-                    <div class="flex gap-3">
-                        <button onclick="cerrarModalKitAll()" 
-                                class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition">
-                            Cerrar
-                        </button>
-                        <a href="https://wa.me/595972292392?text=¡Hola! Quiero información sobre el kit completo: ${encodeURIComponent(titulos[idx])}" 
-                           target="_blank"
-                           class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition text-center">
-                            Consultar kit completo
-                        </a>
-                    </div>
-                </div>
+    let html = `
+        <!-- PORTADA SIN MARGENES LATERALES -->
+        <div class="portada-sin-margenes">
+            <img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" 
+                class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">
+                ${titulosPersonalizados[idx-1]}
+                </h2>
             </div>
         </div>
-    </div>`;
 
-    // Insertar el modal en el body
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
+        <!-- CONTENIDO NORMAL (con márgenes) -->
+        <div class="container mx-auto px-4 mt-8">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    `;
     
-    // Bloquear scroll del body
-    document.body.style.overflow = 'hidden';
+    productos.forEach((p, i) => {
+        const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.precio}`);
+        
+        let slidesHTML = '';
+        if (p.img && p.img.length > 0) {
+            p.img.forEach((imgSrc, imgIdx) => {
+                slidesHTML += `
+                <div class="swiper-slide flex justify-center items-center">
+                    <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain" loading="lazy">
+                </div>
+                `;
+            });
+        } else {
+            slidesHTML = `
+                <div class="swiper-slide flex justify-center items-center">
+                <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                    <span class="text-gray-500">Imagen no disponible</span>
+                </div>
+                </div>
+            `;
+        }
+
+        // MODIFICACIÓN: En lugar de "Leer más..." que abre el modal viejo,
+        // hacemos que TOCA LA CARD COMPLETA abra el modal nuevo
+        html += `
+            <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center cursor-pointer product-card-kit"
+                 onclick="mostrarModalKitProducto(${idx}, ${i})">
+                <!-- Carrusel de imágenes -->
+                <div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4">
+                    <div class="swiper-wrapper">
+                        ${slidesHTML}
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+
+                <h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4>
+                <p class="mb-2 text-sm sm:text-base text-gray-600">${acortarTexto(p.desc, 100)}</p>
+                <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
+                <div class="flex flex-col gap-2 w-full mt-auto" onclick="event.stopPropagation()">
+                    <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
+                        class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">
+                        Comprar por WhatsApp
+                    </a>
+                    <button onclick="event.stopPropagation(); agregarAlCarrito('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')"
+                        class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+                        Agregar al carrito
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+
+    html += `</div></div>`;
+    document.getElementById('productoskit-content').innerHTML = html;
+    
+    // Inicializar Swipers para cada producto
+    productos.forEach((_, i) => {
+        const swiperSelector = `.swiper-producto-${i}`;
+        const swiperElement = document.querySelector(swiperSelector);
+        
+        if (swiperElement) {
+            try {
+                new Swiper(swiperElement, {
+                    loop: true,
+                    navigation: {
+                        nextEl: `${swiperSelector} .swiper-button-next`,
+                        prevEl: `${swiperSelector} .swiper-button-prev`,
+                    },
+                    preventClicks: true,
+                    preventClicksPropagation: true,
+                    touchStartPreventDefault: true
+                });
+            } catch (error) {
+                console.warn(`Error en Swiper ${i}:`, error);
+            }
+        }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Función para mostrar el detalle de UN producto del kit (en tu formato modal preferido)
-function mostrarDetalleProductoKitModal(kitId, productoIndex) {
+// NUEVA FUNCIÓN: Modal detallado con diseño de 2 columnas
+function mostrarModalKitProducto(kitId, productoIndex) {
     const kitIndex = kitId - 1;
     const productos = productosKits[kitIndex];
     if (!productos || !productos[productoIndex]) return;
     
     const producto = productos[productoIndex];
     
-    // Primero cerrar el modal de lista
-    cerrarModalKitAll();
-    
-    // Crear el modal de detalle en TU formato preferido
+    // Crear el HTML del modal en formato de 2 columnas
     let modalHTML = `
     <div class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-kit-detalle">
         <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
             
-            <!-- HEADER con botón volver y cerrar -->
+            <!-- HEADER con título y botón cerrar -->
             <div class="flex justify-between items-center p-6 border-b">
-                <div class="flex items-center gap-3">
-                    <button onclick="volverAListaProductosKit(${kitId})" 
-                            class="text-gray-500 hover:text-gray-700 p-2 hover:bg-gray-100 rounded-full transition">
-                        ←
-                    </button>
-                    <h3 class="text-2xl font-bold text-gray-800">${producto.nombre}</h3>
-                </div>
+                <h3 class="text-2xl font-bold text-gray-800">${producto.nombre}</h3>
                 <button onclick="cerrarModalKitDetalle()" 
                         class="text-gray-500 hover:text-gray-700 text-2xl p-2 hover:bg-gray-100 rounded-full transition">
                     ×
@@ -3181,13 +3181,12 @@ function mostrarDetalleProductoKitModal(kitId, productoIndex) {
                         <!-- IMAGEN PRINCIPAL (grande) -->
                         <div class="relative bg-gray-100 rounded-xl overflow-hidden" style="height: 400px;">
                             <img id="imagen-principal-detalle" 
-                                 src="${producto.img[0] || 'png/placeholder.png'}" 
+                                 src="${producto.img && producto.img[0] ? producto.img[0] : 'png/placeholder.png'}" 
                                  alt="${producto.nombre}"
-                                 class="w-full h-full object-contain p-4 cursor-zoom-in"
-                                 onclick="ampliarImagenDetalle('${producto.img[0] || 'png/placeholder.png'}')">
+                                 class="w-full h-full object-contain p-4 cursor-zoom-in">
                             
                             <!-- BOTONES DEL CARRUSEL (solo si hay más de 1 imagen) -->
-                            ${producto.img.length > 1 ? `
+                            ${producto.img && producto.img.length > 1 ? `
                             <button onclick="cambiarImagenDetalle(-1)" 
                                     class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110">
                                 ←
@@ -3199,7 +3198,7 @@ function mostrarDetalleProductoKitModal(kitId, productoIndex) {
                             ` : ''}
                             
                             <!-- CONTADOR -->
-                            ${producto.img.length > 1 ? `
+                            ${producto.img && producto.img.length > 1 ? `
                             <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
                                 <span id="contador-imagen-detalle">1</span> / <span id="total-imagenes-detalle">${producto.img.length}</span>
                             </div>
@@ -3207,7 +3206,7 @@ function mostrarDetalleProductoKitModal(kitId, productoIndex) {
                         </div>
                         
                         <!-- MINIATURAS (solo si hay más de 1 imagen) -->
-                        ${producto.img.length > 1 ? `
+                        ${producto.img && producto.img.length > 1 ? `
                         <div id="miniaturas-detalle" class="flex gap-2 overflow-x-auto py-2">
                             ${producto.img.map((imgSrc, imgIndex) => `
                                 <img src="${imgSrc}" 
@@ -3221,44 +3220,43 @@ function mostrarDetalleProductoKitModal(kitId, productoIndex) {
                     
                     <!-- COLUMNA DERECHA: INFORMACIÓN -->
                     <div class="space-y-6">
-                        <!-- Descripción -->
+                        <!-- Descripción COMPLETA -->
                         <div>
                             <h4 class="text-lg font-semibold text-gray-800 mb-2">Descripción completa</h4>
-                            <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                            <p class="text-gray-700 leading-relaxed">
                                 ${producto.desc || 'Sin descripción disponible.'}
                             </p>
                         </div>
                         
-                        <!-- Especificaciones (si existen) -->
+                        <!-- Especificaciones como LISTA -->
                         ${producto.especificaciones && producto.especificaciones.length > 0 ? `
                         <div>
                             <h4 class="text-lg font-semibold text-gray-800 mb-2">📦 Características principales</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <ul class="space-y-2">
                                 ${producto.especificaciones.map(spec => `
-                                    <div class="flex items-start">
-                                        <span class="text-blue-500 mr-2">•</span>
-                                        <span class="text-gray-700 text-sm">${spec}</span>
-                                    </div>
+                                    <li class="flex items-start">
+                                        <span class="text-blue-500 mr-2 mt-1">•</span>
+                                        <span class="text-gray-700">${spec}</span>
+                                    </li>
                                 `).join('')}
-                            </div>
+                            </ul>
                         </div>
                         ` : ''}
                         
                         <!-- Precio -->
                         <div class="pt-4 border-t">
-                            <h4 class="text-lg font-semibold text-gray-800 mb-2">Precio individual</h4>
+                            <h4 class="text-lg font-semibold text-gray-800 mb-2">Precio</h4>
                             <p class="text-3xl font-bold text-green-600">${producto.precio || 'Consultar'}</p>
-                            <p class="text-sm text-gray-500 mt-1">Parte del kit completo</p>
                         </div>
                         
                         <!-- Documentos descargables -->
                         ${producto.documentos && producto.documentos.length > 0 ? `
                         <div>
-                            <h4 class="text-lg font-semibold text-gray-800 mb-2">📄 Documentos</h4>
+                            <h4 class="text-lg font-semibold text-gray-800 mb-2">📄 Documentos disponibles</h4>
                             <div class="space-y-2">
                                 ${producto.documentos.map(doc => `
                                     <a href="${doc.archivo}" target="_blank" 
-                                       class="flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm md:text-base">
+                                       class="flex items-center text-blue-600 hover:text-blue-800 hover:underline">
                                         <i class="fas fa-file-download mr-2"></i>
                                         ${doc.nombre}
                                     </a>
@@ -3305,7 +3303,7 @@ function mostrarDetalleProductoKitModal(kitId, productoIndex) {
     window.productoDetalleActual = {
         producto: producto,
         imagenIndex: 0,
-        totalImagenes: producto.img.length
+        totalImagenes: producto.img ? producto.img.length : 0
     };
     
     // Bloquear scroll del body
@@ -3313,20 +3311,11 @@ function mostrarDetalleProductoKitModal(kitId, productoIndex) {
 }
 
 // =============================================
-// FUNCIONES AUXILIARES PARA LOS MODALES
+// FUNCIONES AUXILIARES PARA EL MODAL
 // =============================================
 
-// Variables globales para controlar los carruseles
 let productoDetalleActual = null;
 
-// Función para cerrar modal de lista de productos
-function cerrarModalKitAll() {
-    const modal = document.querySelector('.modal-kit-all');
-    if (modal) modal.remove();
-    document.body.style.overflow = '';
-}
-
-// Función para cerrar modal de detalle
 function cerrarModalKitDetalle() {
     const modal = document.querySelector('.modal-kit-detalle');
     const modalZoom = document.getElementById('modal-zoom-detalle');
@@ -3335,17 +3324,9 @@ function cerrarModalKitDetalle() {
     document.body.style.overflow = '';
 }
 
-// Función para volver a la lista de productos
-function volverAListaProductosKit(kitId) {
-    cerrarModalKitDetalle();
-    setTimeout(() => {
-        verProductosKit(kitId);
-    }, 100);
-}
-
 // Funciones para el carrusel del detalle
 function cambiarImagenDetalle(direccion) {
-    if (!productoDetalleActual) return;
+    if (!productoDetalleActual || !productoDetalleActual.producto.img) return;
     
     const nuevoIndex = productoDetalleActual.imagenIndex + direccion;
     const total = productoDetalleActual.totalImagenes;
@@ -3401,17 +3382,14 @@ function cerrarZoomDetalle() {
     if (modalZoom) modalZoom.classList.add('hidden');
 }
 
-// Cerrar modales con tecla ESC
+// Cerrar modal con tecla ESC
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         if (document.querySelector('.modal-kit-detalle')) {
             cerrarModalKitDetalle();
-        } else if (document.querySelector('.modal-kit-all')) {
-            cerrarModalKitAll();
         }
     }
 });
-
     // Función mejorada para volver al inicio
 function volverAlInicio() {
     // Navegar a la vista de inicio
