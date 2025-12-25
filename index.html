@@ -1389,6 +1389,58 @@
   to { transform: translateY(-50%) rotate(360deg); }
 }
 
+/* ============================================= */
+/* CSS PARA MODAL CARRUSEL DE KITS */
+/* ============================================= */
+    
+    /* Estilos para el carrusel mejorado */
+#miniaturas-1, #miniaturas-2, #miniaturas-3 {
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 #f1f1f1;
+}
+
+#miniaturas-1::-webkit-scrollbar, 
+#miniaturas-2::-webkit-scrollbar,
+#miniaturas-3::-webkit-scrollbar {
+    height: 6px;
+}
+
+#miniaturas-1::-webkit-scrollbar-track,
+#miniaturas-2::-webkit-scrollbar-track,
+#miniaturas-3::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+#miniaturas-1::-webkit-scrollbar-thumb,
+#miniaturas-2::-webkit-scrollbar-thumb,
+#miniaturas-3::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 3px;
+}
+
+/* Transición suave para cambio de imágenes */
+#imagen-principal-1, #imagen-principal-2, #imagen-principal-3 {
+    transition: opacity 0.3s ease;
+}
+
+/* Efecto hover para miniaturas */
+#miniaturas-1 img:hover, 
+#miniaturas-2 img:hover,
+#miniaturas-3 img:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+/* Botones del carrusel */
+.fixed .absolute button {
+    transition: all 0.2s ease;
+}
+
+.fixed .absolute button:hover {
+    background-color: white !important;
+    transform: translateY(-50%) scale(1.1);
+}
 /* CSS para sección de asesoría */
 .scroll-smooth-instant {
     scroll-behavior: smooth;
