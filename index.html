@@ -3093,10 +3093,28 @@ function verProductosKit(idx) {
         // MODIFICACIÓN: En lugar de "Leer más..." que abre el modal viejo,
         // hacemos que TOCA LA CARD COMPLETA abra el modal nuevo
         html += `
-            <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center cursor-pointer product-card-kit"
-                 onclick="mostrarModalKitProducto(${idx}, ${i})">
-                <!-- Carrusel de imágenes -->
-                <div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4">
+    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
+        <!-- Carrusel de imágenes -->
+        <div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4" onclick="event.stopPropagation()">
+            <div class="swiper-wrapper">
+                ${slidesHTML}
+            </div>
+            <div class="swiper-button-next" onclick="event.stopPropagation()"></div>
+            <div class="swiper-button-prev" onclick="event.stopPropagation()"></div>
+        </div>
+
+        <h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4>
+        <p class="mb-2 text-sm sm:text-base text-gray-600">${acortarTexto(p.desc, 100)}</p>
+        
+        <!-- ENLACE "VER MÁS..." QUE HABÍA DESAPARECIDO -->
+        <a href="javascript:void(0)" 
+           onclick="mostrarModalKitProducto(${idx}, ${i})" 
+           class="text-blue-600 hover:text-blue-800 hover:underline mb-3 text-sm font-semibold inline-block">
+           Ver detalles completos...
+        </a>
+        
+        <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
+        <div class="flex flex-col gap-2 w-full mt-auto">
                     <div class="swiper-wrapper">
                         ${slidesHTML}
                     </div>
@@ -3212,8 +3230,11 @@ function mostrarModalKitProducto(kitId, productoIndex) {
     
     // Crear el HTML del modal en formato de 2 columnas
     let modalHTML = `
-    <div class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-kit-detalle">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+<div class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-kit-detalle">
+    <!-- Overlay para cerrar al hacer clic fuera -->
+    <div class="absolute inset-0" onclick="cerrarModalKitDetalle()"></div>
+    
+    <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col relative z-10">
             
             <!-- HEADER con título y botón cerrar -->
             <div class="flex justify-between items-center p-6 border-b">
@@ -3233,20 +3254,21 @@ function mostrarModalKitProducto(kitId, productoIndex) {
                         <!-- IMAGEN PRINCIPAL (grande) -->
                         <div class="relative bg-gray-100 rounded-xl overflow-hidden" style="height: 400px;">
                             <img id="imagen-principal-detalle" 
-                                 src="${producto.img && producto.img[0] ? producto.img[0] : 'png/placeholder.png'}" 
-                                 alt="${producto.nombre}"
-                                 class="w-full h-full object-contain p-4 cursor-zoom-in">
+     src="${producto.img && producto.img[0] ? producto.img[0] : 'png/placeholder.png'}" 
+     alt="${producto.nombre}"
+     class="w-full h-full object-contain p-4 cursor-zoom-in"
+     onclick="ampliarImagenDetalle(this.src)">
                             
                             <!-- BOTONES DEL CARRUSEL (solo si hay más de 1 imagen) -->
                             ${producto.img && producto.img.length > 1 ? `
-                            <button onclick="cambiarImagenDetalle(-1)" 
-                                    class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110">
-                                ←
-                            </button>
-                            <button onclick="cambiarImagenDetalle(1)" 
-                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110">
-                                →
-                            </button>
+                            <button onclick="event.stopPropagation(); cambiarImagenDetalle(-1)" 
+        class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20">
+    ←
+</button>
+<button onclick="event.stopPropagation(); cambiarImagenDetalle(1)" 
+        class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20">
+    →
+</button>
                             ` : ''}
                             
                             <!-- CONTADOR -->
@@ -3262,9 +3284,9 @@ function mostrarModalKitProducto(kitId, productoIndex) {
                         <div id="miniaturas-detalle" class="flex gap-2 overflow-x-auto py-2">
                             ${producto.img.map((imgSrc, imgIndex) => `
                                 <img src="${imgSrc}" 
-                                     alt="Miniatura ${imgIndex + 1}"
-                                     class="w-20 h-20 object-cover rounded-lg border-2 ${imgIndex === 0 ? 'border-blue-500' : 'border-transparent hover:border-blue-300'} cursor-pointer transition-all"
-                                     onclick="seleccionarImagenDetalle(${imgIndex})">
+     alt="Miniatura ${imgIndex + 1}"
+     class="w-20 h-20 object-cover rounded-lg border-2 ${imgIndex === 0 ? 'border-blue-500' : 'border-transparent hover:border-blue-300'} cursor-pointer transition-all"
+     onclick="event.stopPropagation(); seleccionarImagenDetalle(${imgIndex})">
                             `).join('')}
                         </div>
                         ` : ''}
@@ -3470,7 +3492,25 @@ function ampliarImagenDetalle(src) {
         modalZoom.classList.remove('hidden');
     }
 }
-
+function cerrarModalKitDetalle() {
+    const modal = document.querySelector('.modal-kit-detalle');
+    const modalZoom = document.getElementById('modal-zoom-detalle');
+    
+    if (modal) {
+        // Animar el cierre
+        modal.style.opacity = '0';
+        modal.style.transition = 'opacity 0.3s ease';
+        
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = '';
+            productoDetalleActual = null;
+        }, 300);
+    }
+    
+    if (modalZoom) modalZoom.classList.add('hidden');
+}
+  
 function cerrarZoomDetalle() {
     const modalZoom = document.getElementById('modal-zoom-detalle');
     if (modalZoom) modalZoom.classList.add('hidden');
