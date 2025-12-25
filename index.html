@@ -2980,125 +2980,260 @@ function toggleModal() {
 
     // Render productos del kit (con carrusel)
     function verProductosKit(idx) {
-    navegarA('productoskit', { kitId: idx });
-      const productos = productosKits[idx - 1];
+    const kitIndex = idx - 1;
+    const productos = productosKits[kitIndex];
+    
+    if (!productos || productos.length === 0) {
+        console.error('No hay productos para este kit');
+        mostrarNotificacion('❌ No hay productos disponibles para este kit', 'error');
+        return;
+    }
 
-      const portadas = [
-        "png/portada_kit1.webp",
-        "png/portadados.webp", 
-        "png/portada_kit3.svg"
-      ];
+    // Determinar título del kit
+    const titulosKit = [
+        "🔌 Kit de Electrónica Básico - Kuongshun",
+        "⚡ Kit de Proyectos - Learning", 
+        "🤖 Kit de Robótica - Acebott"
+    ];
+    
+    const titulo = titulosKit[kitIndex] || productos[0].nombre || 'Kit Innovakit';
 
-      const titulosPersonalizados = [
-        "🔌 Kits de Electrónica - Kuongshun",
-        "⚡ Kits Proyectos - Learning", 
-        "🤖 Kits de Robótica - Acebott"
-      ];
+    // Crear el HTML del modal MEJORADO
+    let modalHTML = `
+    <div class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-kit">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            
+            <!-- HEADER con título y botón cerrar -->
+            <div class="flex justify-between items-center p-4 sm:p-6 border-b">
+                <h3 class="text-xl sm:text-2xl font-bold text-gray-800">${titulo}</h3>
+                <button onclick="cerrarModalKit()" 
+                        class="text-gray-500 hover:text-gray-700 text-2xl p-2 hover:bg-gray-100 rounded-full transition">
+                    ×
+                </button>
+            </div>
 
-      let html = `
-        <!-- PORTADA SIN MARGENES LATERALES -->
-        <div class="portada-sin-margenes">
-          <img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" 
-               class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-            <h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">
-              ${titulosPersonalizados[idx-1]}
-            </h2>
-          </div>
+            <!-- CONTENIDO PRINCIPAL - 2 COLUMNAS -->
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                    
+                    <!-- COLUMNA IZQUIERDA: CARRUSEL DE IMÁGENES -->
+                    <div class="space-y-3 sm:space-y-4">
+                        <!-- IMAGEN PRINCIPAL (grande) -->
+                        <div class="relative bg-gray-100 rounded-xl overflow-hidden" style="min-height: 300px; height: 35vh;">
+                            <img id="imagen-principal-${idx}" 
+                                 src="${productos[0].img?.[0] || 'png/placeholder.png'}" 
+                                 alt="${productos[0].nombre}"
+                                 class="w-full h-full object-contain p-4"
+                                 onclick="ampliarImagenKit('${productos[0].img?.[0] || 'png/placeholder.png'}')">
+                            
+                            <!-- BOTONES DEL CARRUSEL -->
+                            <button onclick="cambiarImagenKit(${idx}, -1)" 
+                                    class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 w-8 h-8 sm:w-10 sm:h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110">
+                                ←
+                            </button>
+                            <button onclick="cambiarImagenKit(${idx}, 1)" 
+                                    class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 w-8 h-8 sm:w-10 sm:h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110">
+                                →
+                            </button>
+                            
+                            <!-- CONTADOR -->
+                            <div class="absolute bottom-3 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded-full text-xs sm:text-sm">
+                                <span id="contador-imagen-${idx}">1</span> / <span id="total-imagenes-${idx}">${productos[0].img?.length || 1}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- MINIATURAS -->
+                        <div id="miniaturas-${idx}" class="flex gap-1 sm:gap-2 overflow-x-auto py-2 px-1">
+                            ${(productos[0].img || ['png/placeholder.png']).map((imgSrc, imgIndex) => `
+                                <img src="${imgSrc}" 
+                                     alt="Miniatura ${imgIndex + 1}"
+                                     class="w-14 h-14 sm:w-20 sm:h-20 object-cover rounded-lg border-2 ${imgIndex === 0 ? 'border-blue-500' : 'border-transparent hover:border-blue-300'} cursor-pointer transition-all"
+                                     onclick="seleccionarImagenKit(${idx}, ${imgIndex})"
+                                     loading="lazy">
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- COLUMNA DERECHA: INFORMACIÓN -->
+                    <div class="space-y-4 sm:space-y-6">
+                        <!-- Nombre del producto -->
+                        <div>
+                            <h4 class="text-lg sm:text-xl font-bold text-gray-800 mb-2">${productos[0].nombre}</h4>
+                            <p class="text-gray-600 text-sm sm:text-base">${productos[0].desc?.substring(0, 200) || 'Kit completo de electrónica para aprendizaje'}...</p>
+                        </div>
+                        
+                        <!-- Componentes incluidos (si existen) -->
+                        ${productos[0].especificaciones && productos[0].especificaciones.length > 0 ? `
+                        <div class="bg-blue-50 rounded-lg p-3 sm:p-4">
+                            <h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-2">📦 Componentes incluidos</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-40 overflow-y-auto pr-2">
+                                ${productos[0].especificaciones.map(spec => `
+                                    <div class="flex items-start">
+                                        <span class="text-blue-500 mr-2 mt-1">•</span>
+                                        <span class="text-gray-700 text-sm">${spec}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Precio -->
+                        <div class="pt-3 sm:pt-4 border-t">
+                            <h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-1">Precio</h4>
+                            <p class="text-2xl sm:text-3xl font-bold text-green-600">${productos[0].precio || 'Consultar precio'}</p>
+                            ${productos[0].stock === 'disponible' ? 
+                                '<span class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full mt-1">✓ En stock</span>' : 
+                                '<span class="inline-block px-2 py-1 text-xs bg-red-100 text-red-800 rounded-full mt-1">✗ Agotado</span>'
+                            }
+                        </div>
+                        
+                        <!-- Documentos descargables -->
+                        ${productos[0].documentos && productos[0].documentos.length > 0 ? `
+                        <div class="bg-gray-50 rounded-lg p-3 sm:p-4">
+                            <h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-2">📄 Documentos</h4>
+                            <div class="space-y-2">
+                                ${productos[0].documentos.map(doc => `
+                                    <a href="${doc.archivo}" target="_blank" 
+                                       class="flex items-center text-blue-600 hover:text-blue-800 hover:underline text-sm sm:text-base">
+                                        <i class="fas fa-file-download mr-2"></i>
+                                        ${doc.nombre}
+                                    </a>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FOOTER con botones de acción -->
+            <div class="border-t p-4 sm:p-6 bg-gray-50">
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="cerrarModalKit()" 
+                            class="px-4 sm:px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition flex-1">
+                        <i class="fas fa-times mr-2"></i>Cerrar
+                    </button>
+                    <a href="https://wa.me/595972292392?text=¡Hola! Quiero información sobre: ${encodeURIComponent(productos[0].nombre)} - ${encodeURIComponent(productos[0].precio || 'Kit Innovakit')}" 
+                       target="_blank"
+                       class="px-4 sm:px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition flex-1 text-center">
+                        <i class="fab fa-whatsapp mr-2"></i>Consultar por WhatsApp
+                    </a>
+                </div>
+            </div>
         </div>
+    </div>
+    
+    <!-- MODAL PARA ZOOM DE IMAGEN -->
+    <div id="modal-zoom-kit" class="hidden fixed inset-0 bg-black bg-opacity-90 z-[60] flex items-center justify-center p-4" onclick="cerrarZoomKit()">
+        <div class="relative max-w-4xl w-full">
+            <img id="imagen-zoom-kit" src="" alt="Zoom" class="w-full h-auto max-h-[80vh] object-contain">
+            <button onclick="cerrarZoomKit()" 
+                    class="absolute top-4 right-4 text-white text-3xl bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center">
+                ×
+            </button>
+        </div>
+    </div>`;
 
-        <!-- CONTENIDO NORMAL (con márgenes) -->
-        <div class="container mx-auto px-4 mt-8">
-          <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      `;
-      
-      productos.forEach((p, i) => {
-        const mensaje = encodeURIComponent(`¡Hola! Quiero comprar el producto: ${p.nombre} - ${p.precio}`);
-        
-        let slidesHTML = '';
-        if (p.img && p.img.length > 0) {
-          p.img.forEach((imgSrc, imgIdx) => {
-            slidesHTML += `
-              <div class="swiper-slide flex justify-center items-center">
-                <img src="${imgSrc}" alt="${p.nombre} - Imagen ${imgIdx + 1}" class="max-h-48 object-contain" loading="lazy">
-              </div>
-            `;
-          });
-        } else {
-          slidesHTML = `
-            <div class="swiper-slide flex justify-center items-center">
-              <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span class="text-gray-500">Imagen no disponible</span>
-              </div>
-            </div>
-          `;
-        }
+    // Insertar el modal en el body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Guardar datos del kit actual para navegación
+    window.kitActual = {
+        idx: idx,
+        kitIndex: kitIndex,
+        imagenIndex: 0,
+        totalImagenes: productos[0].img?.length || 1
+    };
+    
+    // Bloquear scroll del body
+    document.body.style.overflow = 'hidden';
+}
+// SEGUNDO PASOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+// Variables para controlar el carrusel
+let kitActual = null;
 
-        html += `
-          <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
-            <!-- Carrusel de imágenes -->
-            <div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4">
-              <div class="swiper-wrapper">
-                ${slidesHTML}
-              </div>
-              <div class="swiper-button-next"></div>
-              <div class="swiper-button-prev"></div>
-            </div>
+// Función para cerrar el modal
+function cerrarModalKit() {
+    const modal = document.querySelector('.fixed.inset-0.bg-black.bg-opacity-75');
+    const modalZoom = document.getElementById('modal-zoom');
+    if (modal) modal.remove();
+    if (modalZoom) modalZoom.classList.add('hidden');
+}
 
-            <h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4>
-            <p class="mb-2 text-sm sm:text-base">${acortarTexto(p.desc)} 
-              <a href="javascript:void(0)" onclick="mostrarDescripcionCompleta(${JSON.stringify(p).replace(/"/g, '&quot;')})" class="text-blue-600 hover:underline">Leer más...</a>
-            </p>
-            <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
-            <div class="flex flex-col gap-2 w-full mt-auto">
-              <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
-                class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">
-                Comprar por WhatsApp
-              </a>
-              <button onclick="agregarAlCarrito('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')"
-                class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-                Agregar al carrito
-              </button>
-            </div>
-          </div>
-        `;
-      });
+// Función para cambiar imagen en el carrusel
+function cambiarImagenKit(kitId, direccion) {
+    if (!kitActual || kitActual.idx !== kitId) return;
+    
+    const nuevoIndex = kitActual.imagenIndex + direccion;
+    const total = kitActual.totalImagenes;
+    
+    // Circular: si pasa del final, vuelve al inicio y viceversa
+    kitActual.imagenIndex = (nuevoIndex + total) % total;
+    
+    actualizarImagenKit(kitId);
+}
 
-      html += `</div></div>`;
-      document.getElementById('productoskit-content').innerHTML = html;
-      
-      // Inicializar Swipers para cada producto CON MANEJO DE ERRORES
-productos.forEach((_, i) => {
-  const swiperSelector = `.swiper-producto-${i}`;
-  const swiperElement = document.querySelector(swiperSelector);
-  
-  // VERIFICAR SI EL ELEMENTO EXISTE ANTES DE INICIALIZAR
-  if (swiperElement) {
-    try {
-      new Swiper(swiperElement, {
-        loop: true,
-        navigation: {
-          nextEl: `${swiperSelector} .swiper-button-next`,
-          prevEl: `${swiperSelector} .swiper-button-prev`,
-        },
-        preventClicks: true,
-        preventClicksPropagation: true,
-        touchStartPreventDefault: true
-      });
-      
-      console.log(`✅ Swiper ${i} inicializado correctamente`);
-    } catch (error) {
-      console.warn(`⚠️ Error en Swiper ${i}, mostrando imágenes estáticas:`, error);
-      // Fallback silencioso - no hace nada, las imágenes se muestran normales
+// Función para seleccionar imagen desde miniatura
+function seleccionarImagenKit(kitId, index) {
+    if (!kitActual || kitActual.idx !== kitId) return;
+    
+    kitActual.imagenIndex = index;
+    actualizarImagenKit(kitId);
+}
+
+// Función para actualizar la imagen mostrada
+function actualizarImagenKit(kitId) {
+    if (!kitActual || kitActual.idx !== kitId) return;
+    
+    const productos = productosKits[kitActual.kitIndex];
+    if (!productos || !productos[0] || !productos[0].img) return;
+    
+    const nuevaImagen = productos[0].img[kitActual.imagenIndex];
+    
+    // Actualizar imagen principal
+    const imgPrincipal = document.getElementById(`imagen-principal-${kitId}`);
+    if (imgPrincipal) {
+        imgPrincipal.src = nuevaImagen;
+        imgPrincipal.onclick = () => ampliarImagen(nuevaImagen);
     }
-  } else {
-    console.warn(`🔍 Elemento Swiper no encontrado: ${swiperSelector}`);
-  }
+    
+    // Actualizar contador
+    const contador = document.getElementById(`contador-imagen-${kitId}`);
+    const total = document.getElementById(`total-imagenes-${kitId}`);
+    if (contador) contador.textContent = kitActual.imagenIndex + 1;
+    if (total) total.textContent = kitActual.totalImagenes;
+    
+    // Actualizar miniaturas (marcar la activa)
+    const miniaturas = document.querySelectorAll(`#miniaturas-${kitId} img`);
+    miniaturas.forEach((thumb, index) => {
+        thumb.classList.toggle('border-blue-500', index === kitActual.imagenIndex);
+        thumb.classList.toggle('border-transparent', index !== kitActual.imagenIndex);
+    });
+}
+
+// Función para ampliar imagen (zoom)
+function ampliarImagen(src) {
+    const modalZoom = document.getElementById('modal-zoom');
+    const imgZoom = document.getElementById('imagen-zoom');
+    
+    if (modalZoom && imgZoom) {
+        imgZoom.src = src;
+        modalZoom.classList.remove('hidden');
+    }
+}
+
+// Función para cerrar el zoom
+function cerrarZoom() {
+    const modalZoom = document.getElementById('modal-zoom');
+    if (modalZoom) modalZoom.classList.add('hidden');
+}
+
+// Cerrar modal con tecla ESC
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        cerrarModalKit();
+    }
 });
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
     // Función mejorada para volver al inicio
 function volverAlInicio() {
