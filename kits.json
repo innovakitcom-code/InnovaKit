@@ -219,7 +219,7 @@
       {
   "id": "AE046",
   "nombre": "Kit de Componentes Variados (AE046)",
-  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye: - Controller Board UNO - LCD 16X02 - 65 Jumper Wire - 830 Tie-Points Protoboard - Stepper Motor - ULN2003 Stepper Motor Driver - Remote - Rc522 RFID Module - USB Cable - Servo Motor (SG90) - Joystick Module - 5V Relay Module - Sound Sensor Module - 3 Color LED module - DHT11 Temperature and Humidity Module - Water Level Detection Sensor Module - 1 Digital 7-Segment Display - 4 Digit 7-Segment Display - 8x8 Matrix Display - Button Switch 5PCS - 10KΩ Potentiometer - 9V Battery Connector With DC - 4x4 Matrix 16 Keypad Keyboard Module - DS1302 RTC Real Time Clock Module - Photoresistor 3PCS - Active Buzzer - Passive Buzzer - Red LED 5PCS - Yellow LED 5PCS - Green LED 5PCS - Flame sensor - IR Receiver - Tilt Bail Switch 2CPS - Resistor 220Ω/1KΩ-10KΩ 30PCS - LM35DZ - 74HC595 - Famale-to-Male Dupont Wire 20PCS",
+  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye componentes como: - Controller Board UNO - LCD 16X02 - 65 Jumper Wire - 830 Tie-Points Protoboard - Stepper Motor - ULN2003 Stepper Motor Driver - Remote - Rc522 RFID Module - USB Cable - Servo Motor (SG90) - Joystick Module - 5V Relay Module - Sound Sensor Module - 3 Color LED module - DHT11 Temperature and Humidity Module - Water Level Detection Sensor Module - 1 Digital 7-Segment Display - 4 Digit 7-Segment Display - 8x8 Matrix Display - Button Switch 5PCS - 10KΩ Potentiometer - 9V Battery Connector With DC - 4x4 Matrix 16 Keypad Keyboard Module - DS1302 RTC Real Time Clock Module - Photoresistor 3PCS - Active Buzzer - Passive Buzzer - Red LED 5PCS - Yellow LED 5PCS - Green LED 5PCS - Flame sensor - IR Receiver - Tilt Bail Switch 2CPS - Resistor 220Ω/1KΩ-10KΩ 30PCS - LM35DZ - 74HC595 - Famale-to-Male Dupont Wire 20PCS",
   "precio": "Gs. 475.000",
   "imagenes": ["img/AE046.png", "webP/AE046-1.webp", "webP/AE046-2.webp", "webP/AE046-3.webp", "webP/AE046-4.webp", "webP/AE046-5.webp", "webP/AE046-6.webp"],
   "documentos": [],
@@ -228,7 +228,7 @@
 {
   "id": "AE126",
   "nombre": "NEWEST RFID Starter Kit R3 Upgraded Version Learning Kit",
-  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye: - Controller Board UNO - LCD 16X02 - 65 Jumper Wire - 830 Tie-Points Protoboard - Stepper Motor - ULN2003 Stepper Motor Driver - Remote - Rc522 RFID Module - USB Cable - Servo Motor (SG90) - Joystick Module - 5V Relay Module - Sound Sensor Module - 3 Color LED module - DHT11 Temperature and Humidity Module - Water Level Detection Sensor Module - 1 Digital 7-Segment Display - 4 Digit 7-Segment Display - 8x8 Matrix Display - Button Switch 5PCS - 10KΩ Potentiometer - 9V Battery Connector With DC - 4x4 Matrix 16 Keypad Keyboard Module - DS1302 RTC Real Time Clock Module - Photoresistor 3PCS - Active Buzzer - Passive Buzzer - Red LED 5PCS - Yellow LED 5PCS - Green LED 5PCS - Flame sensor - IR Receiver - Tilt Bail Switch 2CPS - Resistor 220Ω/1KΩ-10KΩ 30PCS - LM35DZ - 74HC595 - Famale-to-Male Dupont Wire 20PCS",
+  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye componentes como: - Controller Board UNO - LCD 16X02 - 65 Jumper Wire - 830 Tie-Points Protoboard - Stepper Motor - ULN2003 Stepper Motor Driver - Remote - Rc522 RFID Module - USB Cable - Servo Motor (SG90) - Joystick Module - 5V Relay Module - Sound Sensor Module - 3 Color LED module - DHT11 Temperature and Humidity Module - Water Level Detection Sensor Module - 1 Digital 7-Segment Display - 4 Digit 7-Segment Display - 8x8 Matrix Display - Button Switch 5PCS - 10KΩ Potentiometer - 9V Battery Connector With DC - 4x4 Matrix 16 Keypad Keyboard Module - DS1302 RTC Real Time Clock Module - Photoresistor 3PCS - Active Buzzer - Passive Buzzer - Red LED 5PCS - Yellow LED 5PCS - Green LED 5PCS - Flame sensor - IR Receiver - Tilt Bail Switch 2CPS - Resistor 220Ω/1KΩ-10KΩ 30PCS - LM35DZ - 74HC595 - Famale-to-Male Dupont Wire 20PCS",
   "precio": "Gs. 475.000",
   "imagenes": ["webP/AE126-1.webp", "webP/AE126-2.webp", "webP/AE126-3.webp", "webP/AE126-4.webp"],
   "documentos": [],
@@ -237,7 +237,7 @@
 {
   "id": "AE069",
   "nombre": "NEWEST RFID Starter Kit R3 Upgraded Version Learning Kit",
-  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
+  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye componentes como: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
   "precio": "Gs. 445.000",
   "imagenes": ["webP/AE069-1.webp", "webP/AE069-2.webp", "webP/AE069-3.webp", "webP/AE069-4.webp", "webP/AE069-5.webp"],
   "documentos": [],
@@ -246,7 +246,7 @@
 {
   "id": "AE003",
   "nombre": "NEWEST RFID Starter Kit R3 Upgraded Version Learning Kit",
-  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
+  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye componentes como: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
   "precio": "Gs. 445.000",
   "imagenes": ["webP/AE003-1.webp", "webP/AE003-2.webp", "webP/AE003-3.webp", "webP/AE003-4.webp", "webP/AE003-5.webp"],
   "documentos": [],
@@ -255,7 +255,7 @@
 {
   "id": "AE049",
   "nombre": "NEWEST RFID Starter Kit R3 Upgraded Version Learning Kit",
-  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
+  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye componentes como: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
   "precio": "Gs. 445.000",
   "imagenes": ["webP/AE049-1.webp", "webP/AE049-2.webp", "webP/AE049-3.webp", "webP/AE049-4.webp", "webP/AE049-5.webp", "webP/AE049-6.webp"],
   "documentos": [],
@@ -264,7 +264,7 @@
 {
   "id": "AE310",
   "nombre": "NEWEST RFID Starter Kit R3 Upgraded Version Learning Kit",
-  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
+  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye componentes como: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
   "precio": "Gs. 445.000",
   "imagenes": ["webP/AE310-1.webp", "webP/AE310-2.webp", "webP/AE310-3.webp", "webP/AE310-4.webp", "webP/AE310-5.webp", "webP/AE310-6.webp"],
   "documentos": [],
@@ -273,7 +273,7 @@
 {
   "id": "AE308",
   "nombre": "NEWEST RFID Starter Kit R3 Upgraded Version Learning Kit",
-  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
+  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye componentes como: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
   "precio": "Gs. 445.000",
   "imagenes": ["webP/AE308-1.webp", "webP/AE308-2.webp", "webP/AE308-3.webp", "webP/AE308-4.webp", "webP/AE308-5.webp"],
   "documentos": [],
@@ -282,7 +282,7 @@
 {
   "id": "AE017",
   "nombre": "NEWEST RFID Starter Kit R3 Upgraded Version Learning Kit",
-  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
+  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye componentes como: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
   "precio": "Gs. 445.000",
   "imagenes": ["webP/AE017-1.webp", "webP/AE017-2.webp", "webP/AE017-3.webp", "webP/AE017-4.webp"],
   "documentos": [],
@@ -291,7 +291,7 @@
 {
   "id": "AE065",
   "nombre": "NEWEST RFID Starter Kit R3 Upgraded Version Learning Kit",
-  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
+  "descripcion_larga": "Kit con componentes variados para proyectos de electrónica. Incluye componentes como: - Resistencias - Condensadores - Transistores - Diodos - LEDs - Potenciómetros - Interruptores - Pulsadores - Zumbadores - Relés - Displays - Sensores - Cables - Protoboard - Arduino UNO - Shield Ethernet - Shield WiFi - Shield Bluetooth - Shield GPS - Shield LCD -Shield motor - Shield relé - Shield sensor - Shield SD card - Shield audio - Shield teclado - Shield joystick",
   "precio": "Gs. 445.000",
   "imagenes": ["webP/AE065-1.webp", "webP/AE065-2.webp", "webP/AE065-3.webp", "webP/AE065-4.webp"],
   "documentos": [],
@@ -363,6 +363,7 @@
     ]
   }
 ]
+
 
 
 
