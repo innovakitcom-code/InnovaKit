@@ -50,7 +50,7 @@
 {
   "id": "AE318",
   "nombre": "9 en 1 Sensor Kit (AE318)",
-  "descripcion_larga": "Conjunto de sensores de gas variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como: - MQ/135 Sensor Module 1PCS - MQ/2 Sensor Module 1PCS - MQ/3 Sensor Module 1PCS - MQ/4 Sensor Module 1PCS - MQ 5 Sensor Module 1PCS - MQ 6 Sensor Module 1PCS - MQ 7 Sensor Module 1PCS - MQ 8 Sensor Module 1PCS - MQ 9 Sensor Module 1PCS",
+  "descripcion_larga": "Conjunto de sensores de gas variados, ideales para aprender, practicar y desarrollar proyectos. Cada kit incluye piezas esenciales como: - MQ/135 Sensor Module 1PCS - MQ/2 Sensor Module 1PCS - MQ/3 Sensor Module 1PCS - MQ/4 Sensor Module 1PCS - MQ/5 Sensor Module 1PCS - MQ/6 Sensor Module 1PCS - MQ/7 Sensor Module 1PCS - MQ/8 Sensor Module 1PCS - MQ/9 Sensor Module 1PCS",
   "precio": "Gs. 280.000",
   "imagenes": ["webP/AE318-1.webp", "webP/AE318-2.webp", "webP/AE318-3.webp", "webP/AE318-5.webp", "webP/AE318-6.webp", "img/AE318_4.png"],
   "documentos": [
@@ -363,6 +363,7 @@
     ]
   }
 ]
+
 
 
 
