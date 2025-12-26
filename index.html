@@ -3115,28 +3115,17 @@ function verProductosKit(idx) {
         
         <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
         <div class="flex flex-col gap-2 w-full mt-auto">
-                    <div class="swiper-wrapper">
-                        ${slidesHTML}
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
-
-                <h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4>
-                <p class="mb-2 text-sm sm:text-base text-gray-600">${acortarTexto(p.desc, 100)}</p>
-                <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
-                <div class="flex flex-col gap-2 w-full mt-auto" onclick="event.stopPropagation()">
-                    <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
-                        class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">
-                        Comprar por WhatsApp
-                    </a>
-                    <button onclick="event.stopPropagation(); agregarAlCarrito('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')"
-                        class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-                        Agregar al carrito
-                    </button>
-                </div>
-            </div>
-        `;
+            <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
+                class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">
+                Comprar por WhatsApp
+            </a>
+            <button onclick="event.stopPropagation(); agregarAlCarrito('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')"
+                class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+                Agregar al carrito
+            </button>
+        </div>
+    </div>
+`;
     });
 
     html += `</div></div>`;
