@@ -63,7 +63,7 @@
   "nombre": "37 Piezas Sensor Kit (AE002)",
   "descripcion_larga": "Conjunto de 37 piezas de Módulos y Sensores combinados tales como: - DS18B20 Module - Shock Switch - Hall Magnetic sensor Module - Button Switch - Infrared Receiver - IR Emission - Passive Buzzer - Laser Module - SMD RGB Module - RGB LED Module - TEMP and Humidity module - Photo interrupter Module - Mercury Switch - Tilt Switch Module - Reed Switch Module - Mini reed Switch Module - Mini two/color Module - Dual/color Common/Cathode LED - Knock Sensor - Digital temperature Module - Flame Module - Mental Touch Module - Analog temp Module - Photo resistor Module - 7 color flash Module - High sensitive Voice Sensor - Magic light cup Module - Joystick Module - Linear hall Module - Analog hall Module - Avoidance Module - Tracking Module - Rotary encoders Module - Buzzer Module - Heartbeat Module - Relay Module - Small sound Module",
   "precio": "Gs. 370.000",
-  "imagenes": ["webP/AE002-1.webp", "webP/AE002-2.webp", "webP/AE002-4.webp", "webP/AE002-6.webp", "img/AE002-7.png"],
+  "imagenes": ["webP/AE002-1.webp", "webP/AE002-2.webp", "webP/AE002-4.webp", "webP/AE002-6.webp", "img/AE002-7.jpg"],
   "documentos": [
     {"nombre": "Descargar Manual completo AE002", "archivo": "https://drive.google.com/file/d/1y1vtNtXe1lpgNU7y4kQYZPzsc1INp3yO/view?usp=sharing"}
   ],
@@ -363,6 +363,7 @@
     ]
   }
 ]
+
 
 
 
