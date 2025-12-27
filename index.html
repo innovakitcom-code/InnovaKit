@@ -5710,49 +5710,43 @@ function guardarPedidoEnSheets() {
     fuente: 'Innovakit Web'
   };
   
-  console.log('📤 Guardando pedido:', pedido);
+  console.log('📤 Enviando pedido a Sheets:', pedido);
   
   // URL de TU Apps Script
   const sheetsURL = 'https://script.google.com/macros/s/AKfycbxMVG-Aa6fIMKSw8Y0-xOyLlahVAKOPT9ZYiRUDi_-kZ1fm9qxsx0F6zZhM5jSArC1j/exec';
   
-  // Crear URL con parámetros GET (más compatible)
-  const urlConParametros = sheetsURL + '?' + Object.keys(pedido)
-    .map(key => `${key}=${encodeURIComponent(pedido[key])}`)
-    .join('&');
+  // 🔁 MÉTODO MEJORADO: Crear un formulario invisible y enviarlo
+  // Esto evita problemas de CORS y es muy compatible.
+  const form = document.createElement('form');
+  form.method = 'POST'; // Usamos POST
+  form.action = sheetsURL;
+  form.target = '_blank'; // Se abre en pestaña nueva, no interfiere
+  form.style.display = 'none'; // Invisible
   
-  console.log('🔗 URL a enviar:', urlConParametros);
+  // Crear un campo de texto OCULTO con todos los datos como JSON
+  const inputData = document.createElement('input');
+  inputData.type = 'hidden';
+  inputData.name = 'data'; // Se enviará como "data=JSON"
+  inputData.value = JSON.stringify(pedido);
+  form.appendChild(inputData);
   
-  // Enviar usando fetch con GET
-  fetch(urlConParametros, { 
-    method: 'GET',
-    mode: 'no-cors'
-  })
-  .then(() => {
-    console.log('✅ Pedido enviado a Google Sheets');
-    mostrarNotificacion('📝 Pedido registrado en sistema');
-  })
-  .catch(err => {
-    console.log('⚠️ No se pudo guardar en Sheets:', err);
-    // No mostrar error al usuario, WhatsApp igual se envía
+  // También agregamos los datos como parámetros individuales por si acaso
+  Object.keys(pedido).forEach(key => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = pedido[key];
+    form.appendChild(input);
   });
-}
-
-// 3. Botón de prueba para backend
-function probarBackend() {
-  console.log('🧪 Probando backend...');
   
-  const testURL = 'https://script.google.com/macros/s/AKfycbxMVG-Aa6fIMKSw8Y0-xOyLlahVAKOPT9ZYiRUDi_-kZ1fm9qxsx0F6zZhM5jSArC1j/exec?test=1';
+  // Agregar el formulario a la página, enviarlo y removerlo
+  document.body.appendChild(form);
+  console.log('🔄 Enviando formulario a:', sheetsURL);
+  form.submit();
+  document.body.removeChild(form);
   
-  fetch(testURL)
-    .then(res => res.text())
-    .then(text => {
-      console.log('✅ Backend responde:', text);
-      alert('Backend OK: ' + text.substring(0, 50));
-    })
-    .catch(err => {
-      console.log('❌ Error:', err);
-      alert('Error: ' + err.message);
-    });
+  console.log('✅ Petición de guardado lanzada (método formulario).');
+  // No esperamos respuesta porque el formulario se envió.
 }
 </script>
 
