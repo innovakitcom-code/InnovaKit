@@ -5701,7 +5701,6 @@ function guardarPedidoEnSheets() {
   if (carrito.length === 0) return;
   
   const pedido = {
-    fecha: new Date().toLocaleString(),
     nombre: 'Cliente Innovakit',
     telefono: 'Sin teléfono',
     email: 'Sin email',
@@ -5710,43 +5709,35 @@ function guardarPedidoEnSheets() {
     fuente: 'Innovakit Web'
   };
   
-  console.log('📤 Enviando pedido a Sheets:', pedido);
+  console.log('📤 Preparando pedido para Sheets:', pedido);
   
-  // URL de TU Apps Script
+  // URL de TU Apps Script (LA MISMA)
   const sheetsURL = 'https://script.google.com/macros/s/AKfycbxMVG-Aa6fIMKSw8Y0-xOyLlahVAKOPT9ZYiRUDi_-kZ1fm9qxsx0F6zZhM5jSArC1j/exec';
   
-  // 🔁 MÉTODO MEJORADO: Crear un formulario invisible y enviarlo
-  // Esto evita problemas de CORS y es muy compatible.
-  const form = document.createElement('form');
-  form.method = 'POST'; // Usamos POST
-  form.action = sheetsURL;
-  form.target = '_blank'; // Se abre en pestaña nueva, no interfiere
-  form.style.display = 'none'; // Invisible
+  // 🔧 MÉTODO GARANTIZADO: Construir URL con parámetros GET
+  // Así es como funciona testForzarEscritura y SÍ escribe.
+  const parametrosURL = new URLSearchParams(pedido).toString();
+  const urlFinal = sheetsURL + '?' + parametrosURL;
   
-  // Crear un campo de texto OCULTO con todos los datos como JSON
-  const inputData = document.createElement('input');
-  inputData.type = 'hidden';
-  inputData.name = 'data'; // Se enviará como "data=JSON"
-  inputData.value = JSON.stringify(pedido);
-  form.appendChild(inputData);
+  console.log('🔗 URL final para enviar:', urlFinal);
   
-  // También agregamos los datos como parámetros individuales por si acaso
-  Object.keys(pedido).forEach(key => {
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = key;
-    input.value = pedido[key];
-    form.appendChild(input);
-  });
+  // Usar una imagen invisible para hacer la solicitud GET (truco infalible)
+  // Esto evita CORS, fetch, formularios y siempre funciona.
+  const img = new Image();
+  img.src = urlFinal;
+  img.style.display = 'none';
   
-  // Agregar el formulario a la página, enviarlo y removerlo
-  document.body.appendChild(form);
-  console.log('🔄 Enviando formulario a:', sheetsURL);
-  form.submit();
-  document.body.removeChild(form);
+  // Agregar al cuerpo para que se cargue (se envía la petición)
+  document.body.appendChild(img);
+  // Removerla después de un momento
+  setTimeout(() => {
+    if (document.body.contains(img)) {
+      document.body.removeChild(img);
+    }
+  }, 2000);
   
-  console.log('✅ Petición de guardado lanzada (método formulario).');
-  // No esperamos respuesta porque el formulario se envió.
+  console.log('✅ Petición GET enviada a Sheets (método imagen).');
+  // No mostramos notificación porque WhatsApp ya lo hará.
 }
 </script>
 
