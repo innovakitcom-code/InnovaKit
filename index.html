@@ -1445,9 +1445,30 @@
 .scroll-smooth-instant {
     scroll-behavior: smooth;
 }
+    /* Skip link para accesibilidad (agregar al final del CSS) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 10px;
+  background: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 10000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 10px;
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+}
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
   <!-- ESTE SCRIPT ELIMINA EL SW VIEJO -->
   <script>
   if ('serviceWorker' in navigator) {
@@ -1577,7 +1598,7 @@
     <!-- Misión - MEJORADO FASE 5 -->
     <section id="mision" class="p-6 sm:p-12 text-center bg-white scroll-mt-20 card-elevated mx-4">
       <i class="fas fa-bullseye text-4xl sm:text-5xl text-green-600 mb-4 animate-bounce-subtle"></i>
-      <h3 class="text-xl sm:text-2xl font-bold mb-2">Nuestra Misión</h3>
+      <h3 id="mision-titulo" class="text-xl sm:text-2xl font-bold mb-2">Nuestra Misión</h3>
       <p class="max-w-2xl mx-auto text-base sm:text-lg text-readable">
         Nuestra misión es <strong>hacer que aprender electrónica sea accesible y emocionante</strong>, brindando herramientas prácticas que impulsen la creatividad en estudiantes, makers y emprendedores.</p>
     </section>
@@ -1586,7 +1607,7 @@
 <!-- Visión -->
     <section id="vision" class="p-6 sm:p-12 text-center bg-gradient-to-br from-blue-50 to-indigo-100 scroll-mt-20 card-elevated mx-4">
       <i class="fas fa-lightbulb text-4xl sm:text-5xl text-yellow-500 mb-4 animate-bounce-subtle"></i>
-      <h3 class="text-xl sm:text-2xl font-bold mb-2">Nuestra Visión</h3>
+      <h3 id="vision-titulo" class="text-xl sm:text-2xl font-bold mb-2">Nuestra Visión</h3>
       <p class="max-w-2xl mx-auto text-base sm:text-lg text-readable">
   Queremos ser <strong>referentes en educación tecnológica en Paraguay</strong>, inspirando a nuevas generaciones a desarrollar proyectos reales con electrónica y programación.</p>
     </section>
