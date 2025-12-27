@@ -1502,7 +1502,7 @@
       <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-2">Contacto</a>
       
       <!-- Carrito -->
-      <button onclick="verCarrito()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover" aria-label="Ver carrito de compras">
+      <button onclick="enviarCarritoWhatsAppMejorado()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover" aria-label="Ver carrito de compras">
   🛒 Carrito (<span id="carrito-count-desktop" aria-live="polite">0</span>)
 </button>
 </nav> 
@@ -5662,6 +5662,97 @@ function verAsesorias() {
             });
         }
     }, 100);
+}
+  // =============================================
+// NUEVO: Sistema de pedidos CON Google Sheets
+// =============================================
+
+// 1. Versión MEJORADA que guarda en Sheets
+function enviarCarritoWhatsAppMejorado() {
+  if (carrito.length === 0) { 
+    mostrarNotificacion("Tu carrito está vacío 🛒"); 
+    return; 
+  }
+  
+  console.log('🚀 Iniciando compra mejorada...');
+  
+  // A. PRIMERO: Guardar en Google Sheets (en segundo plano)
+  guardarPedidoEnSheets();
+  
+  // B. LUEGO: Enviar por WhatsApp (tu código original)
+  const numero = "595972292392";
+  const cuerpo = carrito.map((p, i) => `${i+1}. ${p.nombre} - ${p.precio}`).join('%0A');
+  const total = carrito.reduce((sum, p) => sum + parseGs(p.precio), 0);
+  const url = `https://wa.me/${numero}?text=¡Hola! Quiero comprar:%0A%0A${cuerpo}%0A%0A*Total: ${formatearGs(total)}*`;
+  
+  // C. Vaciar carrito y actualizar
+  carrito = [];
+  actualizarContador();
+  
+  // D. Abrir WhatsApp
+  window.open(url, "_blank");
+  
+  // E. Mostrar confirmación
+  mostrarNotificacion('✅ Pedido enviado, revisa WhatsApp');
+}
+
+// 2. Función para guardar en Google Sheets (MÉTODO GET - más compatible)
+function guardarPedidoEnSheets() {
+  if (carrito.length === 0) return;
+  
+  const pedido = {
+    fecha: new Date().toLocaleString(),
+    nombre: 'Cliente Innovakit',
+    telefono: 'Sin teléfono',
+    email: 'Sin email',
+    productos: carrito.map(p => p.nombre).join(', '),
+    total: carrito.reduce((sum, p) => sum + parseGs(p.precio), 0),
+    fuente: 'Innovakit Web'
+  };
+  
+  console.log('📤 Guardando pedido:', pedido);
+  
+  // URL de TU Apps Script
+  const sheetsURL = 'https://script.google.com/macros/s/AKfycbxMVG-Aa6fIMKSw8Y0-xOyLlahVAKOPT9ZYiRUDi_-kZ1fm9qxsx0F6zZhM5jSArC1j/exec';
+  
+  // Crear URL con parámetros GET (más compatible)
+  const urlConParametros = sheetsURL + '?' + Object.keys(pedido)
+    .map(key => `${key}=${encodeURIComponent(pedido[key])}`)
+    .join('&');
+  
+  console.log('🔗 URL a enviar:', urlConParametros);
+  
+  // Enviar usando fetch con GET
+  fetch(urlConParametros, { 
+    method: 'GET',
+    mode: 'no-cors'
+  })
+  .then(() => {
+    console.log('✅ Pedido enviado a Google Sheets');
+    mostrarNotificacion('📝 Pedido registrado en sistema');
+  })
+  .catch(err => {
+    console.log('⚠️ No se pudo guardar en Sheets:', err);
+    // No mostrar error al usuario, WhatsApp igual se envía
+  });
+}
+
+// 3. Botón de prueba para backend
+function probarBackend() {
+  console.log('🧪 Probando backend...');
+  
+  const testURL = 'https://script.google.com/macros/s/AKfycbxMVG-Aa6fIMKSw8Y0-xOyLlahVAKOPT9ZYiRUDi_-kZ1fm9qxsx0F6zZhM5jSArC1j/exec?test=1';
+  
+  fetch(testURL)
+    .then(res => res.text())
+    .then(text => {
+      console.log('✅ Backend responde:', text);
+      alert('Backend OK: ' + text.substring(0, 50));
+    })
+    .catch(err => {
+      console.log('❌ Error:', err);
+      alert('Error: ' + err.message);
+    });
 }
 </script>
 
