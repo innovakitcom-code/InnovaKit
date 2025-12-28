@@ -1861,20 +1861,22 @@
         <div class="text-xl font-bold text-gray-800">
           Total: <span id="carrito-total" class="text-green-600 text-2xl">Gs. 0</span>
         </div>
-        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-          <button onclick="vaciarCarrito()" class="px-6 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold flex items-center justify-center btn-hover touch-target transition-all duration-300">
-            <i class="fas fa-trash mr-2"></i>
-            Vaciar
-          </button>
-          <!-- CON ESTO -->
-<button onclick="enviarCarritoWhatsAppMejorado()" 
-        class="px-5 py-2.5 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold flex items-center justify-center gap-2 btn-hover touch-target transition-all duration-300">
-  <i class="fab fa-whatsapp"></i>
-  <span>Comprar por WhatsApp</span>
+        <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <button onclick="vaciarCarrito()" 
+        class="px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold flex items-center justify-center btn-hover touch-target transition-all duration-300 text-sm">
+  <i class="fas fa-trash mr-1.5"></i>
+  Vaciar Carrito
 </button>
-          <button class="modal-carrito-close px-6 py-3 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold transition-all duration-300 btn-hover">
-            Cerrar
-          </button>
+
+<button onclick="enviarCarritoWhatsAppMejorado()" 
+        class="px-4 py-2.5 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold flex items-center justify-center btn-hover touch-target transition-all duration-300 text-sm">
+  <i class="fab fa-whatsapp mr-1.5"></i>
+  Comprar por Whatsapp
+</button>
+
+<button class="modal-carrito-close px-4 py-2.5 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold transition-all duration-300 btn-hover text-sm">
+  Cerrar
+</button>
         </div>
       </div>
     </div>
