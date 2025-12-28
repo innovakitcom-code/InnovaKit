@@ -2905,6 +2905,8 @@ function comprarProductoWhatsApp() {
 
 // 4. NUEVA FUNCIÓN para guardar producto individual
 function guardarPedidoIndividualEnSheets(nombreProducto, precioProducto) {
+  const esMovil = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+  
   const pedidoIndividual = {
     nombre: 'Cliente Innovakit (Individual)',
     telefono: 'Sin teléfono',
@@ -2912,28 +2914,30 @@ function guardarPedidoIndividualEnSheets(nombreProducto, precioProducto) {
     productos: nombreProducto,
     total: precioProducto,
     fuente: 'Compra Individual',
-    tipo: 'producto_suelto'
+    tipo: 'producto_suelto',
+    dispositivo: esMovil ? 'móvil' : 'desktop'
   };
   
-  console.log('📤 Guardando producto individual:', pedidoIndividual);
+  console.log('📤 Guardando producto individual');
+  console.log('📱 Es móvil?', esMovil);
   
-  // Usar la MISMA función de guardado que ya funciona
-  // Reutiliza la URL de tu Versión 4 que ya está funcionando
-  const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
-  const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedidoIndividual).toString();
-  
-  // Método de imagen invisible (el que ya funciona)
-  const img = new Image();
-  img.src = urlConDatos;
-  img.style.display = 'none';
-  document.body.appendChild(img);
-  setTimeout(() => {
-    if (document.body.contains(img)) document.body.removeChild(img);
-  }, 1000);
-  
-  console.log('✅ Producto individual enviado a Sheets');
+  if (esMovil) {
+    // Método especial para móvil
+    enviarMobilASheets(pedidoIndividual);
+  } else {
+    // Método original para desktop (NO TOCAR)
+    const sheetsURL = 'https://script.google.com/macros/s/AKfycbw4Nl4e58j2BrmsjrMG-85VjuvOB77nVg0LhLuw6XYCV2cDOXvO3M_eYGijr_7A1Zpv/exec';
+    const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedidoIndividual).toString();
+    
+    const img = new Image();
+    img.src = urlConDatos;
+    img.style.display = 'none';
+    document.body.appendChild(img);
+    setTimeout(() => {
+      if (document.body.contains(img)) document.body.removeChild(img);
+    }, 1000);
+  }
 }
-
 function agregarProductoAlCarrito() {
   const producto = componentesSueltos.find(comp => 
     comp.nombre === document.getElementById('modal-producto-nombre').textContent
@@ -5801,6 +5805,7 @@ function guardarPedidoEnSheets() {
   // Función para comprar kits que también guarda
 function comprarKitWhatsApp(nombreKit, precioKit) {
   const precioNum = parseGs(precioKit);
+  const esMovil = /Mobi|Android|iPhone/i.test(navigator.userAgent);
   
   // Guardar en Sheets
   const pedidoKit = {
@@ -5810,24 +5815,71 @@ function comprarKitWhatsApp(nombreKit, precioKit) {
     productos: nombreKit,
     total: precioNum,
     fuente: 'Kit Completo',
-    tipo: 'kit'
+    tipo: 'kit',
+    dispositivo: esMovil ? 'móvil' : 'desktop'
   };
   
-  const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
-  const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedidoKit).toString();
+  console.log('📱 Es móvil?', esMovil);
   
-  const img = new Image();
-  img.src = urlConDatos;
-  img.style.display = 'none';
-  document.body.appendChild(img);
-  setTimeout(() => document.body.removeChild(img), 1000);
+  if (esMovil) {
+    // Método especial para móvil
+    enviarMobilASheets(pedidoKit);
+  } else {
+    // Método original para desktop (NO TOCAR)
+    const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
+    const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedidoKit).toString();
+    
+    const img = new Image();
+    img.src = urlConDatos;
+    img.style.display = 'none';
+    document.body.appendChild(img);
+    setTimeout(() => document.body.removeChild(img), 1000);
+  }
   
-  // Abrir WhatsApp
+  // Abrir WhatsApp (IGUAL)
   const mensaje = `¡Hola! Quiero comprar el kit: ${nombreKit} - ${precioKit}`;
   const urlWhatsApp = `https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`;
   window.open(urlWhatsApp, "_blank");
   
   mostrarNotificacion('✅ Kit registrado y enviado a WhatsApp');
+}
+  // =============================================
+// SOLO PARA MÓVIL - Método más robusto
+// =============================================
+function enviarMobilASheets(pedido) {
+  const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
+  const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedido).toString();
+  
+  console.log('📱 Intentando enviar desde móvil...');
+  
+  // 1. Beacon API (si está disponible)
+  if (navigator.sendBeacon) {
+    console.log('📱 Usando Beacon API');
+    return navigator.sendBeacon(urlConDatos);
+  }
+  
+  // 2. Fetch con timeout largo
+  console.log('📱 Usando Fetch con timeout largo');
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), 8000);
+  
+  fetch(urlConDatos, {
+    mode: 'no-cors',
+    signal: controller.signal
+  })
+  .then(() => console.log('✅ Éxito en móvil'))
+  .catch(() => {
+    // 3. Imagen como último recurso
+    console.log('📱 Fallback a imagen');
+    const img = new Image();
+    img.src = urlConDatos;
+    document.body.appendChild(img);
+    setTimeout(() => {
+      if (img.parentNode) img.parentNode.removeChild(img);
+    }, 5000);
+  });
+  
+  return true;
 }
 </script>
 
