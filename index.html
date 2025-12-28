@@ -2886,13 +2886,68 @@ function toggleModalProducto() {
   }
 }
 function comprarProductoWhatsApp() {
-  const producto = componentesSueltos.find(comp => 
-    comp.nombre === document.getElementById('modal-producto-nombre').textContent
-  );
-  if (producto) {
-    const mensaje = `¡Hola! Quiero comprar: ${producto.nombre} - ${producto.precio}`;
-    window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`, '_blank');
+  // 1. Obtener datos del producto desde el modal actual
+  const productoNombre = document.getElementById('modal-producto-nombre').textContent;
+  const productoPrecio = document.getElementById('modal-producto-precio').textContent;
+  const productoPrecioNum = parseGs(productoPrecio);
+  
+  console.log('🛍️ Comprando producto individual:', productoNombre);
+  
+  // 2. PRIMERO: Guardar este producto individual en Google Sheets
+  guardarPedidoIndividualEnSheets(productoNombre, productoPrecioNum);
+  
+  // 3. LUEGO: Abrir WhatsApp (tu código original)
+  const mensaje = `¡Hola! Quiero comprar: ${productoNombre} - ${productoPrecio}`;
+  const url = `https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`;
+  
+  // Track para analytics
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'whatsapp_single_product', {
+      'event_category': 'conversion',
+      'event_label': productoNombre,
+      'value': productoPrecioNum
+    });
   }
+  
+  // Cerrar el modal
+  toggleModalProducto();
+  
+  // Abrir WhatsApp
+  window.open(url, "_blank");
+  
+  // Mostrar confirmación
+  mostrarNotificacion('✅ Producto enviado a WhatsApp y registrado');
+}
+
+// 4. NUEVA FUNCIÓN para guardar producto individual
+function guardarPedidoIndividualEnSheets(nombreProducto, precioProducto) {
+  const pedidoIndividual = {
+    nombre: 'Cliente Innovakit (Individual)',
+    telefono: 'Sin teléfono',
+    email: 'Sin email',
+    productos: nombreProducto,
+    total: precioProducto,
+    fuente: 'Compra Individual',
+    tipo: 'producto_suelto'
+  };
+  
+  console.log('📤 Guardando producto individual:', pedidoIndividual);
+  
+  // Usar la MISMA función de guardado que ya funciona
+  // Reutiliza la URL de tu Versión 4 que ya está funcionando
+  const sheetsURL = 'https://script.google.com/macros/s/AKfycbw4Nl4e58j2BrmsjrMG-85VjuvOB77nVg0LhLuw6XYCV2cDOXvO3M_eYGijr_7A1Zpv/exec';
+  const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedidoIndividual).toString();
+  
+  // Método de imagen invisible (el que ya funciona)
+  const img = new Image();
+  img.src = urlConDatos;
+  img.style.display = 'none';
+  document.body.appendChild(img);
+  setTimeout(() => {
+    if (document.body.contains(img)) document.body.removeChild(img);
+  }, 1000);
+  
+  console.log('✅ Producto individual enviado a Sheets');
 }
 
 function agregarProductoAlCarrito() {
@@ -3156,10 +3211,10 @@ function verProductosKit(idx) {
         
         <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
         <div class="flex flex-col gap-2 w-full mt-auto">
-            <a href="https://wa.me/595972292392?text=${mensaje}" target="_blank"
-                class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">
-                Comprar por WhatsApp
-            </a>
+            <button onclick="comprarKitWhatsApp('${p.nombre}', '${p.precio}')"
+        class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">
+   Comprar por WhatsApp
+</button>
             <button onclick="event.stopPropagation(); agregarAlCarrito('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')"
                 class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
                 Agregar al carrito
@@ -5758,6 +5813,37 @@ function guardarPedidoEnSheets() {
   
   console.log('✅ Petición GET enviada a Sheets (método imagen).');
   // No mostramos notificación porque WhatsApp ya lo hará.
+}
+  // Función para comprar kits que también guarda
+function comprarKitWhatsApp(nombreKit, precioKit) {
+  const precioNum = parseGs(precioKit);
+  
+  // Guardar en Sheets
+  const pedidoKit = {
+    nombre: 'Cliente Innovakit (Kit)',
+    telefono: 'Sin teléfono',
+    email: 'Sin email',
+    productos: nombreKit,
+    total: precioNum,
+    fuente: 'Kit Completo',
+    tipo: 'kit'
+  };
+  
+  const sheetsURL = 'https://script.google.com/macros/s/AKfycbw4Nl4e58j2BrmsjrMG-85VjuvOB77nVg0LhLuw6XYCV2cDOXvO3M_eYGijr_7A1Zpv/exec';
+  const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedidoKit).toString();
+  
+  const img = new Image();
+  img.src = urlConDatos;
+  img.style.display = 'none';
+  document.body.appendChild(img);
+  setTimeout(() => document.body.removeChild(img), 1000);
+  
+  // Abrir WhatsApp
+  const mensaje = `¡Hola! Quiero comprar el kit: ${nombreKit} - ${precioKit}`;
+  const urlWhatsApp = `https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`;
+  window.open(urlWhatsApp, "_blank");
+  
+  mostrarNotificacion('✅ Kit registrado y enviado a WhatsApp');
 }
 </script>
 
