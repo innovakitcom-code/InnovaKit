@@ -1501,22 +1501,12 @@
       <a href="#asesorias-preview" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-2">Asesoría |</a>
       <a href="#contacto" onclick="volverAlInicio()" class="hover:text-blue-600 focus:text-blue-600 px-2">Contacto</a>
       
-       <!-- DOS BOTONES: Ver carrito Y Comprar directo -->
-    <div class="ml-4 flex gap-2">
-      <button onclick="verCarrito()" 
-              class="bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 btn-hover"
-              aria-label="Ver carrito de compras">
-        👁️ Carrito (<span id="carrito-count-desktop" aria-live="polite">0</span>)
-      </button>
-      
-      <button onclick="enviarCarritoWhatsAppMejorado()" 
-              class="bg-green-600 text-white px-3 py-2 rounded-lg shadow hover:bg-green-700 font-semibold focus:outline-none focus:ring-2 focus:ring-green-500 btn-hover"
-              aria-label="Comprar por WhatsApp">
-        🛒 Comprar
-      </button>
-    </div>
-  </nav>
-</div>
+       <!-- Carrito -->
+      <button onclick="verCarrito()" class="ml-4 bg-yellow-300 text-gray-900 px-3 py-2 rounded-lg shadow hover:bg-yellow-400 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-500 btn-hover" aria-label="Ver carrito de compras">
+  🛒 Carrito (<span id="carrito-count-desktop" aria-live="polite">0</span>)
+</button>
+</nav> 
+  </div> 
   <!-- Móvil: Mi diseño (oculto en desktop) -->
   <div class="sm:hidden">
   <!-- Fila 1: Logo (izquierda) + Carrito (derecha) -->
@@ -1530,20 +1520,10 @@
       </a>
     </div>
     
-     <!-- DOS BOTONES MÓVIL -->
-    <div class="flex gap-1">
-      <button onclick="verCarrito()" 
-              class="bg-blue-600 text-white px-2 py-1 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400"
-              aria-label="Ver carrito">
-        👁️ (<span id="carrito-count-mobile" aria-live="polite">0</span>)
-      </button>
-      
-      <button onclick="enviarCarritoWhatsAppMejorado()" 
-              class="bg-green-600 text-white px-2 py-1 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-green-400"
-              aria-label="Comprar ahora">
-        🛒
-      </button>
-    </div>
+     <!-- Carrito fijo a la derecha -->
+    <button onclick="verCarrito()" class="bg-yellow-300 text-gray-900 px-2 py-1 rounded-lg text-sm font-semibold ml-4 focus:outline-none focus:ring-2 focus:ring-yellow-400" aria-label="Ver carrito">
+  🛍️ (<span id="carrito-count-mobile" aria-live="polite">0</span>)
+</button>
   </div>
 
   <!-- Fila 2: Navegación centrada -->
@@ -1886,10 +1866,11 @@
             <i class="fas fa-trash mr-2"></i>
             Vaciar
           </button>
-          <button onclick="enviarCarritoWhatsApp()" class="px-6 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold flex items-center justify-center btn-hover touch-target btn-icon transition-all duration-300">
-            <i class="fab fa-whatsapp mr-2"></i>
-            Enviar por WhatsApp
-          </button>
+          <!-- CON ESTO -->
+<button onclick="enviarCarritoWhatsAppMejorado()" class="px-6 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold flex items-center justify-center btn-hover touch-target btn-icon transition-all duration-300">
+  <i class="fab fa-whatsapp mr-2"></i>
+  Comprar por WhatsApp
+</button>
           <button class="modal-carrito-close px-6 py-3 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold transition-all duration-300 btn-hover">
             Cerrar
           </button>
