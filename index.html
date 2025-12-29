@@ -4943,7 +4943,7 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('🚀 Innovakit FASE 5 - UX/UI Mejorada');
     trackEvent('Navegación', 'Página Vista', 'Inicio');
 });
-// =============================================
+       // =============================================
 // HISTORY API PARA NAVEGACIÓN MÓVIL - CORREGIDO
 // =============================================
 
@@ -5337,9 +5337,83 @@ function limpiarFiltros() {
         console.log('✅ Innovakit inicializado correctamente');
     });   // 🎯 CIERRE CORRECTO DEL DOMContentLoaded
 
+    // =============================================
+    // SERVICE WORKER PARA CACHE - FASE 2
+    // =============================================
+    
+    // Registrar Service Worker para cache
+    /*if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('✅ Service Worker registrado:', registration);
+                })
+                .catch(error => {
+                    console.log('❌ Error registrando Service Worker:', error);
+                });
+        });
+    }
+
+    // =============================================
+    // PWA INSTALL PROMPT - FASE 3
+    // =============================================
+    
+    let deferredPrompt;
+    const installButton = document.createElement('button');
+    
+    // Crear botón de instalación
+    function createInstallButton() {
+        installButton.innerHTML = '📲 Instalar App';
+        installButton.className = 'fixed bottom-24 right-6 z-50 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hidden';
+        installButton.onclick = installPWA;
+        
+        document.body.appendChild(installButton);
+    }
+    
+    // Mostrar prompt de instalación
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        
+        // Mostrar botón después de 5 segundos
+        setTimeout(() => {
+            installButton.classList.remove('hidden');
+            installButton.classList.add('animate-bounce');
+        }, 5000);
+        
+        // Ocultar después de 15 segundos
+        setTimeout(() => {
+            installButton.classList.add('hidden');
+        }, 15000);
+    });
+    
+    // Instalar PWA
+    async function installPWA() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                console.log('✅ Usuario instaló la PWA');
+                installButton.classList.add('hidden');
+            }
+            
+            deferredPrompt = null;
+        }
+    }
+    
+    // Detectar si ya está instalado
+    window.addEventListener('appinstalled', () => {
+        console.log('🎉 PWA instalada correctamente');
+        installButton.classList.add('hidden');
+    });
+    
+    // Inicializar botón de instalación
+    createInstallButton();
 // =============================================
 // MEJORAS UX/UI - FASE 5 (CORREGIDO)
 // =============================================
+*/
 // 1. Sistema de notificaciones mejorado
 function mostrarNotificacion(mensaje, tipo = 'success', duracion = 4000) {
     const notificacion = document.createElement('div');
