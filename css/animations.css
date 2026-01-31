@@ -177,4 +177,90 @@
 .buscando {
   position: relative;
   padding-right: 40px;
+
+}
+/* ============================================= */
+/* GRADIENTE ANIMADO DEL HERO - INNOVAKIT */
+/* ============================================= */
+
+/* Gradiente principal Innovakit */
+.bg-animated {
+  background: linear-gradient(270deg, #1e3a8a, #22be80, #1a47dc);
+  background-size: 200% 200%;
+  animation: moveGradient 8s ease infinite;
+}
+
+/* Versión móvil */
+@media (max-width: 767px) {
+  .bg-animated {
+    background: linear-gradient(270deg, #1e3a8a, #065f46, #1e40af) !important;
+    animation: moveGradientMobile 10s ease infinite !important;
+  }
+}
+
+/* Versión tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .bg-animated {
+    background: linear-gradient(270deg, #1e3a8a, #065f46, #1e40af) !important;
+    animation: moveGradientTablet 10s ease infinite !important;
+  }
+}
+
+/* ============================================= */
+/* COLORES ESPECÍFICOS INNOVAKIT */
+/* ============================================= */
+
+/* Verde Innovakit */
+.text-innovakit-green { color: #7eb74a; }
+.bg-innovakit-green { background-color: #7eb74a; }
+.border-innovakit-green { border-color: #7eb74a; }
+
+/* Amarillo Innovakit */
+.text-innovakit-yellow { color: #fdc344; }
+.bg-innovakit-yellow { background-color: #fdc344; }
+
+/* Azul Innovakit */
+.text-innovakit-blue { color: #3b82f6; }
+.bg-innovakit-blue { background-color: #3b82f6; }
+
+/* ============================================= */
+/* ANIMACIONES FALTANTES */
+/* ============================================= */
+
+/* Efecto pulse para badges */
+@keyframes pulseSoft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 3s infinite;
+}
+
+/* Spin para loading */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  animation: spin 1s ease-in-out infinite;
+}
+
+/* ============================================= */
+/* CLASES DE TRANSICIÓN */
+/* ============================================= */
+.page-transition {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-out;
+}
+
+.animate-bounce-subtle {
+  animation: bounceSubtle 2s infinite;
 }
