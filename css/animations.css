@@ -1,0 +1,180 @@
+/* ============================================= */
+/* ANIMACIONES PRINCIPALES */
+/* ============================================= */
+
+/* Animación de gradiente para hero */
+.bg-animated {
+  background: linear-gradient(270deg, #1e3a8a, #22be80, #1a47dc);
+  background-size: 200% 200%;
+  animation: moveGradient 8s ease infinite;
+}
+
+@keyframes moveGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animación móvil optimizada */
+@keyframes moveGradientMobile {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animación tablet */
+@keyframes moveGradientTablet {
+  0% { background-size: 200% 200%; }
+  50% { background-size: 210% 210%; }
+  100% { background-size: 200% 200%; }
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  0% { opacity: 0; transform: translateX(20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================= */
+/* ANIMACIONES DE UI */
+/* ============================================= */
+
+/* Bounce sutil */
+@keyframes bounceSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-bounce-subtle {
+  animation: bounceSubtle 2s infinite;
+}
+
+/* Pulse suave */
+@keyframes pulseSoft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 3s infinite;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Spin para buscando */
+.buscando::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #3b82f6;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  transform: translateY(-50%);
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* ============================================= */
+/* EFECTOS DE CARGA Y TRANSICIONES */
+/* ============================================= */
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Transición de página */
+.page-transition {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ============================================= */
+/* ANIMACIONES PARA MOBILE HERO */
+/* ============================================= */
+
+/* Aplicar animación móvil específica */
+@media (max-width: 767px) {
+  .bg-animated {
+    animation: moveGradientMobile 10s ease infinite !important;
+    background: linear-gradient(270deg, #1e3a8a, #065f46, #1e40af) !important;
+    background-size: 200% 200% !important;
+  }
+}
+
+/* Aplicar animación tablet específica */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .bg-animated {
+    animation: moveGradientTablet 10s ease infinite !important;
+    background: linear-gradient(270deg, #1e3a8a, #065f46, #1e40af) !important;
+    background-size: 200% 200% !important;
+  }
+}
+
+/* ============================================= */
+/* CLASES DE ANIMACIÓN UTILITARIAS */
+/* ============================================= */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-out;
+}
+
+/* ============================================= */
+/* SCROLL SMOOTH */
+/* ============================================= */
+.scroll-smooth-instant {
+  scroll-behavior: smooth;
+}
+
+/* ============================================= */
+/* SAFE AREAS PARA IPHONE */
+/* ============================================= */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ============================================= */
+/* FEEDBACK VISUAL DE BÚSQUEDA */
+/* ============================================= */
+.buscando {
+  position: relative;
+  padding-right: 40px;
+}
