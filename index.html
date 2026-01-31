@@ -2499,19 +2499,46 @@ function parseGs(str) {
 }
 // Base de datos de componentes sueltos
 let componentesSueltos = [];
-// =============================================
-// SISTEMA DE SEGURIDAD ADMIN - CONFIGURAR!
-// =============================================
+// ============================================= -->
+// SISTEMA DE SEGURIDAD - CARGADO DESDE ARCHIVO SEGURO -->
+// ============================================= -->
 
-const SISTEMA_SEGURIDAD = {
-    // ⚠️ ¡CAMBIAR ESTOS VALORES! ⚠️
-    password: "KitElectronica2024",           // Cambia esta contraseña
-    codigoSecreto: "9722",                    // Últimos 4 dígitos de tu WhatsApp
-    urlToken: "innovakit_paraguay_admin",     // Cambia este token
-    intentos: 0,
-    maxIntentos: 3
-};
+<script>
+// Esta variable se llenará automáticamente
+let SISTEMA_SEGURIDAD = null;
 
+// Función para cargar configuración segura
+function cargarConfiguracionSegura() {
+    try {
+        // Si existe el archivo seguro, úsalo
+        if (typeof CONFIG_SEGURO !== 'undefined') {
+            SISTEMA_SEGURIDAD = {
+                password: CONFIG_SEGURO.ADMIN.PASSWORD_PRINCIPAL,
+                codigoSecreto: CONFIG_SEGURO.ADMIN.CODIGO_4_DIGITOS,
+                urlToken: CONFIG_SEGURO.ADMIN.TOKEN_URL,
+                intentos: 0,
+                maxIntentos: CONFIG_SEGURO.ADMIN.INTENTOS_MAXIMOS
+            };
+            console.log('✅ Configuración segura cargada');
+        } else {
+            // Fallback: valores por defecto (solo para desarrollo)
+            SISTEMA_SEGURIDAD = {
+                password: "TEMPORAL_CAMBIAME",
+                codigoSecreto: "0000",
+                urlToken: "token_temporal",
+                intentos: 0,
+                maxIntentos: 3
+            };
+            console.warn('⚠️ Usando configuración temporal');
+        }
+    } catch (error) {
+        console.error('❌ Error cargando configuración:', error);
+    }
+}
+
+// Cargar cuando la página esté lista
+document.addEventListener('DOMContentLoaded', cargarConfiguracionSegura);
+  <script src="js/config.seguro.js"></script>
 // =============================================
 // SISTEMA DE REVIEWS CON APROBACIÓN MANUAL
 // =============================================
