@@ -1,0 +1,162 @@
+# .gitignore para Innovakit - Proyecto Web
+
+# =============================================
+# Sistema y Editor
+# =============================================
+.DS_Store
+*.swp
+*~
+Thumbs.db
+desktop.ini
+
+# =============================================
+# Entornos y Configuraciones
+# =============================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# =============================================
+# Node.js / npm
+# =============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# =============================================
+# Logs
+# =============================================
+logs/
+*.log
+
+# =============================================
+# Dependencias y builds
+# =============================================
+.cache/
+dist/
+build/
+out/
+
+# =============================================
+# Sistema operativo
+# =============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+ehthumbs.db
+Thumbs.db
+*.stackdump
+
+# =============================================
+# Archivos de IDE
+# =============================================
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# =============================================
+# Archivos de configuración local
+# =============================================
+*.local.js
+*.local.json
+*.local.yaml
+
+# =============================================
+# Backups y temporales
+# =============================================
+*.bak
+*.tmp
+*.temp
+*.backup
+
+# =============================================
+# Base de datos local
+# =============================================
+*.db
+*.sqlite
+*.sqlite3
+
+# =============================================
+# Credenciales y archivos sensibles
+# =============================================
+# API Keys
+*_key.pem
+*_cert.pem
+
+# Google Sheets credentials
+credentials.json
+token.json
+
+# =============================================
+# Testing y cobertura
+# =============================================
+coverage/
+.nyc_output/
+
+# =============================================
+# Archivos específicos del proyecto Innovakit
+# =============================================
+
+# Archivos de configuración personal (si existen)
+config.local.js
+config.local.json
+
+# Cache de imágenes procesadas
+img-cache/
+
+# Archivos de sesión/autenticación local
+session/
+auth/
+
+# Archivos de analytics local (si los generas)
+analytics-local.json
+
+# Backup de datos de productos
+productos-backup.json
+kits-backup.json
+reviews-backup.json
+
+# =============================================
+# PWA y Service Workers (de desarrollo)
+# =============================================
+sw.js.bak
+service-worker.js.bak
+manifest.backup.json
+
+# =============================================
+# Uploads locales (si subes archivos localmente)
+# =============================================
+uploads/
+temp-uploads/
+
+# =============================================
+# Archivos generados automáticamente
+# =============================================
+# Cache de búsqueda
+search-cache.json
+
+# Cache de filtros
+filters-cache.json
+
+# Estadísticas generadas
+stats.json
+
+# =============================================
+# FIN DEL .gitignore
+# =============================================
