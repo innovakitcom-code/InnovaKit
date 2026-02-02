@@ -156,7 +156,14 @@ filters-cache.json
 
 # Estadísticas generadas
 stats.json
-
+# =============================================
+# ARCHIVOS SECRETOS DE INNOVAKIT - NO SUBIR!
+# =============================================
+js/config.seguro.js
+js/_s.js
+js/*.secret.js
+js/private*.js
 # =============================================
 # FIN DEL .gitignore
+
 # =============================================
