@@ -13,13 +13,9 @@
       "sizes": "any",
       "type": "image/x-icon"
     },
-    {
-      "src": "favicon.png",
-      "sizes": "any",
-      "type": "image/png"
-    }
   ],
   "categories": ["education", "shopping"],
   "lang": "es-PY",
   "scope": "/"
 }
+
