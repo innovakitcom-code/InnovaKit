@@ -20,9 +20,9 @@ const CONFIG_SEGURO_INNOVAKIT = {
     
     // Sistema de Admin
     ADMIN: {
-        PASSWORD_PRINCIPAL: 'KitElectronica2024',  // ⚠️ CAMBIA ESTO
-        CODIGO_4_DIGITOS: '9722',                 // ⚠️ CAMBIA ESTO
-        TOKEN_URL: 'innovakit_paraguay_admin',    // ⚠️ CAMBIA ESTO
+        PASSWORD_PRINCIPAL: 'qwertyuiop',  // ⚠️ CAMBIA ESTO
+        CODIGO_4_DIGITOS: '6058',                 // ⚠️ CAMBIA ESTO
+        TOKEN_URL: 'adminpy',    // ⚠️ CAMBIA ESTO
         INTENTOS_MAXIMOS: 3
     }
 };
@@ -38,4 +38,5 @@ const CONFIG_SEGURO_INNOVAKIT = {
 if (typeof window !== 'undefined') {
     window.CONFIG_SEGURO = CONFIG_SEGURO_INNOVAKIT;
     console.log('✅ Configuración segura cargada (local)');
+
 }
