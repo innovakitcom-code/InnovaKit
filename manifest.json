@@ -14,9 +14,10 @@
       "type": "image/x-icon"
     },
   ],
-  "categories": ["education", "shopping", "robotic"],
+  "categories": ["education", "shopping"],
   "lang": "es-PY",
   "scope": "/"
 }
+
 
 
