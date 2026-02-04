@@ -71,6 +71,44 @@
   
   <!-- Solo una carga de Tailwind -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'innovakit-green': '#7eb74a',
+            'innovakit-yellow': '#fdc344',
+            'innovakit-blue': '#3b82f6'
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.6s ease-out',
+            'slide-in-right': 'slideInRight 0.5s ease-out',
+            'bounce-subtle': 'bounceSubtle 2s infinite',
+            'pulse-soft': 'pulseSoft 3s infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInRight: {
+              '0%': { opacity: '0', transform: 'translateX(20px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' }
+            },
+            bounceSubtle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-5px)' }
+            },
+            pulseSoft: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.8' }
+            }
+          }
+        }
+      }
+    }
+  </script>
     <!-- Estilos CSS optimizados - FASE 5: MEJORAS UX/UI -->
   <style>
     /* Variables CSS para consistencia */
