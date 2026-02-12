@@ -19,10 +19,10 @@
 <!-- 1. ICO para navegadores antiguos y Google (OBLIGATORIO) -->
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <!-- 2. PNG para navegadores modernos -->
-<link rel="icon" type="image/png" sizes="any" href="favicon.png">
-<link rel="icon" type="image/png" sizes="any" href="favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
 <!-- 3. Apple/iOS -->
-<link rel="apple-touch-icon" sizes="any" href="favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
 <!-- 4. Manifest PWA -->
 <link rel="manifest" href="manifest.json">
 <!-- 5. Theme color -->
@@ -43,6 +43,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Innovakit">
   <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="manifest" href="/manifest.json">
   
   <!-- Open Graph mejorado -->
   <meta property="og:title" content="Innovakit - Kits y componentes de Electrónica en Paraguay">
@@ -70,8 +71,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
   
   <!-- Solo una carga de Tailwind -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Estilos CSS optimizados - FASE 5: MEJORAS UX/UI -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'innovakit-green': '#7eb74a',
+            'innovakit-yellow': '#fdc344',
+            'innovakit-blue': '#3b82f6'
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.6s ease-out',
+            'slide-in-right': 'slideInRight 0.5s ease-out',
+            'bounce-subtle': 'bounceSubtle 2s infinite',
+            'pulse-soft': 'pulseSoft 3s infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            slideInRight: {
+              '0%': { opacity: '0', transform: 'translateX(20px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' }
+            },
+            bounceSubtle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-5px)' }
+            },
+            pulseSoft: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.8' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Estilos CSS optimizados - FASE 5: MEJORAS UX/UI -->
   <style>
     /* Variables CSS para consistencia */
     :root {
@@ -1538,7 +1578,7 @@
             </svg>
           </a>
           <a href="#asesorias-preview"
-             class="btn-hover inline-flex items-center justify-center px-6 py-3.5 rounded-full  bg-yellow-300 hover:bg-yellow-400
+             class="btn-hover inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-[#FFD84D] hover:bg-yellow-400
                     text-gray-900 font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-yellow-300 btn-icon">
             <span>Solicita asesoría</span>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2460,43 +2500,17 @@ function parseGs(str) {
 // Base de datos de componentes sueltos
 let componentesSueltos = [];
 // =============================================
-// SISTEMA DE SEGURIDAD - CARGADO DESDE ARCHIVO SEGURO 
+// SISTEMA DE SEGURIDAD ADMIN - CONFIGURAR!
 // =============================================
 
-// Esta variable se llenará automáticamente
-let SISTEMA_SEGURIDAD = null;
-
-// Función para cargar configuración segura
-function cargarConfiguracionSegura() {
-    try {
-        // Si existe el archivo seguro, úsalo
-        if (typeof CONFIG_SEGURO !== 'undefined') {
-            SISTEMA_SEGURIDAD = {
-                password: CONFIG_SEGURO.ADMIN.PASSWORD_PRINCIPAL,
-                codigoSecreto: CONFIG_SEGURO.ADMIN.CODIGO_4_DIGITOS,
-                urlToken: CONFIG_SEGURO.ADMIN.TOKEN_URL,
-                intentos: 0,
-                maxIntentos: CONFIG_SEGURO.ADMIN.INTENTOS_MAXIMOS
-            };
-            console.log('✅ Configuración segura cargada');
-        } else {
-            // Fallback: valores por defecto (solo para desarrollo)
-            SISTEMA_SEGURIDAD = {
-                password: "TEMPORAL_CAMBIAME",
-                codigoSecreto: "0000",
-                urlToken: "token_temporal",
-                intentos: 0,
-                maxIntentos: 3
-            };
-            console.warn('⚠️ Usando configuración temporal');
-        }
-    } catch (error) {
-        console.error('❌ Error cargando configuración:', error);
-    }
-}
-
-// Cargar cuando la página esté lista
-document.addEventListener('DOMContentLoaded', cargarConfiguracionSegura);
+const SISTEMA_SEGURIDAD = {
+    // ⚠️ ¡CAMBIAR ESTOS VALORES! ⚠️
+    password: "KitElectronica2024",           // Cambia esta contraseña
+    codigoSecreto: "9722",                    // Últimos 4 dígitos de tu WhatsApp
+    urlToken: "innovakit_paraguay_admin",     // Cambia este token
+    intentos: 0,
+    maxIntentos: 3
+};
 
 // =============================================
 // SISTEMA DE REVIEWS CON APROBACIÓN MANUAL
@@ -5880,6 +5894,6 @@ function enviarMobilASheets(pedido) {
   return true;
 }
 </script>
-<script src="js/config.seguro.js"></script>
+
 </body>
 </html>
