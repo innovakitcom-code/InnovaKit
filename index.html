@@ -2938,7 +2938,7 @@ function guardarPedidoIndividualEnSheets(nombreProducto, precioProducto) {
     enviarMobilASheets(pedidoIndividual);
   } else {
     // Método original para desktop (NO TOCAR)
-    const sheetsURL = 'https://script.google.com/d/1fpzTfDHb8XncTYTj36VEiFebSFbHmw-ihx814ljSOAWjwQNTmU-SgGoJ/edit?usp=sharing';
+    const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
     const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedidoIndividual).toString();
     
     const img = new Image();
@@ -5787,7 +5787,7 @@ function guardarPedidoEnSheets() {
   console.log('📤 Preparando pedido para Sheets:', pedido);
   
   // URL de TU Apps Script (LA MISMA)
-  const sheetsURL = 'https://script.google.com/d/1fpzTfDHb8XncTYTj36VEiFebSFbHmw-ihx814ljSOAWjwQNTmU-SgGoJ/edit?usp=sharing';
+  const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
   
   // 🔧 MÉTODO GARANTIZADO: Construir URL con parámetros GET
   // Así es como funciona testForzarEscritura y SÍ escribe.
@@ -5838,7 +5838,7 @@ function comprarKitWhatsApp(nombreKit, precioKit) {
     enviarMobilASheets(pedidoKit);
   } else {
     // Método original para desktop (NO TOCAR)
-    const sheetsURL = 'https://script.google.com/d/1fpzTfDHb8XncTYTj36VEiFebSFbHmw-ihx814ljSOAWjwQNTmU-SgGoJ/edit?usp=sharing';
+    const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
     const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedidoKit).toString();
     
     const img = new Image();
@@ -5859,7 +5859,7 @@ function comprarKitWhatsApp(nombreKit, precioKit) {
 // SOLO PARA MÓVIL - Método más robusto
 // =============================================
 function enviarMobilASheets(pedido) {
-  const sheetsURL = 'https://script.google.com/d/1fpzTfDHb8XncTYTj36VEiFebSFbHmw-ihx814ljSOAWjwQNTmU-SgGoJ/edit?usp=sharing';
+  const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
   const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedido).toString();
   
   console.log('📱 Intentando enviar desde móvil...');
