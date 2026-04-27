@@ -3211,7 +3211,7 @@ function verProductosKit(idx) {
         
         <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
         <div class="flex flex-col gap-2 w-full mt-auto">
-            <button onclick="comprarKitWhatsApp('${p.nombre}', '${p.precio}')"
+         <button onclick="comprarProductoKitWhatsApp('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')" 
         class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">
    Comprar por WhatsApp
 </button>
@@ -5815,45 +5815,64 @@ function guardarPedidoEnSheets() {
   // No mostramos notificación porque WhatsApp ya lo hará.
 }
   // Función para comprar kits que también guarda
+// =============================================
+// FUNCIÓN CORREGIDA PARA COMPRAR KITS
+// =============================================
 function comprarKitWhatsApp(nombreKit, precioKit) {
-  const precioNum = parseGs(precioKit);
-  const esMovil = /Mobi|Android|iPhone/i.test(navigator.userAgent);
-  
-  // Guardar en Sheets
-  const pedidoKit = {
-    nombre: 'Cliente Innovakit (Kit)',
-    telefono: 'Sin teléfono',
-    email: 'Sin email',
-    productos: nombreKit,
-    total: precioNum,
-    fuente: 'Kit Completo',
-    tipo: 'kit',
-    dispositivo: esMovil ? 'móvil' : 'desktop'
-  };
-  
-  console.log('📱 Es móvil?', esMovil);
-  
-  if (esMovil) {
-    // Método especial para móvil
-    enviarMobilASheets(pedidoKit);
-  } else {
-    // Método original para desktop (NO TOCAR)
+    console.log('🛍️ COMPRANDO KIT:', nombreKit, precioKit);
+    
+    const precioNum = parseGs(precioKit);
+    const esMovil = /Mobi|Android|iPhone/i.test(navigator.userAgent);
     const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
-    const urlConDatos = sheetsURL + '?' + new URLSearchParams(pedidoKit).toString();
+    
+    const pedidoKit = {
+        nombre: 'Cliente Innovakit (Kit)',
+        telefono: 'Sin teléfono',
+        email: 'Sin email',
+        productos: nombreKit,
+        total: precioNum,
+        fuente: 'Kit Completo',
+        tipo: 'kit',
+        dispositivo: esMovil ? 'móvil' : 'desktop',
+        timestamp: new Date().toISOString()
+    };
+    
+    console.log('📦 Guardando kit:', pedidoKit);
+    
+    const params = new URLSearchParams(pedidoKit).toString();
+    const urlFinal = sheetsURL + '?' + params;
     
     const img = new Image();
-    img.src = urlConDatos;
+    img.src = urlFinal;
     img.style.display = 'none';
     document.body.appendChild(img);
-    setTimeout(() => document.body.removeChild(img), 1000);
-  }
-  
-  // Abrir WhatsApp (IGUAL)
-  const mensaje = `¡Hola! Quiero comprar el kit: ${nombreKit} - ${precioKit}`;
-  const urlWhatsApp = `https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`;
-  window.open(urlWhatsApp, "_blank");
-  
-  mostrarNotificacion('✅ Kit registrado y enviado a WhatsApp');
+    setTimeout(() => {
+        if (document.body.contains(img)) document.body.removeChild(img);
+    }, 2000);
+    
+    const backups = JSON.parse(localStorage.getItem('innovakit_pedidos_backup') || '[]');
+    backups.push({
+        ...pedidoKit,
+        backup_fecha: new Date().toISOString()
+    });
+    localStorage.setItem('innovakit_pedidos_backup', JSON.stringify(backups.slice(-50)));
+    
+    const mensaje = `¡Hola! Quiero comprar el kit: ${nombreKit} - ${precioKit}`;
+    const urlWhatsApp = `https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`;
+    
+    const modal = document.querySelector('.modal-kit-detalle');
+    if (modal) cerrarModalKitDetalle();
+    
+    window.open(urlWhatsApp, "_blank");
+    mostrarNotificacion('✅ Kit registrado y enviado a WhatsApp');
+    
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'whatsapp_kit', {
+            'event_category': 'conversion',
+            'event_label': nombreKit,
+            'value': precioNum
+        });
+    }
 }
   // =============================================
 // SOLO PARA MÓVIL - Método más robusto
@@ -5892,6 +5911,95 @@ function enviarMobilASheets(pedido) {
   });
   
   return true;
+}
+  // =============================================
+// NUEVA FUNCIÓN PARA PRODUCTOS DENTRO DE KITS
+// =============================================
+function comprarProductoKitWhatsApp(nombreProducto, precioProducto) {
+    console.log('🛍️ COMPRANDO PRODUCTO DE KIT:', nombreProducto, precioProducto);
+    
+    const precioNum = parseGs(precioProducto);
+    const sheetsURL = 'https://script.google.com/macros/s/AKfycbyjAHJGbou9AmNjtWLV0W-NFx71SrTqIu-Px6pTCSmLEZpQyS_32724DAR2Y2Gby3ox/exec';
+    
+    const pedidoProducto = {
+        nombre: 'Cliente Innovakit (Producto Kit)',
+        telefono: 'Sin teléfono',
+        email: 'Sin email',
+        productos: nombreProducto,
+        total: precioNum,
+        fuente: 'Producto de Kit',
+        tipo: 'producto_kit',
+        dispositivo: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'móvil' : 'desktop',
+        timestamp: new Date().toISOString()
+    };
+    
+    console.log('📦 Guardando producto de kit:', pedidoProducto);
+    
+    const params = new URLSearchParams(pedidoProducto).toString();
+    const urlFinal = sheetsURL + '?' + params;
+    
+    const img = new Image();
+    img.src = urlFinal;
+    img.style.display = 'none';
+    document.body.appendChild(img);
+    setTimeout(() => {
+        if (document.body.contains(img)) document.body.removeChild(img);
+    }, 2000);
+    
+    const backups = JSON.parse(localStorage.getItem('innovakit_pedidos_backup') || '[]');
+    backups.push({
+        ...pedidoProducto,
+        backup_fecha: new Date().toISOString()
+    });
+    localStorage.setItem('innovakit_pedidos_backup', JSON.stringify(backups.slice(-50)));
+    
+    const mensaje = `¡Hola! Quiero comprar: ${nombreProducto} - ${precioProducto}`;
+    const urlWhatsApp = `https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`;
+    window.open(urlWhatsApp, "_blank");
+    
+    mostrarNotificacion('✅ Producto registrado y enviado a WhatsApp');
+}
+  // =============================================
+// FUNCIÓN DE DIAGNÓSTICO PARA VER PEDIDOS
+// =============================================
+function verTodosLosPedidos() {
+    const backups = JSON.parse(localStorage.getItem('innovakit_pedidos_backup') || '[]');
+    
+    console.log('📊 INNOVAKIT - REGISTRO DE PEDIDOS');
+    console.log('=================================');
+    console.log(`Total de pedidos guardados: ${backups.length}`);
+    
+    if (backups.length === 0) {
+        console.log('📭 No hay pedidos registrados aún');
+        alert('No hay pedidos registrados aún. Haz una compra de prueba.');
+        return;
+    }
+    
+    const porTipo = {};
+    backups.forEach(p => {
+        const tipo = p.tipo || 'desconocido';
+        if (!porTipo[tipo]) porTipo[tipo] = 0;
+        porTipo[tipo]++;
+    });
+    
+    console.log('📋 Resumen por tipo:');
+    Object.keys(porTipo).forEach(tipo => {
+        console.log(`   ${tipo}: ${porTipo[tipo]} pedidos`);
+    });
+    
+    console.log('\n📝 Últimos 5 pedidos:');
+    backups.slice(-5).reverse().forEach((p, i) => {
+        console.log(`${i+1}. [${p.tipo}] ${p.productos?.substring(0, 50)}... - ${p.fuente}`);
+        console.log(`   Fecha: ${p.backup_fecha || p.timestamp}`);
+    });
+    
+    alert(`📊 PEDIDOS REGISTRADOS:\n\n` +
+          `Total: ${backups.length}\n` +
+          `Kits: ${porTipo['kit'] || 0}\n` +
+          `Productos de kit: ${porTipo['producto_kit'] || 0}\n` +
+          `Productos sueltos: ${porTipo['producto_suelto'] || 0}\n` +
+          `Carritos: ${porTipo['carrito'] || 0}\n\n` +
+          `Revisa la consola (F12) para más detalles.`);
 }
 </script>
 
