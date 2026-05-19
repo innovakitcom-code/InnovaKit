@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Innovakit</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .sidebar { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .nav-item.active { background: rgba(59,130,246,0.2); border-left: 4px solid #3b82f6; }
+        .card { transition: transform 0.2s, box-shadow 0.2s; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-gray-100">
+    
+    <div id="admin-check" class="flex items-center justify-center min-h-screen">
+        <div class="text-center">
+            <i class="fas fa-spinner fa-spin text-4xl text-blue-600 mb-4"></i>
+            <p class="text-gray-600">Verificando acceso...</p>
+        </div>
+    </div>
+    
+    <div id="admin-panel" class="hidden">
+        <!-- Sidebar -->
+        <div class="flex min-h-screen">
+            <div class="sidebar w-64 fixed h-full text-white">
+                <div class="p-6 border-b border-gray-700">
+                    <h1 class="text-2xl font-bold">
+                        <span style="color:#7eb74a">Innova</span><span class="text-blue-400">kit</span>
+                        <span class="text-xs block text-gray-400 mt-1">Panel Admin</span>
+                    </h1>
+                </div>
+                
+                <nav class="p-4 space-y-2">
+                    <button onclick="mostrarSeccion('dashboard')" id="nav-dashboard" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 hover:bg-gray-700 transition">
+                        <i class="fas fa-chart-line w-5"></i> Dashboard
+                    </button>
+                    <button onclick="mostrarSeccion('productos')" id="nav-productos" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 hover:bg-gray-700 transition">
+                        <i class="fas fa-microchip w-5"></i> Productos
+                    </button>
+                    <button onclick="mostrarSeccion('kits')" id="nav-kits" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 hover:bg-gray-700 transition">
+                        <i class="fas fa-box w-5"></i> Kits
+                    </button>
+                    <button onclick="mostrarSeccion('reviews')" id="nav-reviews" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 hover:bg-gray-700 transition">
+                        <i class="fas fa-star w-5"></i> Reviews
+                    </button>
+                    <button onclick="mostrarSeccion('pedidos')" id="nav-pedidos" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 hover:bg-gray-700 transition">
+                        <i class="fas fa-shopping-cart w-5"></i> Pedidos
+                    </button>
+                </nav>
+                
+                <div class="absolute bottom-0 w-64 p-4 border-t border-gray-700">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                        <div>
+                            <p id="admin-nombre" class="font-semibold">Administrador</p>
+                            <p id="admin-email" class="text-xs text-gray-400">admin@innovakit.com</p>
+                        </div>
+                    </div>
+                    <button onclick="cerrarSesionAdmin()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Contenido principal -->
+            <div class="ml-64 flex-1 p-8">
+                <div id="contenido-seccion">
+                    <!-- El contenido se carga dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal para agregar/editar producto -->
+    <div id="modal-producto-form" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modal-producto-titulo" class="text-2xl font-bold">Agregar Producto</h3>
+                    <button onclick="cerrarModalProductoForm()" class="text-2xl">&times;</button>
+                </div>
+                
+                <form id="producto-form" enctype="multipart/form-data">
+                    <input type="hidden" id="producto-id" value="">
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-1">Nombre del producto *</label>
+                        <input type="text" id="prod-nombre" required class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-1">Descripción</label>
+                        <textarea id="prod-descripcion" rows="4" class="w-full p-3 border rounded-lg"></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Precio (Gs.) *</label>
+                            <input type="number" id="prod-precio" required class="w-full p-3 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Categoría</label>
+                            <input type="text" id="prod-categoria" placeholder="Ej: Sensores, Placas, Motores" class="w-full p-3 border rounded-lg">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-1">Imagen principal</label>
+                        <input type="file" id="prod-imagen" accept="image/*" class="w-full p-2">
+                        <div id="imagen-preview" class="mt-2 hidden">
+                            <img id="preview-img" class="w-32 h-32 object-contain">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-1">Especificaciones (una por línea)</label>
+                        <textarea id="prod-especificaciones" rows="5" class="w-full p-3 border rounded-lg" placeholder="Microcontrolador ATmega328P&#10;14 pines digitales&#10;6 pines analógicos"></textarea>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" id="prod-stock" checked> 
+                            <span class="text-sm font-semibold">Producto disponible</span>
+                        </label>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button type="submit" class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold">Guardar producto</button>
+                        <button type="button" onclick="cerrarModalProductoForm()" class="flex-1 bg-gray-300 py-3 rounded-lg">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuración de Supabase (igual que en config.js)
+        const SUPABASE_URL = 'https://lvdjczfblanbadikccxo.supabase.co';  // ← TU URL
+        const SUPABASE_ANON_KEY = 'sb_publishable_O9oR1xmyeAy1ludJJlo3Rw_2gW9XZ_F';  // ← TU ANON KEY
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        let usuarioAdmin = null;
+        let productos = [];
+        let kits = [];
+        let seccionActual = 'dashboard';
+        
+        // Verificar acceso admin
+        async function verificarAccesoAdmin() {
+            const { data: { user } } = await supabase.auth.getUser();
+            
+            if (!user) {
+                window.location.href = '/';
+                return;
+            }
+            
+            const { data: perfil } = await supabase
+                .from('perfiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+            
+            if (!perfil?.es_admin) {
+                window.location.href = '/';
+                return;
+            }
+            
+            usuarioAdmin = {
+                id: user.id,
+                email: user.email,
+                nombre: perfil.nombre
+            };
+            
+            document.getElementById('admin-nombre').textContent = usuarioAdmin.nombre;
+            document.getElementById('admin-email').textContent = usuarioAdmin.email;
+            document.getElementById('admin-check').classList.add('hidden');
+            document.getElementById('admin-panel').classList.remove('hidden');
+            
+            cargarDashboard();
+        }
+        
+        // Cargar datos
+        async function cargarProductos() {
+            const { data } = await supabase.from('productos').select('*').order('id', { ascending: false });
+            productos = data || [];
+            return productos;
+        }
+        
+        async function cargarKits() {
+            const { data } = await supabase.from('kits').select('*');
+            kits = data || [];
+            return kits;
+        }
+        
+        // Dashboard
+        async function cargarDashboard() {
+            await cargarProductos();
+            await cargarKits();
+            
+            const { count: pedidosCount } = await supabase.from('pedidos').select('*', { count: 'exact', head: true });
+            const { count: reviewsPendientes } = await supabase.from('reviews').select('*', { count: 'exact', head: true }).eq('aprobada', false);
+            
+            document.getElementById('contenido-seccion').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="card bg-white p-6 rounded-xl shadow">
+                        <i class="fas fa-microchip text-3xl text-blue-600 mb-2"></i>
+                        <p class="text-2xl font-bold">${productos.length}</p>
+                        <p class="text-gray-600">Productos</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-xl shadow">
+                        <i class="fas fa-box text-3xl text-green-600 mb-2"></i>
+                        <p class="text-2xl font-bold">${kits.length}</p>
+                        <p class="text-gray-600">Kits</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-xl shadow">
+                        <i class="fas fa-shopping-cart text-3xl text-orange-600 mb-2"></i>
+                        <p class="text-2xl font-bold">${pedidosCount || 0}</p>
+                        <p class="text-gray-600">Pedidos</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-xl shadow">
+                        <i class="fas fa-star text-3xl text-yellow-500 mb-2"></i>
+                        <p class="text-2xl font-bold">${reviewsPendientes || 0}</p>
+                        <p class="text-gray-600">Reviews pendientes</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="font-bold text-lg mb-4">Últimos productos agregados</h3>
+                    <div class="space-y-2">
+                        ${productos.slice(0, 5).map(p => `
+                            <div class="flex justify-between items-center p-3 border-b">
+                                <span>${p.nombre}</span>
+                                <span class="text-green-600">${p.precio.toLocaleString()} Gs.</span>
+                            </div>
+                        `).join('')}
+                        ${productos.length === 0 ? '<p class="text-gray-500">No hay productos aún</p>' : ''}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Lista de productos (CRUD)
+        async function cargarListaProductos() {
+            await cargarProductos();
+            
+            document.getElementById('contenido-seccion').innerHTML = `
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold">Productos</h2>
+                    <button onclick="abrirModalProductoForm()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                        <i class="fas fa-plus"></i> Nuevo producto
+                    </button>
+                </div>
+                <div class="bg-white rounded-xl shadow overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-50 border-b">
+                            <tr>
+                                <th class="text-left p-3">Imagen</th>
+                                <th class="text-left p-3">Nombre</th>
+                                <th class="text-left p-3">Precio</th>
+                                <th class="text-left p-3">Stock</th>
+                                <th class="text-left p-3">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${productos.map(p => `
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="p-3"><img src="${p.imagen_principal || 'img/placeholder.png'}" class="w-10 h-10 object-contain"></td>
+                                    <td class="p-3">${p.nombre}</td>
+                                    <td class="p-3 text-green-600">${p.precio.toLocaleString()} Gs.</td>
+                                    <td class="p-3">${p.stock ? '<span class="text-green-600">✔ Disponible</span>' : '<span class="text-red-600">✖ Sin stock</span>'}</td>
+                                    <td class="p-3">
+                                        <button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button>
+                                        <button onclick="eliminarProducto(${p.id})" class="text-red-600"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                            ${productos.length === 0 ? '<tr><td colspan="5" class="text-center p-8 text-gray-500">No hay productos. Haz clic en "Nuevo producto"</td></tr>' : ''}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+        
+        // Abrir modal para nuevo producto
+        function abrirModalProductoForm(producto = null) {
+            document.getElementById('modal-producto-titulo').textContent = producto ? 'Editar Producto' : 'Agregar Producto';
+            document.getElementById('producto-id').value = producto?.id || '';
+            document.getElementById('prod-nombre').value = producto?.nombre || '';
+            document.getElementById('prod-descripcion').value = producto?.descripcion || '';
+            document.getElementById('prod-precio').value = producto?.precio || '';
+            document.getElementById('prod-categoria').value = producto?.categoria || '';
+            document.getElementById('prod-especificaciones').value = (producto?.especificaciones || []).join('\n');
+            document.getElementById('prod-stock').checked = producto?.stock !== false;
+            
+            if (producto?.imagen_principal) {
+                document.getElementById('preview-img').src = producto.imagen_principal;
+                document.getElementById('imagen-preview').classList.remove('hidden');
+            } else {
+                document.getElementById('imagen-preview').classList.add('hidden');
+            }
+            
+            document.getElementById('modal-producto-form').classList.remove('hidden');
+            document.getElementById('modal-producto-form').classList.add('flex');
+        }
+        
+        function cerrarModalProductoForm() {
+            document.getElementById('modal-producto-form').classList.add('hidden');
+            document.getElementById('modal-producto-form').classList.remove('flex');
+            document.getElementById('producto-form').reset();
+        }
+        
+        // Guardar producto (insertar o actualizar)
+        document.getElementById('producto-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const id = document.getElementById('producto-id').value;
+            const nombre = document.getElementById('prod-nombre').value;
+            const descripcion = document.getElementById('prod-descripcion').value;
+            const precio = parseInt(document.getElementById('prod-precio').value);
+            const categoria = document.getElementById('prod-categoria').value;
+            const especificaciones = document.getElementById('prod-especificaciones').value.split('\n').filter(s => s.trim());
+            const stock = document.getElementById('prod-stock').checked;
+            
+            const productoData = {
+                nombre, descripcion, precio, categoria, especificaciones, stock,
+                imagen_principal: 'img/placeholder.png'  // Por ahora placeholder
+            };
+            
+            if (id) {
+                await supabase.from('productos').update(productoData).eq('id', id);
+                mostrarNotificacion('Producto actualizado', 'success');
+            } else {
+                await supabase.from('productos').insert([productoData]);
+                mostrarNotificacion('Producto creado', 'success');
+            }
+            
+            cerrarModalProductoForm();
+            cargarListaProductos();
+        });
+        
+        async function editarProducto(id) {
+            const producto = productos.find(p => p.id === id);
+            if (producto) abrirModalProductoForm(producto);
+        }
+        
+        async function eliminarProducto(id) {
+            if (confirm('¿Eliminar este producto?')) {
+                await supabase.from('productos').update({ activo: false }).eq('id', id);
+                mostrarNotificacion('Producto eliminado', 'info');
+                cargarListaProductos();
+            }
+        }
+        
+        // Reviews pendientes
+        async function cargarReviewsPendientes() {
+            const { data } = await supabase
+                .from('reviews')
+                .select('*, perfiles(nombre)')
+                .eq('aprobada', false)
+                .order('created_at', { ascending: false });
+            
+            document.getElementById('contenido-seccion').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Reviews Pendientes</h2>
+                <div class="space-y-4">
+                    ${data?.map(r => `
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="font-semibold">${r.perfiles?.nombre || 'Anónimo'}</span>
+                                        <span class="text-yellow-500">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+                                    </div>
+                                    <p class="text-gray-700">${r.comentario}</p>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="aprobarReview(${r.id})" class="bg-green-600 text-white px-3 py-1 rounded">Aprobar</button>
+                                    <button onclick="rechazarReview(${r.id})" class="bg-red-600 text-white px-3 py-1 rounded">Rechazar</button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('') || '<div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">No hay reviews pendientes</div>'}
+                </div>
+            `;
+        }
+        
+        async function aprobarReview(id) {
+            await supabase.from('reviews').update({ aprobada: true }).eq('id', id);
+            mostrarNotificacion('Review aprobada', 'success');
+            cargarReviewsPendientes();
+        }
+        
+        async function rechazarReview(id) {
+            await supabase.from('reviews').delete().eq('id', id);
+            mostrarNotificacion('Review rechazada', 'info');
+            cargarReviewsPendientes();
+        }
+        
+        // Pedidos
+        async function cargarPedidos() {
+            const { data } = await supabase
+                .from('pedidos')
+                .select('*, perfiles(nombre)')
+                .order('created_at', { ascending: false });
+            
+            document.getElementById('contenido-seccion').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Pedidos</h2>
+                <div class="space-y-4">
+                    ${data?.map(p => `
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <p class="font-semibold">${p.perfiles?.nombre || 'Cliente'}</p>
+                                    <p class="text-sm text-gray-500">${new Date(p.created_at).toLocaleString()}</p>
+                                </div>
+                                <span class="px-3 py-1 rounded-full text-sm ${p.estado === 'pendiente' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}">
+                                    ${p.estado}
+                                </span>
+                            </div>
+                            <div class="border-t pt-3">
+                                <p class="font-bold text-green-600">Total: ${p.total?.toLocaleString() || 0} Gs.</p>
+                            </div>
+                        </div>
+                    `).join('') || '<div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">No hay pedidos aún</div>'}
+                </div>
+            `;
+        }
+        
+        // Navegación
+        function mostrarSeccion(seccion) {
+            seccionActual = seccion;
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById(`nav-${seccion}`)?.classList.add('active');
+            
+            if (seccion === 'dashboard') cargarDashboard();
+            else if (seccion === 'productos') cargarListaProductos();
+            else if (seccion === 'kits') cargarListaKits();
+            else if (seccion === 'reviews') cargarReviewsPendientes();
+            else if (seccion === 'pedidos') cargarPedidos();
+        }
+        
+        function cargarListaKits() {
+            document.getElementById('contenido-seccion').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Kits</h2>
+                <div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">
+                    <i class="fas fa-box text-4xl mb-3 text-gray-300"></i>
+                    <p>Próximamente: Gestión de kits</p>
+                    <p class="text-sm mt-2">Por ahora puedes editar los kits directamente en Supabase</p>
+                </div>
+            `;
+        }
+        
+        function cerrarSesionAdmin() {
+            supabase.auth.signOut();
+            window.location.href = '/';
+        }
+        
+        function mostrarNotificacion(mensaje, tipo) {
+            const notif = document.createElement('div');
+            notif.className = `fixed bottom-4 right-4 px-4 py-2 rounded-lg text-white ${tipo === 'success' ? 'bg-green-500' : 'bg-red-500'} z-50`;
+            notif.textContent = mensaje;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 3000);
+        }
+        
+        // Inicializar
+        verificarAccesoAdmin();
+    </script>
+</body>
+</html>
