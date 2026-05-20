@@ -1581,36 +1581,6 @@ document.getElementById('form-registro-supabase')?.addEventListener('submit', as
         alert('Error: registrarUsuarioSupabase no está definida. Revisa js_supabase-auth.js');
     }
 });
-    <!-- Botón flotante para admin (solo visible cuando el usuario es admin) -->
-<div id="admin-float-btn" style="position: fixed; bottom: 20px; left: 20px; z-index: 1000; display: none;">
-    <a href="/admin.html" class="bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center w-14 h-14">
-        <i class="fas fa-crown text-xl"></i>
-    </a>
-</div>
-
-<script>
-// Mostrar botón admin solo si el usuario es admin
-async function verificarMostrarBotonAdmin() {
-    if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-        const { data: { user } } = await supabaseClient.auth.getUser();
-        if (user) {
-            const { data: perfil } = await supabaseClient
-                .from('perfiles')
-                .select('es_admin')
-                .eq('id', user.id)
-                .single();
-            if (perfil?.es_admin) {
-                document.getElementById('admin-float-btn').style.display = 'block';
-            }
-        }
-    }
-}
-// Ejecutar después de cargar la página
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', verificarMostrarBotonAdmin);
-} else {
-    verificarMostrarBotonAdmin();
-}
 // Funciones adicionales necesarias
 function extraerComponentes(desc) { return []; }
 function formatearComponentesEnColumnas(c) { return ''; }
