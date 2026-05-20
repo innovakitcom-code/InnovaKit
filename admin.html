@@ -26,29 +26,6 @@
         .modal { transition: opacity 0.3s ease; }
         input, select, textarea { border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; width: 100%; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; ring: 2px solid #3b82f6; }
-        
-        /* Botón admin oculto que solo aparece para usuarios admin */
-        .admin-float-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: #7eb74a;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-        .admin-float-btn:hover {
-            transform: scale(1.1);
-            background: #5a8f32;
-        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -176,18 +153,13 @@
         </div>
     </div>
     
-    <!-- Botón flotante para admin (visible solo cuando el usuario es admin) -->
-    <a href="/admin.html" id="admin-float-btn" class="admin-float-btn hidden" title="Panel Administrador">
-        <i class="fas fa-crown text-xl"></i>
-    </a>
-    
     <script>
         // ============================================
-        // CONFIGURACIÓN DE SUPABASE (SOLO UNA VEZ)
+        // CONFIGURACIÓN DE SUPABASE
         // ============================================
         const SUPABASE_URL = 'https://lvdjczfblanbadikccxo.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_O9oR1xmyeAy1ludJJlo3Rw_2gW9XZ_F';
-        const supabaseAdmin = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
         let usuarioActual = null;
         let productos = [];
@@ -197,46 +169,37 @@
         // VERIFICAR ACCESO ADMIN
         // ============================================
         async function verificarAcceso() {
-            console.log('🔍 Verificando acceso...');
+            const { data: { user } } = await supabase.auth.getUser();
             
-            try {
-                const { data: { user }, error: userError } = await supabaseAdmin.auth.getUser();
-                
-                if (userError) {
-                    console.error('❌ Error:', userError);
-                    document.getElementById('loading-screen').innerHTML = `<div class="text-center"><p class="text-red-600">Error de autenticación</p><button onclick="window.location.href='/'" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Volver</button></div>`;
-                    return;
-                }
-                
-                if (!user) {
-                    window.location.href = '/';
-                    return;
-                }
-                
-                const { data: perfil, error: perfilError } = await supabaseAdmin
-                    .from('perfiles')
-                    .select('*')
-                    .eq('id', user.id)
-                    .single();
-                
-                if (perfilError || !perfil?.es_admin) {
-                    alert('No tienes permisos de administrador');
-                    window.location.href = '/';
-                    return;
-                }
-                
-                usuarioActual = { id: user.id, email: user.email, nombre: perfil.nombre };
-                document.getElementById('admin-nombre').textContent = usuarioActual.nombre;
-                document.getElementById('admin-email').textContent = usuarioActual.email;
-                document.getElementById('loading-screen').classList.add('hidden');
-                document.getElementById('admin-panel').classList.remove('hidden');
-                
-                cargarDashboard();
-                
-            } catch (error) {
-                console.error('❌ Error:', error);
-                document.getElementById('loading-screen').innerHTML = `<div class="text-center"><p class="text-red-600">Error: ${error.message}</p><button onclick="window.location.href='/'" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Volver</button></div>`;
+            if (!user) {
+                window.location.href = '/';
+                return;
             }
+            
+            const { data: perfil } = await supabase
+                .from('perfiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+            
+            if (!perfil?.es_admin) {
+                alert('No tienes permisos de administrador');
+                window.location.href = '/';
+                return;
+            }
+            
+            usuarioActual = {
+                id: user.id,
+                email: user.email,
+                nombre: perfil.nombre
+            };
+            
+            document.getElementById('admin-nombre').textContent = usuarioActual.nombre;
+            document.getElementById('admin-email').textContent = usuarioActual.email;
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('admin-panel').classList.remove('hidden');
+            
+            cargarDashboard();
         }
         
         // ============================================
@@ -244,18 +207,45 @@
         // ============================================
         async function cargarDashboard() {
             activarNav('dashboard');
-            const { count: productosCount } = await supabaseAdmin.from('productos').select('*', { count: 'exact', head: true });
-            const { count: kitsCount } = await supabaseAdmin.from('kits').select('*', { count: 'exact', head: true });
-            const { count: pedidosCount } = await supabaseAdmin.from('pedidos').select('*', { count: 'exact', head: true });
-            const { count: reviewsPendientes } = await supabaseAdmin.from('reviews').select('*', { count: 'exact', head: true }).eq('aprobada', false);
+            
+            const { count: productosCount } = await supabase.from('productos').select('*', { count: 'exact', head: true });
+            const { count: kitsCount } = await supabase.from('kits').select('*', { count: 'exact', head: true });
+            const { count: pedidosCount } = await supabase.from('pedidos').select('*', { count: 'exact', head: true });
+            const { count: reviewsPendientes } = await supabase.from('reviews').select('*', { count: 'exact', head: true }).eq('aprobada', false);
+            const { count: usuariosCount } = await supabase.from('perfiles').select('*', { count: 'exact', head: true });
             
             document.getElementById('contenido-principal').innerHTML = `
                 <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-microchip text-3xl text-blue-600 mb-2"></i><p class="text-2xl font-bold">${productosCount || 0}</p><p class="text-gray-600">Productos</p></div>
-                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-box text-3xl text-green-600 mb-2"></i><p class="text-2xl font-bold">${kitsCount || 0}</p><p class="text-gray-600">Kits</p></div>
-                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-shopping-cart text-3xl text-orange-600 mb-2"></i><p class="text-2xl font-bold">${pedidosCount || 0}</p><p class="text-gray-600">Pedidos</p></div>
-                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-star text-3xl text-yellow-500 mb-2"></i><p class="text-2xl font-bold">${reviewsPendientes || 0}</p><p class="text-gray-600">Reviews pendientes</p></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+                    <div class="card bg-white p-6 rounded-xl shadow">
+                        <i class="fas fa-microchip text-3xl text-blue-600 mb-2"></i>
+                        <p class="text-2xl font-bold">${productosCount || 0}</p>
+                        <p class="text-gray-600">Productos</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-xl shadow">
+                        <i class="fas fa-box text-3xl text-green-600 mb-2"></i>
+                        <p class="text-2xl font-bold">${kitsCount || 0}</p>
+                        <p class="text-gray-600">Kits</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-xl shadow">
+                        <i class="fas fa-shopping-cart text-3xl text-orange-600 mb-2"></i>
+                        <p class="text-2xl font-bold">${pedidosCount || 0}</p>
+                        <p class="text-gray-600">Pedidos</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-xl shadow">
+                        <i class="fas fa-star text-3xl text-yellow-500 mb-2"></i>
+                        <p class="text-2xl font-bold">${reviewsPendientes || 0}</p>
+                        <p class="text-gray-600">Reviews pendientes</p>
+                    </div>
+                    <div class="card bg-white p-6 rounded-xl shadow">
+                        <i class="fas fa-users text-3xl text-purple-600 mb-2"></i>
+                        <p class="text-2xl font-bold">${usuariosCount || 0}</p>
+                        <p class="text-gray-600">Usuarios</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h3 class="font-bold text-lg mb-4">Bienvenido al Panel de Administración</h3>
+                    <p class="text-gray-600">Desde aquí puedes gestionar productos, kits, reviews y pedidos de Innovakit.</p>
                 </div>
             `;
         }
@@ -265,15 +255,57 @@
         // ============================================
         async function cargarProductos() {
             activarNav('productos');
-            const { data, error } = await supabaseAdmin.from('productos').select('*').order('id', { ascending: false });
-            if (error) return;
+            
+            const { data, error } = await supabase
+                .from('productos')
+                .select('*')
+                .order('id', { ascending: false });
+            
+            if (error) {
+                console.error(error);
+                return;
+            }
+            
             productos = data;
             
             document.getElementById('contenido-principal').innerHTML = `
-                <div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold">Productos</h2><button onclick="abrirModalProducto()" class="btn-primary flex items-center gap-2"><i class="fas fa-plus"></i> Nuevo producto</button></div>
-                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="text-left p-3">ID</th><th class="text-left p-3">Nombre</th><th class="text-left p-3">Precio</th><th class="text-left p-3">Stock</th><th class="text-left p-3">Acciones</th></tr></thead><tbody>
-                    ${productos.map(p => `<tr class="border-b hover:bg-gray-50"><td class="p-3">${p.id}</td><td class="p-3">${p.nombre}</td><td class="p-3 text-green-600">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '<span class="text-green-600">✔ Disponible</span>' : '<span class="text-red-600">✖ Sin stock</span>'}</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button><button onclick="eliminarProducto(${p.id})" class="text-red-600"><i class="fas fa-trash"></i></button></td></tr>`).join('')}
-                </tbody></table></div></div>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold">Productos</h2>
+                    <button onclick="abrirModalProducto()" class="btn-primary flex items-center gap-2">
+                        <i class="fas fa-plus"></i> Nuevo producto
+                    </button>
+                </div>
+                <div class="bg-white rounded-xl shadow overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 border-b">
+                                <tr>
+                                    <th class="text-left p-3">ID</th>
+                                    <th class="text-left p-3">Imagen</th>
+                                    <th class="text-left p-3">Nombre</th>
+                                    <th class="text-left p-3">Precio</th>
+                                    <th class="text-left p-3">Stock</th>
+                                    <th class="text-left p-3">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${productos.map(p => `
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="p-3">${p.id}</td>
+                                        <td class="p-3"><img src="${p.imagen_principal || 'img/placeholder.png'}" class="w-10 h-10 object-contain"></td>
+                                        <td class="p-3">${p.nombre}</td>
+                                        <td class="p-3 text-green-600">${p.precio.toLocaleString()} Gs.</td>
+                                        <td class="p-3">${p.stock ? '<span class="text-green-600">✔ Disponible</span>' : '<span class="text-red-600">✖ Sin stock</span>'}</td>
+                                        <td class="p-3">
+                                            <button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button>
+                                            <button onclick="eliminarProducto(${p.id})" class="text-red-600"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             `;
         }
         
@@ -299,6 +331,7 @@
         
         document.getElementById('form-producto').addEventListener('submit', async (e) => {
             e.preventDefault();
+            
             const id = document.getElementById('producto-id').value;
             const nombre = document.getElementById('prod-nombre').value;
             const descripcion = document.getElementById('prod-descripcion').value;
@@ -307,26 +340,223 @@
             const imagen_principal = document.getElementById('prod-imagen').value;
             const especificaciones = document.getElementById('prod-especificaciones').value.split('\n').filter(s => s.trim());
             const stock = document.getElementById('prod-stock').checked;
+            
             const productoData = { nombre, descripcion, precio, categoria, imagen_principal, especificaciones, stock, activo: true };
             
-            if (id) await supabaseAdmin.from('productos').update(productoData).eq('id', id);
-            else await supabaseAdmin.from('productos').insert([productoData]);
+            if (id) {
+                await supabase.from('productos').update(productoData).eq('id', id);
+                alert('Producto actualizado');
+            } else {
+                await supabase.from('productos').insert([productoData]);
+                alert('Producto creado');
+            }
             
             cerrarModalProducto();
             cargarProductos();
         });
         
-        async function editarProducto(id) { const p = productos.find(p => p.id === id); if (p) abrirModalProducto(p); }
-        async function eliminarProducto(id) { if (confirm('¿Eliminar?')) { await supabaseAdmin.from('productos').update({ activo: false }).eq('id', id); cargarProductos(); } }
+        async function editarProducto(id) {
+            const producto = productos.find(p => p.id === id);
+            if (producto) abrirModalProducto(producto);
+        }
         
-        async function cargarKits() { activarNav('kits'); document.getElementById('contenido-principal').innerHTML = '<h2 class="text-3xl font-bold mb-6">Kits</h2><div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">Gestión de kits próximamente</div>'; }
-        async function cargarReviews() { activarNav('reviews'); document.getElementById('contenido-principal').innerHTML = '<h2 class="text-3xl font-bold mb-6">Reviews</h2><div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">Gestión de reviews próximamente</div>'; }
-        async function cargarPedidos() { activarNav('pedidos'); document.getElementById('contenido-principal').innerHTML = '<h2 class="text-3xl font-bold mb-6">Pedidos</h2><div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">Gestión de pedidos próximamente</div>'; }
-        async function cargarUsuarios() { activarNav('usuarios'); document.getElementById('contenido-principal').innerHTML = '<h2 class="text-3xl font-bold mb-6">Usuarios</h2><div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">Gestión de usuarios próximamente</div>'; }
+        async function eliminarProducto(id) {
+            if (confirm('¿Eliminar este producto?')) {
+                await supabase.from('productos').update({ activo: false }).eq('id', id);
+                alert('Producto eliminado');
+                cargarProductos();
+            }
+        }
         
-        function activarNav(seccion) { document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active')); document.getElementById(`nav-${seccion}`)?.classList.add('active'); }
-        function cerrarSesion() { supabaseAdmin.auth.signOut(); window.location.href = '/'; }
+        // ============================================
+        // KITS
+        // ============================================
+        async function cargarKits() {
+            activarNav('kits');
+            
+            const { data, error } = await supabase.from('kits').select('*');
+            
+            if (error) {
+                console.error(error);
+                return;
+            }
+            
+            kits = data;
+            
+            document.getElementById('contenido-principal').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Kits</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    ${kits.map(k => `
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <img src="${k.imagen_portada || 'img/placeholder.png'}" class="w-full h-40 object-cover rounded-lg mb-4">
+                            <h3 class="font-bold text-xl mb-2">${k.nombre}</h3>
+                            <p class="text-gray-600 mb-4">${k.descripcion || 'Kit educativo de electrónica'}</p>
+                            <button onclick="alert('Edición de kits próximamente')" class="btn-primary w-full">Editar kit</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
         
+        // ============================================
+        // REVIEWS
+        // ============================================
+        async function cargarReviews() {
+            activarNav('reviews');
+            
+            const { data, error } = await supabase
+                .from('reviews')
+                .select('*, perfiles(nombre)')
+                .eq('aprobada', false)
+                .order('created_at', { ascending: false });
+            
+            if (error) {
+                console.error(error);
+                return;
+            }
+            
+            document.getElementById('contenido-principal').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Reviews Pendientes</h2>
+                ${data.length === 0 ? '<div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">No hay reviews pendientes</div>' : `
+                    <div class="space-y-4">
+                        ${data.map(r => `
+                            <div class="bg-white rounded-xl shadow p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="font-semibold">${r.perfiles?.nombre || 'Anónimo'}</span>
+                                            <span class="text-yellow-500">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+                                        </div>
+                                        <p class="text-gray-700">${r.comentario}</p>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button onclick="aprobarReview(${r.id})" class="btn-success px-3 py-1 text-sm">Aprobar</button>
+                                        <button onclick="rechazarReview(${r.id})" class="btn-danger px-3 py-1 text-sm">Rechazar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `}
+            `;
+        }
+        
+        async function aprobarReview(id) {
+            await supabase.from('reviews').update({ aprobada: true }).eq('id', id);
+            alert('Review aprobada');
+            cargarReviews();
+        }
+        
+        async function rechazarReview(id) {
+            if (confirm('¿Rechazar esta review?')) {
+                await supabase.from('reviews').delete().eq('id', id);
+                alert('Review rechazada');
+                cargarReviews();
+            }
+        }
+        
+        // ============================================
+        // PEDIDOS
+        // ============================================
+        async function cargarPedidos() {
+            activarNav('pedidos');
+            
+            const { data, error } = await supabase
+                .from('pedidos')
+                .select('*, perfiles(nombre)')
+                .order('created_at', { ascending: false });
+            
+            if (error) {
+                console.error(error);
+                return;
+            }
+            
+            document.getElementById('contenido-principal').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Pedidos</h2>
+                ${data.length === 0 ? '<div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">No hay pedidos aún</div>' : `
+                    <div class="space-y-4">
+                        ${data.map(p => `
+                            <div class="bg-white rounded-xl shadow p-6">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <p class="font-semibold">${p.perfiles?.nombre || 'Cliente'}</p>
+                                        <p class="text-sm text-gray-500">${new Date(p.created_at).toLocaleString()}</p>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-full text-sm ${p.estado === 'pendiente' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'}">
+                                        ${p.estado}
+                                    </span>
+                                </div>
+                                <div class="border-t pt-3">
+                                    <p class="font-bold text-green-600">Total: ${p.total?.toLocaleString() || 0} Gs.</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `}
+            `;
+        }
+        
+        // ============================================
+        // USUARIOS
+        // ============================================
+        async function cargarUsuarios() {
+            activarNav('usuarios');
+            
+            const { data, error } = await supabase
+                .from('perfiles')
+                .select('*')
+                .order('created_at', { ascending: false });
+            
+            if (error) {
+                console.error(error);
+                return;
+            }
+            
+            document.getElementById('contenido-principal').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Usuarios Registrados</h2>
+                <div class="bg-white rounded-xl shadow overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 border-b">
+                                <tr>
+                                    <th class="text-left p-3">Nombre</th>
+                                    <th class="text-left p-3">Email</th>
+                                    <th class="text-left p-3">Teléfono</th>
+                                    <th class="text-left p-3">Admin</th>
+                                    <th class="text-left p-3">Registro</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.map(u => `
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="p-3">${u.nombre || '—'}</td>
+                                        <td class="p-3">${u.id} (ver en Auth)</td>
+                                        <td class="p-3">${u.telefono || '—'}</td>
+                                        <td class="p-3">${u.es_admin ? '<span class="text-green-600">✓ Sí</span>' : '<span class="text-gray-500">—</span>'}</td>
+                                        <td class="p-3">${new Date(u.created_at).toLocaleDateString()}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // ============================================
+        // UTILIDADES
+        // ============================================
+        function activarNav(seccion) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById(`nav-${seccion}`)?.classList.add('active');
+        }
+        
+        function cerrarSesion() {
+            supabase.auth.signOut();
+            window.location.href = '/';
+        }
+        
+        // Inicializar
         verificarAcceso();
     </script>
 </body>
