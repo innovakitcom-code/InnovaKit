@@ -1,0 +1,212 @@
+/* ============================================
+   INNOVAKIT - ANIMACIONES
+   Extraídas del index original
+   ============================================ */
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+    0% { opacity: 0; transform: translateX(20px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes bounceSubtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes pulseSoft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes moveGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes moveGradientMobile {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes moveGradientTablet {
+    0% { background-size: 200% 200%; }
+    50% { background-size: 210% 210%; }
+    100% { background-size: 200% 200%; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Clases de animación */
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+}
+
+.animate-bounce-subtle {
+    animation: bounceSubtle 2s infinite;
+}
+
+.animate-pulse-soft {
+    animation: pulseSoft 3s infinite;
+}
+
+.page-transition {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Skeleton loading */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+/* Estilos para scrollbar de miniaturas */
+#miniaturas-1, #miniaturas-2, #miniaturas-3 {
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 #f1f1f1;
+}
+
+#miniaturas-1::-webkit-scrollbar, 
+#miniaturas-2::-webkit-scrollbar,
+#miniaturas-3::-webkit-scrollbar {
+    height: 6px;
+}
+
+#miniaturas-1::-webkit-scrollbar-track,
+#miniaturas-2::-webkit-scrollbar-track,
+#miniaturas-3::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+#miniaturas-1::-webkit-scrollbar-thumb,
+#miniaturas-2::-webkit-scrollbar-thumb,
+#miniaturas-3::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 3px;
+}
+
+/* Transiciones */
+#imagen-principal-1, #imagen-principal-2, #imagen-principal-3 {
+    transition: opacity 0.3s ease;
+}
+
+#miniaturas-1 img:hover, 
+#miniaturas-2 img:hover,
+#miniaturas-3 img:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+/* Feedback visual de búsqueda */
+.buscando {
+    position: relative;
+    padding-right: 40px;
+}
+
+.buscando::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #3b82f6;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translateY(-50%);
+}
+
+.scroll-smooth-instant {
+    scroll-behavior: smooth;
+}
+
+/* Dark mode improvements */
+@media (prefers-color-scheme: dark) {
+    .dark\:auto-contrast {
+        filter: contrast(1.2) brightness(1.1);
+    }
+}
+
+/* Móvil - Hero section */
+@media (max-width: 767px) {
+    .bg-animated {
+        animation: moveGradientMobile 10s ease infinite !important;
+        background: linear-gradient(270deg, #1e3a8a, #065f46, #1e40af) !important;
+        background-size: 200% 200% !important;
+    }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .bg-animated {
+        animation: moveGradientTablet 10s ease infinite !important;
+        background: linear-gradient(270deg, #1e3a8a, #065f46, #1e40af) !important;
+        background-size: 200% 200% !important;
+    }
+}
+
+/* Efecto de elevación */
+.transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gradientes */
+.gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-success {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.gradient-warning {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.price-tag {
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    animation: pulseSoft 2s infinite;
+}
