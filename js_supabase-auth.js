@@ -87,3 +87,28 @@ async function cargarUsuarioActualSupabase() {
     
     return usuarioActual;
 }
+function actualizarUIUsuario() {
+    const userDesktop = document.getElementById('user-desktop');
+    if (!userDesktop) return;
+    
+    if (usuarioActual) {
+        userDesktop.innerHTML = `
+            <div class="flex items-center gap-2 ml-4">
+                <span class="text-sm font-semibold text-gray-700">👋 ${usuarioActual.nombre}</span>
+                <button onclick="cerrarSesionSupabase()" class="text-red-500 text-sm hover:text-red-700">Salir</button>
+            </div>
+        `;
+    } else {
+        userDesktop.innerHTML = `
+            <button onclick="mostrarModalLogin()" class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold btn-hover">
+                <i class="fas fa-user"></i> Ingresar
+            </button>
+        `;
+    }
+    
+    // También actualizar móvil
+    const userMobile = document.querySelector('.sm\\:hidden .bg-blue-600');
+    if (userMobile && usuarioActual) {
+        userMobile.outerHTML = `<button onclick="cerrarSesionSupabase()" class="bg-red-600 text-white px-2 py-1 rounded-lg text-sm font-semibold ml-2">Salir</button>`;
+    }
+}
