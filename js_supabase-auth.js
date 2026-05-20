@@ -50,6 +50,7 @@ async function iniciarSesionSupabase(email, password) {
         if (error) throw error;
         
         await cargarUsuarioActualSupabase();
+        actualizarUIUsuario();  // ← ACTUALIZAR UI DESPUÉS DEL LOGIN
         mostrarNotificacion(`✅ ¡Bienvenido, ${usuarioActual?.nombre || email}!`, 'success');
         return true;
     } catch (error) {
@@ -62,8 +63,9 @@ async function cerrarSesionSupabase() {
     if (!supabaseClient) return;
     await supabaseClient.auth.signOut();
     usuarioActual = null;
+    actualizarUIUsuario();  // ← ACTUALIZAR UI DESPUÉS DE CERRAR SESIÓN
     mostrarNotificacion('Sesión cerrada', 'info');
-    location.reload();
+    // No recargar la página, solo actualizar UI
 }
 
 async function cargarUsuarioActualSupabase() {
@@ -87,9 +89,15 @@ async function cargarUsuarioActualSupabase() {
     
     return usuarioActual;
 }
+
 function actualizarUIUsuario() {
+    console.log('🔄 Actualizando UI de usuario:', usuarioActual);
+    
     const userDesktop = document.getElementById('user-desktop');
-    if (!userDesktop) return;
+    if (!userDesktop) {
+        console.warn('⚠️ user-desktop no encontrado');
+        return;
+    }
     
     if (usuarioActual) {
         userDesktop.innerHTML = `
@@ -107,8 +115,24 @@ function actualizarUIUsuario() {
     }
     
     // También actualizar móvil
-    const userMobile = document.querySelector('.sm\\:hidden .bg-blue-600');
-    if (userMobile && usuarioActual) {
-        userMobile.outerHTML = `<button onclick="cerrarSesionSupabase()" class="bg-red-600 text-white px-2 py-1 rounded-lg text-sm font-semibold ml-2">Salir</button>`;
+    const mobileContainer = document.querySelector('.sm\\:hidden .flex.justify-between');
+    if (mobileContainer) {
+        const existingBtn = mobileContainer.querySelector('button.bg-blue-600');
+        if (usuarioActual) {
+            if (existingBtn) {
+                existingBtn.outerHTML = `<button onclick="cerrarSesionSupabase()" class="bg-red-600 text-white px-2 py-1 rounded-lg text-sm font-semibold ml-2">Salir</button>`;
+            }
+        } else {
+            if (existingBtn && existingBtn.textContent.includes('Salir')) {
+                existingBtn.outerHTML = `<button onclick="mostrarModalLogin()" class="bg-blue-600 text-white px-2 py-1 rounded-lg text-sm font-semibold ml-2"><i class="fas fa-user"></i></button>`;
+            }
+        }
     }
 }
+
+// Inicializar UI cuando carga la página
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log('🔐 Inicializando autenticación...');
+    await cargarUsuarioActualSupabase();
+    actualizarUIUsuario();
+});
