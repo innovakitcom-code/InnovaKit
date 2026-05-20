@@ -103,7 +103,7 @@ function actualizarUIUsuario() {
         userDesktop.innerHTML = `
             <div class="flex items-center gap-2 ml-4">
                 <span class="text-sm font-semibold text-gray-700">👋 ${usuarioActual.nombre}</span>
-                <button onclick="cerrarSesionSupabase()" class="text-red-500 text-sm hover:text-red-700">Salir</button>
+                <button onclick="cerrarSesionSupabase()" class="text-red-600 text-sm hover:text-red-700">CERRAR</button>
             </div>
         `;
     } else {
