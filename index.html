@@ -1018,13 +1018,99 @@ document.getElementById('form-registro-supabase')?.addEventListener('submit', as
         alert('Error: registrarUsuarioSupabase no está definida');
     }
 });
+    // Filtro por categoría (versión real)
+function aplicarFiltroCategoria(categoria) {
+    console.log('🔍 Filtrando por categoría:', categoria);
     
+    // Resetear a primera página
+    paginaActual = 1;
+    
+    // Mapear categorías a términos de búsqueda
+    const mapaCategorias = {
+        'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20', 'sensor de temperatura', 'temp'],
+        'Humedad': ['humedad', 'dht11', 'dht22', 'sensor de humedad', 'soil', 'humidity'],
+        'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio', 'mpu', 'sensor de movimiento', 'motion'],
+        'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible', 'photoresistor', 'light'],
+        'Servo Motores': ['servo', 'sg90', 'servomotor', 'servo motor'],
+        'Stepper': ['stepper', 'paso a paso', '28byj', 'uln2003', 'motor paso'],
+        'Displays': ['display', 'pantalla', 'lcd', 'oled', '7 segmentos', 'matriz led', 'max7219', 'lcd16x2'],
+        'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266', 'nano', 'uno', 'mega', 'raspberry', 'raspberry pi', 'pico'],
+        'Sensores': ['sensor', 'detector', 'medidor', 'pir', 'ultrasonido', 'hc-sr04', 'dht', 'temperatura', 'humedad', 'movimiento', 'luz', 'gas', 'mq', 'flame', 'color', 'pulso', 'vibracion', 'sonido', 'efecto hall', 'inclinacion'],
+        'Motores': ['motor', 'servo', 'stepper', 'dc motor', '28byj', 'sg90', 'motor dc'],
+        'Comunicación': ['bluetooth', 'hc-05', 'rfid', 'rc522', 'infrarrojo', 'ir', 'wifi', 'ethernet', 'nrf'],
+        'Gas': ['gas', 'mq-2', 'mq-3', 'mq-4', 'mq-5', 'mq-6', 'mq-7', 'mq-8', 'mq-9', 'mq-135', 'alcohol', 'monóxido', 'hidrógeno', 'co2']
+    };
+    
+    const terminos = mapaCategorias[categoria] || [categoria.toLowerCase()];
+    
+    // Cerrar el dropdown después de seleccionar
+    const dropdowns = document.querySelectorAll('.subcategory-panel');
+    dropdowns.forEach(panel => {
+        panel.classList.add('opacity-0', 'invisible', 'scale-95');
+        panel.classList.remove('opacity-100', 'visible', 'scale-100');
+    });
+    
+    // Aplicar filtro a componentesSueltos
+    const filtrados = componentesSueltos.filter(comp => {
+        const textoBusqueda = (
+            comp.nombre.toLowerCase() + ' ' +
+            (comp.categoria || '').toLowerCase() + ' ' +
+            (comp.descripcion || '').toLowerCase() + ' ' +
+            (comp.especificaciones || []).join(' ').toLowerCase()
+        );
+        return terminos.some(termino => textoBusqueda.includes(termino));
+    });
+    
+    console.log(`📊 Encontrados ${filtrados.length} productos para "${categoria}"`);
+    
+    // Renderizar productos filtrados
+    const grid = document.getElementById('grid-componentes');
+    if (!grid) return;
+    
+    if (filtrados.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-8"><div class="text-gray-400 text-4xl mb-2">🔍</div><p>No se encontraron productos en "${categoria}"</p><button onclick="limpiarFiltros()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded">Mostrar todos</button></div>`;
+    } else {
+        grid.innerHTML = filtrados.map(comp => `
+            <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition cursor-pointer flex flex-col h-full" onclick="mostrarModalProducto(${comp.id})">
+                <div class="p-3">
+                    <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded" loading="lazy">
+                    <h3 class="font-semibold text-base line-clamp-2 min-h-[48px]">${comp.nombre}</h3>
+                    ${comp.categoria ? `<p class="text-xs text-gray-500 mt-1">${comp.categoria}</p>` : ''}
+                </div>
+                <div class="px-3"><p class="text-green-600 font-bold text-base">${comp.precio}</p></div>
+                <div class="p-3 pt-1 mt-auto">
+                    <div class="flex items-center justify-between">
+                        <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
+                        </span>
+                        <button class="text-blue-600 hover:text-blue-800 font-semibold text-xs">Ver detalles ›</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Actualizar paginación
+    const totalPaginas = Math.ceil(filtrados.length / componentesPorPagina);
+    const infoPaginacion = document.getElementById('info-paginacion');
+    const infoMobile = document.getElementById('info-paginacion-mobile');
+    if (infoPaginacion) infoPaginacion.innerHTML = `Página <span class="text-blue-600">${paginaActual}</span> de <span class="text-blue-600">${totalPaginas || 1}</span>`;
+    if (infoMobile) infoMobile.innerHTML = `<span class="text-blue-600">${paginaActual}</span>/<span class="text-blue-600">${totalPaginas || 1}</span>`;
+    
+    // Deshabilitar/habilitar botones de paginación
+    const btns = document.querySelectorAll('.pagination-fixed button');
+    if (btns.length >= 2) {
+        btns[0].disabled = paginaActual === 1;
+        btns[1].disabled = paginaActual === totalPaginas || totalPaginas === 0;
+    }
+    
+    mostrarNotificacion(`Filtrando por: ${categoria} (${filtrados.length} productos)`, 'info');
+}
     // Placeholders
     function renderizarReviewsEnModal(p) { return ''; }
     function cargarTestimoniosReales() {}
     function mostrarModalProyecto() {}
     function instalarPWA() {}
-    function aplicarFiltroCategoria(c) {}
     function mostrarModalFiltros() {}
     function cerrarModalFiltros() {}
     function aplicarFiltrosMovil() {}
