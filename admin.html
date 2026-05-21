@@ -410,35 +410,83 @@
         // REVIEWS
         // ============================================
         async function cargarReviews() {
-            activarNav('reviews');
-            const { data } = await supabaseAdmin.from('reviews').select('*, perfiles(nombre)').order('created_at', { ascending: false });
-            
-            document.getElementById('contenido-principal').innerHTML = `
-                <h2 class="text-3xl font-bold mb-6">Reviews</h2>
-                <div class="space-y-4">
-                    ${data?.map(r => `
-                        <div class="bg-white rounded-xl shadow p-6">
-                            <div class="flex justify-between items-start mb-3">
-                                <div>
-                                    <div class="flex items-center gap-2 mb-1">
-                                        <span class="font-semibold">${r.perfiles?.nombre || 'Anónimo'}</span>
-                                        <div class="rating-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-                                    </div>
-                                    <p class="text-gray-700">${r.comentario}</p>
-                                    <p class="text-xs text-gray-500 mt-2">${new Date(r.created_at).toLocaleString()}</p>
+    activarNav('reviews');
+    
+    // Primero obtener todas las reviews
+    const { data: reviewsData, error: reviewsError } = await supabaseAdmin
+        .from('reviews')
+        .select('*')
+        .order('created_at', { ascending: false });
+    
+    if (reviewsError) {
+        console.error('Error cargando reviews:', reviewsError);
+        document.getElementById('contenido-principal').innerHTML = `
+            <h2 class="text-3xl font-bold mb-6">Reviews</h2>
+            <div class="bg-red-100 rounded-xl shadow p-8 text-center text-red-700">
+                Error cargando reviews: ${reviewsError.message}
+            </div>
+        `;
+        return;
+    }
+    
+    // Para cada review, obtener el nombre del usuario manualmente
+    const reviewsConUsuario = await Promise.all(
+        (reviewsData || []).map(async (review) => {
+            let nombreUsuario = 'Anónimo';
+            if (review.usuario_id) {
+                const { data: perfil } = await supabaseAdmin
+                    .from('perfiles')
+                    .select('nombre')
+                    .eq('id', review.usuario_id)
+                    .single();
+                if (perfil) nombreUsuario = perfil.nombre;
+            }
+            return { ...review, perfiles: { nombre: nombreUsuario } };
+        })
+    );
+    
+    document.getElementById('contenido-principal').innerHTML = `
+        <h2 class="text-3xl font-bold mb-6">Reviews</h2>
+        <div class="space-y-4">
+            ${reviewsConUsuario.length === 0 ? 
+                '<div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">No hay reviews</div>' :
+                reviewsConUsuario.map(r => `
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="font-semibold">${r.perfiles?.nombre || 'Anónimo'}</span>
+                                    <div class="rating-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
                                 </div>
-                                <div class="flex gap-2">
-                                    ${!r.aprobada ? `<button onclick="aprobarReview(${r.id})" class="btn-success px-3 py-1 text-sm">Aprobar</button><button onclick="rechazarReview(${r.id})" class="btn-danger px-3 py-1 text-sm">Rechazar</button>` : `<span class="badge-approved">✓ Aprobada</span>`}
-                                </div>
+                                <p class="text-gray-700">${r.comentario || 'Sin comentario'}</p>
+                                <p class="text-xs text-gray-500 mt-2">${new Date(r.created_at).toLocaleString()}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                ${!r.aprobada ? 
+                                    `<button onclick="aprobarReview(${r.id})" class="btn-success px-3 py-1 text-sm">Aprobar</button>
+                                     <button onclick="rechazarReview(${r.id})" class="btn-danger px-3 py-1 text-sm">Rechazar</button>` : 
+                                    `<span class="badge-approved">✓ Aprobada</span>`
+                                }
                             </div>
                         </div>
-                    `).join('') || '<div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">No hay reviews</div>'}
-                </div>
-            `;
-        }
+                    </div>
+                `).join('')
+            }
+        </div>
+    `;
+}
         
-        async function aprobarReview(id) { await supabaseAdmin.from('reviews').update({ aprobada: true }).eq('id', id); cargarReviews(); }
-        async function rechazarReview(id) { if (confirm('¿Rechazar?')) { await supabaseAdmin.from('reviews').delete().eq('id', id); cargarReviews(); } }
+       async function aprobarReview(id) { 
+    await supabaseAdmin.from('reviews').update({ aprobada: true }).eq('id', id); 
+    cargarReviews(); 
+}
+
+async function rechazarReview(id) { 
+    if (confirm('¿Rechazar esta review?')) { 
+        await supabaseAdmin.from('reviews').delete().eq('id', id); 
+        cargarReviews(); 
+    } 
+}
         
         // ============================================
         // PEDIDOS
