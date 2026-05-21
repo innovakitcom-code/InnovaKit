@@ -12,7 +12,7 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // Variables globales
 let usuarioActual = null;
 let productosGlobal = [];
-let kitsGlobal = [];
+
 
 // ============================================
 // NOTIFICACIONES
