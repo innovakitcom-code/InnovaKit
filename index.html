@@ -286,7 +286,7 @@
     
     <hr class="my-6 border-gray-300">
     
-   <!-- TESTIMONIOS -->
+    <!-- TESTIMONIOS -->
     <section id="testimonios" class="pt-8 pb-12 bg-gradient-to-br from-blue-50 to-indigo-100">
       <div class="max-w-6xl mx-auto px-4">
         <h3 class="text-3xl font-bold text-center mb-4 animate-fade-in-up">Proyectos de Nuestros Clientes</h3>
@@ -303,8 +303,71 @@
       </div>
     </section>
     
-    <hr class="my-6 border-gray-300">
+    <!-- ========================================== -->
+    <!-- MODAL PARA COMPARTIR PROYECTO -->
+    <!-- ========================================== -->
+    <div id="proyecto-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" onclick="cerrarModalProyecto(event)">
+      <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-2xl font-bold">📸 Comparte tu Proyecto</h3>
+            <button onclick="cerrarModalProyecto()" class="text-2xl">&times;</button>
+          </div>
+          <form id="form-proyecto" onsubmit="enviarProyecto(event)">
+            <div class="mb-4">
+              <label class="block text-sm font-semibold mb-1">Foto de tu proyecto *</label>
+              <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-blue-400 transition"
+                   onclick="document.getElementById('foto-proyecto').click()">
+                <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                <p class="text-gray-600">Haz clic para subir una foto</p>
+                <p class="text-gray-400 text-sm">JPEG, PNG hasta 5MB</p>
+                <input type="file" id="foto-proyecto" accept="image/*" class="hidden" onchange="previewFotoProyecto(this)">
+              </div>
+              <div id="foto-preview" class="mt-3 hidden">
+                <img id="foto-preview-img" class="w-full h-40 object-cover rounded-lg">
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="block text-sm font-semibold mb-1">Tu nombre *</label>
+                <input type="text" id="proyecto-nombre" class="w-full p-2 border rounded-lg" required>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-1">Nombre del proyecto *</label>
+                <input type="text" id="proyecto-titulo" class="w-full p-2 border rounded-lg" required>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="block text-sm font-semibold mb-1">Tu calificación *</label>
+              <div id="rating-stars" class="flex gap-1 text-2xl mb-2">
+                <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="1"></i>
+                <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="2"></i>
+                <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="3"></i>
+                <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="4"></i>
+                <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="5"></i>
+              </div>
+              <input type="hidden" id="proyecto-rating" value="0">
+            </div>
+            
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-1">Cuéntanos sobre tu proyecto *</label>
+              <textarea id="proyecto-comentario" rows="4" class="w-full p-2 border rounded-lg" placeholder="¿Qué creaste? ¿Qué componentes usaste? ¿Qué aprendiste?" required></textarea>
+            </div>
+            
+            <div class="flex gap-3">
+              <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">
+                <i class="fas fa-paper-plane mr-2"></i> Enviar proyecto
+              </button>
+              <button type="button" onclick="cerrarModalProyecto()" class="flex-1 bg-gray-200 hover:bg-gray-300 py-3 rounded-lg font-semibold">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
     
+    <hr class="my-6 border-gray-300">
     
     <!-- CONTACTO -->
     <section id="contacto" class="p-3 bg-gradient-to-br from-white to-gray-50 sm:p-6 text-center rounded-2xl mx-4 mb-4">
@@ -635,88 +698,48 @@
     let componentesSueltos = [];
     let productosKits = [[], [], []];
     let navegando = false;
+    let ratingSeleccionado = 0;
     
     // ============================================
     // FUNCIONES DE CARGA DESDE SUPABASE
     // ============================================
     
-    // Cargar productos desde Supabase
     async function cargarProductosSupabase() {
         try {
             console.log('🔄 Cargando productos desde Supabase...');
-            const { data, error } = await supabaseClient
-                .from('productos')
-                .select('*')
-                .eq('activo', true)
-                .order('id');
-            
+            const { data, error } = await supabaseClient.from('productos').select('*').eq('activo', true).order('id');
             if (error) throw error;
-            
             componentesSueltos = data.map(comp => ({
-                id: comp.id,
-                nombre: comp.nombre,
-                categoria: comp.categoria,
-                precio: `${comp.precio.toLocaleString()} Gs.`,
-                precioNum: comp.precio,
-                imagen: comp.imagen_principal || 'img/placeholder.png',
+                id: comp.id, nombre: comp.nombre, categoria: comp.categoria, precio: `${comp.precio.toLocaleString()} Gs.`,
+                precioNum: comp.precio, imagen: comp.imagen_principal || 'img/placeholder.png',
                 imagenes: comp.imagenes || [comp.imagen_principal || 'img/placeholder.png'],
-                descripcion: comp.descripcion || 'Sin descripción',
-                stock: comp.stock ? 'disponible' : 'sin stock',
+                descripcion: comp.descripcion || 'Sin descripción', stock: comp.stock ? 'disponible' : 'sin stock',
                 especificaciones: comp.especificaciones || []
             }));
-            
-            console.log(`✅ Cargados ${componentesSueltos.length} productos desde Supabase`);
-            
-            if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) {
-                renderizarComponentesSueltos();
-            }
-        } catch (error) {
-            console.error('❌ Error cargando productos:', error);
-            mostrarNotificacion('Error cargando productos', 'error');
-        }
+            console.log(`✅ Cargados ${componentesSueltos.length} productos`);
+            if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) renderizarComponentesSueltos();
+        } catch (error) { console.error('Error cargando productos:', error); mostrarNotificacion('Error cargando productos', 'error'); }
     }
     
-    // Cargar productos de los kits desde Supabase
     async function cargarKitsSupabase() {
         try {
             console.log('🔄 Cargando productos de kits desde Supabase...');
-            
-            // Para cada kit (1, 2, 3)
             for (let kitId = 1; kitId <= 3; kitId++) {
-                const { data, error } = await supabaseClient
-                    .from('productos')
-                    .select('*')
-                    .eq('kit_id', kitId)
-                    .eq('activo', true);
-                
+                const { data, error } = await supabaseClient.from('productos').select('*').eq('kit_id', kitId).eq('activo', true);
                 if (error) throw error;
-                
                 productosKits[kitId - 1] = data.map(p => ({
-                    img: p.imagenes || [p.imagen_principal],
-                    nombre: p.nombre,
-                    desc: p.descripcion,
-                    precio: `${p.precio.toLocaleString()} Gs.`,
-                    precioNum: p.precio,
-                    documentos: [], // Por ahora vacío, se puede agregar después
-                    especificaciones: p.especificaciones || []
+                    img: p.imagenes || [p.imagen_principal], nombre: p.nombre, desc: p.descripcion,
+                    precio: `${p.precio.toLocaleString()} Gs.`, precioNum: p.precio, documentos: [], especificaciones: p.especificaciones || []
                 }));
             }
-            
             console.log(`✅ Kits cargados: Kit1: ${productosKits[0].length}, Kit2: ${productosKits[1].length}, Kit3: ${productosKits[2].length}`);
-        } catch (error) {
-            console.error('❌ Error cargando kits:', error);
-        }
+        } catch (error) { console.error('Error cargando kits:', error); }
     }
     
-    // Renderizar componentes sueltos
     function renderizarComponentesSueltos() {
         const grid = document.getElementById('grid-componentes');
         if (!grid) return;
-        
-        if (!componentesSueltos.length) {
-            grid.innerHTML = `<div class="col-span-full text-center py-8"><div class="text-yellow-500 text-4xl mb-2">🔄</div><p>Cargando productos...</p></div>`;
-            return;
-        }
+        if (!componentesSueltos.length) { grid.innerHTML = `<div class="col-span-full text-center py-8"><div class="text-yellow-500 text-4xl mb-2">🔄</div><p>Cargando...</p></div>`; return; }
         
         const buscarInput = document.getElementById('buscar-componente');
         const filtroPrecio = document.getElementById('filtro-precio');
@@ -742,22 +765,10 @@
         } else {
             grid.innerHTML = pagina.map(comp => `
                 <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition cursor-pointer flex flex-col h-full" onclick="mostrarModalProducto(${comp.id})">
-                    <div class="p-3">
-                        <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded" loading="lazy">
-                        <h3 class="font-semibold text-base line-clamp-2 min-h-[48px]">${comp.nombre}</h3>
-                        ${comp.categoria ? `<p class="text-xs text-gray-500 mt-1">${comp.categoria}</p>` : ''}
-                    </div>
+                    <div class="p-3"><img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded" loading="lazy"><h3 class="font-semibold text-base line-clamp-2 min-h-[48px]">${comp.nombre}</h3>${comp.categoria ? `<p class="text-xs text-gray-500 mt-1">${comp.categoria}</p>` : ''}</div>
                     <div class="px-3"><p class="text-green-600 font-bold text-base">${comp.precio}</p></div>
-                    <div class="p-3 pt-1 mt-auto">
-                        <div class="flex items-center justify-between">
-                            <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                                ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
-                            </span>
-                            <button class="text-blue-600 hover:text-blue-800 font-semibold text-xs">Ver detalles ›</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+                    <div class="p-3 pt-1 mt-auto"><div class="flex items-center justify-between"><span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}</span><button class="text-blue-600 hover:text-blue-800 font-semibold text-xs">Ver detalles ›</button></div></div>
+                </div>`).join('');
         }
         
         const infoPaginacion = document.getElementById('info-paginacion');
@@ -771,16 +782,7 @@
     
     function cambiarPagina(nueva) { paginaActual = nueva; renderizarComponentesSueltos(); document.getElementById('grid-componentes').scrollIntoView({ behavior: 'smooth' }); }
     function limpiarFiltros() { paginaActual = 1; const input = document.getElementById('buscar-componente'); if (input) input.value = ''; const precio = document.getElementById('filtro-precio'); if (precio) precio.value = 'todos'; renderizarComponentesSueltos(); mostrarNotificacion('Filtros limpiados ✅'); }
-    
-    function verComponentesSueltos() {
-        document.getElementById('main-content').style.display = 'none';
-        document.getElementById('vista-productoskit').classList.add('hidden');
-        document.getElementById('vista-asesorias').classList.add('hidden');
-        document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
-        paginaActual = 1;
-        renderizarComponentesSueltos();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    function verComponentesSueltos() { document.getElementById('main-content').style.display = 'none'; document.getElementById('vista-productoskit').classList.add('hidden'); document.getElementById('vista-asesorias').classList.add('hidden'); document.getElementById('vista-componentes-sueltos').classList.remove('hidden'); paginaActual = 1; renderizarComponentesSueltos(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     
     function mostrarModalProducto(id) {
         const producto = componentesSueltos.find(c => c.id === id);
@@ -799,110 +801,32 @@
         const imgs = producto.imagenes || [producto.imagen];
         for (let i = 0; i < 4; i++) {
             const thumb = document.getElementById(`modal-producto-thumb${i+1}`);
-            if (thumb) {
-                if (imgs[i]) { thumb.src = imgs[i]; thumb.style.display = 'block'; thumb.onclick = () => document.getElementById('modal-producto-imagen').src = imgs[i]; }
-                else thumb.style.display = 'none';
-            }
+            if (thumb) { if (imgs[i]) { thumb.src = imgs[i]; thumb.style.display = 'block'; thumb.onclick = () => document.getElementById('modal-producto-imagen').src = imgs[i]; } else thumb.style.display = 'none'; }
         }
         toggleModalProducto();
     }
     
-    function toggleModalProducto() {
-        const modal = document.getElementById('modal-producto');
-        const isOpening = modal.classList.contains('opacity-0');
-        modal.classList.toggle('opacity-0');
-        modal.classList.toggle('pointer-events-none');
-        document.body.classList.toggle('modal-active', isOpening);
-        if (window.innerWidth <= 768) document.body.style.overflow = isOpening ? 'hidden' : '';
-    }
-    
-    function comprarProductoWhatsApp() {
-        const nombre = document.getElementById('modal-producto-nombre').textContent;
-        const precio = document.getElementById('modal-producto-precio').textContent;
-        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${nombre} - ${precio}`)}`, '_blank');
-        toggleModalProducto();
-    }
-    
-    // ============================================
-    // KITS DESDE SUPABASE (LA FUNCIÓN ORIGINAL QUE FUNCIONA)
-    // ============================================
+    function toggleModalProducto() { const modal = document.getElementById('modal-producto'); const isOpening = modal.classList.contains('opacity-0'); modal.classList.toggle('opacity-0'); modal.classList.toggle('pointer-events-none'); document.body.classList.toggle('modal-active', isOpening); if (window.innerWidth <= 768) document.body.style.overflow = isOpening ? 'hidden' : ''; }
+    function comprarProductoWhatsApp() { const nombre = document.getElementById('modal-producto-nombre').textContent; const precio = document.getElementById('modal-producto-precio').textContent; window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${nombre} - ${precio}`)}`, '_blank'); toggleModalProducto(); }
     
     function verProductosKit(idx) {
         navegarA('productoskit', { kitId: idx });
         const productos = productosKits[idx - 1];
-        
         const portadas = ["png/portada_kit1.webp", "png/portadados.webp", "png/portada_kit3.svg"];
         const titulosPersonalizados = ["🔌 Kits de Electrónica - Kuongshun", "⚡ Kits Proyectos - Learning", "🤖 Kits de Robótica - Acebott"];
-        
-        let html = `
-            <div class="portada-sin-margenes">
-                <img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">${titulosPersonalizados[idx-1]}</h2>
-                </div>
-            </div>
-            <div class="container mx-auto px-4 mt-8">
-                <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        `;
-        
+        let html = `<div class="portada-sin-margenes"><img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">${titulosPersonalizados[idx-1]}</h2></div></div><div class="container mx-auto px-4 mt-8"><h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
         productos.forEach((p, i) => {
             let slidesHTML = '';
-            if (p.img && p.img.length > 0) {
-                p.img.forEach((imgSrc) => {
-                    slidesHTML += `<div class="swiper-slide flex justify-center items-center"><img src="${imgSrc}" alt="${p.nombre}" class="max-h-48 object-contain" loading="lazy"></div>`;
-                });
-            } else {
-                slidesHTML = `<div class="swiper-slide flex justify-center items-center"><div class="w-full h-48 bg-gray-200 flex items-center justify-center"><span class="text-gray-500">Imagen no disponible</span></div></div>`;
-            }
-            
-            html += `
-                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center">
-                    <div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4" onclick="event.stopPropagation()">
-                        <div class="swiper-wrapper">${slidesHTML}</div>
-                        <div class="swiper-button-next" onclick="event.stopPropagation()"></div>
-                        <div class="swiper-button-prev" onclick="event.stopPropagation()"></div>
-                    </div>
-                    <h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4>
-                    <p class="mb-2 text-sm sm:text-base text-gray-700">${acortarTexto(p.desc, 100)}</p>
-                    <a href="javascript:void(0)" onclick="mostrarModalKitProducto(${idx}, ${i})" class="text-blue-600 hover:text-blue-800 hover:underline mb-3 text-sm font-semibold inline-block">Ver detalles completos...</a>
-                    <p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p>
-                    <div class="flex flex-col gap-2 w-full mt-auto">
-                        <button onclick="comprarProductoKitWhatsApp('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">Comprar por WhatsApp</button>
-                        <button onclick="agregarAlCarritoSupabase(${p.id || i}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precioNum || 0}, '${p.img?.[0] || ""}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">Agregar al carrito</button>
-                    </div>
-                </div>
-            `;
+            if (p.img && p.img.length > 0) { p.img.forEach((imgSrc) => { slidesHTML += `<div class="swiper-slide flex justify-center items-center"><img src="${imgSrc}" alt="${p.nombre}" class="max-h-48 object-contain" loading="lazy"></div>`; }); } else { slidesHTML = `<div class="swiper-slide flex justify-center items-center"><div class="w-full h-48 bg-gray-200 flex items-center justify-center"><span class="text-gray-500">Imagen no disponible</span></div></div>`; }
+            html += `<div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center"><div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4" onclick="event.stopPropagation()"><div class="swiper-wrapper">${slidesHTML}</div><div class="swiper-button-next" onclick="event.stopPropagation()"></div><div class="swiper-button-prev" onclick="event.stopPropagation()"></div></div><h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4><p class="mb-2 text-sm sm:text-base text-gray-700">${(p.desc || '').substring(0, 100)}...</p><a href="javascript:void(0)" onclick="mostrarModalKitProducto(${idx}, ${i})" class="text-blue-600 hover:text-blue-800 hover:underline mb-3 text-sm font-semibold inline-block">Ver detalles completos...</a><p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p><div class="flex flex-col gap-2 w-full mt-auto"><button onclick="comprarProductoKitWhatsApp('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">Comprar por WhatsApp</button><button onclick="agregarAlCarritoSupabase(${p.id || i}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precioNum || 0}, '${p.img?.[0] || ""}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">Agregar al carrito</button></div></div>`;
         });
-        
         html += `</div></div>`;
         document.getElementById('productoskit-content').innerHTML = html;
-        
-        productos.forEach((_, i) => {
-            const swiperElement = document.querySelector(`.swiper-producto-${i}`);
-            if (swiperElement) {
-                try {
-                    new Swiper(swiperElement, {
-                        loop: true,
-                        navigation: {
-                            nextEl: `.swiper-producto-${i} .swiper-button-next`,
-                            prevEl: `.swiper-producto-${i} .swiper-button-prev`,
-                        },
-                        preventClicks: true,
-                        preventClicksPropagation: true
-                    });
-                } catch (error) {
-                    console.warn(`Error en Swiper ${i}:`, error);
-                }
-            }
-        });
+        productos.forEach((_, i) => { const swiperElement = document.querySelector(`.swiper-producto-${i}`); if (swiperElement) { new Swiper(swiperElement, { loop: true, navigation: { nextEl: `.swiper-producto-${i} .swiper-button-next`, prevEl: `.swiper-producto-${i} .swiper-button-prev` }, preventClicks: true }); } });
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    function acortarTexto(texto, maxLength = 120) {
-        if (texto.length <= maxLength) return texto;
-        return texto.substring(0, maxLength) + '...';
-    }
+    function acortarTexto(texto, maxLength = 120) { return texto.length <= maxLength ? texto : texto.substring(0, maxLength) + '...'; }
     
     // ============================================
     // MODAL DETALLE KIT (CARRUSEL)
@@ -914,280 +838,72 @@
         const productos = productosKits[kitIndex];
         if (!productos || !productos[productoIndex]) return;
         const producto = productos[productoIndex];
-        
         const componentes = obtenerComponentesDeDescripcion(producto.desc);
         const descripcionCorta = obtenerDescripcionSinComponentes(producto.desc);
-        
         const modalHTML = `<div class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-kit-detalle"><div class="absolute inset-0" onclick="cerrarModalKitDetalle()"></div><div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col relative z-10"><div class="flex justify-between items-center p-6 border-b"><h3 class="text-2xl font-bold text-gray-800">${producto.nombre}</h3><button onclick="cerrarModalKitDetalle()" class="text-gray-500 hover:text-gray-700 text-2xl p-2 hover:bg-gray-100 rounded-full transition">×</button></div><div class="flex-1 overflow-y-auto p-6"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div class="space-y-4"><div class="relative bg-gray-100 rounded-xl overflow-hidden" style="height: 400px;"><img id="imagen-principal-detalle" src="${producto.img && producto.img[0] ? producto.img[0] : 'png/placeholder.png'}" alt="${producto.nombre}" class="w-full h-full object-contain p-4 cursor-zoom-in" onclick="ampliarImagenDetalle(this.src)">${producto.img && producto.img.length > 1 ? `<button onclick="event.stopPropagation(); cambiarImagenDetalle(-1)" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20">←</button><button onclick="event.stopPropagation(); cambiarImagenDetalle(1)" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20">→</button><div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-full text-sm"><span id="contador-imagen-detalle">1</span> / <span id="total-imagenes-detalle">${producto.img.length}</span></div>` : ''}</div>${producto.img && producto.img.length > 1 ? `<div id="miniaturas-detalle" class="flex gap-2 overflow-x-auto py-2">${producto.img.map((imgSrc, imgIndex) => `<img src="${imgSrc}" alt="Miniatura ${imgIndex + 1}" class="w-20 h-20 object-cover rounded-lg border-2 ${imgIndex === 0 ? 'border-blue-500' : 'border-transparent hover:border-blue-300'} cursor-pointer transition-all" onclick="event.stopPropagation(); seleccionarImagenDetalle(${imgIndex})">`).join('')}</div>` : ''}</div><div class="space-y-6"><div><h4 class="text-lg font-semibold text-gray-800 mb-2">Descripción completa</h4><p class="text-gray-700 leading-relaxed">${descripcionCorta || 'Sin descripción disponible.'}</p></div>${componentes.length > 0 ? `<div><h4 class="text-lg font-semibold text-gray-800 mb-2">📦 Componentes incluidos</h4><div class="bg-blue-50 rounded-lg p-4 max-h-60 overflow-y-auto"><div class="grid grid-cols-1 md:grid-cols-2 gap-2">${componentes.map(comp => `<div class="flex items-start"><span class="text-blue-500 mr-2 mt-1">•</span><span class="text-gray-700 text-sm">${comp}</span></div>`).join('')}</div></div></div>` : ''}${producto.especificaciones && producto.especificaciones.length > 0 ? `<div><h4 class="text-lg font-semibold text-gray-800 mb-2">✨ Características técnicas</h4><ul class="space-y-2">${producto.especificaciones.map(spec => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span class="text-gray-700">${spec}</span></li>`).join('')}</ul></div>` : ''}<div class="pt-4 border-t"><h4 class="text-lg font-semibold text-gray-800 mb-2">Precio</h4><p class="text-3xl font-bold text-green-600">${producto.precio || 'Consultar'}</p></div>${producto.documentos && producto.documentos.length > 0 ? `<div><h4 class="text-lg font-semibold text-gray-800 mb-2">📄 Documentos disponibles</h4><div class="space-y-2">${producto.documentos.map(doc => `<a href="${doc.archivo}" target="_blank" class="flex items-center text-blue-600 hover:text-blue-800 hover:underline"><i class="fas fa-file-download mr-2"></i>${doc.nombre}</a>`).join('')}</div></div>` : ''}</div></div></div><div class="border-t p-6 bg-gray-50"><div class="flex flex-col sm:flex-row gap-3"><button onclick="cerrarModalKitDetalle()" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition flex-1"><i class="fas fa-times mr-2"></i>Cerrar</button><a href="https://wa.me/595972292392?text=${encodeURIComponent('¡Hola! Quiero información sobre: ' + producto.nombre)}" target="_blank" class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition flex-1 text-center"><i class="fab fa-whatsapp mr-2"></i>Consultar por WhatsApp</a></div></div></div></div><div id="modal-zoom-detalle" class="hidden fixed inset-0 bg-black bg-opacity-90 z-[60] flex items-center justify-center p-4" onclick="cerrarZoomDetalle()"><div class="relative max-w-4xl w-full"><img id="imagen-zoom-detalle" src="" alt="Zoom" class="w-full h-auto max-h-[80vh] object-contain"><button onclick="cerrarZoomDetalle()" class="absolute top-4 right-4 text-white text-3xl bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center">×</button></div></div>`;
-        
         document.body.insertAdjacentHTML('beforeend', modalHTML);
         productoDetalleActual = { producto: producto, imagenIndex: 0, totalImagenes: producto.img ? producto.img.length : 0 };
         if (producto.img && producto.img.length > 1) setTimeout(() => actualizarMiniaturasActivas(), 100);
         document.body.style.overflow = 'hidden';
     }
     
-    function obtenerDescripcionSinComponentes(descripcion) {
-        if (!descripcion) return '';
-        const idxComponentes = descripcion.toLowerCase().indexOf('como:');
-        return idxComponentes !== -1 ? descripcion.substring(0, idxComponentes + 5).trim() : descripcion;
-    }
-    
-    function obtenerComponentesDeDescripcion(descripcion) {
-        if (!descripcion) return [];
-        const componentes = [];
-        const idxComo = descripcion.toLowerCase().indexOf('como:');
-        if (idxComo === -1) return [];
-        const seccionComponentes = descripcion.substring(idxComo + 5).trim();
-        const separadores = /[-–—•]|\d+\./;
-        const partes = seccionComponentes.split(separadores);
-        partes.forEach(parte => {
-            const componente = parte.replace(/^[\s:;,.]*/, '').replace(/[\s:;,.]*$/, '').trim();
-            if (componente && componente.length > 2 && !componente.match(/^\d+$/)) componentes.push(componente);
-        });
-        return componentes;
-    }
-    
-    function cambiarImagenDetalle(direccion) {
-        if (!productoDetalleActual || !productoDetalleActual.producto.img || productoDetalleActual.totalImagenes <= 1) return;
-        productoDetalleActual.imagenIndex = (productoDetalleActual.imagenIndex + direccion + productoDetalleActual.totalImagenes) % productoDetalleActual.totalImagenes;
-        actualizarImagenDetalle();
-    }
-    
-    function seleccionarImagenDetalle(index) {
-        if (!productoDetalleActual) return;
-        productoDetalleActual.imagenIndex = index;
-        actualizarImagenDetalle();
-    }
-    
-    function actualizarImagenDetalle() {
-        if (!productoDetalleActual || !productoDetalleActual.producto.img) return;
-        const nuevaImagen = productoDetalleActual.producto.img[productoDetalleActual.imagenIndex];
-        const imgPrincipal = document.getElementById('imagen-principal-detalle');
-        if (imgPrincipal) imgPrincipal.src = nuevaImagen;
-        const contador = document.getElementById('contador-imagen-detalle');
-        if (contador) contador.textContent = productoDetalleActual.imagenIndex + 1;
-        actualizarMiniaturasActivas();
-    }
-    
-    function actualizarMiniaturasActivas() {
-        if (!productoDetalleActual) return;
-        const miniaturas = document.querySelectorAll('#miniaturas-detalle img');
-        miniaturas.forEach((thumb, index) => {
-            thumb.classList.toggle('border-blue-500', index === productoDetalleActual.imagenIndex);
-            thumb.classList.toggle('border-transparent', index !== productoDetalleActual.imagenIndex);
-        });
-    }
-    
-    function ampliarImagenDetalle(src) {
-        const modalZoom = document.getElementById('modal-zoom-detalle');
-        const imgZoom = document.getElementById('imagen-zoom-detalle');
-        if (modalZoom && imgZoom) {
-            imgZoom.src = src;
-            modalZoom.classList.remove('hidden');
-        }
-    }
-    
-    function cerrarModalKitDetalle() {
-        const modal = document.querySelector('.modal-kit-detalle');
-        if (modal) {
-            modal.style.opacity = '0';
-            setTimeout(() => { modal.remove(); document.body.style.overflow = ''; productoDetalleActual = null; }, 300);
-        }
-    }
-    
-    function cerrarZoomDetalle() {
-        const modalZoom = document.getElementById('modal-zoom-detalle');
-        if (modalZoom) modalZoom.classList.add('hidden');
-    }
-    
-    function comprarProductoKitWhatsApp(nombreProducto, precioProducto) {
-        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${nombreProducto} - ${precioProducto}`)}`, "_blank");
-        mostrarNotificacion('✅ Producto enviado a WhatsApp');
-    }
+    function obtenerDescripcionSinComponentes(descripcion) { if (!descripcion) return ''; const idxComponentes = descripcion.toLowerCase().indexOf('como:'); return idxComponentes !== -1 ? descripcion.substring(0, idxComponentes + 5).trim() : descripcion; }
+    function obtenerComponentesDeDescripcion(descripcion) { if (!descripcion) return []; const componentes = []; const idxComo = descripcion.toLowerCase().indexOf('como:'); if (idxComo === -1) return []; const seccionComponentes = descripcion.substring(idxComo + 5).trim(); const separadores = /[-–—•]|\d+\./; const partes = seccionComponentes.split(separadores); partes.forEach(parte => { const componente = parte.replace(/^[\s:;,.]*/, '').replace(/[\s:;,.]*$/, '').trim(); if (componente && componente.length > 2 && !componente.match(/^\d+$/)) componentes.push(componente); }); return componentes; }
+    function cambiarImagenDetalle(direccion) { if (!productoDetalleActual || !productoDetalleActual.producto.img || productoDetalleActual.totalImagenes <= 1) return; productoDetalleActual.imagenIndex = (productoDetalleActual.imagenIndex + direccion + productoDetalleActual.totalImagenes) % productoDetalleActual.totalImagenes; actualizarImagenDetalle(); }
+    function seleccionarImagenDetalle(index) { if (!productoDetalleActual) return; productoDetalleActual.imagenIndex = index; actualizarImagenDetalle(); }
+    function actualizarImagenDetalle() { if (!productoDetalleActual || !productoDetalleActual.producto.img) return; const nuevaImagen = productoDetalleActual.producto.img[productoDetalleActual.imagenIndex]; const imgPrincipal = document.getElementById('imagen-principal-detalle'); if (imgPrincipal) imgPrincipal.src = nuevaImagen; const contador = document.getElementById('contador-imagen-detalle'); if (contador) contador.textContent = productoDetalleActual.imagenIndex + 1; actualizarMiniaturasActivas(); }
+    function actualizarMiniaturasActivas() { if (!productoDetalleActual) return; const miniaturas = document.querySelectorAll('#miniaturas-detalle img'); miniaturas.forEach((thumb, index) => { thumb.classList.toggle('border-blue-500', index === productoDetalleActual.imagenIndex); thumb.classList.toggle('border-transparent', index !== productoDetalleActual.imagenIndex); }); }
+    function ampliarImagenDetalle(src) { const modalZoom = document.getElementById('modal-zoom-detalle'); const imgZoom = document.getElementById('imagen-zoom-detalle'); if (modalZoom && imgZoom) { imgZoom.src = src; modalZoom.classList.remove('hidden'); } }
+    function cerrarModalKitDetalle() { const modal = document.querySelector('.modal-kit-detalle'); if (modal) { modal.style.opacity = '0'; setTimeout(() => { modal.remove(); document.body.style.overflow = ''; productoDetalleActual = null; }, 300); } }
+    function cerrarZoomDetalle() { const modalZoom = document.getElementById('modal-zoom-detalle'); if (modalZoom) modalZoom.classList.add('hidden'); }
+    function comprarProductoKitWhatsApp(nombreProducto, precioProducto) { window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${nombreProducto} - ${precioProducto}`)}`, "_blank"); mostrarNotificacion('✅ Producto enviado a WhatsApp'); }
     
     // ============================================
-    // FILTRO POR CATEGORÍA (VERSIÓN ORIGINAL QUE FUNCIONA)
+    // FILTRO POR CATEGORÍA
     // ============================================
-    
     function aplicarFiltroCategoria(categoria) {
         console.log('Filtrando por:', categoria);
         mostrarNotificacion(`Filtrando por: ${categoria}`);
-        
         const dropdowns = document.querySelectorAll('.subcategory-panel');
-        dropdowns.forEach(panel => {
-            panel.classList.add('opacity-0', 'invisible', 'scale-95');
-        });
-        
+        dropdowns.forEach(panel => { panel.classList.add('opacity-0', 'invisible', 'scale-95'); });
         paginaActual = 1;
-        
-        const categoriasMap = {
-            'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20'],
-            'Humedad': ['humedad', 'dht11', 'dht22'],
-            'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio'],
-            'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible'],
-            'Servo Motores': ['servo', 'sg90'],
-            'Stepper': ['stepper', 'paso a paso'],
-            'DC Motors': ['motor dc', 'motor corriente continua'],
-            'LCD 16x2': ['lcd', '16x2', 'pantalla lcd'],
-            'Matriz LED': ['matriz led', 'max7219', '8x8'],
-            'OLED': ['oled', 'pantalla oled', 'display oled'],
-            'Módulos': ['módulo', 'module', 'shield'],
-            'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266'],
-            'Raspberry Pi': ['raspberry', 'pi', 'rpi'],
-            'Sensores': ['sensor', 'detector', 'medidor'],
-            'Motores': ['motor', 'servo', 'stepper'],
-            'Displays': ['display', 'pantalla', 'lcd', 'oled', 'led']
-        };
-        
+        const categoriasMap = { 'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20'], 'Humedad': ['humedad', 'dht11', 'dht22'], 'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio'], 'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible'], 'Servo Motores': ['servo', 'sg90'], 'Stepper': ['stepper', 'paso a paso'], 'DC Motors': ['motor dc', 'motor corriente continua'], 'LCD 16x2': ['lcd', '16x2', 'pantalla lcd'], 'Matriz LED': ['matriz led', 'max7219', '8x8'], 'OLED': ['oled', 'pantalla oled', 'display oled'], 'Módulos': ['módulo', 'module', 'shield'], 'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266'], 'Raspberry Pi': ['raspberry', 'pi', 'rpi'], 'Sensores': ['sensor', 'detector', 'medidor'], 'Motores': ['motor', 'servo', 'stepper'], 'Displays': ['display', 'pantalla', 'lcd', 'oled', 'led'] };
         const terminosBusqueda = categoriasMap[categoria] || [categoria.toLowerCase()];
-        
-        const productosFiltrados = componentesSueltos.filter(comp => {
-            const textoBusqueda = (
-                comp.nombre.toLowerCase() + ' ' + 
-                (comp.descripcion || '').toLowerCase() + ' ' +
-                (comp.categoria || '').toLowerCase() + ' ' +
-                (comp.especificaciones ? comp.especificaciones.join(' ').toLowerCase() : '')
-            );
-            return terminosBusqueda.some(termino => textoBusqueda.includes(termino.toLowerCase()));
-        });
-        
+        const productosFiltrados = componentesSueltos.filter(comp => { const textoBusqueda = (comp.nombre.toLowerCase() + ' ' + (comp.descripcion || '').toLowerCase() + ' ' + (comp.categoria || '').toLowerCase() + ' ' + (comp.especificaciones ? comp.especificaciones.join(' ').toLowerCase() : '')); return terminosBusqueda.some(termino => textoBusqueda.includes(termino.toLowerCase())); });
         const grid = document.getElementById('grid-componentes');
         if (!grid) return;
-        
-        if (productosFiltrados.length === 0) {
-            grid.innerHTML = `<div class="col-span-full text-center py-8"><div class="text-gray-400 text-4xl mb-2">🔍</div><p class="text-gray-700 font-semibold">No se encontraron productos en "${categoria}"</p><button onclick="limpiarFiltros()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded">Mostrar todos</button></div>`;
-        } else {
-            grid.innerHTML = productosFiltrados.map(comp => `
-                <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition cursor-pointer flex flex-col h-full" onclick="mostrarModalProducto(${comp.id})">
-                    <div class="p-3">
-                        <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded" loading="lazy">
-                        <h3 class="font-semibold text-base line-clamp-2 min-h-[48px]">${comp.nombre}</h3>
-                        ${comp.categoria ? `<p class="text-xs text-gray-500 mt-1">${comp.categoria}</p>` : ''}
-                    </div>
-                    <div class="px-3"><p class="text-green-600 font-bold text-base">${comp.precio}</p></div>
-                    <div class="p-3 pt-1 mt-auto">
-                        <div class="flex items-center justify-between">
-                            <span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-                                ${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}
-                            </span>
-                            <button class="text-blue-600 hover:text-blue-800 font-semibold text-xs">Ver detalles ›</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-        
-        const infoPaginacion = document.getElementById('info-paginacion');
-        const infoMobile = document.getElementById('info-paginacion-mobile');
-        const totalPaginas = Math.ceil(productosFiltrados.length / componentesPorPagina);
-        if (infoPaginacion) infoPaginacion.innerHTML = `Página <span class="text-blue-600">${paginaActual}</span> de <span class="text-blue-600">${totalPaginas || 1}</span>`;
-        if (infoMobile) infoMobile.innerHTML = `<span class="text-blue-600">${paginaActual}</span>/<span class="text-blue-600">${totalPaginas || 1}</span>`;
-        
-        mostrarNotificacion(`Filtrando por: ${categoria} (${productosFiltrados.length} productos)`);
+        if (productosFiltrados.length === 0) { grid.innerHTML = `<div class="col-span-full text-center py-8"><div class="text-gray-400 text-4xl mb-2">🔍</div><p class="text-gray-700 font-semibold">No se encontraron productos en "${categoria}"</p><button onclick="limpiarFiltros()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded">Mostrar todos</button></div>`; } else { grid.innerHTML = productosFiltrados.map(comp => `<div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition cursor-pointer flex flex-col h-full" onclick="mostrarModalProducto(${comp.id})"><div class="p-3"><img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded" loading="lazy"><h3 class="font-semibold text-base line-clamp-2 min-h-[48px]">${comp.nombre}</h3>${comp.categoria ? `<p class="text-xs text-gray-500 mt-1">${comp.categoria}</p>` : ''}</div><div class="px-3"><p class="text-green-600 font-bold text-base">${comp.precio}</p></div><div class="p-3 pt-1 mt-auto"><div class="flex items-center justify-between"><span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}</span><button class="text-blue-600 hover:text-blue-800 font-semibold text-xs">Ver detalles ›</button></div></div></div>`).join(''); }
+        const infoPaginacion = document.getElementById('info-paginacion'); const infoMobile = document.getElementById('info-paginacion-mobile'); const totalPaginas = Math.ceil(productosFiltrados.length / componentesPorPagina); if (infoPaginacion) infoPaginacion.innerHTML = `Página <span class="text-blue-600">${paginaActual}</span> de <span class="text-blue-600">${totalPaginas || 1}</span>`; if (infoMobile) infoMobile.innerHTML = `<span class="text-blue-600">${paginaActual}</span>/<span class="text-blue-600">${totalPaginas || 1}</span>`; mostrarNotificacion(`Filtrando por: ${categoria} (${productosFiltrados.length} productos)`);
     }
     
     // ============================================
     // CARRITO CON SUPABASE
     // ============================================
-    
     async function cargarCarritoSupabase() {
         if (!usuarioActual) { carritoGlobal = []; actualizarContadorCarrito(); return; }
-        try {
-            const { data, error } = await supabaseClient.from('carrito').select('*, productos(nombre, precio, imagen_principal)').eq('usuario_id', usuarioActual.id);
-            if (error) throw error;
-            carritoGlobal = data.map(item => ({ id: item.id, producto_id: item.producto_id, nombre: item.productos.nombre, precio: item.productos.precio, cantidad: item.cantidad, imagen: item.productos.imagen_principal }));
-            actualizarContadorCarrito();
-        } catch (error) { console.error('Error cargando carrito:', error); }
+        try { const { data, error } = await supabaseClient.from('carrito').select('*, productos(nombre, precio, imagen_principal)').eq('usuario_id', usuarioActual.id); if (error) throw error; carritoGlobal = data.map(item => ({ id: item.id, producto_id: item.producto_id, nombre: item.productos.nombre, precio: item.productos.precio, cantidad: item.cantidad, imagen: item.productos.imagen_principal })); actualizarContadorCarrito(); } catch (error) { console.error('Error cargando carrito:', error); }
     }
-    
-    async function agregarAlCarritoSupabase(productoId, nombre, precio, imagen) {
-        if (!usuarioActual) { mostrarNotificacion('Inicia sesión para guardar tu carrito', 'error'); mostrarModalLogin(); return; }
-        try {
-            const { error } = await supabaseClient.from('carrito').insert([{ usuario_id: usuarioActual.id, producto_id: productoId, cantidad: 1 }]);
-            if (error) throw error;
-            mostrarNotificacion(`📦 ${nombre} agregado al carrito`, 'success');
-            await cargarCarritoSupabase();
-        } catch (error) { mostrarNotificacion('Error al agregar', 'error'); }
-    }
-    
-    async function quitarDelCarritoSupabase(itemId) {
-        if (!usuarioActual) return;
-        await supabaseClient.from('carrito').delete().eq('id', itemId);
-        await cargarCarritoSupabase();
-        renderizarCarritoModal();
-    }
-    
-    async function vaciarCarritoSupabase() {
-        if (!usuarioActual) return;
-        if (confirm('¿Vaciar carrito?')) {
-            await supabaseClient.from('carrito').delete().eq('usuario_id', usuarioActual.id);
-            await cargarCarritoSupabase();
-            renderizarCarritoModal();
-            mostrarNotificacion('Carrito vaciado', 'info');
-        }
-    }
-    
-    function actualizarContadorCarrito() {
-        const count = carritoGlobal.length;
-        const desktop = document.getElementById('carrito-count-desktop');
-        const mobile = document.getElementById('carrito-count-mobile');
-        if (desktop) desktop.textContent = count;
-        if (mobile) mobile.textContent = count;
-    }
-    
-    function renderizarCarritoModal() {
-        const cont = document.getElementById('carrito-lista');
-        if (!cont) return;
-        if (!carritoGlobal.length) {
-            cont.innerHTML = `<p class="text-gray-500 py-6 text-center">Tu carrito está vacío.</p>`;
-            document.getElementById('carrito-total').textContent = 'Gs. 0';
-            return;
-        }
-        let total = 0;
-        cont.innerHTML = carritoGlobal.map(item => {
-            total += item.precio;
-            return `<div class="flex items-center justify-between py-3 border-b"><div class="flex-1"><p class="font-medium">${item.nombre}</p><p class="text-sm text-green-700">${item.precio.toLocaleString()} Gs.</p></div><button onclick="quitarDelCarritoSupabase(${item.id})" class="text-red-500 px-2 py-1 rounded hover:bg-red-50">✕</button></div>`;
-        }).join('');
-        document.getElementById('carrito-total').textContent = `Gs. ${total.toLocaleString()}`;
-    }
-    
+    async function agregarAlCarritoSupabase(productoId, nombre, precio, imagen) { if (!usuarioActual) { mostrarNotificacion('Inicia sesión para guardar tu carrito', 'error'); mostrarModalLogin(); return; } try { const { error } = await supabaseClient.from('carrito').insert([{ usuario_id: usuarioActual.id, producto_id: productoId, cantidad: 1 }]); if (error) throw error; mostrarNotificacion(`📦 ${nombre} agregado al carrito`, 'success'); await cargarCarritoSupabase(); } catch (error) { mostrarNotificacion('Error al agregar', 'error'); } }
+    async function quitarDelCarritoSupabase(itemId) { if (!usuarioActual) return; await supabaseClient.from('carrito').delete().eq('id', itemId); await cargarCarritoSupabase(); renderizarCarritoModal(); }
+    async function vaciarCarritoSupabase() { if (!usuarioActual) return; if (confirm('¿Vaciar carrito?')) { await supabaseClient.from('carrito').delete().eq('usuario_id', usuarioActual.id); await cargarCarritoSupabase(); renderizarCarritoModal(); mostrarNotificacion('Carrito vaciado', 'info'); } }
+    function actualizarContadorCarrito() { const count = carritoGlobal.length; const desktop = document.getElementById('carrito-count-desktop'); const mobile = document.getElementById('carrito-count-mobile'); if (desktop) desktop.textContent = count; if (mobile) mobile.textContent = count; }
+    function renderizarCarritoModal() { const cont = document.getElementById('carrito-lista'); if (!cont) return; if (!carritoGlobal.length) { cont.innerHTML = `<p class="text-gray-500 py-6 text-center">Tu carrito está vacío.</p>`; document.getElementById('carrito-total').textContent = 'Gs. 0'; return; } let total = 0; cont.innerHTML = carritoGlobal.map(item => { total += item.precio; return `<div class="flex items-center justify-between py-3 border-b"><div class="flex-1"><p class="font-medium">${item.nombre}</p><p class="text-sm text-green-700">${item.precio.toLocaleString()} Gs.</p></div><button onclick="quitarDelCarritoSupabase(${item.id})" class="text-red-500 px-2 py-1 rounded hover:bg-red-50">✕</button></div>`; }).join(''); document.getElementById('carrito-total').textContent = `Gs. ${total.toLocaleString()}`; }
     function verCarrito() { renderizarCarritoModal(); const modal = document.getElementById('modal-carrito'); if (modal) { modal.classList.remove('opacity-0', 'pointer-events-none'); document.body.classList.add('modal-active'); } }
-    
-    async function enviarCarritoWhatsAppMejorado() {
-        if (!carritoGlobal.length) { mostrarNotificacion('Carrito vacío', 'error'); return; }
-        const cuerpo = carritoGlobal.map((p, i) => `${i+1}. ${p.nombre} - ${p.precio.toLocaleString()} Gs.`).join('%0A');
-        const total = carritoGlobal.reduce((s, p) => s + p.precio, 0);
-        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar:%0A%0A${cuerpo}%0A%0A*Total: ${total.toLocaleString()} Gs.*`)}`, '_blank');
-        await vaciarCarritoSupabase();
-        mostrarNotificacion('✅ Pedido enviado');
-    }
-    
-    function agregarProductoAlCarritoSupabase() {
-        const producto = componentesSueltos.find(c => c.nombre === document.getElementById('modal-producto-nombre').textContent);
-        if (producto) { agregarAlCarritoSupabase(producto.id, producto.nombre, producto.precioNum, producto.imagen); toggleModalProducto(); }
-    }
+    async function enviarCarritoWhatsAppMejorado() { if (!carritoGlobal.length) { mostrarNotificacion('Carrito vacío', 'error'); return; } const cuerpo = carritoGlobal.map((p, i) => `${i+1}. ${p.nombre} - ${p.precio.toLocaleString()} Gs.`).join('%0A'); const total = carritoGlobal.reduce((s, p) => s + p.precio, 0); window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar:%0A%0A${cuerpo}%0A%0A*Total: ${total.toLocaleString()} Gs.*`)}`, '_blank'); await vaciarCarritoSupabase(); mostrarNotificacion('✅ Pedido enviado'); }
+    function agregarProductoAlCarritoSupabase() { const producto = componentesSueltos.find(c => c.nombre === document.getElementById('modal-producto-nombre').textContent); if (producto) { agregarAlCarritoSupabase(producto.id, producto.nombre, producto.precioNum, producto.imagen); toggleModalProducto(); } }
     
     // ============================================
     // FUNCIONES DE LOGIN Y UI
     // ============================================
-    
     function mostrarModalLogin() { const modal = document.getElementById('modal-login'); if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; } }
     function cerrarModalLogin(event) { if (event && event.target !== event.currentTarget) return; const modal = document.getElementById('modal-login'); if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; } }
     function mostrarModalRegistro() { const modal = document.getElementById('modal-registro'); if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; } }
     function cerrarModalRegistro(event) { if (event && event.target !== event.currentTarget) return; const modal = document.getElementById('modal-registro'); if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; } }
     
     // ============================================
-    // NOTIFICACIÓN MEJORADA
+    // NOTIFICACIÓN
     // ============================================
-    function mostrarNotificacion(mensaje, tipo = 'success') {
-        console.log(`📢 [${tipo}] ${mensaje}`);
-        const notif = document.createElement('div');
-        notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded-lg text-white text-sm transition-all duration-300 transform translate-x-full ${tipo === 'success' ? 'bg-green-500' : tipo === 'error' ? 'bg-red-500' : 'bg-blue-500'}`;
-        notif.textContent = mensaje;
-        document.body.appendChild(notif);
-        setTimeout(() => notif.classList.remove('translate-x-full'), 100);
-        setTimeout(() => { notif.classList.add('translate-x-full'); setTimeout(() => notif.remove(), 300); }, 3000);
-    }
+    function mostrarNotificacion(mensaje, tipo = 'success') { console.log(`📢 [${tipo}] ${mensaje}`); const notif = document.createElement('div'); notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded-lg text-white text-sm transition-all duration-300 transform translate-x-full ${tipo === 'success' ? 'bg-green-500' : tipo === 'error' ? 'bg-red-500' : 'bg-blue-500'}`; notif.textContent = mensaje; document.body.appendChild(notif); setTimeout(() => notif.classList.remove('translate-x-full'), 100); setTimeout(() => { notif.classList.add('translate-x-full'); setTimeout(() => notif.remove(), 300); }, 3000); }
     
     // ============================================
     // NAVEGACIÓN
@@ -1195,17 +911,7 @@
     function volverAlInicio() { navegarA('inicio'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function verAsesorias() { navegarA('asesorias'); }
     function toggleModal() { const modal = document.getElementById('modal-descripcion'); const isOpening = modal.classList.contains('opacity-0'); modal.classList.toggle('opacity-0'); modal.classList.toggle('pointer-events-none'); document.body.classList.toggle('modal-active', isOpening); if (window.innerWidth <= 768) document.body.style.overflow = isOpening ? 'hidden' : ''; }
-    
-    function enviarPorWhatsApp() {
-        const nombre = document.querySelector('input[name="nombre"]')?.value || '';
-        const institucion = document.querySelector('input[name="institucion"]')?.value || '';
-        const email = document.querySelector('input[name="email"]')?.value || '';
-        const telefono = document.querySelector('input[name="telefono"]')?.value || '';
-        const tipo = document.querySelector('select[name="tipo_proyecto"]')?.value || '';
-        const proyecto = document.querySelector('textarea[name="proyecto"]')?.value || '';
-        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Solicito asesoría:%0A%0ANombre: ${nombre}%0AInstitución: ${institucion}%0AEmail: ${email}%0ATeléfono: ${telefono}%0ATipo: ${tipo}%0A%0ADescripción: ${proyecto}`)}`, '_blank');
-    }
-    
+    function enviarPorWhatsApp() { const nombre = document.querySelector('input[name="nombre"]')?.value || ''; const institucion = document.querySelector('input[name="institucion"]')?.value || ''; const email = document.querySelector('input[name="email"]')?.value || ''; const telefono = document.querySelector('input[name="telefono"]')?.value || ''; const tipo = document.querySelector('select[name="tipo_proyecto"]')?.value || ''; const proyecto = document.querySelector('textarea[name="proyecto"]')?.value || ''; window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Solicito asesoría:%0A%0ANombre: ${nombre}%0AInstitución: ${institucion}%0AEmail: ${email}%0ATeléfono: ${telefono}%0ATipo: ${tipo}%0A%0ADescripción: ${proyecto}`)}`, '_blank'); }
     function trackEvent(categoria, accion, etiqueta = '') { if (typeof gtag !== 'undefined') gtag('event', accion, { 'event_category': categoria, 'event_label': etiqueta }); }
     
     function navegarA(vista, data = {}) {
@@ -1225,21 +931,76 @@
     }
     
     // ============================================
+    // FUNCIONES PARA COMPARTIR PROYECTO
+    // ============================================
+    function mostrarModalProyecto() { const modal = document.getElementById('proyecto-modal'); if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; ratingSeleccionado = 0; document.getElementById('proyecto-rating').value = 0; document.querySelectorAll('#rating-stars i').forEach(s => { s.classList.remove('fas', 'text-yellow-400'); s.classList.add('far'); }); document.getElementById('foto-preview').classList.add('hidden'); document.getElementById('form-proyecto').reset(); } }
+    function cerrarModalProyecto(event) { if (event && event.target !== event.currentTarget) return; const modal = document.getElementById('proyecto-modal'); if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; } }
+    function previewFotoProyecto(input) { const file = input.files[0]; if (file) { const reader = new FileReader(); reader.onload = function(e) { const preview = document.getElementById('foto-preview'); const img = document.getElementById('foto-preview-img'); img.src = e.target.result; preview.classList.remove('hidden'); }; reader.readAsDataURL(file); } }
+    async function enviarProyecto(event) {
+        event.preventDefault();
+        const nombre = document.getElementById('proyecto-nombre').value.trim();
+        const titulo = document.getElementById('proyecto-titulo').value.trim();
+        const rating = parseInt(document.getElementById('proyecto-rating').value);
+        const comentario = document.getElementById('proyecto-comentario').value.trim();
+        const fotoInput = document.getElementById('foto-proyecto');
+        if (rating === 0 || !fotoInput.files[0] || nombre.length < 2 || comentario.length < 20) { mostrarNotificacion('Complete todos los campos', 'error'); return; }
+        const submitBtn = event.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Enviando...';
+        submitBtn.disabled = true;
+        try {
+            const file = fotoInput.files[0];
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const fotoBase64 = e.target.result;
+                const { error } = await supabaseClient.from('reviews').insert([{ usuario_id: usuarioActual?.id || null, producto_id: null, rating: rating, comentario: comentario, foto: fotoBase64, tipo: 'proyecto', aprobada: false }]);
+                if (error) { mostrarNotificacion('Error al guardar. Intenta de nuevo.', 'error'); } else { mostrarNotificacion('¡Gracias por compartir tu proyecto! Lo revisaremos pronto.', 'success'); cerrarModalProyecto(); setTimeout(() => cargarTestimoniosReales(), 1000); }
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        } catch (error) { console.error('Error:', error); mostrarNotificacion('Error al enviar', 'error'); submitBtn.textContent = originalText; submitBtn.disabled = false; }
+    }
+    
+    // ============================================
+    // CARGAR TESTIMONIOS REALES
+    // ============================================
+    async function cargarTestimoniosReales() {
+        const container = document.getElementById('testimonios-reales');
+        if (!container) return;
+        try {
+            const { data, error } = await supabaseClient.from('reviews').select('*').eq('tipo', 'proyecto').eq('aprobada', true).order('created_at', { ascending: false }).limit(6);
+            if (error) throw error;
+            if (!data || data.length === 0) { container.innerHTML = `<div class="col-span-full text-center py-8"><i class="fas fa-camera text-4xl text-gray-300 mb-4"></i><p class="text-gray-500">Aún no hay proyectos compartidos</p><p class="text-gray-400 text-sm">Sé el primero en mostrar tu creación</p></div>`; return; }
+            container.innerHTML = data.map(proyecto => `<div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300"><div class="relative h-48 overflow-hidden"><img src="${proyecto.foto}" alt="Proyecto" class="w-full h-full object-cover"><div class="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-lg text-sm">${'★'.repeat(proyecto.rating)}${'☆'.repeat(5 - proyecto.rating)}</div></div><div class="p-4"><h4 class="font-bold text-lg mb-1">${proyecto.comentario?.substring(0, 80)}${proyecto.comentario?.length > 80 ? '...' : ''}</h4><p class="text-gray-500 text-sm mt-2">${new Date(proyecto.created_at).toLocaleDateString('es-PY')}</p></div></div>`).join('');
+        } catch (error) { console.error('Error cargando testimonios:', error); container.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">Error cargando proyectos</div>`; }
+    }
+    
+    // Inicializar estrellas
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('#rating-stars i')) {
+            const star = e.target.closest('#rating-stars i');
+            const rating = parseInt(star.dataset.rating);
+            ratingSeleccionado = rating;
+            document.getElementById('proyecto-rating').value = rating;
+            const stars = document.querySelectorAll('#rating-stars i');
+            stars.forEach((s, i) => { if (i < rating) { s.classList.remove('far'); s.classList.add('fas', 'text-yellow-400'); } else { s.classList.remove('fas', 'text-yellow-400'); s.classList.add('far'); } });
+        }
+    });
+    
+    // ============================================
     // INICIALIZACIÓN
     // ============================================
-    
     document.addEventListener('DOMContentLoaded', async () => {
         console.log('🚀 Inicializando Innovakit con Supabase...');
         await cargarUsuarioActualSupabase();
         await cargarKitsSupabase();
         await cargarProductosSupabase();
         await cargarCarritoSupabase();
+        cargarTestimoniosReales();
         
         const buscar = document.getElementById('buscar-componente');
-        if (buscar) {
-            let timeout;
-            buscar.addEventListener('input', () => { clearTimeout(timeout); timeout = setTimeout(() => { paginaActual = 1; renderizarComponentesSueltos(); }, 300); });
-        }
+        if (buscar) { let timeout; buscar.addEventListener('input', () => { clearTimeout(timeout); timeout = setTimeout(() => { paginaActual = 1; renderizarComponentesSueltos(); }, 300); }); }
         const precioFiltro = document.getElementById('filtro-precio');
         if (precioFiltro) precioFiltro.addEventListener('change', () => { paginaActual = 1; renderizarComponentesSueltos(); });
         
@@ -1249,259 +1010,14 @@
         document.addEventListener('keydown', e => { if (e.key === 'Escape') { toggleModalProducto(); const modal = document.getElementById('modal-carrito'); if (modal && !modal.classList.contains('pointer-events-none')) { modal.classList.add('opacity-0', 'pointer-events-none'); document.body.classList.remove('modal-active'); } } });
         
         if (!history.state) history.replaceState({vista: 'inicio'}, '', '#inicio');
-        if (window.location.hash) {
-            const hash = window.location.hash;
-            if (hash.includes('productoskit')) { const kitId = hash.split('-')[1]; if (kitId) navegarA('productoskit', { kitId: parseInt(kitId) }); }
-            else if (hash === '#asesorias') navegarA('asesorias');
-            else if (hash === '#componentes') navegarA('componentes');
-        }
+        if (window.location.hash) { const hash = window.location.hash; if (hash.includes('productoskit')) { const kitId = hash.split('-')[1]; if (kitId) navegarA('productoskit', { kitId: parseInt(kitId) }); } else if (hash === '#asesorias') navegarA('asesorias'); else if (hash === '#componentes') navegarA('componentes'); }
         console.log('✅ Innovakit inicializado');
     });
     
-    // Event listeners para formularios de Supabase
-    document.getElementById('form-login-supabase')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-        if (typeof iniciarSesionSupabase === 'function') {
-            if (await iniciarSesionSupabase(email, password)) {
-                cerrarModalLogin();
-            }
-        }
-    });
+    document.getElementById('form-login-supabase')?.addEventListener('submit', async (e) => { e.preventDefault(); const email = document.getElementById('login-email').value; const password = document.getElementById('login-password').value; if (typeof iniciarSesionSupabase === 'function') { if (await iniciarSesionSupabase(email, password)) { cerrarModalLogin(); } } });
+    document.getElementById('form-registro-supabase')?.addEventListener('submit', async (e) => { e.preventDefault(); const nombre = document.getElementById('reg-nombre').value; const telefono = document.getElementById('reg-telefono').value; const email = document.getElementById('reg-email').value; const password = document.getElementById('reg-password').value; if (typeof registrarUsuarioSupabase === 'function') { if (await registrarUsuarioSupabase(email, password, nombre, telefono)) { cerrarModalRegistro(); mostrarModalLogin(); } } });
     
-    document.getElementById('form-registro-supabase')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const nombre = document.getElementById('reg-nombre').value;
-        const telefono = document.getElementById('reg-telefono').value;
-        const email = document.getElementById('reg-email').value;
-        const password = document.getElementById('reg-password').value;
-        if (typeof registrarUsuarioSupabase === 'function') {
-            if (await registrarUsuarioSupabase(email, password, nombre, telefono)) {
-                cerrarModalRegistro();
-                mostrarModalLogin();
-            }
-        }
-    });
-    // ============================================
-// FUNCIONES PARA COMPARTIR PROYECTO
-// ============================================
-
-let ratingSeleccionado = 0;
-
-// Inicializar estrellas
-function initRatingStars() {
-    const stars = document.querySelectorAll('#rating-stars i');
-    stars.forEach(star => {
-        star.addEventListener('click', function() {
-            ratingSeleccionado = parseInt(this.dataset.rating);
-            document.getElementById('proyecto-rating').value = ratingSeleccionado;
-            stars.forEach((s, i) => {
-                if (i < ratingSeleccionado) {
-                    s.classList.remove('far');
-                    s.classList.add('fas', 'text-yellow-400');
-                } else {
-                    s.classList.remove('fas', 'text-yellow-400');
-                    s.classList.add('far');
-                }
-            });
-        });
-    });
-}
-
-function mostrarModalProyecto() {
-    const modal = document.getElementById('proyecto-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.display = 'flex';
-        ratingSeleccionado = 0;
-        document.getElementById('proyecto-rating').value = 0;
-        document.querySelectorAll('#rating-stars i').forEach(s => {
-            s.classList.remove('fas', 'text-yellow-400');
-            s.classList.add('far');
-        });
-        document.getElementById('foto-preview').classList.add('hidden');
-        document.getElementById('form-proyecto').reset();
-    }
-}
-
-function cerrarModalProyecto(event) {
-    if (event && event.target !== event.currentTarget) return;
-    const modal = document.getElementById('proyecto-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-    }
-}
-
-function previewFotoProyecto(input) {
-    const file = input.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const preview = document.getElementById('foto-preview');
-            const img = document.getElementById('foto-preview-img');
-            img.src = e.target.result;
-            preview.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-async function enviarProyecto(event) {
-    event.preventDefault();
-    
-    const nombre = document.getElementById('proyecto-nombre').value.trim();
-    const titulo = document.getElementById('proyecto-titulo').value.trim();
-    const rating = parseInt(document.getElementById('proyecto-rating').value);
-    const comentario = document.getElementById('proyecto-comentario').value.trim();
-    const fotoInput = document.getElementById('foto-proyecto');
-    
-    // Validaciones
-    if (rating === 0) {
-        mostrarNotificacion('Por favor selecciona una calificación', 'error');
-        return;
-    }
-    
-    if (!fotoInput.files[0]) {
-        mostrarNotificacion('Por favor sube una foto de tu proyecto', 'error');
-        return;
-    }
-    
-    if (nombre.length < 2) {
-        mostrarNotificacion('Por favor ingresa tu nombre', 'error');
-        return;
-    }
-    
-    if (comentario.length < 20) {
-        mostrarNotificacion('Por favor describe mejor tu proyecto (mínimo 20 caracteres)', 'error');
-        return;
-    }
-    
-    // Mostrar loading
-    const submitBtn = event.target.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Enviando...';
-    submitBtn.disabled = true;
-    
-    try {
-        // Convertir foto a base64
-        const file = fotoInput.files[0];
-        const reader = new FileReader();
-        
-        reader.onload = async function(e) {
-            const fotoBase64 = e.target.result;
-            
-            // Guardar en Supabase (tabla reviews)
-            const { data, error } = await supabaseClient
-                .from('reviews')
-                .insert([{
-                    usuario_id: usuarioActual?.id || null,
-                    producto_id: null,
-                    rating: rating,
-                    comentario: comentario,
-                    foto: fotoBase64,
-                    tipo: 'proyecto',
-                    aprobada: false
-                }]);
-            
-            if (error) {
-                console.error('Error guardando proyecto:', error);
-                mostrarNotificacion('Error al guardar. Intenta de nuevo.', 'error');
-            } else {
-                mostrarNotificacion('¡Gracias por compartir tu proyecto! Lo revisaremos pronto.', 'success');
-                cerrarModalProyecto();
-                
-                // Recargar testimonios
-                setTimeout(() => {
-                    if (typeof cargarTestimoniosReales === 'function') {
-                        cargarTestimoniosReales();
-                    }
-                }, 1000);
-            }
-            
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        };
-        
-        reader.readAsDataURL(file);
-        
-    } catch (error) {
-        console.error('Error:', error);
-        mostrarNotificacion('Error al enviar', 'error');
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }
-}
-
-// Función para cargar testimonios aprobados desde Supabase
-async function cargarTestimoniosReales() {
-    const container = document.getElementById('testimonios-reales');
-    if (!container) return;
-    
-    try {
-        const { data, error } = await supabaseClient
-            .from('reviews')
-            .select('*')
-            .eq('tipo', 'proyecto')
-            .eq('aprobada', true)
-            .order('created_at', { ascending: false })
-            .limit(6);
-        
-        if (error) throw error;
-        
-        if (!data || data.length === 0) {
-            container.innerHTML = `<div class="col-span-full text-center py-8"><i class="fas fa-camera text-4xl text-gray-300 mb-4"></i><p class="text-gray-500">Aún no hay proyectos compartidos</p><p class="text-gray-400 text-sm">Sé el primero en mostrar tu creación</p></div>`;
-            return;
-        }
-        
-        container.innerHTML = data.map(proyecto => `
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="${proyecto.foto}" alt="Proyecto de ${proyecto.usuario_id?.substring(0, 8) || 'cliente'}" class="w-full h-full object-cover">
-                    <div class="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-lg text-sm">
-                        ${'★'.repeat(proyecto.rating)}${'☆'.repeat(5 - proyecto.rating)}
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-bold text-lg mb-1">${proyecto.comentario?.substring(0, 80)}${proyecto.comentario?.length > 80 ? '...' : ''}</h4>
-                    <p class="text-gray-500 text-sm mt-2">${new Date(proyecto.created_at).toLocaleDateString('es-PY')}</p>
-                </div>
-            </div>
-        `).join('');
-        
-    } catch (error) {
-        console.error('Error cargando testimonios:', error);
-        container.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">Error cargando proyectos</div>`;
-    }
-}
-
-// Inicializar estrellas cuando se abre el modal
-document.addEventListener('DOMContentLoaded', function() {
-    // Delegar evento para las estrellas (por si el modal se agrega dinámicamente)
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('#rating-stars i')) {
-            const star = e.target.closest('#rating-stars i');
-            const rating = parseInt(star.dataset.rating);
-            ratingSeleccionado = rating;
-            document.getElementById('proyecto-rating').value = rating;
-            const stars = document.querySelectorAll('#rating-stars i');
-            stars.forEach((s, i) => {
-                if (i < rating) {
-                    s.classList.remove('far');
-                    s.classList.add('fas', 'text-yellow-400');
-                } else {
-                    s.classList.remove('fas', 'text-yellow-400');
-                    s.classList.add('far');
-                }
-            });
-        }
-    });
-});
-    // Funciones auxiliares necesarias
-    function renderizarReviewsEnModal(p) { return ''; }
-    function cargarTestimoniosReales() {}
-    function mostrarModalProyecto() {}
+    // Funciones placeholder
     function instalarPWA() {}
     function mostrarModalFiltros() {}
     function cerrarModalFiltros() {}
@@ -1551,70 +1067,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   }
   document.addEventListener('DOMContentLoaded', mostrarBotonAdmin);
-  </script>
-  <!-- ========================================== -->
-<!-- MODAL PARA COMPARTIR PROYECTO -->
-<!-- ========================================== -->
-<div id="proyecto-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" onclick="cerrarModalProyecto(event)">
-    <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-2xl font-bold">📸 Comparte tu Proyecto</h3>
-                <button onclick="cerrarModalProyecto()" class="text-2xl">&times;</button>
-            </div>
-            <form id="form-proyecto" onsubmit="enviarProyecto(event)">
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold mb-1">Foto de tu proyecto *</label>
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-blue-400 transition"
-                         onclick="document.getElementById('foto-proyecto').click()">
-                        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
-                        <p class="text-gray-600">Haz clic para subir una foto</p>
-                        <p class="text-gray-400 text-sm">JPEG, PNG hasta 5MB</p>
-                        <input type="file" id="foto-proyecto" accept="image/*" class="hidden" onchange="previewFotoProyecto(this)">
-                    </div>
-                    <div id="foto-preview" class="mt-3 hidden">
-                        <img id="foto-preview-img" class="w-full h-40 object-cover rounded-lg">
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Tu nombre *</label>
-                        <input type="text" id="proyecto-nombre" class="w-full p-2 border rounded-lg" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Nombre del proyecto *</label>
-                        <input type="text" id="proyecto-titulo" class="w-full p-2 border rounded-lg" required>
-                    </div>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold mb-1">Tu calificación *</label>
-                    <div id="rating-stars" class="flex gap-1 text-2xl mb-2">
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="1"></i>
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="2"></i>
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="3"></i>
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="4"></i>
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="5"></i>
-                    </div>
-                    <input type="hidden" id="proyecto-rating" value="0">
-                </div>
-                
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold mb-1">Cuéntanos sobre tu proyecto *</label>
-                    <textarea id="proyecto-comentario" rows="4" class="w-full p-2 border rounded-lg" placeholder="¿Qué creaste? ¿Qué componentes usaste? ¿Qué aprendiste?" required></textarea>
-                </div>
-                
-                <div class="flex gap-3">
-                    <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">
-                        <i class="fas fa-paper-plane mr-2"></i> Enviar proyecto
-                    </button>
-                    <button type="button" onclick="cerrarModalProyecto()" class="flex-1 bg-gray-200 hover:bg-gray-300 py-3 rounded-lg font-semibold">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
   </script>
 </body>
 </html>
