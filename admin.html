@@ -25,14 +25,12 @@
         .btn-success:hover { background: #059669; }
         .modal { transition: opacity 0.3s ease; }
         input, select, textarea { border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; width: 100%; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; ring: 2px solid #3b82f6; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; }
         
-        /* Estilo para estrellas de rating */
         .rating-stars { display: inline-flex; gap: 2px; }
         .star-filled { color: #fbbf24; }
         .star-empty { color: #d1d5db; }
         
-        /* Badges */
         .badge-pending { background: #fef3c7; color: #d97706; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
         .badge-approved { background: #d1fae5; color: #059669; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
         .badge-pendiente { background: #fed7aa; color: #c2410c; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
@@ -40,22 +38,49 @@
 </head>
 <body class="bg-gray-100">
     
-    <!-- Pantalla de carga -->
-    <div id="loading-screen" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
-        <div class="text-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p class="text-gray-600">Verificando acceso...</p>
+    <!-- ========================================== -->
+    <!-- PANTALLA DE LOGIN (visible inicialmente) -->
+    <!-- ========================================== -->
+    <div id="login-screen" class="flex items-center justify-center min-h-screen bg-gray-100">
+        <div class="bg-white rounded-2xl shadow-xl max-w-md w-full mx-4 p-8">
+            <div class="text-center mb-6">
+                <h1 class="text-3xl font-bold">
+                    <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
+                </h1>
+                <p class="text-gray-500 mt-2">Panel de Administración</p>
+            </div>
+            
+            <div id="login-error" class="hidden mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm"></div>
+            
+            <form id="admin-login-form">
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                    <input type="email" id="admin-email" placeholder="admin@innovakit.com" class="w-full" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Contraseña</label>
+                    <input type="password" id="admin-password" placeholder="••••••••" class="w-full" required>
+                </div>
+                <button type="submit" id="login-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition">
+                    Ingresar al Panel
+                </button>
+            </form>
+            <p class="text-center text-gray-500 text-sm mt-6">
+                <a href="/" class="text-blue-600 hover:underline">← Volver a la tienda</a>
+            </p>
         </div>
     </div>
     
-    <!-- Panel Admin (oculto inicialmente) -->
+    <!-- ========================================== -->
+    <!-- PANEL ADMIN (oculto hasta login exitoso) -->
+    <!-- ========================================== -->
     <div id="admin-panel" class="hidden">
-        <!-- Sidebar -->
         <div class="flex min-h-screen">
+            <!-- Sidebar -->
             <div class="sidebar w-64 fixed h-full text-white">
                 <div class="p-6 border-b border-gray-700">
                     <h1 class="text-2xl font-bold">
-                        <span style="color:#7eb74a">Innova</span><span class="text-blue-400">kit</span>
+                        <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-500">kit</span>
                         <span class="text-xs block text-gray-400 mt-1">Panel Admin</span>
                     </h1>
                 </div>
@@ -98,13 +123,16 @@
             <!-- Contenido principal -->
             <div class="ml-64 flex-1 p-8">
                 <div id="contenido-principal">
-                    <!-- El contenido se carga dinámicamente -->
+                    <div class="text-center py-12">
+                        <i class="fas fa-spinner fa-spin text-3xl text-blue-600"></i>
+                        <p class="mt-2 text-gray-500">Cargando...</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Modal para agregar/editar producto -->
+    <!-- Modal para producto -->
     <div id="modal-producto" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div class="p-6">
@@ -131,6 +159,23 @@
         </div>
     </div>
     
+    <!-- Modal para kit -->
+    <div id="modal-kit" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl max-w-md w-full mx-4 p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-kit-titulo" class="text-2xl font-bold">Agregar Kit</h3>
+                <button onclick="cerrarModalKit()" class="text-2xl">&times;</button>
+            </div>
+            <form id="form-kit">
+                <input type="hidden" id="kit-id">
+                <div class="mb-4"><label class="block text-sm font-semibold mb-1">Nombre *</label><input type="text" id="kit-nombre" required class="w-full"></div>
+                <div class="mb-4"><label class="block text-sm font-semibold mb-1">Descripción</label><textarea id="kit-descripcion" rows="4" class="w-full"></textarea></div>
+                <div class="mb-4"><label class="block text-sm font-semibold mb-1">Imagen portada</label><input type="text" id="kit-imagen" placeholder="png/portada_kit1.webp" class="w-full"></div>
+                <div class="flex gap-3"><button type="submit" class="flex-1 btn-primary">Guardar</button><button type="button" onclick="cerrarModalKit()" class="flex-1 bg-gray-300 py-2 rounded-lg">Cancelar</button></div>
+            </form>
+        </div>
+    </div>
+    
     <script>
         // ============================================
         // CONFIGURACIÓN DE SUPABASE
@@ -151,25 +196,56 @@
         });
         
         // ============================================
-        // VERIFICAR ACCESO ADMIN
+        // LOGIN ADMIN
         // ============================================
-        async function verificarAcceso() {
-            const { data: { user } } = await supabaseAdmin.auth.getUser();
-            if (!user) { window.location.href = '/'; return; }
+        document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            const { data: perfil } = await supabaseAdmin.from('perfiles').select('*').eq('id', user.id).single();
-            if (!perfil?.es_admin) { alert('No tienes permisos de administrador'); window.location.href = '/'; return; }
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            const loginBtn = document.getElementById('login-btn');
+            const errorDiv = document.getElementById('login-error');
             
-            usuarioAdmin = { id: user.id, email: user.email, nombre: perfil.nombre };
-            document.getElementById('admin-nombre').textContent = usuarioAdmin.nombre;
-            document.getElementById('admin-email').textContent = usuarioAdmin.email;
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('admin-panel').classList.remove('hidden');
+            loginBtn.textContent = 'Verificando...';
+            loginBtn.disabled = true;
+            errorDiv.classList.add('hidden');
             
-            cargarDashboard();
-        }
+            try {
+                const { data, error } = await supabaseAdmin.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                
+                const { data: perfil, error: perfilError } = await supabaseAdmin
+                    .from('perfiles')
+                    .select('*')
+                    .eq('id', data.user.id)
+                    .single();
+                
+                if (perfilError || !perfil?.es_admin) {
+                    await supabaseAdmin.auth.signOut();
+                    throw new Error('No tienes permisos de administrador');
+                }
+                
+                usuarioAdmin = { id: data.user.id, email: data.user.email, nombre: perfil.nombre };
+                document.getElementById('admin-nombre').textContent = usuarioAdmin.nombre;
+                document.getElementById('admin-email').textContent = usuarioAdmin.email;
+                
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                
+                cargarDashboard();
+                
+            } catch (error) {
+                errorDiv.textContent = error.message;
+                errorDiv.classList.remove('hidden');
+                loginBtn.textContent = 'Ingresar al Panel';
+                loginBtn.disabled = false;
+            }
+        });
         
-        function cerrarSesionAdmin() { supabaseAdmin.auth.signOut(); window.location.href = '/'; }
+        function cerrarSesionAdmin() {
+            supabaseAdmin.auth.signOut();
+            location.reload();
+        }
         
         // ============================================
         // DASHBOARD
@@ -184,7 +260,7 @@
             
             document.getElementById('contenido-principal').innerHTML = `
                 <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
                     <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-microchip text-3xl text-blue-600"></i><p class="text-2xl font-bold mt-2">${productosCount || 0}</p><p class="text-gray-600">Productos</p></div>
                     <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-box text-3xl text-green-600"></i><p class="text-2xl font-bold mt-2">${kitsCount || 0}</p><p class="text-gray-600">Kits</p></div>
                     <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-shopping-cart text-3xl text-orange-600"></i><p class="text-2xl font-bold mt-2">${pedidosCount || 0}</p><p class="text-gray-600">Pedidos</p></div>
@@ -206,7 +282,7 @@
                 <div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold">Productos</h2><button onclick="abrirModalProducto()" class="btn-primary"><i class="fas fa-plus"></i> Nuevo producto</button></div>
                 <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="text-left p-3">ID</th><th class="text-left p-3">Nombre</th><th class="text-left p-3">Precio</th><th class="text-left p-3">Stock</th><th class="text-left p-3">Tipo</th><th class="text-left p-3">Acciones</th></tr></thead><tbody>
                     ${productos.map(p => `<tr class="border-b hover:bg-gray-50"><td class="p-3">${p.id}</td><td class="p-3">${p.nombre}</td><td class="p-3 text-green-600">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '<span class="text-green-600">✔</span>' : '<span class="text-red-600">✖</span>'}</td><td class="p-3">${p.kit_id ? `Kit ${p.kit_id}` : 'Componente'}</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button><button onclick="eliminarProducto(${p.id})" class="text-red-600"><i class="fas fa-trash"></i></button></td></tr>`).join('')}
-                </tbody></table></div></div>
+                </tbody>追赶</div></div>
             `;
         }
         
@@ -222,8 +298,7 @@
             document.getElementById('prod-stock').checked = producto?.stock !== false;
             document.getElementById('prod-tipo').value = producto?.kit_id ? 'kit' : 'componente';
             if (producto?.kit_id) document.getElementById('prod-kit-id').value = producto.kit_id;
-            const container = document.getElementById('kit-id-container');
-            container.style.display = producto?.kit_id ? 'block' : 'none';
+            document.getElementById('kit-id-container').style.display = producto?.kit_id ? 'block' : 'none';
             document.getElementById('modal-producto').classList.remove('hidden');
             document.getElementById('modal-producto').style.display = 'flex';
         }
@@ -266,7 +341,6 @@
             const { data } = await supabaseAdmin.from('kits').select('*');
             kits = data || [];
             
-            // Obtener cantidad de productos por kit
             const { data: productosKit } = await supabaseAdmin.from('productos').select('kit_id').not('kit_id', 'is', null);
             const countPorKit = {};
             productosKit?.forEach(p => { countPorKit[p.kit_id] = (countPorKit[p.kit_id] || 0) + 1; });
@@ -291,51 +365,43 @@
         }
         
         function abrirModalKit(kit = null) {
-            const modalHTML = `
-                <div id="modal-kit" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-white rounded-2xl max-w-md w-full mx-4 p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-2xl font-bold">${kit ? 'Editar Kit' : 'Agregar Kit'}</h3>
-                            <button onclick="cerrarModalKit()" class="text-2xl">&times;</button>
-                        </div>
-                        <form id="form-kit">
-                            <input type="hidden" id="kit-id" value="${kit?.id || ''}">
-                            <div class="mb-4"><label class="block text-sm font-semibold mb-1">Nombre *</label><input type="text" id="kit-nombre" value="${kit?.nombre || ''}" required class="w-full"></div>
-                            <div class="mb-4"><label class="block text-sm font-semibold mb-1">Descripción</label><textarea id="kit-descripcion" rows="4" class="w-full">${kit?.descripcion || ''}</textarea></div>
-                            <div class="mb-4"><label class="block text-sm font-semibold mb-1">Imagen portada</label><input type="text" id="kit-imagen" value="${kit?.imagen_portada || ''}" placeholder="png/portada_kit1.webp" class="w-full"></div>
-                            <div class="flex gap-3"><button type="submit" class="flex-1 btn-primary">Guardar</button><button type="button" onclick="cerrarModalKit()" class="flex-1 bg-gray-300 py-2 rounded-lg">Cancelar</button></div>
-                        </form>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
-            document.getElementById('form-kit').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const id = document.getElementById('kit-id').value;
-                const data = {
-                    nombre: document.getElementById('kit-nombre').value,
-                    descripcion: document.getElementById('kit-descripcion').value,
-                    imagen_portada: document.getElementById('kit-imagen').value,
-                    activo: true
-                };
-                if (id) await supabaseAdmin.from('kits').update(data).eq('id', id);
-                else await supabaseAdmin.from('kits').insert([data]);
-                cerrarModalKit();
-                cargarKits();
-            });
+            document.getElementById('modal-kit-titulo').textContent = kit ? 'Editar Kit' : 'Agregar Kit';
+            document.getElementById('kit-id').value = kit?.id || '';
+            document.getElementById('kit-nombre').value = kit?.nombre || '';
+            document.getElementById('kit-descripcion').value = kit?.descripcion || '';
+            document.getElementById('kit-imagen').value = kit?.imagen_portada || '';
+            document.getElementById('modal-kit').classList.remove('hidden');
+            document.getElementById('modal-kit').style.display = 'flex';
         }
         
-        function cerrarModalKit() { document.getElementById('modal-kit')?.remove(); }
-        async function editarKit(id) { const kit = kits.find(k => k.id === id); if (kit) abrirModalKit(kit); }
+        function cerrarModalKit() {
+            document.getElementById('modal-kit').classList.add('hidden');
+            document.getElementById('modal-kit').style.display = 'none';
+            document.getElementById('form-kit').reset();
+        }
+        
+        document.getElementById('form-kit').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('kit-id').value;
+            const data = {
+                nombre: document.getElementById('kit-nombre').value,
+                descripcion: document.getElementById('kit-descripcion').value,
+                imagen_portada: document.getElementById('kit-imagen').value,
+                activo: true
+            };
+            if (id) await supabaseAdmin.from('kits').update(data).eq('id', id);
+            else await supabaseAdmin.from('kits').insert([data]);
+            cerrarModalKit();
+            cargarKits();
+        });
+        
+        async function editarKit(id) { abrirModalKit(kits.find(k => k.id === id)); }
         async function verProductosDelKit(kitId) {
             const { data } = await supabaseAdmin.from('productos').select('*').eq('kit_id', kitId).eq('activo', true);
             document.getElementById('contenido-principal').innerHTML = `
-                <div class="flex items-center gap-4 mb-6">
-                    <button onclick="cargarKits()" class="text-blue-600"><i class="fas fa-arrow-left"></i> Volver</button>
-                    <h2 class="text-3xl font-bold">Productos del Kit ${kitId}</h2>
-                </div>
-                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="p-3">ID</th><th class="p-3">Nombre</th><th class="p-3">Precio</th><th class="p-3">Stock</th><th class="p-3">Acciones</th></tr></thead><tbody>
-                    ${data?.map(p => `<tr><td class="p-3">${p.id}</td><td class="p-3">${p.nombre}</td><td class="p-3">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '✔' : '✖'}</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button></td></tr>`).join('') || '<tr><td colspan="5" class="text-center p-8">No hay productos en este kit</td></tr>'}
+                <div class="flex items-center gap-4 mb-6"><button onclick="cargarKits()" class="text-blue-600"><i class="fas fa-arrow-left"></i> Volver</button><h2 class="text-3xl font-bold">Productos del Kit ${kitId}</h2></div>
+                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="p-3">Nombre</th><th class="p-3">Precio</th><th class="p-3">Stock</th><th class="p-3">Acciones</th></tr></thead><tbody>
+                    ${data?.map(p => `<tr class="border-b"><td class="p-3">${p.nombre}</td><td class="p-3">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '✔' : '✖'}</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600"><i class="fas fa-edit"></i></button></td></tr>`).join('') || '<tr><td colspan="4" class="text-center p-8">No hay productos en este kit</td></tr>'}
                 </tbody></table></div></div>
             `;
         }
@@ -371,8 +437,8 @@
             `;
         }
         
-        async function aprobarReview(id) { await supabaseAdmin.from('reviews').update({ aprobada: true }).eq('id', id); cargarReviews(); mostrarNotificacion('Review aprobada', 'success'); }
-        async function rechazarReview(id) { if (confirm('¿Rechazar?')) { await supabaseAdmin.from('reviews').delete().eq('id', id); cargarReviews(); mostrarNotificacion('Review rechazada', 'info'); } }
+        async function aprobarReview(id) { await supabaseAdmin.from('reviews').update({ aprobada: true }).eq('id', id); cargarReviews(); }
+        async function rechazarReview(id) { if (confirm('¿Rechazar?')) { await supabaseAdmin.from('reviews').delete().eq('id', id); cargarReviews(); } }
         
         // ============================================
         // PEDIDOS
@@ -424,7 +490,7 @@
                             <td class="p-3">${u.nombre || '—'}</td>
                             <td class="p-3">${u.id?.substring(0, 8)}...</td>
                             <td class="p-3">${u.telefono || '—'}</td>
-                            <td class="p-3">${u.es_admin ? '<span class="text-green-600">✓ Sí</span>' : '<button onclick="toggleAdmin(\'' + u.id + '\', true)" class="text-blue-600 text-sm">Hacer admin</button>'}</td>
+                            <td class="p-3">${u.es_admin ? '<span class="text-green-600">✓ Sí</span>' : 'No'}</td>
                             <td class="p-3">${new Date(u.created_at).toLocaleDateString()}</td>
                             <td class="p-3"><button onclick="toggleAdmin('${u.id}', ${!u.es_admin})" class="text-blue-600 text-sm">${u.es_admin ? 'Quitar admin' : 'Hacer admin'}</button></td>
                         </tr>
@@ -435,7 +501,7 @@
         
         async function toggleAdmin(userId, makeAdmin) {
             await supabaseAdmin.from('perfiles').update({ es_admin: makeAdmin }).eq('id', userId);
-            mostrarNotificacion(makeAdmin ? 'Usuario ahora es admin' : 'Admin removido', 'success');
+            alert(makeAdmin ? 'Usuario ahora es administrador' : 'Admin removido');
             cargarUsuarios();
         }
         
@@ -443,9 +509,6 @@
         // UTILIDADES
         // ============================================
         function activarNav(seccion) { document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active')); document.getElementById(`nav-${seccion}`)?.classList.add('active'); }
-        function mostrarNotificacion(mensaje, tipo) { alert(mensaje); }
-        
-        verificarAcceso();
     </script>
 </body>
 </html>
