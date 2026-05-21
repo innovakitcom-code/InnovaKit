@@ -71,6 +71,53 @@
   <link rel="stylesheet" href="css_style.css">
   <link rel="stylesheet" href="css_animations.css">
   
+  <style>
+    /* ============================================
+       REDUCCIÓN DE ESPACIO EN TESTIMONIOS
+       ============================================ */
+    #testimonios {
+        padding-top: 1.5rem !important;
+        padding-bottom: 2rem !important;
+    }
+    #testimonios h3 {
+        margin-bottom: 0.5rem !important;
+    }
+    #testimonios .text-gray-700.text-center {
+        margin-bottom: 1rem !important;
+    }
+    #testimonios .flex.justify-center.mb-8 {
+        margin-bottom: 0.75rem !important;
+    }
+    #testimonios .text-center.text-gray-700.text-sm.mb-6 {
+        margin-bottom: 0.75rem !important;
+    }
+    #testimonios-reales {
+        gap: 1rem !important;
+    }
+    #testimonios-reales > div {
+        margin-bottom: 0 !important;
+    }
+    
+    /* ============================================
+       ARREGLAR ESTRELLAS INTERACTIVAS
+       ============================================ */
+    #rating-stars i {
+        cursor: pointer !important;
+        pointer-events: auto !important;
+        user-select: none !important;
+        transition: all 0.2s ease;
+    }
+    #rating-stars i:hover {
+        transform: scale(1.1);
+    }
+    #proyecto-modal {
+        z-index: 9999 !important;
+    }
+    .modal, [id*="modal"] {
+        z-index: 9998;
+    }
+  </style>
+  
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -286,20 +333,20 @@
     
     <hr class="my-6 border-gray-300">
     
-    <!-- TESTIMONIOS -->
+    <!-- TESTIMONIOS (VERSIÓN REDUCIDA) -->
     <section id="testimonios" class="pt-8 pb-12 bg-gradient-to-br from-blue-50 to-indigo-100">
       <div class="max-w-6xl mx-auto px-4">
-        <h3 class="text-3xl font-bold text-center mb-4 animate-fade-in-up">Proyectos de Nuestros Clientes</h3>
-        <p class="text-gray-700 text-center mb-6 max-w-3xl mx-auto text-base">
+        <h3 class="text-3xl font-bold text-center mb-2 animate-fade-in-up">Proyectos de Nuestros Clientes</h3>
+        <p class="text-gray-700 text-center mb-4 max-w-3xl mx-auto text-base">
           Descubre lo que han creado estudiantes, makers y emprendedores con Innovakit
         </p>
-        <div class="flex justify-center mb-8">
+        <div class="flex justify-center mb-3">
           <button onclick="mostrarModalProyecto()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-xl font-semibold text-base btn-hover touch-target btn-icon transition-all duration-300 transform hover:scale-105">
             <i class="fas fa-camera mr-2"></i>Comparte tu proyecto
           </button>
         </div>
-        <p class="text-center text-gray-700 text-sm mb-6">Muestra al mundo lo que creaste</p>
-        <div id="testimonios-reales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <p class="text-center text-gray-700 text-sm mb-3">Muestra al mundo lo que creaste</p>
+        <div id="testimonios-reales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
     </section>
     
@@ -931,11 +978,83 @@
     }
     
     // ============================================
-    // FUNCIONES PARA COMPARTIR PROYECTO
+    // FUNCIONES PARA COMPARTIR PROYECTO (VERSIÓN CORREGIDA)
     // ============================================
-    function mostrarModalProyecto() { const modal = document.getElementById('proyecto-modal'); if (modal) { modal.classList.remove('hidden'); modal.style.display = 'flex'; ratingSeleccionado = 0; document.getElementById('proyecto-rating').value = 0; document.querySelectorAll('#rating-stars i').forEach(s => { s.classList.remove('fas', 'text-yellow-400'); s.classList.add('far'); }); document.getElementById('foto-preview').classList.add('hidden'); document.getElementById('form-proyecto').reset(); } }
-    function cerrarModalProyecto(event) { if (event && event.target !== event.currentTarget) return; const modal = document.getElementById('proyecto-modal'); if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; } }
-    function previewFotoProyecto(input) { const file = input.files[0]; if (file) { const reader = new FileReader(); reader.onload = function(e) { const preview = document.getElementById('foto-preview'); const img = document.getElementById('foto-preview-img'); img.src = e.target.result; preview.classList.remove('hidden'); }; reader.readAsDataURL(file); } }
+    
+    // Función para inicializar las estrellas correctamente
+    function initRatingStars() {
+        const stars = document.querySelectorAll('#rating-stars i');
+        if (!stars.length) return;
+        
+        stars.forEach(star => {
+            star.removeEventListener('click', star._clickHandler);
+            
+            const clickHandler = function(e) {
+                e.stopPropagation();
+                const rating = parseInt(this.dataset.rating);
+                if (isNaN(rating)) return;
+                
+                ratingSeleccionado = rating;
+                const ratingInput = document.getElementById('proyecto-rating');
+                if (ratingInput) ratingInput.value = rating;
+                
+                stars.forEach((s, i) => {
+                    if (i < rating) {
+                        s.classList.remove('far');
+                        s.classList.add('fas', 'text-yellow-400');
+                    } else {
+                        s.classList.remove('fas', 'text-yellow-400');
+                        s.classList.add('far');
+                    }
+                });
+            };
+            
+            star._clickHandler = clickHandler;
+            star.addEventListener('click', clickHandler);
+            star.style.cursor = 'pointer';
+        });
+    }
+    
+    function mostrarModalProyecto() { 
+        const modal = document.getElementById('proyecto-modal'); 
+        if (modal) { 
+            modal.classList.remove('hidden'); 
+            modal.style.display = 'flex'; 
+            ratingSeleccionado = 0; 
+            document.getElementById('proyecto-rating').value = 0; 
+            document.querySelectorAll('#rating-stars i').forEach(s => { 
+                s.classList.remove('fas', 'text-yellow-400'); 
+                s.classList.add('far'); 
+            }); 
+            document.getElementById('foto-preview').classList.add('hidden'); 
+            document.getElementById('form-proyecto').reset(); 
+            setTimeout(initRatingStars, 100);
+        } 
+    }
+    
+    function cerrarModalProyecto(event) { 
+        if (event && event.target !== event.currentTarget) return; 
+        const modal = document.getElementById('proyecto-modal'); 
+        if (modal) { 
+            modal.classList.add('hidden'); 
+            modal.style.display = 'none'; 
+        } 
+    }
+    
+    function previewFotoProyecto(input) { 
+        const file = input.files[0]; 
+        if (file) { 
+            const reader = new FileReader(); 
+            reader.onload = function(e) { 
+                const preview = document.getElementById('foto-preview'); 
+                const img = document.getElementById('foto-preview-img'); 
+                img.src = e.target.result; 
+                preview.classList.remove('hidden'); 
+            }; 
+            reader.readAsDataURL(file); 
+        } 
+    }
+    
     async function enviarProyecto(event) {
         event.preventDefault();
         const nombre = document.getElementById('proyecto-nombre').value.trim();
@@ -975,18 +1094,6 @@
             container.innerHTML = data.map(proyecto => `<div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300"><div class="relative h-48 overflow-hidden"><img src="${proyecto.foto}" alt="Proyecto" class="w-full h-full object-cover"><div class="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-lg text-sm">${'★'.repeat(proyecto.rating)}${'☆'.repeat(5 - proyecto.rating)}</div></div><div class="p-4"><h4 class="font-bold text-lg mb-1">${proyecto.comentario?.substring(0, 80)}${proyecto.comentario?.length > 80 ? '...' : ''}</h4><p class="text-gray-500 text-sm mt-2">${new Date(proyecto.created_at).toLocaleDateString('es-PY')}</p></div></div>`).join('');
         } catch (error) { console.error('Error cargando testimonios:', error); container.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">Error cargando proyectos</div>`; }
     }
-    
-    // Inicializar estrellas
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('#rating-stars i')) {
-            const star = e.target.closest('#rating-stars i');
-            const rating = parseInt(star.dataset.rating);
-            ratingSeleccionado = rating;
-            document.getElementById('proyecto-rating').value = rating;
-            const stars = document.querySelectorAll('#rating-stars i');
-            stars.forEach((s, i) => { if (i < rating) { s.classList.remove('far'); s.classList.add('fas', 'text-yellow-400'); } else { s.classList.remove('fas', 'text-yellow-400'); s.classList.add('far'); } });
-        }
-    });
     
     // ============================================
     // INICIALIZACIÓN
