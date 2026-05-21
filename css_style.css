@@ -408,3 +408,68 @@ img {
     .whatsapp-movil { display: none !important; }
     .whatsapp-desktop { display: flex !important; }
 }
+/* ============================================
+   REDUCCIÓN DE ESPACIO EN TESTIMONIOS
+   ============================================ */
+
+/* Reducir padding vertical de la sección */
+#testimonios {
+    padding-top: 1.5rem !important;
+    padding-bottom: 2rem !important;
+}
+
+/* Reducir márgenes del título */
+#testimonios h3 {
+    margin-bottom: 0.5rem !important;
+}
+
+/* Reducir margen del párrafo descriptivo */
+#testimonios .text-gray-700.text-center {
+    margin-bottom: 1rem !important;
+}
+
+/* Reducir margen del botón "Comparte tu proyecto" */
+#testimonios .flex.justify-center.mb-8 {
+    margin-bottom: 0.75rem !important;
+}
+
+/* Reducir margen del texto "Muestra al mundo" */
+#testimonios .text-center.text-gray-700.text-sm.mb-6 {
+    margin-bottom: 0.75rem !important;
+}
+
+/* Reducir gap entre tarjetas */
+#testimonios-reales {
+    gap: 1rem !important;
+}
+
+/* Eliminar margen extra en tarjetas */
+#testimonios-reales > div {
+    margin-bottom: 0 !important;
+}
+
+/* ============================================
+   ARREGLAR ESTRELLAS INTERACTIVAS
+   ============================================ */
+
+/* Asegurar que las estrellas sean cliqueables */
+#rating-stars i {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    user-select: none !important;
+    transition: all 0.2s ease;
+}
+
+#rating-stars i:hover {
+    transform: scale(1.1);
+}
+
+/* Asegurar z-index del modal */
+#proyecto-modal {
+    z-index: 9999 !important;
+}
+
+/* Asegurar que el modal esté por encima */
+.modal, [id*="modal"] {
+    z-index: 9998;
+}
