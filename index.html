@@ -287,69 +287,23 @@
     <hr class="my-6 border-gray-300">
     
    <!-- TESTIMONIOS -->
-    <!-- ========================================== -->
-<!-- MODAL PARA COMPARTIR PROYECTO -->
-<!-- ========================================== -->
-<div id="proyecto-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" onclick="cerrarModalProyecto(event)">
-    <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-2xl font-bold">📸 Comparte tu Proyecto</h3>
-                <button onclick="cerrarModalProyecto()" class="text-2xl">&times;</button>
-            </div>
-            <form id="form-proyecto" onsubmit="enviarProyecto(event)">
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold mb-1">Foto de tu proyecto *</label>
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-blue-400 transition"
-                         onclick="document.getElementById('foto-proyecto').click()">
-                        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
-                        <p class="text-gray-600">Haz clic para subir una foto</p>
-                        <p class="text-gray-400 text-sm">JPEG, PNG hasta 5MB</p>
-                        <input type="file" id="foto-proyecto" accept="image/*" class="hidden" onchange="previewFotoProyecto(this)">
-                    </div>
-                    <div id="foto-preview" class="mt-3 hidden">
-                        <img id="foto-preview-img" class="w-full h-40 object-cover rounded-lg">
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Tu nombre *</label>
-                        <input type="text" id="proyecto-nombre" class="w-full p-2 border rounded-lg" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Nombre del proyecto *</label>
-                        <input type="text" id="proyecto-titulo" class="w-full p-2 border rounded-lg" required>
-                    </div>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold mb-1">Tu calificación *</label>
-                    <div id="rating-stars" class="flex gap-1 text-2xl mb-2">
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="1"></i>
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="2"></i>
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="3"></i>
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="4"></i>
-                        <i class="far fa-star cursor-pointer hover:text-yellow-400 transition" data-rating="5"></i>
-                    </div>
-                    <input type="hidden" id="proyecto-rating" value="0">
-                </div>
-                
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold mb-1">Cuéntanos sobre tu proyecto *</label>
-                    <textarea id="proyecto-comentario" rows="4" class="w-full p-2 border rounded-lg" placeholder="¿Qué creaste? ¿Qué componentes usaste? ¿Qué aprendiste?" required></textarea>
-                </div>
-                
-                <div class="flex gap-3">
-                    <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">
-                        <i class="fas fa-paper-plane mr-2"></i> Enviar proyecto
-                    </button>
-                    <button type="button" onclick="cerrarModalProyecto()" class="flex-1 bg-gray-200 hover:bg-gray-300 py-3 rounded-lg font-semibold">Cancelar</button>
-                </div>
-            </form>
+    <section id="testimonios" class="pt-8 pb-12 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div class="max-w-6xl mx-auto px-4">
+        <h3 class="text-3xl font-bold text-center mb-4 animate-fade-in-up">Proyectos de Nuestros Clientes</h3>
+        <p class="text-gray-700 text-center mb-6 max-w-3xl mx-auto text-base">
+          Descubre lo que han creado estudiantes, makers y emprendedores con Innovakit
+        </p>
+        
+        <div class="justify-center text-center mb-6">
+          <button onclick="mostrarModalProyecto()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-xl font-semibold text-base btn-hover touch-target btn-icon transition-all duration-300 transform hover:scale-105">
+            <i class="fas fa-camera mr-2"></i>Comparte tu proyecto
+          </button>
+          <p class="text-gray-700 text-sm mt-1">Muestra al mundo lo que creaste</p>
         </div>
-    </div>
-</div>
+        
+        <div id="testimonios-reales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+    </section>
     
     <hr class="my-6 border-gray-300">
     
@@ -1331,223 +1285,9 @@
             }
         }
     });
-    // ============================================
-// FUNCIONES PARA COMPARTIR PROYECTO
-// ============================================
-
-let ratingSeleccionado = 0;
-
-// Inicializar estrellas
-function initRatingStars() {
-    const stars = document.querySelectorAll('#rating-stars i');
-    stars.forEach(star => {
-        star.addEventListener('click', function() {
-            ratingSeleccionado = parseInt(this.dataset.rating);
-            document.getElementById('proyecto-rating').value = ratingSeleccionado;
-            stars.forEach((s, i) => {
-                if (i < ratingSeleccionado) {
-                    s.classList.remove('far');
-                    s.classList.add('fas', 'text-yellow-400');
-                } else {
-                    s.classList.remove('fas', 'text-yellow-400');
-                    s.classList.add('far');
-                }
-            });
-        });
-    });
-}
-
-function mostrarModalProyecto() {
-    const modal = document.getElementById('proyecto-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.display = 'flex';
-        ratingSeleccionado = 0;
-        document.getElementById('proyecto-rating').value = 0;
-        document.querySelectorAll('#rating-stars i').forEach(s => {
-            s.classList.remove('fas', 'text-yellow-400');
-            s.classList.add('far');
-        });
-        document.getElementById('foto-preview').classList.add('hidden');
-        document.getElementById('form-proyecto').reset();
-    }
-}
-
-function cerrarModalProyecto(event) {
-    if (event && event.target !== event.currentTarget) return;
-    const modal = document.getElementById('proyecto-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-    }
-}
-
-function previewFotoProyecto(input) {
-    const file = input.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const preview = document.getElementById('foto-preview');
-            const img = document.getElementById('foto-preview-img');
-            img.src = e.target.result;
-            preview.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-async function enviarProyecto(event) {
-    event.preventDefault();
     
-    const nombre = document.getElementById('proyecto-nombre').value.trim();
-    const titulo = document.getElementById('proyecto-titulo').value.trim();
-    const rating = parseInt(document.getElementById('proyecto-rating').value);
-    const comentario = document.getElementById('proyecto-comentario').value.trim();
-    const fotoInput = document.getElementById('foto-proyecto');
-    
-    // Validaciones
-    if (rating === 0) {
-        mostrarNotificacion('Por favor selecciona una calificación', 'error');
-        return;
-    }
-    
-    if (!fotoInput.files[0]) {
-        mostrarNotificacion('Por favor sube una foto de tu proyecto', 'error');
-        return;
-    }
-    
-    if (nombre.length < 2) {
-        mostrarNotificacion('Por favor ingresa tu nombre', 'error');
-        return;
-    }
-    
-    if (comentario.length < 20) {
-        mostrarNotificacion('Por favor describe mejor tu proyecto (mínimo 20 caracteres)', 'error');
-        return;
-    }
-    
-    // Mostrar loading
-    const submitBtn = event.target.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Enviando...';
-    submitBtn.disabled = true;
-    
-    try {
-        // Convertir foto a base64
-        const file = fotoInput.files[0];
-        const reader = new FileReader();
-        
-        reader.onload = async function(e) {
-            const fotoBase64 = e.target.result;
-            
-            // Guardar en Supabase (tabla reviews)
-            const { data, error } = await supabaseClient
-                .from('reviews')
-                .insert([{
-                    usuario_id: usuarioActual?.id || null,
-                    producto_id: null,
-                    rating: rating,
-                    comentario: comentario,
-                    foto: fotoBase64,
-                    tipo: 'proyecto',
-                    aprobada: false
-                }]);
-            
-            if (error) {
-                console.error('Error guardando proyecto:', error);
-                mostrarNotificacion('Error al guardar. Intenta de nuevo.', 'error');
-            } else {
-                mostrarNotificacion('¡Gracias por compartir tu proyecto! Lo revisaremos pronto.', 'success');
-                cerrarModalProyecto();
-                
-                // Recargar testimonios
-                setTimeout(() => {
-                    if (typeof cargarTestimoniosReales === 'function') {
-                        cargarTestimoniosReales();
-                    }
-                }, 1000);
-            }
-            
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        };
-        
-        reader.readAsDataURL(file);
-        
-    } catch (error) {
-        console.error('Error:', error);
-        mostrarNotificacion('Error al enviar', 'error');
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }
-}
-
-// Función para cargar testimonios aprobados desde Supabase
-async function cargarTestimoniosReales() {
-    const container = document.getElementById('testimonios-reales');
-    if (!container) return;
-    
-    try {
-        const { data, error } = await supabaseClient
-            .from('reviews')
-            .select('*')
-            .eq('tipo', 'proyecto')
-            .eq('aprobada', true)
-            .order('created_at', { ascending: false })
-            .limit(6);
-        
-        if (error) throw error;
-        
-        if (!data || data.length === 0) {
-            container.innerHTML = `<div class="col-span-full text-center py-8"><i class="fas fa-camera text-4xl text-gray-300 mb-4"></i><p class="text-gray-500">Aún no hay proyectos compartidos</p><p class="text-gray-400 text-sm">Sé el primero en mostrar tu creación</p></div>`;
-            return;
-        }
-        
-        container.innerHTML = data.map(proyecto => `
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
-                <div class="relative h-48 overflow-hidden">
-                    <img src="${proyecto.foto}" alt="Proyecto de ${proyecto.usuario_id?.substring(0, 8) || 'cliente'}" class="w-full h-full object-cover">
-                    <div class="absolute top-2 right-2 bg-black/60 text-white px-2 py-1 rounded-lg text-sm">
-                        ${'★'.repeat(proyecto.rating)}${'☆'.repeat(5 - proyecto.rating)}
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h4 class="font-bold text-lg mb-1">${proyecto.comentario?.substring(0, 80)}${proyecto.comentario?.length > 80 ? '...' : ''}</h4>
-                    <p class="text-gray-500 text-sm mt-2">${new Date(proyecto.created_at).toLocaleDateString('es-PY')}</p>
-                </div>
-            </div>
-        `).join('');
-        
-    } catch (error) {
-        console.error('Error cargando testimonios:', error);
-        container.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">Error cargando proyectos</div>`;
-    }
-}
-
-// Inicializar estrellas cuando se abre el modal
-document.addEventListener('DOMContentLoaded', function() {
-    // Delegar evento para las estrellas (por si el modal se agrega dinámicamente)
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('#rating-stars i')) {
-            const star = e.target.closest('#rating-stars i');
-            const rating = parseInt(star.dataset.rating);
-            ratingSeleccionado = rating;
-            document.getElementById('proyecto-rating').value = rating;
-            const stars = document.querySelectorAll('#rating-stars i');
-            stars.forEach((s, i) => {
-                if (i < rating) {
-                    s.classList.remove('far');
-                    s.classList.add('fas', 'text-yellow-400');
-                } else {
-                    s.classList.remove('fas', 'text-yellow-400');
-                    s.classList.add('far');
-                }
-            });
-        }
-    });
-});
     // Funciones auxiliares necesarias
- 
+    function renderizarReviewsEnModal(p) { return ''; }
     function cargarTestimoniosReales() {}
     function mostrarModalProyecto() {}
     function instalarPWA() {}
