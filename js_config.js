@@ -13,7 +13,6 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let usuarioActual = null;
 let productosGlobal = [];
 let kitsGlobal = [];
-let carritoGlobal = [];
 
 // ============================================
 // NOTIFICACIONES
