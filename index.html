@@ -961,6 +961,40 @@
         if (!history.state) history.replaceState({vista: 'inicio'}, '', '#inicio');
         console.log('✅ Inicializado');
     });
+    // Event listeners para formularios de Supabase
+document.getElementById('form-login-supabase')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    console.log('🔐 Intentando login:', email);
+    
+    if (typeof iniciarSesionSupabase === 'function') {
+        if (await iniciarSesionSupabase(email, password)) {
+            cerrarModalLogin();
+            // No recargar la página, la UI se actualiza sola
+        }
+    } else {
+        alert('Error: iniciarSesionSupabase no está definida');
+    }
+});
+
+document.getElementById('form-registro-supabase')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nombre = document.getElementById('reg-nombre').value;
+    const telefono = document.getElementById('reg-telefono').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+    console.log('📝 Intentando registro:', email);
+    
+    if (typeof registrarUsuarioSupabase === 'function') {
+        if (await registrarUsuarioSupabase(email, password, nombre, telefono)) {
+            cerrarModalRegistro();
+            mostrarModalLogin();
+        }
+    } else {
+        alert('Error: registrarUsuarioSupabase no está definida');
+    }
+});
     
     // Placeholders
     function renderizarReviewsEnModal(p) { return ''; }
