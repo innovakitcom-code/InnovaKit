@@ -239,12 +239,11 @@
     
     <hr class="my-4 border-gray-300">
     
-    <!-- PRODUCTOS (KITS) - ESTA SECCIÓN SE MANTIENE IGUAL, LOS KITS SE CARGAN DESDE SUPAbase -->
+    <!-- PRODUCTOS (KITS) -->
     <section id="productos" class="p-6 sm:p-6 bg-gradient-to-br from-blue-50 to-indigo-100 scroll-mt-20 mt-6">
       <h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Nuestros Productos</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 place-items-center justify-center">
         
-        <!-- Los botones de kits ahora cargarán desde Supabase -->
         <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
           <img src="png/Kounshun.svg" alt="Kit de electrónica Innovakit" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
           <h4 class="text-lg font-bold mb-2 text-center">Kit de Electrónica Básico</h4>
@@ -259,7 +258,6 @@
           <button onclick="verProductosKitSupabase(3)" class="w-full bg-blue-600 text-white px-3 py-2 rounded-lg shadow hover:bg-blue-700 mt-auto text-sm">Ver más</button>
         </div>
         
-        <!-- Componentes Sueltos (carga desde Supabase) -->
         <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 p-4 flex flex-col items-center w-full max-w-xs mx-auto mb-4 h-96">
           <img src="png/Producto4.svg" alt="Componentes Sueltos" class="w-48 h-48 object-contain mb-3 rounded-lg" loading="lazy">
           <h4 class="text-lg font-bold mb-2 text-center">Componentes</h4>
@@ -279,9 +277,9 @@
         ¿Vas a una <strong class="text-blue-700">feria científica</strong> o necesitas presentar un proyecto técnico? 
         Con nuestra asesoría tendrás <strong class="text-blue-700">acompañamiento profesional</strong> para que tu idea destaque.
       </p>
-      <div class="flex justify-center text-center mb-6">
-      <button onclick="verAsesorias()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300 transform hover:scale-105">
-        <i class="fas fa-calendar-check mr-2"></i>Solicitar asesoría
+      <div class="flex justify-center">
+        <button onclick="verAsesorias()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon transition-all duration-300 transform hover:scale-105">
+          <i class="fas fa-calendar-check mr-2"></i>Solicitar asesoría
         </button>
       </div>
     </section>
@@ -295,14 +293,14 @@
         <p class="text-gray-700 text-center mb-6 max-w-3xl mx-auto text-base">
           Descubre lo que han creado estudiantes, makers y emprendedores con Innovakit
         </p>
-       <div class="flex justify-center text-center mb-8">
+        <div class="flex justify-center mb-8">
           <button onclick="mostrarModalProyecto()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-xl font-semibold text-base btn-hover touch-target btn-icon transition-all duration-300 transform hover:scale-105">
             <i class="fas fa-camera mr-2"></i>Comparte tu proyecto
           </button>
         </div>
-        <div class="text-center mb-6">
-          <p class="justify-center text-gray-700 text-sm">Muestra al mundo lo que creaste</p></div>
+        <p class="text-center text-gray-700 text-sm mb-6">Muestra al mundo lo que creaste</p>
         <div id="testimonios-reales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
     </section>
     
     <hr class="my-6 border-gray-300">
@@ -330,7 +328,7 @@
       </div>
     </section>
     
- <!-- WhatsApp Flotante -->
+    <!-- WhatsApp Flotante -->
     <div class="fixed bottom-6 right-6 z-50 animate-bounce-subtle">
       <a href="https://wa.me/595972292392?text=¡Hola! Quiero más información sobre los kits de Innovakit" target="_blank" class="bg-green-500 hover:bg-green-600 text-white p-5 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center justify-center w-16 h-16 btn-hover touch-target">
         <i class="fab fa-whatsapp text-2xl"></i>
@@ -340,10 +338,9 @@
   </main>
   
   <!-- ========================================== -->
-  <!-- VISTAS OCULTAS (Kits, Asesorías, Componentes) -->
+  <!-- VISTAS OCULTAS -->
   <!-- ========================================== -->
   
-  <!-- Vista de productos kit (se llena dinámicamente desde Supabase) -->
   <section id="vista-productoskit" class="hidden p-6 sm:p-12 bg-gradient-to-br from-gray-50 to-white min-h-screen">
     <div id="productoskit-content" class="max-w-7xl mx-auto"></div>
     <div class="mt-12 flex justify-center animate-fade-in-up">
@@ -386,7 +383,7 @@
     </div>
   </div>
   
-  <!-- Modal Carrito (conectado a Supabase) -->
+  <!-- Modal Carrito -->
   <div id="modal-carrito" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50 backdrop-blur-sm">
     <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-60 transition-opacity duration-300"></div>
     <div class="modal-container bg-white w-11/12 md:max-w-2xl mx-auto rounded-2xl shadow-2xl z-50 overflow-y-auto transform transition-all duration-300 scale-95 max-h-[90vh]">
@@ -545,7 +542,7 @@
     </div>
   </section>
   
-  <!-- Vista Componentes Sueltos (CON SUPABASE) -->
+  <!-- Vista Componentes Sueltos -->
   <section id="vista-componentes-sueltos" class="hidden bg-gradient-to-b from-gray-50 to-white min-h-screen">
     <div class="bg-white shadow-sm border-b"><div class="container mx-auto px-4 py-3"><nav class="text-sm text-gray-700 flex items-center space-x-2"><a href="#" onclick="volverAlInicio()" class="hover:text-blue-600"><i class="fas fa-home mr-2"></i>Inicio</a><span class="text-gray-400">/</span><span class="text-gray-800 font-semibold">Componentes Sueltos</span></nav></div></div>
     <div class="page-container"><div class="products-container"><div class="container mx-auto px-4 py-6">
@@ -586,7 +583,7 @@
   </footer>
   
   <!-- ========================================== -->
-  <!-- MODAL LOGIN (agregado para Supabase) -->
+  <!-- MODAL LOGIN Y REGISTRO -->
   <!-- ========================================== -->
   <div id="modal-login" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50" onclick="cerrarModalLogin(event)">
     <div class="bg-white rounded-2xl max-w-md w-full mx-4 p-6" onclick="event.stopPropagation()">
@@ -639,79 +636,63 @@
     let navegando = false;
     
     // ============================================
+    // NOTIFICACIÓN
+    // ============================================
+    function mostrarNotificacion(mensaje, tipo = 'success') {
+        console.log(`📢 [${tipo}] ${mensaje}`);
+        const notif = document.createElement('div');
+        notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded-lg text-white text-sm transition-all duration-300 transform translate-x-full ${tipo === 'success' ? 'bg-green-500' : tipo === 'error' ? 'bg-red-500' : 'bg-blue-500'}`;
+        notif.textContent = mensaje;
+        document.body.appendChild(notif);
+        setTimeout(() => notif.classList.remove('translate-x-full'), 100);
+        setTimeout(() => { notif.classList.add('translate-x-full'); setTimeout(() => notif.remove(), 300); }, 3000);
+    }
+    
+    // ============================================
     // FUNCIONES DE CARGA DESDE SUPABASE
     // ============================================
     
-    // Cargar productos desde Supabase
+    async function cargarKitsSupabase() {
+        try {
+            const { data, error } = await supabaseClient.from('kits').select('*').eq('activo', true);
+            if (error) throw error;
+            kitsGlobal = data || [];
+            console.log(`✅ Cargados ${kitsGlobal.length} kits`);
+        } catch (error) {
+            console.error('Error cargando kits:', error);
+            kitsGlobal = [];
+        }
+    }
+    
     async function cargarProductosSupabase() {
         try {
-            console.log('🔄 Cargando productos desde Supabase...');
-            const { data, error } = await supabaseClient
-                .from('productos')
-                .select('*')
-                .eq('activo', true)
-                .order('id');
-            
+            const { data, error } = await supabaseClient.from('productos').select('*').eq('activo', true).order('id');
             if (error) throw error;
-            
             componentesSueltos = data.map(comp => ({
-                id: comp.id,
-                nombre: comp.nombre,
-                categoria: comp.categoria,
-                precio: `${comp.precio.toLocaleString()} Gs.`,
-                precioNum: comp.precio,
+                id: comp.id, nombre: comp.nombre, categoria: comp.categoria,
+                precio: `${comp.precio.toLocaleString()} Gs.`, precioNum: comp.precio,
                 imagen: comp.imagen_principal || 'img/placeholder.png',
                 imagenes: comp.imagenes || [comp.imagen_principal || 'img/placeholder.png'],
                 descripcion: comp.descripcion || 'Sin descripción',
                 stock: comp.stock ? 'disponible' : 'sin stock',
                 especificaciones: comp.especificaciones || []
             }));
-            
-            console.log(`✅ Cargados ${componentesSueltos.length} productos desde Supabase`);
-            
-            if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) {
-                renderizarComponentesSueltos();
-            }
-        } catch (error) {
-            console.error('❌ Error cargando productos:', error);
-            mostrarNotificacion('Error cargando productos', 'error');
-        }
+            console.log(`✅ Cargados ${componentesSueltos.length} productos`);
+            if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) renderizarComponentesSueltos();
+        } catch (error) { console.error('Error cargando productos:', error); }
     }
     
-    // Cargar kits desde Supabase
-    async function cargarKitsSupabase() {
-        try {
-            console.log('🔄 Cargando kits desde Supabase...');
-            const { data, error } = await supabaseClient
-                .from('kits')
-                .select('*')
-                .eq('activo', true);
-            
-            if (error) throw error;
-            kitsGlobal = data;
-            console.log(`✅ Cargados ${kitsGlobal.length} kits desde Supabase`);
-        } catch (error) {
-            console.error('❌ Error cargando kits:', error);
-            kitsGlobal = [];
-        }
-    }
-    
-    // Renderizar componentes sueltos
     function renderizarComponentesSueltos() {
         const grid = document.getElementById('grid-componentes');
         if (!grid) return;
-        
-        if (!componentesSueltos || componentesSueltos.length === 0) {
-            grid.innerHTML = `<div class="col-span-full text-center py-8"><div class="text-yellow-500 text-4xl mb-2">🔄</div><p class="text-gray-700">Cargando productos...</p></div>`;
-            return;
-        }
+        if (!componentesSueltos.length) { grid.innerHTML = `<div class="col-span-full text-center py-8"><div class="text-yellow-500 text-4xl mb-2">🔄</div><p>Cargando...</p></div>`; return; }
         
         const buscarInput = document.getElementById('buscar-componente');
         const filtroPrecio = document.getElementById('filtro-precio');
-        const filtroTexto = buscarInput ? buscarInput.value.toLowerCase() : '';
-        const filtroPrecioValor = filtroPrecio ? filtroPrecio.value : 'todos';
+        const filtroTexto = buscarInput?.value.toLowerCase() || '';
+        const filtroPrecioValor = filtroPrecio?.value || 'todos';
         
-        let componentesFiltrados = componentesSueltos.filter(comp => {
+        let filtrados = componentesSueltos.filter(comp => {
             const coincideTexto = !filtroTexto || comp.nombre.toLowerCase().includes(filtroTexto);
             let coincidePrecio = true;
             if (filtroPrecioValor !== 'todos') {
@@ -721,42 +702,32 @@
             return coincideTexto && coincidePrecio;
         });
         
-        const totalComponentes = componentesFiltrados.length;
-        const totalPaginas = Math.ceil(totalComponentes / componentesPorPagina);
+        const totalPaginas = Math.ceil(filtrados.length / componentesPorPagina);
         const inicio = (paginaActual - 1) * componentesPorPagina;
-        const fin = inicio + componentesPorPagina;
-        const componentesPagina = componentesFiltrados.slice(inicio, fin);
+        const pagina = filtrados.slice(inicio, inicio + componentesPorPagina);
         
-        if (componentesPagina.length === 0) {
-            grid.innerHTML = `<div class="col-span-full text-center py-8"><div class="text-gray-400 text-4xl mb-2">🔍</div><p class="text-gray-700 font-semibold">No se encontraron productos</p><button onclick="limpiarFiltros()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded">Mostrar todos</button></div>`;
+        if (!pagina.length) {
+            grid.innerHTML = `<div class="col-span-full text-center py-8"><div class="text-gray-400 text-4xl mb-2">🔍</div><p>No se encontraron productos</p><button onclick="limpiarFiltros()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded">Mostrar todos</button></div>`;
         } else {
-            grid.innerHTML = componentesPagina.map(comp => `
-                <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition duration-300 cursor-pointer flex flex-col h-full min-h-[350px]" onclick="mostrarModalProducto(${comp.id})">
-                    <div class="p-3 flex-grow min-h-[130px]">
-                        <img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded" loading="lazy">
-                        <h3 class="font-semibold text-base line-clamp-2">${comp.nombre}</h3>
-                        ${comp.categoria ? `<p class="text-xs text-gray-500 mt-1">${comp.categoria}</p>` : ''}
-                    </div>
+            grid.innerHTML = pagina.map(comp => `
+                <div class="bg-white rounded-lg shadow-sm border hover:shadow-md transition cursor-pointer flex flex-col h-full min-h-[350px]" onclick="mostrarModalProducto(${comp.id})">
+                    <div class="p-3 flex-grow"><img src="${comp.imagen}" alt="${comp.nombre}" class="w-full h-40 object-contain mb-2 rounded" loading="lazy"><h3 class="font-semibold text-base line-clamp-2">${comp.nombre}</h3>${comp.categoria ? `<p class="text-xs text-gray-500 mt-1">${comp.categoria}</p>` : ''}</div>
                     <div class="px-3"><p class="text-green-600 font-bold text-base">${comp.precio}</p></div>
-                    <div class="p-3 pt-1"><div class="flex items-center justify-between"><span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}</span><button class="text-blue-600 hover:text-blue-800 font-semibold text-xs">Ver detalles ›</button></div></div>
-                </div>
-            `).join('');
+                    <div class="p-3 pt-1"><div class="flex items-center justify-between"><span class="px-2 py-1 text-xs rounded-full ${comp.stock === 'disponible' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${comp.stock === 'disponible' ? 'En stock' : 'Sin stock'}</span><button class="text-blue-600 text-xs">Ver detalles ›</button></div></div>
+                </div>`).join('');
         }
         
         const infoPaginacion = document.getElementById('info-paginacion');
-        const infoPaginacionMobile = document.getElementById('info-paginacion-mobile');
+        const infoMobile = document.getElementById('info-paginacion-mobile');
         if (infoPaginacion) infoPaginacion.innerHTML = `Página <span class="text-blue-600">${paginaActual}</span> de <span class="text-blue-600">${totalPaginas || 1}</span>`;
-        if (infoPaginacionMobile) infoPaginacionMobile.innerHTML = `<span class="text-blue-600">${paginaActual}</span>/<span class="text-blue-600">${totalPaginas || 1}</span>`;
+        if (infoMobile) infoMobile.innerHTML = `<span class="text-blue-600">${paginaActual}</span>/<span class="text-blue-600">${totalPaginas || 1}</span>`;
         
-        const botones = document.querySelectorAll('.pagination-fixed button');
-        if (botones.length >= 2) {
-            botones[0].disabled = paginaActual === 1;
-            botones[1].disabled = paginaActual === totalPaginas || totalPaginas === 0;
-        }
+        const btns = document.querySelectorAll('.pagination-fixed button');
+        if (btns.length >= 2) { btns[0].disabled = paginaActual === 1; btns[1].disabled = paginaActual === totalPaginas || totalPaginas === 0; }
     }
     
-    function cambiarPagina(nuevaPagina) { paginaActual = nuevaPagina; renderizarComponentesSueltos(); }
-    function limpiarFiltros() { paginaActual = 1; const buscarInput = document.getElementById('buscar-componente'); if (buscarInput) buscarInput.value = ''; const filtroPrecio = document.getElementById('filtro-precio'); if (filtroPrecio) filtroPrecio.value = 'todos'; renderizarComponentesSueltos(); mostrarNotificacion('Filtros limpiados ✅'); }
+    function cambiarPagina(nueva) { paginaActual = nueva; renderizarComponentesSueltos(); document.getElementById('grid-componentes').scrollIntoView({ behavior: 'smooth' }); }
+    function limpiarFiltros() { paginaActual = 1; const input = document.getElementById('buscar-componente'); if (input) input.value = ''; const precio = document.getElementById('filtro-precio'); if (precio) precio.value = 'todos'; renderizarComponentesSueltos(); mostrarNotificacion('Filtros limpiados ✅'); }
     
     function verComponentesSueltos() {
         document.getElementById('main-content').style.display = 'none';
@@ -768,50 +739,29 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // Mostrar modal de producto
     function mostrarModalProducto(id) {
-        const producto = componentesSueltos.find(comp => comp.id === id);
-        if (!producto) { mostrarNotificacion('❌ Producto no encontrado'); return; }
-        try {
-            document.getElementById('modal-producto-nombre').textContent = producto.nombre;
-            document.getElementById('modal-producto-precio').textContent = producto.precio;
-            document.getElementById('modal-producto-descripcion').textContent = producto.descripcion;
-            document.getElementById('modal-producto-imagen').src = producto.imagen;
-            
-            const stockElement = document.getElementById('modal-producto-stock');
-            const disponible = producto.stock === 'disponible';
-            stockElement.textContent = disponible ? 'En stock' : 'Sin existencias';
-            stockElement.className = `ml-4 px-2 py-1 text-xs rounded-full ${disponible ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
-            
-            const especElement = document.getElementById('modal-producto-especificaciones');
-            if (producto.especificaciones && producto.especificaciones.length > 0) {
-                especElement.innerHTML = producto.especificaciones.map(spec => `<div class="flex"><span class="mr-2">•</span><span>${spec}</span></div>`).join('');
-            } else {
-                especElement.innerHTML = '<p class="text-gray-500">No hay especificaciones disponibles</p>';
+        const producto = componentesSueltos.find(c => c.id === id);
+        if (!producto) { mostrarNotificacion('Producto no encontrado', 'error'); return; }
+        document.getElementById('modal-producto-nombre').textContent = producto.nombre;
+        document.getElementById('modal-producto-precio').textContent = producto.precio;
+        document.getElementById('modal-producto-descripcion').textContent = producto.descripcion;
+        document.getElementById('modal-producto-imagen').src = producto.imagen;
+        const stockSpan = document.getElementById('modal-producto-stock');
+        const disponible = producto.stock === 'disponible';
+        stockSpan.textContent = disponible ? 'En stock' : 'Sin existencias';
+        stockSpan.className = `ml-3 px-2 py-1 text-xs rounded-full ${disponible ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+        const especDiv = document.getElementById('modal-producto-especificaciones');
+        if (producto.especificaciones?.length) especDiv.innerHTML = producto.especificaciones.map(s => `<div class="flex"><span class="mr-2">•</span><span>${s}</span></div>`).join('');
+        else especDiv.innerHTML = '<p>No hay especificaciones</p>';
+        const imgs = producto.imagenes || [producto.imagen];
+        for (let i = 0; i < 4; i++) {
+            const thumb = document.getElementById(`modal-producto-thumb${i+1}`);
+            if (thumb) {
+                if (imgs[i]) { thumb.src = imgs[i]; thumb.style.display = 'block'; thumb.onclick = () => document.getElementById('modal-producto-imagen').src = imgs[i]; }
+                else thumb.style.display = 'none';
             }
-            
-            const imagenes = producto.imagenes || [producto.imagen];
-            for (let i = 0; i < 4; i++) {
-                const thumb = document.getElementById(`modal-producto-thumb${i + 1}`);
-                if (thumb) {
-                    if (imagenes[i]) {
-                        thumb.src = imagenes[i];
-                        thumb.style.display = 'block';
-                        thumb.onclick = () => document.getElementById('modal-producto-imagen').src = imagenes[i];
-                    } else {
-                        thumb.style.display = 'none';
-                    }
-                }
-            }
-            
-            toggleModalProducto();
-            setTimeout(() => {
-                const reviewsContainer = document.getElementById('modal-producto-reviews');
-                if (reviewsContainer && typeof renderizarReviewsEnModal === 'function') {
-                    reviewsContainer.innerHTML = renderizarReviewsEnModal(producto.nombre);
-                }
-            }, 100);
-        } catch (error) { console.error(error); mostrarNotificacion('❌ Error al cargar detalles'); }
+        }
+        toggleModalProducto();
     }
     
     function toggleModalProducto() {
@@ -820,15 +770,14 @@
         modal.classList.toggle('opacity-0');
         modal.classList.toggle('pointer-events-none');
         document.body.classList.toggle('modal-active', isOpening);
-        if (window.innerWidth <= 768) { document.body.style.overflow = isOpening ? 'hidden' : ''; }
+        if (window.innerWidth <= 768) document.body.style.overflow = isOpening ? 'hidden' : '';
     }
     
     function comprarProductoWhatsApp() {
-        const productoNombre = document.getElementById('modal-producto-nombre').textContent;
-        const productoPrecio = document.getElementById('modal-producto-precio').textContent;
-        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${productoNombre} - ${productoPrecio}`)}`, "_blank");
+        const nombre = document.getElementById('modal-producto-nombre').textContent;
+        const precio = document.getElementById('modal-producto-precio').textContent;
+        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${nombre} - ${precio}`)}`, '_blank');
         toggleModalProducto();
-        mostrarNotificacion('✅ Producto enviado a WhatsApp');
     }
     
     // ============================================
@@ -838,21 +787,19 @@
     async function cargarCarritoSupabase() {
         if (!usuarioActual) { carritoGlobal = []; actualizarContadorCarrito(); return; }
         try {
-            const { data, error } = await supabaseClient.from('carrito').select('*, productos(nombre, precio, imagen_principal)').eq('usuario_id', usuarioActual.id);
-            if (error) throw error;
-            carritoGlobal = data.map(item => ({ id: item.id, producto_id: item.producto_id, nombre: item.productos.nombre, precio: item.productos.precio, cantidad: item.cantidad, imagen: item.productos.imagen_principal }));
+            const { data } = await supabaseClient.from('carrito').select('*, productos(nombre, precio, imagen_principal)').eq('usuario_id', usuarioActual.id);
+            carritoGlobal = data?.map(item => ({ id: item.id, producto_id: item.producto_id, nombre: item.productos.nombre, precio: item.productos.precio, cantidad: item.cantidad, imagen: item.productos.imagen_principal })) || [];
             actualizarContadorCarrito();
-        } catch (error) { console.error('Error cargando carrito:', error); }
+        } catch (e) { console.error(e); }
     }
     
     async function agregarAlCarritoSupabase(productoId, nombre, precio, imagen) {
         if (!usuarioActual) { mostrarNotificacion('Inicia sesión para guardar tu carrito', 'error'); mostrarModalLogin(); return; }
         try {
-            const { error } = await supabaseClient.from('carrito').insert([{ usuario_id: usuarioActual.id, producto_id: productoId, cantidad: 1 }]);
-            if (error) throw error;
-            mostrarNotificacion(`📦 ${nombre} agregado al carrito`, 'success');
+            await supabaseClient.from('carrito').insert([{ usuario_id: usuarioActual.id, producto_id: productoId, cantidad: 1 }]);
+            mostrarNotificacion(`📦 ${nombre} agregado`, 'success');
             await cargarCarritoSupabase();
-        } catch (error) { mostrarNotificacion('Error al agregar', 'error'); }
+        } catch (e) { mostrarNotificacion('Error al agregar', 'error'); }
     }
     
     async function quitarDelCarritoSupabase(itemId) {
@@ -868,29 +815,30 @@
             await supabaseClient.from('carrito').delete().eq('usuario_id', usuarioActual.id);
             await cargarCarritoSupabase();
             renderizarCarritoModal();
+            mostrarNotificacion('Carrito vaciado', 'info');
         }
     }
     
     function actualizarContadorCarrito() {
         const count = carritoGlobal.length;
-        const desktopCount = document.getElementById("carrito-count-desktop");
-        const mobileCount = document.getElementById("carrito-count-mobile");
-        if (desktopCount) desktopCount.textContent = count;
-        if (mobileCount) mobileCount.textContent = count;
+        const desktop = document.getElementById('carrito-count-desktop');
+        const mobile = document.getElementById('carrito-count-mobile');
+        if (desktop) desktop.textContent = count;
+        if (mobile) mobile.textContent = count;
     }
     
     function renderizarCarritoModal() {
         const cont = document.getElementById('carrito-lista');
         if (!cont) return;
-        if (carritoGlobal.length === 0) {
+        if (!carritoGlobal.length) {
             cont.innerHTML = `<p class="text-gray-500 py-6 text-center">Tu carrito está vacío.</p>`;
             document.getElementById('carrito-total').textContent = 'Gs. 0';
             return;
         }
         let total = 0;
-        cont.innerHTML = carritoGlobal.map((item, idx) => {
+        cont.innerHTML = carritoGlobal.map(item => {
             total += item.precio;
-            return `<div class="flex items-center justify-between py-3 border-b"><div class="flex-1 pr-3"><p class="font-medium text-gray-800">${item.nombre}</p><p class="text-sm text-green-700 font-semibold">${item.precio.toLocaleString()} Gs.</p></div><button onclick="quitarDelCarritoSupabase(${item.id})" class="text-red-500 hover:text-red-700 font-semibold px-2 py-1 rounded hover:bg-red-50 transition">✕</button></div>`;
+            return `<div class="flex items-center justify-between py-3 border-b"><div class="flex-1"><p class="font-medium">${item.nombre}</p><p class="text-sm text-green-700">${item.precio.toLocaleString()} Gs.</p></div><button onclick="quitarDelCarritoSupabase(${item.id})" class="text-red-500 px-2 py-1 rounded hover:bg-red-50">✕</button></div>`;
         }).join('');
         document.getElementById('carrito-total').textContent = `Gs. ${total.toLocaleString()}`;
     }
@@ -898,16 +846,16 @@
     function verCarrito() { renderizarCarritoModal(); const modal = document.getElementById('modal-carrito'); if (modal) { modal.classList.remove('opacity-0', 'pointer-events-none'); document.body.classList.add('modal-active'); } }
     
     async function enviarCarritoWhatsAppMejorado() {
-        if (carritoGlobal.length === 0) { mostrarNotificacion("Tu carrito está vacío 🛒"); return; }
+        if (!carritoGlobal.length) { mostrarNotificacion('Carrito vacío', 'error'); return; }
         const cuerpo = carritoGlobal.map((p, i) => `${i+1}. ${p.nombre} - ${p.precio.toLocaleString()} Gs.`).join('%0A');
         const total = carritoGlobal.reduce((s, p) => s + p.precio, 0);
-        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar:%0A%0A${cuerpo}%0A%0A*Total: ${total.toLocaleString()} Gs.*`)}`, "_blank");
+        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar:%0A%0A${cuerpo}%0A%0A*Total: ${total.toLocaleString()} Gs.*`)}`, '_blank');
         await vaciarCarritoSupabase();
         mostrarNotificacion('✅ Pedido enviado');
     }
     
     function agregarProductoAlCarritoSupabase() {
-        const producto = componentesSueltos.find(comp => comp.nombre === document.getElementById('modal-producto-nombre').textContent);
+        const producto = componentesSueltos.find(c => c.nombre === document.getElementById('modal-producto-nombre').textContent);
         if (producto) { agregarAlCarritoSupabase(producto.id, producto.nombre, producto.precioNum, producto.imagen); toggleModalProducto(); }
     }
     
@@ -918,30 +866,25 @@
     async function verProductosKitSupabase(kitId) {
         navegarA('productoskit', { kitId: kitId });
         const { data: productosKit } = await supabaseClient.from('productos').select('*').eq('kit_id', kitId).eq('activo', true);
-        if (!productosKit || productosKit.length === 0) { mostrarNotificacion('No hay productos en este kit', 'error'); return; }
+        if (!productosKit?.length) { mostrarNotificacion('No hay productos en este kit', 'error'); return; }
         
-        const kit = kitsGlobal.find(k => k.id === kitId);
         const portadas = ["png/portada_kit1.webp", "png/portadados.webp", "png/portada_kit3.svg"];
-        const titulosPersonalizados = ["Kit de Electrónica Básico", "Kit de Electrónica Make", "Kit de Robótica Acebott"];
+        const titulos = ["Kit de Electrónica Básico", "Kit de Electrónica Make", "Kit de Robótica Acebott"];
         
-        let html = `<div class="portada-sin-margenes"><img src="${portadas[kitId-1]}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">${titulosPersonalizados[kitId-1]}</h2></div></div><div class="container mx-auto px-4 mt-8"><h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
+        let html = `<div class="portada-sin-margenes"><img src="${portadas[kitId-1]}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">${titulos[kitId-1]}</h2></div></div><div class="container mx-auto px-4 mt-8"><h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
         
         productosKit.forEach((p, i) => {
-            let slidesHTML = `<div class="swiper-slide flex justify-center items-center"><img src="${p.imagen_principal || 'img/placeholder.png'}" alt="${p.nombre}" class="max-h-48 object-contain"></div>`;
-            if (p.imagenes && p.imagenes.length > 0) {
-                slidesHTML = p.imagenes.map(img => `<div class="swiper-slide flex justify-center items-center"><img src="${img}" alt="${p.nombre}" class="max-h-48 object-contain"></div>`).join('');
-            }
-            html += `<div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center"><div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4" onclick="event.stopPropagation()"><div class="swiper-wrapper">${slidesHTML}</div><div class="swiper-button-next" onclick="event.stopPropagation()"></div><div class="swiper-button-prev" onclick="event.stopPropagation()"></div></div><h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4><p class="mb-2 text-sm sm:text-base text-gray-700">${(p.descripcion || '').substring(0, 100)}...</p><p class="mb-4 text-lg font-semibold text-green-600">${p.precio.toLocaleString()} Gs.</p><div class="flex flex-col gap-2 w-full mt-auto"><button onclick="agregarAlCarritoSupabase(${p.id}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precio}, '${p.imagen_principal}')" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">Comprar por WhatsApp</button><button onclick="agregarAlCarritoSupabase(${p.id}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precio}, '${p.imagen_principal}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">Agregar al carrito</button></div></div>`;
+            let slides = `<div class="swiper-slide"><img src="${p.imagen_principal || 'img/placeholder.png'}" class="max-h-48 object-contain mx-auto"></div>`;
+            if (p.imagenes?.length) slides = p.imagenes.map(img => `<div class="swiper-slide"><img src="${img}" class="max-h-48 object-contain mx-auto"></div>`).join('');
+            html += `<div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6"><div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4"><div class="swiper-wrapper">${slides}</div><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></div><h4 class="text-lg font-bold mb-2 text-center">${p.nombre}</h4><p class="text-sm text-gray-700 mb-2 text-center">${(p.descripcion || '').substring(0, 100)}...</p><p class="text-lg font-semibold text-green-600 mb-3">${p.precio.toLocaleString()} Gs.</p><div class="flex flex-col gap-2 w-full"><button onclick="agregarAlCarritoSupabase(${p.id}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precio}, '${p.imagen_principal}')" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">Comprar</button><button onclick="agregarAlCarritoSupabase(${p.id}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precio}, '${p.imagen_principal}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Agregar</button></div></div>`;
         });
         
         html += `</div></div>`;
         document.getElementById('productoskit-content').innerHTML = html;
         
         productosKit.forEach((_, i) => {
-            const swiperElement = document.querySelector(`.swiper-producto-${i}`);
-            if (swiperElement) {
-                new Swiper(swiperElement, { loop: true, navigation: { nextEl: `.swiper-producto-${i} .swiper-button-next`, prevEl: `.swiper-producto-${i} .swiper-button-prev` }, preventClicks: true });
-            }
+            const el = document.querySelector(`.swiper-producto-${i}`);
+            if (el) new Swiper(el, { loop: true, navigation: { nextEl: `.swiper-producto-${i} .swiper-button-next`, prevEl: `.swiper-producto-${i} .swiper-button-prev` }, preventClicks: true });
         });
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -956,20 +899,6 @@
     function cerrarModalRegistro(event) { if (event && event.target !== event.currentTarget) return; const modal = document.getElementById('modal-registro'); if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; } }
     
     // ============================================
-    // NOTIFICACIÓN MEJORADA (sin alert)
-    // ============================================
-    function mostrarNotificacion(mensaje, tipo = 'success') {
-        console.log(`📢 [${tipo}] ${mensaje}`);
-        // Crear notificación visual temporal
-        const notif = document.createElement('div');
-        notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded-lg text-white text-sm ${tipo === 'success' ? 'bg-green-500' : tipo === 'error' ? 'bg-red-500' : 'bg-blue-500'} transition-all duration-300 transform translate-x-full`;
-        notif.textContent = mensaje;
-        document.body.appendChild(notif);
-        setTimeout(() => notif.classList.remove('translate-x-full'), 100);
-        setTimeout(() => { notif.classList.add('translate-x-full'); setTimeout(() => notif.remove(), 300); }, 3000);
-    }
-    
-    // ============================================
     // NAVEGACIÓN
     // ============================================
     function volverAlInicio() { navegarA('inicio'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -981,12 +910,12 @@
         const institucion = document.querySelector('input[name="institucion"]')?.value || '';
         const email = document.querySelector('input[name="email"]')?.value || '';
         const telefono = document.querySelector('input[name="telefono"]')?.value || '';
-        const tipoProyecto = document.querySelector('select[name="tipo_proyecto"]')?.value || '';
+        const tipo = document.querySelector('select[name="tipo_proyecto"]')?.value || '';
         const proyecto = document.querySelector('textarea[name="proyecto"]')?.value || '';
-        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Solicito asesoría:%0A%0ANombre: ${nombre}%0AInstitución: ${institucion}%0AEmail: ${email}%0ATeléfono: ${telefono}%0ATipo: ${tipoProyecto}%0A%0ADescripción: ${proyecto}`)}`, '_blank');
+        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Solicito asesoría:%0A%0ANombre: ${nombre}%0AInstitución: ${institucion}%0AEmail: ${email}%0ATeléfono: ${telefono}%0ATipo: ${tipo}%0A%0ADescripción: ${proyecto}`)}`, '_blank');
     }
     
-    function trackEvent(categoria, accion, etiqueta = '') { if (typeof gtag !== 'undefined') gtag('event', accion, { 'event_category': categoria, 'event_label': etiqueta }); console.log(`📊 ${categoria} - ${accion} - ${etiqueta}`); }
+    function trackEvent(categoria, accion, etiqueta = '') { if (typeof gtag !== 'undefined') gtag('event', accion, { 'event_category': categoria, 'event_label': etiqueta }); }
     function proporcionarFeedbackTactil() { if ('vibrate' in navigator) navigator.vibrate(50); }
     
     function navegarA(vista, data = {}) {
@@ -1010,17 +939,19 @@
     // ============================================
     
     document.addEventListener('DOMContentLoaded', async () => {
-        console.log('🚀 Inicializando Innovakit con Supabase...');
+        console.log('🚀 Inicializando...');
         await cargarUsuarioActualSupabase();
         await cargarKitsSupabase();
         await cargarProductosSupabase();
         await cargarCarritoSupabase();
-        cargarTestimoniosReales?.();
         
-        const buscarInput = document.getElementById('buscar-componente');
-        if (buscarInput) { let timeout; buscarInput.addEventListener('input', () => { clearTimeout(timeout); timeout = setTimeout(() => { paginaActual = 1; renderizarComponentesSueltos(); }, 300); }); }
-        const filtroPrecio = document.getElementById('filtro-precio');
-        if (filtroPrecio) filtroPrecio.addEventListener('change', () => { paginaActual = 1; renderizarComponentesSueltos(); });
+        const buscar = document.getElementById('buscar-componente');
+        if (buscar) {
+            let timeout;
+            buscar.addEventListener('input', () => { clearTimeout(timeout); timeout = setTimeout(() => { paginaActual = 1; renderizarComponentesSueltos(); }, 300); });
+        }
+        const precioFiltro = document.getElementById('filtro-precio');
+        if (precioFiltro) precioFiltro.addEventListener('change', () => { paginaActual = 1; renderizarComponentesSueltos(); });
         
         document.querySelectorAll('#modal-producto .modal-overlay, #modal-producto .modal-close').forEach(el => el.addEventListener('click', toggleModalProducto));
         document.querySelectorAll('#modal-carrito .modal-overlay, #modal-carrito .modal-carrito-close').forEach(el => el.addEventListener('click', () => { const modal = document.getElementById('modal-carrito'); if (modal) { modal.classList.add('opacity-0', 'pointer-events-none'); document.body.classList.remove('modal-active'); } }));
@@ -1028,16 +959,10 @@
         document.addEventListener('keydown', e => { if (e.key === 'Escape') { toggleModalProducto(); const modal = document.getElementById('modal-carrito'); if (modal && !modal.classList.contains('pointer-events-none')) { modal.classList.add('opacity-0', 'pointer-events-none'); document.body.classList.remove('modal-active'); } } });
         
         if (!history.state) history.replaceState({vista: 'inicio'}, '', '#inicio');
-        if (window.location.hash) {
-            const hash = window.location.hash;
-            if (hash.includes('productoskit')) { const kitId = hash.split('-')[1]; if (kitId) navegarA('productoskit', { kitId: parseInt(kitId) }); }
-            else if (hash === '#asesorias') navegarA('asesorias');
-            else if (hash === '#componentes') navegarA('componentes');
-        }
-        console.log('✅ Innovakit inicializado');
+        console.log('✅ Inicializado');
     });
     
-    // Funciones auxiliares necesarias (placeholders)
+    // Placeholders
     function renderizarReviewsEnModal(p) { return ''; }
     function cargarTestimoniosReales() {}
     function mostrarModalProyecto() {}
@@ -1080,13 +1005,12 @@
   </div>
   
   <script>
-  // Mostrar botón admin solo si el usuario es admin
   async function mostrarBotonAdmin() {
       if (typeof supabaseClient !== 'undefined' && supabaseClient) {
           const { data: { user } } = await supabaseClient.auth.getUser();
           if (user) {
               const { data: perfil } = await supabaseClient.from('perfiles').select('es_admin').eq('id', user.id).single();
-              if (perfil?.es_admin) { document.getElementById('admin-float-btn').style.display = 'block'; }
+              if (perfil?.es_admin) document.getElementById('admin-float-btn').style.display = 'block';
           }
       }
   }
