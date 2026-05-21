@@ -25,78 +25,37 @@
         .btn-success:hover { background: #059669; }
         .modal { transition: opacity 0.3s ease; }
         input, select, textarea { border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; width: 100%; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; ring: 2px solid #3b82f6; }
         
-        /* Botón flotante admin (solo visible cuando estás en el index y eres admin) */
-        .admin-float-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: #7eb74a;
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-        .admin-float-btn:hover {
-            transform: scale(1.1);
-            background: #5a8f32;
-        }
+        /* Estilo para estrellas de rating */
+        .rating-stars { display: inline-flex; gap: 2px; }
+        .star-filled { color: #fbbf24; }
+        .star-empty { color: #d1d5db; }
+        
+        /* Badges */
+        .badge-pending { background: #fef3c7; color: #d97706; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
+        .badge-approved { background: #d1fae5; color: #059669; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
+        .badge-pendiente { background: #fed7aa; color: #c2410c; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
     </style>
 </head>
 <body class="bg-gray-100">
     
-    <!-- ========================================== -->
-    <!-- PANTALLA DE LOGIN (visible inicialmente) -->
-    <!-- ========================================== -->
-    <div id="login-screen" class="flex items-center justify-center min-h-screen bg-gray-100">
-        <div class="bg-white rounded-2xl shadow-xl max-w-md w-full mx-4 p-8">
-            <div class="text-center mb-6">
-                <h1 class="text-3xl font-bold">
-                    <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
-                </h1>
-                <p class="text-gray-500 mt-2">Panel de Administración</p>
-            </div>
-            
-            <div id="login-error" class="hidden mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm"></div>
-            
-            <form id="admin-login-form">
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                    <input type="email" id="admin-email" placeholder="admin@innovakit.com" class="w-full" required>
-                </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Contraseña</label>
-                    <input type="password" id="admin-password" placeholder="••••••••" class="w-full" required>
-                </div>
-                <button type="submit" id="login-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition">
-                    Ingresar al Panel
-                </button>
-            </form>
-            <p class="text-center text-gray-500 text-sm mt-6">
-                <a href="/" class="text-blue-600 hover:underline">← Volver a la tienda</a>
-            </p>
+    <!-- Pantalla de carga -->
+    <div id="loading-screen" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p class="text-gray-600">Verificando acceso...</p>
         </div>
     </div>
     
-    <!-- ========================================== -->
-    <!-- PANEL ADMIN (oculto hasta login exitoso) -->
-    <!-- ========================================== -->
+    <!-- Panel Admin (oculto inicialmente) -->
     <div id="admin-panel" class="hidden">
+        <!-- Sidebar -->
         <div class="flex min-h-screen">
-            <!-- Sidebar -->
             <div class="sidebar w-64 fixed h-full text-white">
                 <div class="p-6 border-b border-gray-700">
                     <h1 class="text-2xl font-bold">
-                        
-                         <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-500">kit</span>
+                        <span style="color:#7eb74a">Innova</span><span class="text-blue-400">kit</span>
                         <span class="text-xs block text-gray-400 mt-1">Panel Admin</span>
                     </h1>
                 </div>
@@ -139,16 +98,13 @@
             <!-- Contenido principal -->
             <div class="ml-64 flex-1 p-8">
                 <div id="contenido-principal">
-                    <div class="text-center py-12">
-                        <i class="fas fa-spinner fa-spin text-3xl text-blue-600"></i>
-                        <p class="mt-2 text-gray-500">Cargando...</p>
-                    </div>
+                    <!-- El contenido se carga dinámicamente -->
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Modal para producto -->
+    <!-- Modal para agregar/editar producto -->
     <div id="modal-producto" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div class="p-6">
@@ -167,6 +123,8 @@
                     <div class="mb-4"><label class="block text-sm font-semibold mb-1">Imagen principal</label><input type="text" id="prod-imagen" placeholder="comp/producto.webp" class="w-full"></div>
                     <div class="mb-4"><label class="block text-sm font-semibold mb-1">Especificaciones (una por línea)</label><textarea id="prod-especificaciones" rows="5" class="w-full"></textarea></div>
                     <div class="mb-4"><label class="flex items-center gap-2"><input type="checkbox" id="prod-stock" checked> <span class="text-sm font-semibold">Producto disponible</span></label></div>
+                    <div class="mb-4"><label class="block text-sm font-semibold mb-1">Tipo</label><select id="prod-tipo" class="w-full"><option value="componente">Componente suelto</option><option value="kit">Producto de kit</option></select></div>
+                    <div class="mb-4" id="kit-id-container" style="display:none;"><label class="block text-sm font-semibold mb-1">Kit ID</label><select id="prod-kit-id" class="w-full"><option value="1">Kit 1 - Electrónica Básico</option><option value="2">Kit 2 - Electrónica Make</option><option value="3">Kit 3 - Robótica Acebott</option></select></div>
                     <div class="flex gap-3"><button type="submit" class="flex-1 btn-primary">Guardar</button><button type="button" onclick="cerrarModalProducto()" class="flex-1 bg-gray-300 hover:bg-gray-400 py-2 rounded-lg">Cancelar</button></div>
                 </form>
             </div>
@@ -183,63 +141,35 @@
         
         let usuarioAdmin = null;
         let productos = [];
+        let kits = [];
         
-        // ============================================
-        // LOGIN ADMIN
-        // ============================================
-        document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const email = document.getElementById('admin-email').value;
-            const password = document.getElementById('admin-password').value;
-            const loginBtn = document.getElementById('login-btn');
-            const errorDiv = document.getElementById('login-error');
-            
-            loginBtn.textContent = 'Verificando...';
-            loginBtn.disabled = true;
-            errorDiv.classList.add('hidden');
-            
-            try {
-                // 1. Iniciar sesión
-                const { data, error } = await supabaseAdmin.auth.signInWithPassword({ email, password });
-                if (error) throw error;
-                
-                // 2. Verificar si es admin
-                const { data: perfil, error: perfilError } = await supabaseAdmin
-                    .from('perfiles')
-                    .select('*')
-                    .eq('id', data.user.id)
-                    .single();
-                
-                if (perfilError || !perfil?.es_admin) {
-                    await supabaseAdmin.auth.signOut();
-                    throw new Error('No tienes permisos de administrador');
-                }
-                
-                // 3. Guardar datos del admin
-                usuarioAdmin = { id: data.user.id, email: data.user.email, nombre: perfil.nombre };
-                document.getElementById('admin-nombre').textContent = usuarioAdmin.nombre;
-                document.getElementById('admin-email').textContent = usuarioAdmin.email;
-                
-                // 4. Mostrar panel
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('admin-panel').classList.remove('hidden');
-                
-                // 5. Cargar dashboard
-                cargarDashboard();
-                
-            } catch (error) {
-                errorDiv.textContent = error.message;
-                errorDiv.classList.remove('hidden');
-                loginBtn.textContent = 'Ingresar al Panel';
-                loginBtn.disabled = false;
-            }
+        // Mostrar/ocultar campo kit_id según tipo
+        document.getElementById('prod-tipo')?.addEventListener('change', function() {
+            const container = document.getElementById('kit-id-container');
+            if (this.value === 'kit') container.style.display = 'block';
+            else container.style.display = 'none';
         });
         
-        function cerrarSesionAdmin() {
-            supabaseAdmin.auth.signOut();
-            location.reload();
+        // ============================================
+        // VERIFICAR ACCESO ADMIN
+        // ============================================
+        async function verificarAcceso() {
+            const { data: { user } } = await supabaseAdmin.auth.getUser();
+            if (!user) { window.location.href = '/'; return; }
+            
+            const { data: perfil } = await supabaseAdmin.from('perfiles').select('*').eq('id', user.id).single();
+            if (!perfil?.es_admin) { alert('No tienes permisos de administrador'); window.location.href = '/'; return; }
+            
+            usuarioAdmin = { id: user.id, email: user.email, nombre: perfil.nombre };
+            document.getElementById('admin-nombre').textContent = usuarioAdmin.nombre;
+            document.getElementById('admin-email').textContent = usuarioAdmin.email;
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('admin-panel').classList.remove('hidden');
+            
+            cargarDashboard();
         }
+        
+        function cerrarSesionAdmin() { supabaseAdmin.auth.signOut(); window.location.href = '/'; }
         
         // ============================================
         // DASHBOARD
@@ -250,14 +180,16 @@
             const { count: kitsCount } = await supabaseAdmin.from('kits').select('*', { count: 'exact', head: true });
             const { count: pedidosCount } = await supabaseAdmin.from('pedidos').select('*', { count: 'exact', head: true });
             const { count: reviewsPendientes } = await supabaseAdmin.from('reviews').select('*', { count: 'exact', head: true }).eq('aprobada', false);
+            const { count: usuariosCount } = await supabaseAdmin.from('perfiles').select('*', { count: 'exact', head: true });
             
             document.getElementById('contenido-principal').innerHTML = `
                 <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow"><i class="fas fa-microchip text-3xl text-blue-600"></i><p class="text-2xl font-bold mt-2">${productosCount || 0}</p><p class="text-gray-600">Productos</p></div>
-                    <div class="bg-white p-6 rounded-xl shadow"><i class="fas fa-box text-3xl text-green-600"></i><p class="text-2xl font-bold mt-2">${kitsCount || 0}</p><p class="text-gray-600">Kits</p></div>
-                    <div class="bg-white p-6 rounded-xl shadow"><i class="fas fa-shopping-cart text-3xl text-orange-600"></i><p class="text-2xl font-bold mt-2">${pedidosCount || 0}</p><p class="text-gray-600">Pedidos</p></div>
-                    <div class="bg-white p-6 rounded-xl shadow"><i class="fas fa-star text-3xl text-yellow-500"></i><p class="text-2xl font-bold mt-2">${reviewsPendientes || 0}</p><p class="text-gray-600">Reviews pendientes</p></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-microchip text-3xl text-blue-600"></i><p class="text-2xl font-bold mt-2">${productosCount || 0}</p><p class="text-gray-600">Productos</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-box text-3xl text-green-600"></i><p class="text-2xl font-bold mt-2">${kitsCount || 0}</p><p class="text-gray-600">Kits</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-shopping-cart text-3xl text-orange-600"></i><p class="text-2xl font-bold mt-2">${pedidosCount || 0}</p><p class="text-gray-600">Pedidos</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-star text-3xl text-yellow-500"></i><p class="text-2xl font-bold mt-2">${reviewsPendientes || 0}</p><p class="text-gray-600">Reviews pendientes</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-users text-3xl text-purple-600"></i><p class="text-2xl font-bold mt-2">${usuariosCount || 0}</p><p class="text-gray-600">Usuarios</p></div>
                 </div>
             `;
         }
@@ -271,12 +203,10 @@
             productos = data || [];
             
             document.getElementById('contenido-principal').innerHTML = `
-                <div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold">Productos</h2><button onclick="abrirModalProducto()" class="btn-primary"><i class="fas fa-plus"></i> Nuevo</button></div>
-                <div class="bg-white rounded-xl shadow overflow-hidden">
-                    <table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="p-3 text-left">ID</th><th class="p-3 text-left">Nombre</th><th class="p-3 text-left">Precio</th><th class="p-3 text-left">Stock</th><th class="p-3 text-left">Acciones</th></tr></thead>
-                    <tbody>${productos.map(p => `<tr class="border-b"><td class="p-3">${p.id}</td><td class="p-3">${p.nombre}</td><td class="p-3">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '✔ Disponible' : '✖ Sin stock'}</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button><button onclick="eliminarProducto(${p.id})" class="text-red-600"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody>
-                    </table>
-                </div>
+                <div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold">Productos</h2><button onclick="abrirModalProducto()" class="btn-primary"><i class="fas fa-plus"></i> Nuevo producto</button></div>
+                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="text-left p-3">ID</th><th class="text-left p-3">Nombre</th><th class="text-left p-3">Precio</th><th class="text-left p-3">Stock</th><th class="text-left p-3">Tipo</th><th class="text-left p-3">Acciones</th></tr></thead><tbody>
+                    ${productos.map(p => `<tr class="border-b hover:bg-gray-50"><td class="p-3">${p.id}</td><td class="p-3">${p.nombre}</td><td class="p-3 text-green-600">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '<span class="text-green-600">✔</span>' : '<span class="text-red-600">✖</span>'}</td><td class="p-3">${p.kit_id ? `Kit ${p.kit_id}` : 'Componente'}</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button><button onclick="eliminarProducto(${p.id})" class="text-red-600"><i class="fas fa-trash"></i></button></td></tr>`).join('')}
+                </tbody></table></div></div>
             `;
         }
         
@@ -290,6 +220,10 @@
             document.getElementById('prod-imagen').value = producto?.imagen_principal || '';
             document.getElementById('prod-especificaciones').value = (producto?.especificaciones || []).join('\n');
             document.getElementById('prod-stock').checked = producto?.stock !== false;
+            document.getElementById('prod-tipo').value = producto?.kit_id ? 'kit' : 'componente';
+            if (producto?.kit_id) document.getElementById('prod-kit-id').value = producto.kit_id;
+            const container = document.getElementById('kit-id-container');
+            container.style.display = producto?.kit_id ? 'block' : 'none';
             document.getElementById('modal-producto').classList.remove('hidden');
             document.getElementById('modal-producto').style.display = 'flex';
         }
@@ -303,6 +237,7 @@
         document.getElementById('form-producto').addEventListener('submit', async (e) => {
             e.preventDefault();
             const id = document.getElementById('producto-id').value;
+            const tipo = document.getElementById('prod-tipo').value;
             const data = {
                 nombre: document.getElementById('prod-nombre').value,
                 descripcion: document.getElementById('prod-descripcion').value,
@@ -311,7 +246,8 @@
                 imagen_principal: document.getElementById('prod-imagen').value,
                 especificaciones: document.getElementById('prod-especificaciones').value.split('\n').filter(s => s.trim()),
                 stock: document.getElementById('prod-stock').checked,
-                activo: true
+                activo: true,
+                kit_id: tipo === 'kit' ? parseInt(document.getElementById('prod-kit-id').value) : null
             };
             if (id) await supabaseAdmin.from('productos').update(data).eq('id', id);
             else await supabaseAdmin.from('productos').insert([data]);
@@ -322,12 +258,194 @@
         async function editarProducto(id) { abrirModalProducto(productos.find(p => p.id === id)); }
         async function eliminarProducto(id) { if (confirm('¿Eliminar?')) { await supabaseAdmin.from('productos').update({ activo: false }).eq('id', id); cargarProductos(); } }
         
-        async function cargarKits() { activarNav('kits'); document.getElementById('contenido-principal').innerHTML = '<h2 class="text-3xl font-bold mb-6">Kits</h2><div class="bg-white rounded-xl shadow p-8 text-center">Próximamente</div>'; }
-        async function cargarReviews() { activarNav('reviews'); document.getElementById('contenido-principal').innerHTML = '<h2 class="text-3xl font-bold mb-6">Reviews</h2><div class="bg-white rounded-xl shadow p-8 text-center">Próximamente</div>'; }
-        async function cargarPedidos() { activarNav('pedidos'); document.getElementById('contenido-principal').innerHTML = '<h2 class="text-3xl font-bold mb-6">Pedidos</h2><div class="bg-white rounded-xl shadow p-8 text-center">Próximamente</div>'; }
-        async function cargarUsuarios() { activarNav('usuarios'); document.getElementById('contenido-principal').innerHTML = '<h2 class="text-3xl font-bold mb-6">Usuarios</h2><div class="bg-white rounded-xl shadow p-8 text-center">Próximamente</div>'; }
+        // ============================================
+        // KITS
+        // ============================================
+        async function cargarKits() {
+            activarNav('kits');
+            const { data } = await supabaseAdmin.from('kits').select('*');
+            kits = data || [];
+            
+            // Obtener cantidad de productos por kit
+            const { data: productosKit } = await supabaseAdmin.from('productos').select('kit_id').not('kit_id', 'is', null);
+            const countPorKit = {};
+            productosKit?.forEach(p => { countPorKit[p.kit_id] = (countPorKit[p.kit_id] || 0) + 1; });
+            
+            document.getElementById('contenido-principal').innerHTML = `
+                <div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold">Kits</h2><button onclick="abrirModalKit()" class="btn-primary"><i class="fas fa-plus"></i> Nuevo kit</button></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    ${kits.map(k => `
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <img src="${k.imagen_portada || 'img/placeholder.png'}" class="w-full h-40 object-cover rounded-lg mb-4">
+                            <h3 class="font-bold text-xl mb-2">${k.nombre}</h3>
+                            <p class="text-gray-600 mb-2">${k.descripcion || 'Kit educativo de electrónica'}</p>
+                            <p class="text-sm text-blue-600 mb-4">📦 ${countPorKit[k.id] || 0} productos</p>
+                            <div class="flex gap-2">
+                                <button onclick="editarKit(${k.id})" class="flex-1 bg-blue-600 text-white py-2 rounded-lg"><i class="fas fa-edit"></i> Editar</button>
+                                <button onclick="verProductosDelKit(${k.id})" class="flex-1 bg-green-600 text-white py-2 rounded-lg"><i class="fas fa-list"></i> Productos</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
         
+        function abrirModalKit(kit = null) {
+            const modalHTML = `
+                <div id="modal-kit" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div class="bg-white rounded-2xl max-w-md w-full mx-4 p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-2xl font-bold">${kit ? 'Editar Kit' : 'Agregar Kit'}</h3>
+                            <button onclick="cerrarModalKit()" class="text-2xl">&times;</button>
+                        </div>
+                        <form id="form-kit">
+                            <input type="hidden" id="kit-id" value="${kit?.id || ''}">
+                            <div class="mb-4"><label class="block text-sm font-semibold mb-1">Nombre *</label><input type="text" id="kit-nombre" value="${kit?.nombre || ''}" required class="w-full"></div>
+                            <div class="mb-4"><label class="block text-sm font-semibold mb-1">Descripción</label><textarea id="kit-descripcion" rows="4" class="w-full">${kit?.descripcion || ''}</textarea></div>
+                            <div class="mb-4"><label class="block text-sm font-semibold mb-1">Imagen portada</label><input type="text" id="kit-imagen" value="${kit?.imagen_portada || ''}" placeholder="png/portada_kit1.webp" class="w-full"></div>
+                            <div class="flex gap-3"><button type="submit" class="flex-1 btn-primary">Guardar</button><button type="button" onclick="cerrarModalKit()" class="flex-1 bg-gray-300 py-2 rounded-lg">Cancelar</button></div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            document.getElementById('form-kit').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const id = document.getElementById('kit-id').value;
+                const data = {
+                    nombre: document.getElementById('kit-nombre').value,
+                    descripcion: document.getElementById('kit-descripcion').value,
+                    imagen_portada: document.getElementById('kit-imagen').value,
+                    activo: true
+                };
+                if (id) await supabaseAdmin.from('kits').update(data).eq('id', id);
+                else await supabaseAdmin.from('kits').insert([data]);
+                cerrarModalKit();
+                cargarKits();
+            });
+        }
+        
+        function cerrarModalKit() { document.getElementById('modal-kit')?.remove(); }
+        async function editarKit(id) { const kit = kits.find(k => k.id === id); if (kit) abrirModalKit(kit); }
+        async function verProductosDelKit(kitId) {
+            const { data } = await supabaseAdmin.from('productos').select('*').eq('kit_id', kitId).eq('activo', true);
+            document.getElementById('contenido-principal').innerHTML = `
+                <div class="flex items-center gap-4 mb-6">
+                    <button onclick="cargarKits()" class="text-blue-600"><i class="fas fa-arrow-left"></i> Volver</button>
+                    <h2 class="text-3xl font-bold">Productos del Kit ${kitId}</h2>
+                </div>
+                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="p-3">ID</th><th class="p-3">Nombre</th><th class="p-3">Precio</th><th class="p-3">Stock</th><th class="p-3">Acciones</th></tr></thead><tbody>
+                    ${data?.map(p => `<tr><td class="p-3">${p.id}</td><td class="p-3">${p.nombre}</td><td class="p-3">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '✔' : '✖'}</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button></td></tr>`).join('') || '<tr><td colspan="5" class="text-center p-8">No hay productos en este kit</td></tr>'}
+                </tbody></table></div></div>
+            `;
+        }
+        
+        // ============================================
+        // REVIEWS
+        // ============================================
+        async function cargarReviews() {
+            activarNav('reviews');
+            const { data } = await supabaseAdmin.from('reviews').select('*, perfiles(nombre)').order('created_at', { ascending: false });
+            
+            document.getElementById('contenido-principal').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Reviews</h2>
+                <div class="space-y-4">
+                    ${data?.map(r => `
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="font-semibold">${r.perfiles?.nombre || 'Anónimo'}</span>
+                                        <div class="rating-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+                                    </div>
+                                    <p class="text-gray-700">${r.comentario}</p>
+                                    <p class="text-xs text-gray-500 mt-2">${new Date(r.created_at).toLocaleString()}</p>
+                                </div>
+                                <div class="flex gap-2">
+                                    ${!r.aprobada ? `<button onclick="aprobarReview(${r.id})" class="btn-success px-3 py-1 text-sm">Aprobar</button><button onclick="rechazarReview(${r.id})" class="btn-danger px-3 py-1 text-sm">Rechazar</button>` : `<span class="badge-approved">✓ Aprobada</span>`}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('') || '<div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">No hay reviews</div>'}
+                </div>
+            `;
+        }
+        
+        async function aprobarReview(id) { await supabaseAdmin.from('reviews').update({ aprobada: true }).eq('id', id); cargarReviews(); mostrarNotificacion('Review aprobada', 'success'); }
+        async function rechazarReview(id) { if (confirm('¿Rechazar?')) { await supabaseAdmin.from('reviews').delete().eq('id', id); cargarReviews(); mostrarNotificacion('Review rechazada', 'info'); } }
+        
+        // ============================================
+        // PEDIDOS
+        // ============================================
+        async function cargarPedidos() {
+            activarNav('pedidos');
+            const { data } = await supabaseAdmin.from('pedidos').select('*, perfiles(nombre)').order('created_at', { ascending: false });
+            
+            document.getElementById('contenido-principal').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Pedidos</h2>
+                <div class="space-y-4">
+                    ${data?.map(p => `
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <p class="font-semibold">${p.perfiles?.nombre || 'Cliente'}</p>
+                                    <p class="text-sm text-gray-500">${new Date(p.created_at).toLocaleString()}</p>
+                                </div>
+                                <span class="badge-pendiente">${p.estado || 'pendiente'}</span>
+                            </div>
+                            <div class="border-t pt-3">
+                                <p class="font-bold text-green-600">Total: ${p.total?.toLocaleString() || 0} Gs.</p>
+                                <button onclick="verDetallePedido(${p.id})" class="text-blue-600 text-sm mt-2">Ver detalles</button>
+                            </div>
+                        </div>
+                    `).join('') || '<div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">No hay pedidos</div>'}
+                </div>
+            `;
+        }
+        
+        async function verDetallePedido(id) {
+            const { data } = await supabaseAdmin.from('pedidos').select('*').eq('id', id).single();
+            const productos = data?.productos || [];
+            alert(`Pedido #${id}\nProductos: ${productos.map(p => p.nombre).join(', ')}\nTotal: ${data?.total?.toLocaleString()} Gs.`);
+        }
+        
+        // ============================================
+        // USUARIOS
+        // ============================================
+        async function cargarUsuarios() {
+            activarNav('usuarios');
+            const { data } = await supabaseAdmin.from('perfiles').select('*').order('created_at', { ascending: false });
+            
+            document.getElementById('contenido-principal').innerHTML = `
+                <h2 class="text-3xl font-bold mb-6">Usuarios</h2>
+                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="p-3">Nombre</th><th class="p-3">Email</th><th class="p-3">Teléfono</th><th class="p-3">Admin</th><th class="p-3">Registro</th><th class="p-3">Acciones</th></tr></thead><tbody>
+                    ${data?.map(u => `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">${u.nombre || '—'}</td>
+                            <td class="p-3">${u.id?.substring(0, 8)}...</td>
+                            <td class="p-3">${u.telefono || '—'}</td>
+                            <td class="p-3">${u.es_admin ? '<span class="text-green-600">✓ Sí</span>' : '<button onclick="toggleAdmin(\'' + u.id + '\', true)" class="text-blue-600 text-sm">Hacer admin</button>'}</td>
+                            <td class="p-3">${new Date(u.created_at).toLocaleDateString()}</td>
+                            <td class="p-3"><button onclick="toggleAdmin('${u.id}', ${!u.es_admin})" class="text-blue-600 text-sm">${u.es_admin ? 'Quitar admin' : 'Hacer admin'}</button></td>
+                        </tr>
+                    `).join('')}
+                </tbody></table></div></div>
+            `;
+        }
+        
+        async function toggleAdmin(userId, makeAdmin) {
+            await supabaseAdmin.from('perfiles').update({ es_admin: makeAdmin }).eq('id', userId);
+            mostrarNotificacion(makeAdmin ? 'Usuario ahora es admin' : 'Admin removido', 'success');
+            cargarUsuarios();
+        }
+        
+        // ============================================
+        // UTILIDADES
+        // ============================================
         function activarNav(seccion) { document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active')); document.getElementById(`nav-${seccion}`)?.classList.add('active'); }
+        function mostrarNotificacion(mensaje, tipo) { alert(mensaje); }
+        
+        verificarAcceso();
     </script>
 </body>
 </html>
