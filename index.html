@@ -936,9 +936,59 @@
     function actualizarContadorCarrito() { const count = carritoGlobal.length; const desktop = document.getElementById('carrito-count-desktop'); const mobile = document.getElementById('carrito-count-mobile'); if (desktop) desktop.textContent = count; if (mobile) mobile.textContent = count; }
     function renderizarCarritoModal() { const cont = document.getElementById('carrito-lista'); if (!cont) return; if (!carritoGlobal.length) { cont.innerHTML = `<p class="text-gray-500 py-6 text-center">Tu carrito está vacío.</p>`; document.getElementById('carrito-total').textContent = 'Gs. 0'; return; } let total = 0; cont.innerHTML = carritoGlobal.map(item => { total += item.precio; return `<div class="flex items-center justify-between py-3 border-b"><div class="flex-1"><p class="font-medium">${item.nombre}</p><p class="text-sm text-green-700">${item.precio.toLocaleString()} Gs.</p></div><button onclick="quitarDelCarritoSupabase(${item.id})" class="text-red-500 px-2 py-1 rounded hover:bg-red-50">✕</button></div>`; }).join(''); document.getElementById('carrito-total').textContent = `Gs. ${total.toLocaleString()}`; }
     function verCarrito() { renderizarCarritoModal(); const modal = document.getElementById('modal-carrito'); if (modal) { modal.classList.remove('opacity-0', 'pointer-events-none'); document.body.classList.add('modal-active'); } }
-    async function enviarCarritoWhatsAppMejorado() { if (!carritoGlobal.length) { mostrarNotificacion('Carrito vacío', 'error'); return; } const cuerpo = carritoGlobal.map((p, i) => `${i+1}. ${p.nombre} - ${p.precio.toLocaleString()} Gs.`).join('%0A'); const total = carritoGlobal.reduce((s, p) => s + p.precio, 0); window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar:%0A%0A${cuerpo}%0A%0A*Total: ${total.toLocaleString()} Gs.*`)}`, '_blank'); await vaciarCarritoSupabase(); mostrarNotificacion('✅ Pedido enviado'); }
+
     function agregarProductoAlCarritoSupabase() { const producto = componentesSueltos.find(c => c.nombre === document.getElementById('modal-producto-nombre').textContent); if (producto) { agregarAlCarritoSupabase(producto.id, producto.nombre, producto.precioNum, producto.imagen); toggleModalProducto(); } }
+  // ============================================
+    // carrito whatsapp mejorado
+    // ============================================
+    async function enviarCarritoWhatsAppMejorado() {
+    if (!carritoGlobal.length) { 
+        mostrarNotificacion('Carrito vacío', 'error'); 
+        return; 
+    }
     
+    if (!usuarioActual) {
+        mostrarNotificacion('Inicia sesión para comprar', 'error');
+        mostrarModalLogin();
+        return;
+    }
+    
+    const cuerpo = carritoGlobal.map((p, i) => `${i+1}. ${p.nombre} - ${p.precio.toLocaleString()} Gs.`).join('%0A');
+    const total = carritoGlobal.reduce((s, p) => s + p.precio, 0);
+    
+    // Guardar el pedido en Supabase ANTES de enviar WhatsApp
+    try {
+        const { error } = await supabaseClient.from('pedidos').insert([{
+            usuario_id: usuarioActual.id,
+            productos: carritoGlobal.map(p => ({
+                id: p.producto_id,
+                nombre: p.nombre,
+                precio: p.precio,
+                cantidad: p.cantidad || 1
+            })),
+            total: total,
+            estado: 'pendiente',
+            whatsapp: '595972292392'
+        }]);
+        
+        if (error) {
+            console.error('Error guardando pedido:', error);
+            mostrarNotificacion('Error al procesar el pedido', 'error');
+            return;
+        }
+        
+        // Abrir WhatsApp
+        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar:%0A%0A${cuerpo}%0A%0A*Total: ${total.toLocaleString()} Gs.*%0A%0AMi pedido # se generó automáticamente`)}`, '_blank');
+        
+        // Vaciar carrito
+        await vaciarCarritoSupabase();
+        mostrarNotificacion('✅ Pedido enviado. Te contactaremos pronto.', 'success');
+        
+    } catch (error) {
+        console.error('Error:', error);
+        mostrarNotificacion('Error al procesar', 'error');
+    }
+}
     // ============================================
     // FUNCIONES DE LOGIN Y UI
     // ============================================
