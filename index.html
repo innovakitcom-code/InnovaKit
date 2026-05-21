@@ -399,7 +399,7 @@
         <div class="flex flex-col sm:flex-row items-center justify-between mt-8 pt-6 border-t border-gray-200 gap-4">
           <div class="text-xl font-bold text-gray-800">Total: <span id="carrito-total" class="text-green-600 text-2xl">Gs. 0</span></div>
           <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-            <button onclick="vaciarCarrito()" class="px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold flex items-center justify-center btn-hover touch-target transition-all duration-300 text-sm">
+            <button onclick="vaciarCarritoSupabase()" class="px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold flex items-center justify-center btn-hover touch-target transition-all duration-300 text-sm">
               <i class="fas fa-trash mr-1.5"></i>Vaciar Carrito
             </button>
             <button onclick="enviarCarritoWhatsAppMejorado()" class="px-4 py-2.5 rounded-xl bg-green-500 hover:bg-green-600 text-white font-semibold flex items-center justify-center btn-hover touch-target transition-all duration-300 text-sm">
@@ -956,6 +956,20 @@
     function cerrarModalRegistro(event) { if (event && event.target !== event.currentTarget) return; const modal = document.getElementById('modal-registro'); if (modal) { modal.classList.add('hidden'); modal.style.display = 'none'; } }
     
     // ============================================
+    // NOTIFICACIÓN MEJORADA (sin alert)
+    // ============================================
+    function mostrarNotificacion(mensaje, tipo = 'success') {
+        console.log(`📢 [${tipo}] ${mensaje}`);
+        // Crear notificación visual temporal
+        const notif = document.createElement('div');
+        notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded-lg text-white text-sm ${tipo === 'success' ? 'bg-green-500' : tipo === 'error' ? 'bg-red-500' : 'bg-blue-500'} transition-all duration-300 transform translate-x-full`;
+        notif.textContent = mensaje;
+        document.body.appendChild(notif);
+        setTimeout(() => notif.classList.remove('translate-x-full'), 100);
+        setTimeout(() => { notif.classList.add('translate-x-full'); setTimeout(() => notif.remove(), 300); }, 3000);
+    }
+    
+    // ============================================
     // NAVEGACIÓN
     // ============================================
     function volverAlInicio() { navegarA('inicio'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -973,7 +987,6 @@
     }
     
     function trackEvent(categoria, accion, etiqueta = '') { if (typeof gtag !== 'undefined') gtag('event', accion, { 'event_category': categoria, 'event_label': etiqueta }); console.log(`📊 ${categoria} - ${accion} - ${etiqueta}`); }
-    function mostrarNotificacion(mensaje, tipo = 'success') { alert(mensaje); }
     function proporcionarFeedbackTactil() { if ('vibrate' in navigator) navigator.vibrate(50); }
     
     function navegarA(vista, data = {}) {
