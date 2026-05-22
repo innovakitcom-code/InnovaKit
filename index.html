@@ -144,7 +144,7 @@
     
     <!-- Desktop -->
     <div class="hidden sm:flex justify-between items-center">
-      <a href="#main-content" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover ml-3" onclick="volverAlInicio(); return false;">
+      <a href="#" class="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 rounded btn-hover ml-3" onclick="volverAlInicio(); return false;">
         <h1 class="text-3xl lg:text-4xl font-bold">
           <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
         </h1>
@@ -175,7 +175,7 @@
     <div class="sm:hidden">
       <div class="flex justify-between items-center mb-3">
         <div class="flex-1">
-          <a href="#main-content" class="flex items-center" onclick="volverAlInicio(); return false;">
+          <a href="#" class="flex items-center" onclick="volverAlInicio(); return false;">
             <h1 class="text-2xl font-bold">
               <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
             </h1>
@@ -186,7 +186,7 @@
           🛍️ (<span id="carrito-count-mobile" aria-live="polite">0</span>)
         </button>
         
-        <button onclick="mostrarModalLogin()" class="bg-blue-600 text-white px-2 py-1 rounded-lg text-sm font-semibold ml-2">
+        <button onclick="mostrarModalLogin()" class="auth-mobile-btn bg-blue-600 text-white px-2 py-1 rounded-lg text-sm font-semibold ml-2">
           <i class="fas fa-user"></i>
         </button>
       </div>
@@ -459,7 +459,7 @@
         <p class="text-gray-400 text-sm mt-1">Esto puede tomar unos segundos</p>
     </div>
     <!-- Contenido real -->
-    <div id="productoskit-content" class="max-w-7xl mx-auto"></div>
+    <div id="productoskit-content" class="max-w-7xl mx-auto" style="display: none;"></div>
     <div class="mt-12 flex justify-center animate-fade-in-up">
       <button onclick="volverAlInicio()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon">
         <i class="fas fa-arrow-left mr-2"></i>Volver al inicio
@@ -667,35 +667,40 @@
         <p class="text-gray-600 font-medium">Cargando componentes...</p>
         <p class="text-gray-400 text-sm mt-1">Buscando en nuestro catálogo</p>
     </div>
-    <div class="bg-white shadow-sm border-b"><div class="container mx-auto px-4 py-3"><nav class="text-sm text-gray-700 flex items-center space-x-2"><a href="#" onclick="volverAlInicio()" class="hover:text-blue-600"><i class="fas fa-home mr-2"></i>Inicio</a><span class="text-gray-400">/</span><span class="text-gray-800 font-semibold">Componentes Sueltos</span></nav></div></div>
-    <div class="page-container"><div class="products-container"><div class="container mx-auto px-4 py-6">
-      <div class="bg-white rounded-lg shadow-sm border p-4 mb-6"><div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
-        <div class="flex-1 md:max-w-[990px]"><input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"></div>
-        <button onclick="mostrarModalFiltros()" class="md:hidden bg-blue-500 text-white px-4 py-3 rounded-lg font-semibold flex items-center justify-center gap-2"><i class="fas fa-filter"></i>Filtros</button>
-        <div class="hidden md:flex flex-row gap-3">
-          <div class="relative group" id="filtro-categoria-container"><button class="px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center gap-2"><i class="fas fa-layer-group"></i>Categorías<i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i></button>
-            <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100 z-50">
-              <div class="p-3"><div class="space-y-1">
-                <div class="relative subcategory-group"><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"><span class="flex items-center gap-2"><i class="fas fa-microchip text-green-500"></i>Sensores</span><i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i></button>
-                  <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95"><div class="p-3"><div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Sensores</div><div class="space-y-1"><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Temperatura')"><i class="fas fa-thermometer-half text-orange-500"></i>Temperatura</button><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Humedad')"><i class="fas fa-tint text-blue-500"></i>Humedad</button><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Movimiento')"><i class="fas fa-running text-purple-500"></i>Movimiento</button><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Luz')"><i class="fas fa-sun text-yellow-500"></i>Luz</button></div></div></div>
+    <div id="componentes-container" class="page-container" style="display: none;">
+      <div class="products-container">
+        <div class="container mx-auto px-4 py-6">
+          <div class="bg-white rounded-lg shadow-sm border p-4 mb-6">
+            <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
+              <div class="flex-1 md:max-w-[990px]"><input type="text" id="buscar-componente" placeholder="🔍 Buscar componentes..." class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"></div>
+              <button onclick="mostrarModalFiltros()" class="md:hidden bg-blue-500 text-white px-4 py-3 rounded-lg font-semibold flex items-center justify-center gap-2"><i class="fas fa-filter"></i>Filtros</button>
+              <div class="hidden md:flex flex-row gap-3">
+                <div class="relative group" id="filtro-categoria-container"><button class="px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 flex items-center gap-2"><i class="fas fa-layer-group"></i>Categorías<i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i></button>
+                  <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right scale-95 group-hover:scale-100 z-50">
+                    <div class="p-3"><div class="space-y-1">
+                      <div class="relative subcategory-group"><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"><span class="flex items-center gap-2"><i class="fas fa-microchip text-green-500"></i>Sensores</span><i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i></button>
+                        <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95"><div class="p-3"><div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Sensores</div><div class="space-y-1"><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Temperatura')"><i class="fas fa-thermometer-half text-orange-500"></i>Temperatura</button><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Humedad')"><i class="fas fa-tint text-blue-500"></i>Humedad</button><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Movimiento')"><i class="fas fa-running text-purple-500"></i>Movimiento</button><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Luz')"><i class="fas fa-sun text-yellow-500"></i>Luz</button></div></div></div>
+                      </div>
+                      <div class="relative subcategory-group"><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"><span class="flex items-center gap-2"><i class="fas fa-cog text-red-500"></i>Motores</span><i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i></button>
+                        <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95"><div class="p-3"><div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Motores</div><div class="space-y-1"><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Servo Motores')"><i class="fas fa-robot text-red-400"></i>Servo Motores</button><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Stepper')"><i class="fas fa-sync-alt text-red-400"></i>Stepper</button></div></div></div>
+                      </div>
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2" onclick="aplicarFiltroCategoria('Displays')"><i class="fas fa-tv text-purple-500"></i>Displays</button>
+                      <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2" onclick="aplicarFiltroCategoria('Placas')"><i class="fas fa-microchip text-gray-500"></i>Placas</button>
+                      <div class="border-t my-2"></div>
+                      <button onclick="limpiarFiltros()" class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700"><i class="fas fa-th-list mr-2"></i>Ver todas las categorías</button>
+                    </div></div>
+                  </div>
                 </div>
-                <div class="relative subcategory-group"><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center justify-between group"><span class="flex items-center gap-2"><i class="fas fa-cog text-red-500"></i>Motores</span><i class="fas fa-chevron-right text-xs text-gray-400 group-hover:text-blue-500 transition-transform duration-300 group-hover:translate-x-1"></i></button>
-                  <div class="absolute left-full top-0 ml-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible subcategory-panel transition-all duration-300 transform origin-top-left scale-95"><div class="p-3"><div class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Tipos de Motores</div><div class="space-y-1"><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Servo Motores')"><i class="fas fa-robot text-red-400"></i>Servo Motores</button><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm flex items-center gap-2" onclick="aplicarFiltroCategoria('Stepper')"><i class="fas fa-sync-alt text-red-400"></i>Stepper</button></div></div></div>
-                </div>
-                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2" onclick="aplicarFiltroCategoria('Displays')"><i class="fas fa-tv text-purple-500"></i>Displays</button>
-                <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-blue-50 transition-all duration-200 flex items-center gap-2" onclick="aplicarFiltroCategoria('Placas')"><i class="fas fa-microchip text-gray-500"></i>Placas</button>
-                <div class="border-t my-2"></div>
-                <button onclick="limpiarFiltros()" class="w-full text-center px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors duration-200 text-sm font-semibold text-gray-700"><i class="fas fa-th-list mr-2"></i>Ver todas las categorías</button>
-              </div></div>
+                <select id="filtro-precio" class="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"><option value="todos">💎 Todos los precios</option><option value="0-50000">💰 Gs. 0 - 50.000</option><option value="50000-100000">💵 Gs. 50.000 - 100.000</option><option value="100000-200000">💳 Gs. 100.000 - 200.000</option></select>
+              </div>
             </div>
           </div>
-          <select id="filtro-precio" class="px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"><option value="todos">💎 Todos los precios</option><option value="0-50000">💰 Gs. 0 - 50.000</option><option value="50000-100000">💵 Gs. 50.000 - 100.000</option><option value="100000-200000">💳 Gs. 100.000 - 200.000</option></select>
+          <div id="modal-filtros" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black bg-opacity-50" onclick="cerrarModalFiltros()"></div><div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto"><div class="flex items-center mb-6 pb-4 border-b"><button id="btn-volver-categorias" class="text-gray-500 mr-3 hidden"><i class="fas fa-chevron-left text-xl"></i></button><h3 id="modal-filtros-titulo" class="text-xl font-bold flex-1">Filtros</h3><button onclick="cerrarModalFiltros()" class="text-gray-500 text-2xl">×</button></div><div id="contenido-filtros"></div><div class="mt-6 pt-4 border-t"><div class="mb-6"><h4 class="font-semibold mb-3 text-lg">💰 Precio</h4><select id="filtro-precio-mobile" class="w-full p-3 border rounded-lg text-base"><option value="todos">💎 Todos los precios</option><option value="0-50000">💰 Gs. 0 - 50.000</option><option value="50000-100000">💵 Gs. 50.000 - 100.000</option><option value="100000-200000">💳 Gs. 100.000 - 200.000</option></select></div><button onclick="aplicarFiltrosMovil()" class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg">Aplicar Filtros</button></div></div></div>
+          <div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+          <div id="loading-componentes" class="text-center py-16 hidden"><div class="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mb-6"></div><p class="text-gray-700 text-lg font-medium">Cargando componentes...</p><p class="text-gray-500 text-sm mt-2">Buscando los mejores productos para ti</p></div>
         </div>
-      </div></div>
-      <div id="modal-filtros" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black bg-opacity-50" onclick="cerrarModalFiltros()"></div><div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto"><div class="flex items-center mb-6 pb-4 border-b"><button id="btn-volver-categorias" class="text-gray-500 mr-3 hidden"><i class="fas fa-chevron-left text-xl"></i></button><h3 id="modal-filtros-titulo" class="text-xl font-bold flex-1">Filtros</h3><button onclick="cerrarModalFiltros()" class="text-gray-500 text-2xl">×</button></div><div id="contenido-filtros"></div><div class="mt-6 pt-4 border-t"><div class="mb-6"><h4 class="font-semibold mb-3 text-lg">💰 Precio</h4><select id="filtro-precio-mobile" class="w-full p-3 border rounded-lg text-base"><option value="todos">💎 Todos los precios</option><option value="0-50000">💰 Gs. 0 - 50.000</option><option value="50000-100000">💵 Gs. 50.000 - 100.000</option><option value="100000-200000">💳 Gs. 100.000 - 200.000</option></select></div><button onclick="aplicarFiltrosMovil()" class="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold text-lg">Aplicar Filtros</button></div></div></div>
-      <div id="grid-componentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
-      <div id="loading-componentes" class="text-center py-16 hidden"><div class="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mb-6"></div><p class="text-gray-700 text-lg font-medium">Cargando componentes...</p><p class="text-gray-500 text-sm mt-2">Buscando los mejores productos para ti</p></div>
-    </div></div></div>
+      </div>
+    </div>
     <div class="pagination-fixed backdrop-blur bg-white/90 border-t border-gray-200 safe-bottom mb-2 md:mb-4"><div class="container mx-auto px-4"><div class="hidden sm:flex justify-center items-center space-x-6"><button onclick="cambiarPagina(paginaActual - 1)" class="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-xl shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 btn-hover font-semibold flex items-center gap-2"><i class="fas fa-chevron-left text-sm"></i>Anterior</button><span id="info-paginacion" class="text-base text-gray-700 font-semibold bg-gray-100 px-4 py-2 rounded-lg">Página <span class="text-blue-600">1</span> de <span class="text-blue-600">1</span></span><button onclick="cambiarPagina(paginaActual + 1)" class="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-xl shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 btn-hover font-semibold flex items-center gap-2">Siguiente<i class="fas fa-chevron-right text-sm"></i></button></div><div class="sm:hidden flex justify-between items-center py-2 px-3"><button onclick="cambiarPagina(paginaActual - 1)" class="px-3 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:opacity-50 transition-all font-semibold text-sm flex items-center touch-target min-w-[70px] justify-center"><i class="fas fa-chevron-left mr-1"></i>Ant.</button><span id="info-paginacion-mobile" class="text-sm text-gray-700 font-medium px-3 py-1 bg-gray-100 rounded"><span class="text-blue-600">1</span>/<span class="text-blue-600">1</span></span><button onclick="cambiarPagina(paginaActual + 1)" class="px-3 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:opacity-50 transition-all font-semibold text-sm flex items-center touch-target min-w-[70px] justify-center">Sig.<i class="fas fa-chevron-right ml-1"></i></button></div></div></div>
   </section>
   
@@ -787,8 +792,14 @@
                 const { data, error } = await supabaseClient.from('productos').select('*').eq('kit_id', kitId).eq('activo', true);
                 if (error) throw error;
                 productosKits[kitId - 1] = data.map(p => ({
-                    img: p.imagenes || [p.imagen_principal], nombre: p.nombre, desc: p.descripcion,
-                    precio: `${p.precio.toLocaleString()} Gs.`, precioNum: p.precio, documentos: [], especificaciones: p.especificaciones || []
+                    id: p.id,
+                    img: p.imagenes || [p.imagen_principal], 
+                    nombre: p.nombre, 
+                    desc: p.descripcion,
+                    precio: `${p.precio.toLocaleString()} Gs.`, 
+                    precioNum: p.precio, 
+                    documentos: [], 
+                    especificaciones: p.especificaciones || []
                 }));
             }
             console.log(`✅ Kits cargados: Kit1: ${productosKits[0].length}, Kit2: ${productosKits[1].length}, Kit3: ${productosKits[2].length}`);
@@ -841,59 +852,49 @@
     
     function cambiarPagina(nueva) { paginaActual = nueva; renderizarComponentesSueltos(); document.getElementById('grid-componentes').scrollIntoView({ behavior: 'smooth' }); }
     function limpiarFiltros() { paginaActual = 1; const input = document.getElementById('buscar-componente'); if (input) input.value = ''; const precio = document.getElementById('filtro-precio'); if (precio) precio.value = 'todos'; renderizarComponentesSueltos(); mostrarNotificacion('Filtros limpiados ✅'); }
-   function verComponentesSueltos() {
-    navegarA('componentes');
     
-    // MOSTRAR LOADER
-    const loader = document.getElementById('loader-componentes');
-    const grid = document.getElementById('grid-componentes');
-    
-    // Guardar tiempo de inicio
-    const startTime = Date.now();
-    
-    if (loader) {
-        loader.classList.remove('hidden');
-        loader.style.display = 'flex';
-    }
-    if (grid) {
-        grid.innerHTML = '';
-        grid.classList.add('hidden');
-    }
-    
-    // Renderizar componentes
-    if (typeof renderizarComponentesSueltos === 'function') {
-        renderizarComponentesSueltos();
+    function verComponentesSueltos() {
+        navegarA('componentes');
         
-        // Calcular tiempo transcurrido
-        const elapsed = Date.now() - startTime;
-        const minDisplayTime = 1500; // 1.5 segundos mínimo
-        const remainingTime = Math.max(0, minDisplayTime - elapsed);
+        const loader = document.getElementById('loader-componentes');
+        const container = document.getElementById('componentes-container');
+        const grid = document.getElementById('grid-componentes');
         
-        // Ocultar loader después del tiempo restante
+        const startTime = Date.now();
+        
+        if (loader) {
+            loader.classList.remove('hidden');
+            loader.style.display = 'flex';
+        }
+        if (container) {
+            container.style.display = 'none';
+        }
+        if (grid) {
+            grid.innerHTML = '';
+        }
+        
+        if (typeof renderizarComponentesSueltos === 'function') {
+            renderizarComponentesSueltos();
+        }
+        
+        const minDisplayTime = 1500;
         setTimeout(() => {
-            if (loader) {
-                loader.classList.add('hidden');
-                loader.style.display = 'none';
-            }
-            if (grid) {
-                grid.classList.remove('hidden');
-            }
-        }, remainingTime);
-    } else {
-        // Fallback si no existe la función
-        setTimeout(() => {
-            if (loader) {
-                loader.classList.add('hidden');
-                loader.style.display = 'none';
-            }
-            if (grid) {
-                grid.classList.remove('hidden');
-            }
-        }, 1500);
+            const elapsed = Date.now() - startTime;
+            const remainingTime = Math.max(0, minDisplayTime - elapsed);
+            setTimeout(() => {
+                if (loader) {
+                    loader.classList.add('hidden');
+                    loader.style.display = 'none';
+                }
+                if (container) {
+                    container.style.display = 'block';
+                }
+            }, remainingTime);
+        }, 10);
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
     function mostrarModalProducto(id) {
         const producto = componentesSueltos.find(c => c.id === id);
         if (!producto) { mostrarNotificacion('Producto no encontrado', 'error'); return; }
@@ -919,81 +920,80 @@
     function toggleModalProducto() { const modal = document.getElementById('modal-producto'); const isOpening = modal.classList.contains('opacity-0'); modal.classList.toggle('opacity-0'); modal.classList.toggle('pointer-events-none'); document.body.classList.toggle('modal-active', isOpening); if (window.innerWidth <= 768) document.body.style.overflow = isOpening ? 'hidden' : ''; }
     function comprarProductoWhatsApp() { const nombre = document.getElementById('modal-producto-nombre').textContent; const precio = document.getElementById('modal-producto-precio').textContent; window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${nombre} - ${precio}`)}`, '_blank'); toggleModalProducto(); }
     
-   function verProductosKit(idx) {
-    navegarA('productoskit', { kitId: idx });
-    
-    // MOSTRAR LOADER
-    const loader = document.getElementById('loader-productoskit');
-    const content = document.getElementById('productoskit-content');
-    
-    // Guardar tiempo de inicio
-    const startTime = Date.now();
-    
-    if (loader) {
-        loader.classList.remove('hidden');
-        loader.style.display = 'flex';
-    }
-    if (content) {
-        content.innerHTML = '';
-    }
-    
-    const productos = productosKits[idx - 1];
-    const portadas = ["png/portada_kit1.webp", "png/portadados.webp", "png/portada_kit3.svg"];
-    const titulosPersonalizados = ["🔌 Kits de Electrónica - Kuongshun", "⚡ Kits Proyectos - Learning", "🤖 Kits de Robótica - Acebott"];
-    
-    let html = `<div class="portada-sin-margenes"><img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">${titulosPersonalizados[idx-1]}</h2></div></div><div class="container mx-auto px-4 mt-8"><h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
-    
-    productos.forEach((p, i) => {
-        let slidesHTML = '';
-        if (p.img && p.img.length > 0) { 
-            p.img.forEach((imgSrc) => { 
-                slidesHTML += `<div class="swiper-slide flex justify-center items-center"><img src="${imgSrc}" alt="${p.nombre}" class="max-h-48 object-contain" loading="lazy"></div>`; 
-            }); 
-        } else { 
-            slidesHTML = `<div class="swiper-slide flex justify-center items-center"><div class="w-full h-48 bg-gray-200 flex items-center justify-center"><span class="text-gray-500">Imagen no disponible</span></div></div>`; 
+    function verProductosKit(idx) {
+        navegarA('productoskit', { kitId: idx });
+        
+        const loader = document.getElementById('loader-productoskit');
+        const content = document.getElementById('productoskit-content');
+        
+        const startTime = Date.now();
+        
+        if (loader) {
+            loader.classList.remove('hidden');
+            loader.style.display = 'flex';
+        }
+        if (content) {
+            content.innerHTML = '';
+            content.style.display = 'none';
         }
         
-        html += `<div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center"><div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4" onclick="event.stopPropagation()"><div class="swiper-wrapper">${slidesHTML}</div><div class="swiper-button-next" onclick="event.stopPropagation()"></div><div class="swiper-button-prev" onclick="event.stopPropagation()"></div></div><h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4><p class="mb-2 text-sm sm:text-base text-gray-700">${acortarTexto(p.desc || '', 100)}...</p><a href="javascript:void(0)" onclick="mostrarModalKitProducto(${idx}, ${i})" class="text-blue-600 hover:text-blue-800 hover:underline mb-3 text-sm font-semibold inline-block">Ver detalles completos...</a><p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p><div class="flex flex-col gap-2 w-full mt-auto"><button onclick="comprarProductoKitWhatsApp('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">Comprar por WhatsApp</button><button onclick="agregarAlCarritoSupabase(${p.id || i}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precioNum || 0}, '${p.img?.[0] || ""}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">Agregar al carrito</button></div></div>`;
-    });
-    
-    html += `</div></div>`;
-    
-    if (content) {
-        content.innerHTML = html;
-    }
-    
-    // Inicializar Swipers
-    setTimeout(() => {
-        productos.forEach((_, i) => { 
-            const swiperElement = document.querySelector(`.swiper-producto-${i}`); 
-            if (swiperElement) { 
-                new Swiper(swiperElement, { 
-                    loop: true, 
-                    navigation: { 
-                        nextEl: `.swiper-producto-${i} .swiper-button-next`, 
-                        prevEl: `.swiper-producto-${i} .swiper-button-prev` 
-                    }, 
-                    preventClicks: true 
+        const productos = productosKits[idx - 1];
+        const portadas = ["png/portada_kit1.webp", "png/portadados.webp", "png/portada_kit3.svg"];
+        const titulosPersonalizados = ["🔌 Kits de Electrónica - Kuongshun", "⚡ Kits Proyectos - Learning", "🤖 Kits de Robótica - Acebott"];
+        
+        let html = `<div class="portada-sin-margenes"><img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">${titulosPersonalizados[idx-1]}</h2></div></div><div class="container mx-auto px-4 mt-8"><h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
+        
+        productos.forEach((p, i) => {
+            let slidesHTML = '';
+            if (p.img && p.img.length > 0) { 
+                p.img.forEach((imgSrc) => { 
+                    slidesHTML += `<div class="swiper-slide flex justify-center items-center"><img src="${imgSrc}" alt="${p.nombre}" class="max-h-48 object-contain" loading="lazy"></div>`; 
                 }); 
-            } 
+            } else { 
+                slidesHTML = `<div class="swiper-slide flex justify-center items-center"><div class="w-full h-48 bg-gray-200 flex items-center justify-center"><span class="text-gray-500">Imagen no disponible</span></div></div>`; 
+            }
+            
+            html += `<div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center"><div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4" onclick="event.stopPropagation()"><div class="swiper-wrapper">${slidesHTML}</div><div class="swiper-button-next" onclick="event.stopPropagation()"></div><div class="swiper-button-prev" onclick="event.stopPropagation()"></div></div><h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4><p class="mb-2 text-sm sm:text-base text-gray-700">${acortarTexto(p.desc || '', 100)}...</p><a href="javascript:void(0)" onclick="mostrarModalKitProducto(${idx}, ${i})" class="text-blue-600 hover:text-blue-800 hover:underline mb-3 text-sm font-semibold inline-block">Ver detalles completos...</a><p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p><div class="flex flex-col gap-2 w-full mt-auto"><button onclick="comprarProductoKitWhatsApp('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">Comprar por WhatsApp</button><button onclick="agregarAlCarritoSupabase(${p.id || i}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precioNum || 0}, '${p.img?.[0] || ""}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">Agregar al carrito</button></div></div>`;
         });
         
-        // Calcular tiempo transcurrido
-        const elapsed = Date.now() - startTime;
-        const minDisplayTime = 1500; // 1.5 segundos mínimo
-        const remainingTime = Math.max(0, minDisplayTime - elapsed);
+        html += `</div></div>`;
         
-        // Ocultar loader después del tiempo restante
+        if (content) {
+            content.innerHTML = html;
+        }
+        
         setTimeout(() => {
-            if (loader) {
-                loader.classList.add('hidden');
-                loader.style.display = 'none';
-            }
-        }, remainingTime);
-    }, 50);
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+            productos.forEach((_, i) => { 
+                const swiperElement = document.querySelector(`.swiper-producto-${i}`); 
+                if (swiperElement) { 
+                    new Swiper(swiperElement, { 
+                        loop: true, 
+                        navigation: { 
+                            nextEl: `.swiper-producto-${i} .swiper-button-next`, 
+                            prevEl: `.swiper-producto-${i} .swiper-button-prev` 
+                        }, 
+                        preventClicks: true 
+                    }); 
+                } 
+            });
+            
+            const elapsed = Date.now() - startTime;
+            const minDisplayTime = 1500;
+            const remainingTime = Math.max(0, minDisplayTime - elapsed);
+            
+            setTimeout(() => {
+                if (loader) {
+                    loader.classList.add('hidden');
+                    loader.style.display = 'none';
+                }
+                if (content) {
+                    content.style.display = 'block';
+                }
+            }, remainingTime);
+        }, 50);
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     
     function acortarTexto(texto, maxLength = 120) { return texto.length <= maxLength ? texto : texto.substring(0, maxLength) + '...'; }
     
@@ -1060,75 +1060,30 @@
     function verCarrito() { renderizarCarritoModal(); const modal = document.getElementById('modal-carrito'); if (modal) { modal.classList.remove('opacity-0', 'pointer-events-none'); document.body.classList.add('modal-active'); } }
 
     function agregarProductoAlCarritoSupabase() { const producto = componentesSueltos.find(c => c.nombre === document.getElementById('modal-producto-nombre').textContent); if (producto) { agregarAlCarritoSupabase(producto.id, producto.nombre, producto.precioNum, producto.imagen); toggleModalProducto(); } }
-  // ============================================
-    // carrito whatsapp mejorado
-    // ============================================
-   async function enviarCarritoWhatsAppMejorado() {
-    if (!carritoGlobal.length) { 
-        mostrarNotificacion('Carrito vacío', 'error'); 
-        return; 
+  
+    async function enviarCarritoWhatsAppMejorado() {
+        if (!carritoGlobal.length) { mostrarNotificacion('Carrito vacío', 'error'); return; }
+        if (!usuarioActual) { mostrarNotificacion('Inicia sesión para comprar', 'error'); mostrarModalLogin(); return; }
+        const total = carritoGlobal.reduce((s, p) => s + p.precio, 0);
+        let mensaje = "¡Hola! Quiero más información sobre estos productos:\n\n";
+        mensaje += "📋 *PRODUCTOS:*\n";
+        carritoGlobal.forEach((item, index) => { mensaje += `${index + 1}. ${item.nombre} - ${item.precio.toLocaleString()} Gs.\n`; });
+        mensaje += `\n💰 *TOTAL: ${total.toLocaleString()} Gs.*\n\n`;
+        mensaje += `👤 Cliente: ${usuarioActual.nombre || usuarioActual.email}\n`;
+        mensaje += `📅 Fecha: ${new Date().toLocaleDateString()}\n\n`;
+        mensaje += `✅ Espero su confirmación.`;
+        
+        try {
+            const { data: pedidoData, error: pedidoError } = await supabaseClient.from('pedidos').insert([{ usuario_id: usuarioActual.id, productos: carritoGlobal.map(p => ({ id: p.producto_id, nombre: p.nombre, precio: p.precio, cantidad: p.cantidad || 1 })), total: total, estado: 'pendiente', whatsapp: '595972292392' }]).select();
+            if (pedidoError) throw pedidoError;
+            const pedidoId = pedidoData?.[0]?.id || 'N/A';
+            const mensajeConPedido = mensaje.replace('✅ Espero su confirmación.', `📋 *N° de Pedido: #${pedidoId}*\n\n✅ Espero su confirmación.`);
+            window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensajeConPedido)}`, '_blank');
+            await vaciarCarritoSupabase();
+            mostrarNotificacion(`✅ Pedido #${pedidoId} registrado. Te contactaremos pronto.`, 'success');
+        } catch (error) { console.error('Error:', error); mostrarNotificacion('Error al procesar', 'error'); }
     }
     
-    if (!usuarioActual) {
-        mostrarNotificacion('Inicia sesión para comprar', 'error');
-        mostrarModalLogin();
-        return;
-    }
-    
-    const total = carritoGlobal.reduce((s, p) => s + p.precio, 0);
-    
-    // Construir mensaje con mejor formato
-    let mensaje = "¡Hola! Quiero más información sobre estos productos:\n\n";
-    mensaje += "📋 *PRODUCTOS:*\n";
-    carritoGlobal.forEach((item, index) => {
-        mensaje += `${index + 1}. ${item.nombre} - ${item.precio.toLocaleString()} Gs.\n`;
-    });
-    mensaje += `\n💰 *TOTAL: ${total.toLocaleString()} Gs.*\n\n`;
-    mensaje += `👤 Cliente: ${usuarioActual.nombre || usuarioActual.email}\n`;
-    mensaje += `📅 Fecha: ${new Date().toLocaleDateString()}\n\n`;
-    mensaje += `✅ Espero su confirmación.`;
-    
-    // Guardar el pedido en Supabase ANTES de enviar WhatsApp
-    try {
-        const { data: pedidoData, error: pedidoError } = await supabaseClient
-            .from('pedidos')
-            .insert([{
-                usuario_id: usuarioActual.id,
-                productos: carritoGlobal.map(p => ({
-                    id: p.producto_id,
-                    nombre: p.nombre,
-                    precio: p.precio,
-                    cantidad: p.cantidad || 1
-                })),
-                total: total,
-                estado: 'pendiente',
-                whatsapp: '595972292392'
-            }])
-            .select();
-        
-        if (pedidoError) {
-            console.error('Error guardando pedido:', pedidoError);
-            mostrarNotificacion('Error al procesar el pedido', 'error');
-            return;
-        }
-        
-        const pedidoId = pedidoData?.[0]?.id || 'N/A';
-        
-        // Agregar número de pedido al mensaje
-        const mensajeConPedido = mensaje.replace('✅ Espero su confirmación.', `📋 *N° de Pedido: #${pedidoId}*\n\n✅ Espero su confirmación.`);
-        
-        // Abrir WhatsApp
-        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensajeConPedido)}`, '_blank');
-        
-        // Vaciar carrito
-        await vaciarCarritoSupabase();
-        mostrarNotificacion(`✅ Pedido #${pedidoId} registrado. Te contactaremos pronto.`, 'success');
-        
-    } catch (error) {
-        console.error('Error:', error);
-        mostrarNotificacion('Error al procesar', 'error');
-    }
-}
     // ============================================
     // FUNCIONES DE LOGIN Y UI
     // ============================================
@@ -1143,7 +1098,7 @@
     function mostrarNotificacion(mensaje, tipo = 'success') { console.log(`📢 [${tipo}] ${mensaje}`); const notif = document.createElement('div'); notif.className = `fixed top-20 right-4 z-50 px-4 py-2 rounded-lg text-white text-sm transition-all duration-300 transform translate-x-full ${tipo === 'success' ? 'bg-green-500' : tipo === 'error' ? 'bg-red-500' : 'bg-blue-500'}`; notif.textContent = mensaje; document.body.appendChild(notif); setTimeout(() => notif.classList.remove('translate-x-full'), 100); setTimeout(() => { notif.classList.add('translate-x-full'); setTimeout(() => notif.remove(), 300); }, 3000); }
     
     // ============================================
-    // NAVEGACIÓN
+    // NAVEGACIÓN CON HISTORIAL (SOLUCIONA EL BOTÓN ATRÁS)
     // ============================================
     function volverAlInicio() { navegarA('inicio'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function verAsesorias() { navegarA('asesorias'); }
@@ -1154,40 +1109,109 @@
     function navegarA(vista, data = {}) {
         if (navegando) return;
         navegando = true;
+        
+        // Ocultar todas las vistas
         document.getElementById('main-content').style.display = 'none';
         document.getElementById('vista-productoskit').classList.add('hidden');
         document.getElementById('vista-asesorias').classList.add('hidden');
         document.getElementById('vista-componentes-sueltos').classList.add('hidden');
+        
+        // Mostrar la vista seleccionada
         switch(vista) {
-            case 'inicio': document.getElementById('main-content').style.display = ''; history.pushState({vista: 'inicio'}, '', '#inicio'); break;
-            case 'productoskit': document.getElementById('vista-productoskit').classList.remove('hidden'); history.pushState({vista: 'productoskit', data}, '', `#productoskit-${data.kitId}`); if (data.kitId) setTimeout(() => { verProductosKit(data.kitId); navegando = false; }, 50); break;
-            case 'asesorias': document.getElementById('vista-asesorias').classList.remove('hidden'); history.pushState({vista: 'asesorias'}, '', '#asesorias'); setTimeout(() => { navegando = false; }, 50); break;
-            case 'componentes': document.getElementById('vista-componentes-sueltos').classList.remove('hidden'); history.pushState({vista: 'componentes'}, '', '#componentes'); setTimeout(() => { verComponentesSueltos(); navegando = false; }, 50); break;
+            case 'inicio':
+                document.getElementById('main-content').style.display = '';
+                history.pushState({ vista: 'inicio' }, '', '#inicio');
+                setTimeout(() => { navegando = false; }, 100);
+                break;
+            case 'productoskit':
+                document.getElementById('vista-productoskit').classList.remove('hidden');
+                const url = `#productoskit-${data.kitId}`;
+                history.pushState({ vista: 'productoskit', kitId: data.kitId }, '', url);
+                if (data.kitId) {
+                    // Esperar a que la vista esté visible antes de cargar
+                    setTimeout(() => { 
+                        verProductosKit(data.kitId); 
+                        setTimeout(() => { navegando = false; }, 100);
+                    }, 50);
+                } else {
+                    setTimeout(() => { navegando = false; }, 100);
+                }
+                break;
+            case 'asesorias':
+                document.getElementById('vista-asesorias').classList.remove('hidden');
+                history.pushState({ vista: 'asesorias' }, '', '#asesorias');
+                setTimeout(() => { navegando = false; }, 100);
+                break;
+            case 'componentes':
+                document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+                history.pushState({ vista: 'componentes' }, '', '#componentes');
+                setTimeout(() => { 
+                    verComponentesSueltos(); 
+                    setTimeout(() => { navegando = false; }, 100);
+                }, 50);
+                break;
         }
-        setTimeout(() => { navegando = false; }, 100);
     }
     
+    // Manejar el botón "atrás" del navegador/celular
+    window.addEventListener('popstate', function(event) {
+        if (event.state) {
+            const vista = event.state.vista;
+            const kitId = event.state.kitId;
+            
+            // Ocultar todas las vistas
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('vista-productoskit').classList.add('hidden');
+            document.getElementById('vista-asesorias').classList.add('hidden');
+            document.getElementById('vista-componentes-sueltos').classList.add('hidden');
+            
+            switch(vista) {
+                case 'inicio':
+                    document.getElementById('main-content').style.display = '';
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                    break;
+                case 'productoskit':
+                    document.getElementById('vista-productoskit').classList.remove('hidden');
+                    if (kitId) {
+                        verProductosKit(kitId);
+                    }
+                    break;
+                case 'asesorias':
+                    document.getElementById('vista-asesorias').classList.remove('hidden');
+                    break;
+                case 'componentes':
+                    document.getElementById('vista-componentes-sueltos').classList.remove('hidden');
+                    verComponentesSueltos();
+                    break;
+                default:
+                    document.getElementById('main-content').style.display = '';
+            }
+        } else {
+            // Estado inicial - volver al inicio
+            document.getElementById('main-content').style.display = '';
+            document.getElementById('vista-productoskit').classList.add('hidden');
+            document.getElementById('vista-asesorias').classList.add('hidden');
+            document.getElementById('vista-componentes-sueltos').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+    });
+    
     // ============================================
-    // FUNCIONES PARA COMPARTIR PROYECTO (VERSIÓN CORREGIDA)
+    // FUNCIONES PARA COMPARTIR PROYECTO
     // ============================================
     
-    // Función para inicializar las estrellas correctamente
     function initRatingStars() {
         const stars = document.querySelectorAll('#rating-stars i');
         if (!stars.length) return;
-        
         stars.forEach(star => {
             star.removeEventListener('click', star._clickHandler);
-            
             const clickHandler = function(e) {
                 e.stopPropagation();
                 const rating = parseInt(this.dataset.rating);
                 if (isNaN(rating)) return;
-                
                 ratingSeleccionado = rating;
                 const ratingInput = document.getElementById('proyecto-rating');
                 if (ratingInput) ratingInput.value = rating;
-                
                 stars.forEach((s, i) => {
                     if (i < rating) {
                         s.classList.remove('far');
@@ -1198,7 +1222,6 @@
                     }
                 });
             };
-            
             star._clickHandler = clickHandler;
             star.addEventListener('click', clickHandler);
             star.style.cursor = 'pointer';
@@ -1306,8 +1329,19 @@
         
         document.addEventListener('keydown', e => { if (e.key === 'Escape') { toggleModalProducto(); const modal = document.getElementById('modal-carrito'); if (modal && !modal.classList.contains('pointer-events-none')) { modal.classList.add('opacity-0', 'pointer-events-none'); document.body.classList.remove('modal-active'); } } });
         
-        if (!history.state) history.replaceState({vista: 'inicio'}, '', '#inicio');
-        if (window.location.hash) { const hash = window.location.hash; if (hash.includes('productoskit')) { const kitId = hash.split('-')[1]; if (kitId) navegarA('productoskit', { kitId: parseInt(kitId) }); } else if (hash === '#asesorias') navegarA('asesorias'); else if (hash === '#componentes') navegarA('componentes'); }
+        // Estado inicial
+        if (!history.state) history.replaceState({ vista: 'inicio' }, '', '#inicio');
+        if (window.location.hash) { 
+            const hash = window.location.hash; 
+            if (hash.includes('productoskit')) { 
+                const kitId = hash.split('-')[1]; 
+                if (kitId) navegarA('productoskit', { kitId: parseInt(kitId) }); 
+            } else if (hash === '#asesorias') { 
+                navegarA('asesorias'); 
+            } else if (hash === '#componentes') { 
+                navegarA('componentes'); 
+            }
+        }
         console.log('✅ Innovakit inicializado');
     });
     
