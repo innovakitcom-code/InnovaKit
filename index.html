@@ -452,12 +452,6 @@
   <!-- VISTAS OCULTAS -->
   <!-- ========================================== -->
   <section id="vista-productoskit" class="hidden p-6 sm:p-12 bg-gradient-to-br from-gray-50 to-white min-h-screen">
-        <!-- LOADER - se muestra mientras carga -->
-    <div id="loader-productoskit" class="flex flex-col items-center justify-center py-20 hidden">
-        <div class="loading-spinner mb-4"></div>
-        <p class="text-gray-600 font-medium">Cargando productos...</p>
-        <p class="text-gray-400 text-sm mt-1">Esto puede tomar unos segundos</p>
-    </div>
     <!-- LOADER - se muestra mientras carga -->
     <div id="loader-productoskit" class="flex flex-col items-center justify-center py-20 hidden">
         <div class="loading-spinner mb-4"></div>
@@ -465,8 +459,6 @@
         <p class="text-gray-400 text-sm mt-1">Esto puede tomar unos segundos</p>
     </div>
     <!-- Contenido real -->
-    <div id="productoskit-content" class="max-w-7xl mx-auto"></div>
-  <section id="vista-productoskit" class="hidden p-6 sm:p-12 bg-gradient-to-br from-gray-50 to-white min-h-screen">
     <div id="productoskit-content" class="max-w-7xl mx-auto"></div>
     <div class="mt-12 flex justify-center animate-fade-in-up">
       <button onclick="volverAlInicio()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl font-semibold text-lg btn-hover touch-target btn-icon">
@@ -669,6 +661,12 @@
   
   <!-- Vista Componentes Sueltos -->
   <section id="vista-componentes-sueltos" class="hidden bg-gradient-to-b from-gray-50 to-white min-h-screen">
+    <!-- LOADER - se muestra mientras carga -->
+    <div id="loader-componentes" class="flex flex-col items-center justify-center py-32 hidden">
+        <div class="loading-spinner mb-4"></div>
+        <p class="text-gray-600 font-medium">Cargando componentes...</p>
+        <p class="text-gray-400 text-sm mt-1">Buscando en nuestro catálogo</p>
+    </div>
     <div class="bg-white shadow-sm border-b"><div class="container mx-auto px-4 py-3"><nav class="text-sm text-gray-700 flex items-center space-x-2"><a href="#" onclick="volverAlInicio()" class="hover:text-blue-600"><i class="fas fa-home mr-2"></i>Inicio</a><span class="text-gray-400">/</span><span class="text-gray-800 font-semibold">Componentes Sueltos</span></nav></div></div>
     <div class="page-container"><div class="products-container"><div class="container mx-auto px-4 py-6">
       <div class="bg-white rounded-lg shadow-sm border p-4 mb-6"><div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
