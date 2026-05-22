@@ -249,7 +249,10 @@
             supabaseAdmin.auth.signOut();
             location.reload();
         }
-        
+        const { count: pedidosCancelados } = await supabaseAdmin
+    .from('pedidos')
+    .select('*', { count: 'exact', head: true })
+    .eq('estado', 'cancelado');
         // ============================================
         // DASHBOARD
         // ============================================
@@ -262,15 +265,17 @@
             const { count: usuariosCount } = await supabaseAdmin.from('perfiles').select('*', { count: 'exact', head: true });
             
             document.getElementById('contenido-principal').innerHTML = `
-                <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
-                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-microchip text-3xl text-blue-600"></i><p class="text-2xl font-bold mt-2">${productosCount || 0}</p><p class="text-gray-600">Productos</p></div>
-                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-box text-3xl text-green-600"></i><p class="text-2xl font-bold mt-2">${kitsCount || 0}</p><p class="text-gray-600">Kits</p></div>
-                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-shopping-cart text-3xl text-orange-600"></i><p class="text-2xl font-bold mt-2">${pedidosCount || 0}</p><p class="text-gray-600">Pedidos</p></div>
-                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-star text-3xl text-yellow-500"></i><p class="text-2xl font-bold mt-2">${reviewsPendientes || 0}</p><p class="text-gray-600">Reviews pendientes</p></div>
-                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-users text-3xl text-purple-600"></i><p class="text-2xl font-bold mt-2">${usuariosCount || 0}</p><p class="text-gray-600">Usuarios</p></div>
-                </div>
-            `;
+    <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
+        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-microchip text-3xl text-blue-600"></i><p class="text-2xl font-bold mt-2">${productosCount || 0}</p><p class="text-gray-600">Productos</p></div>
+        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-box text-3xl text-green-600"></i><p class="text-2xl font-bold mt-2">${kitsCount || 0}</p><p class="text-gray-600">Kits</p></div>
+        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-shopping-cart text-3xl text-orange-600"></i><p class="text-2xl font-bold mt-2">${pedidosCount || 0}</p><p class="text-gray-600">Pedidos totales</p></div>
+        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-check-circle text-3xl text-green-500"></i><p class="text-2xl font-bold mt-2">${(pedidosCount || 0) - (pedidosCancelados || 0)}</p><p class="text-gray-600">Pedidos activos</p></div>
+        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-ban text-3xl text-red-600"></i><p class="text-2xl font-bold mt-2">${pedidosCancelados || 0}</p><p class="text-gray-600">Pedidos cancelados</p></div>
+        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-star text-3xl text-yellow-500"></i><p class="text-2xl font-bold mt-2">${reviewsPendientes || 0}</p><p class="text-gray-600">Reviews pendientes</p></div>
+        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-users text-3xl text-purple-600"></i><p class="text-2xl font-bold mt-2">${usuariosCount || 0}</p><p class="text-gray-600">Usuarios</p></div>
+    </div>
+`;
         }
         
         // ============================================
