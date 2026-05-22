@@ -249,10 +249,7 @@
             supabaseAdmin.auth.signOut();
             location.reload();
         }
-        const { count: pedidosCancelados } = await supabaseAdmin
-    .from('pedidos')
-    .select('*', { count: 'exact', head: true })
-    .eq('estado', 'cancelado');
+       
         // ============================================
         // DASHBOARD
         // ============================================
@@ -262,6 +259,7 @@
             const { count: kitsCount } = await supabaseAdmin.from('kits').select('*', { count: 'exact', head: true });
             const { count: pedidosCount } = await supabaseAdmin.from('pedidos').select('*', { count: 'exact', head: true });
             const { count: reviewsPendientes } = await supabaseAdmin.from('reviews').select('*', { count: 'exact', head: true }).eq('aprobada', false);
+             const { count: pedidosCancelados } = await supabaseAdmin.from('pedidos').select('*', { count: 'exact', head: true }).eq('estado', 'cancelado');
             const { count: usuariosCount } = await supabaseAdmin.from('perfiles').select('*', { count: 'exact', head: true });
             
             document.getElementById('contenido-principal').innerHTML = `
