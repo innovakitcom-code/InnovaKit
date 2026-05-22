@@ -452,6 +452,12 @@
   <!-- VISTAS OCULTAS -->
   <!-- ========================================== -->
   <section id="vista-productoskit" class="hidden p-6 sm:p-12 bg-gradient-to-br from-gray-50 to-white min-h-screen">
+        <!-- LOADER - se muestra mientras carga -->
+    <div id="loader-productoskit" class="flex flex-col items-center justify-center py-20 hidden">
+        <div class="loading-spinner mb-4"></div>
+        <p class="text-gray-600 font-medium">Cargando productos...</p>
+        <p class="text-gray-400 text-sm mt-1">Esto puede tomar unos segundos</p>
+    </div>
     <!-- LOADER - se muestra mientras carga -->
     <div id="loader-productoskit" class="flex flex-col items-center justify-center py-20 hidden">
         <div class="loading-spinner mb-4"></div>
@@ -837,8 +843,50 @@
     
     function cambiarPagina(nueva) { paginaActual = nueva; renderizarComponentesSueltos(); document.getElementById('grid-componentes').scrollIntoView({ behavior: 'smooth' }); }
     function limpiarFiltros() { paginaActual = 1; const input = document.getElementById('buscar-componente'); if (input) input.value = ''; const precio = document.getElementById('filtro-precio'); if (precio) precio.value = 'todos'; renderizarComponentesSueltos(); mostrarNotificacion('Filtros limpiados ✅'); }
-    function verComponentesSueltos() { document.getElementById('main-content').style.display = 'none'; document.getElementById('vista-productoskit').classList.add('hidden'); document.getElementById('vista-asesorias').classList.add('hidden'); document.getElementById('vista-componentes-sueltos').classList.remove('hidden'); paginaActual = 1; renderizarComponentesSueltos(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+   function verComponentesSueltos() {
+    navegarA('componentes');
     
+    // MOSTRAR LOADER
+    const loader = document.getElementById('loader-componentes');
+    const grid = document.getElementById('grid-componentes');
+    
+    if (loader) {
+        loader.classList.remove('hidden');
+        loader.style.display = 'flex';
+    }
+    if (grid) {
+        grid.innerHTML = ''; // Limpiar
+        grid.classList.add('hidden'); // Ocultar grid temporalmente
+    }
+    
+    // Forzar a que se renderice (ya existe renderizarComponentesSueltos)
+    if (typeof renderizarComponentesSueltos === 'function') {
+        // Pequeño retraso para que se vea el loader
+        setTimeout(() => {
+            renderizarComponentesSueltos();
+            if (loader) {
+                loader.classList.add('hidden');
+                loader.style.display = 'none';
+            }
+            if (grid) {
+                grid.classList.remove('hidden');
+            }
+        }, 100);
+    } else {
+        // Si no existe la función, ocultar loader después de un tiempo
+        setTimeout(() => {
+            if (loader) {
+                loader.classList.add('hidden');
+                loader.style.display = 'none';
+            }
+            if (grid) {
+                grid.classList.remove('hidden');
+            }
+        }, 2000);
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
     function mostrarModalProducto(id) {
         const producto = componentesSueltos.find(c => c.id === id);
         if (!producto) { mostrarNotificacion('Producto no encontrado', 'error'); return; }
@@ -864,22 +912,74 @@
     function toggleModalProducto() { const modal = document.getElementById('modal-producto'); const isOpening = modal.classList.contains('opacity-0'); modal.classList.toggle('opacity-0'); modal.classList.toggle('pointer-events-none'); document.body.classList.toggle('modal-active', isOpening); if (window.innerWidth <= 768) document.body.style.overflow = isOpening ? 'hidden' : ''; }
     function comprarProductoWhatsApp() { const nombre = document.getElementById('modal-producto-nombre').textContent; const precio = document.getElementById('modal-producto-precio').textContent; window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${nombre} - ${precio}`)}`, '_blank'); toggleModalProducto(); }
     
-    function verProductosKit(idx) {
-        navegarA('productoskit', { kitId: idx });
-        const productos = productosKits[idx - 1];
-        const portadas = ["png/portada_kit1.webp", "png/portadados.webp", "png/portada_kit3.svg"];
-        const titulosPersonalizados = ["🔌 Kits de Electrónica - Kuongshun", "⚡ Kits Proyectos - Learning", "🤖 Kits de Robótica - Acebott"];
-        let html = `<div class="portada-sin-margenes"><img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">${titulosPersonalizados[idx-1]}</h2></div></div><div class="container mx-auto px-4 mt-8"><h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
-        productos.forEach((p, i) => {
-            let slidesHTML = '';
-            if (p.img && p.img.length > 0) { p.img.forEach((imgSrc) => { slidesHTML += `<div class="swiper-slide flex justify-center items-center"><img src="${imgSrc}" alt="${p.nombre}" class="max-h-48 object-contain" loading="lazy"></div>`; }); } else { slidesHTML = `<div class="swiper-slide flex justify-center items-center"><div class="w-full h-48 bg-gray-200 flex items-center justify-center"><span class="text-gray-500">Imagen no disponible</span></div></div>`; }
-            html += `<div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center"><div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4" onclick="event.stopPropagation()"><div class="swiper-wrapper">${slidesHTML}</div><div class="swiper-button-next" onclick="event.stopPropagation()"></div><div class="swiper-button-prev" onclick="event.stopPropagation()"></div></div><h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4><p class="mb-2 text-sm sm:text-base text-gray-700">${(p.desc || '').substring(0, 100)}...</p><a href="javascript:void(0)" onclick="mostrarModalKitProducto(${idx}, ${i})" class="text-blue-600 hover:text-blue-800 hover:underline mb-3 text-sm font-semibold inline-block">Ver detalles completos...</a><p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p><div class="flex flex-col gap-2 w-full mt-auto"><button onclick="comprarProductoKitWhatsApp('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">Comprar por WhatsApp</button><button onclick="agregarAlCarritoSupabase(${p.id || i}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precioNum || 0}, '${p.img?.[0] || ""}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">Agregar al carrito</button></div></div>`;
-        });
-        html += `</div></div>`;
-        document.getElementById('productoskit-content').innerHTML = html;
-        productos.forEach((_, i) => { const swiperElement = document.querySelector(`.swiper-producto-${i}`); if (swiperElement) { new Swiper(swiperElement, { loop: true, navigation: { nextEl: `.swiper-producto-${i} .swiper-button-next`, prevEl: `.swiper-producto-${i} .swiper-button-prev` }, preventClicks: true }); } });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+   function verProductosKit(idx) {
+    navegarA('productoskit', { kitId: idx });
+    
+    // MOSTRAR LOADER
+    const loader = document.getElementById('loader-productoskit');
+    const content = document.getElementById('productoskit-content');
+    if (loader) {
+        loader.classList.remove('hidden');
+        loader.style.display = 'flex';
     }
+    if (content) {
+        content.innerHTML = ''; // Limpiar contenido anterior
+    }
+    
+    // Simular un pequeño retraso para que el loader se vea (opcional)
+    // En realidad, el loader se verá mientras se ejecuta el resto
+    
+    const productos = productosKits[idx - 1];
+    const portadas = ["png/portada_kit1.webp", "png/portadados.webp", "png/portada_kit3.svg"];
+    const titulosPersonalizados = ["🔌 Kits de Electrónica - Kuongshun", "⚡ Kits Proyectos - Learning", "🤖 Kits de Robótica - Acebott"];
+    
+    let html = `<div class="portada-sin-margenes"><img src="${portadas[idx-1]}" alt="${titulosPersonalizados[idx-1]}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center"><h2 class="text-3xl sm:text-4xl font-bold text-white text-center px-4">${titulosPersonalizados[idx-1]}</h2></div></div><div class="container mx-auto px-4 mt-8"><h3 class="text-2xl sm:text-3xl font-bold text-center mb-8">Productos incluidos</h3><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`;
+    
+    productos.forEach((p, i) => {
+        let slidesHTML = '';
+        if (p.img && p.img.length > 0) { 
+            p.img.forEach((imgSrc) => { 
+                slidesHTML += `<div class="swiper-slide flex justify-center items-center"><img src="${imgSrc}" alt="${p.nombre}" class="max-h-48 object-contain" loading="lazy"></div>`; 
+            }); 
+        } else { 
+            slidesHTML = `<div class="swiper-slide flex justify-center items-center"><div class="w-full h-48 bg-gray-200 flex items-center justify-center"><span class="text-gray-500">Imagen no disponible</span></div></div>`; 
+        }
+        
+        html += `<div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 p-6 flex flex-col items-center w-full max-w-xs mx-auto mb-6 text-center"><div class="swiper swiper-producto-${i} w-full h-48 rounded-lg overflow-hidden mb-4" onclick="event.stopPropagation()"><div class="swiper-wrapper">${slidesHTML}</div><div class="swiper-button-next" onclick="event.stopPropagation()"></div><div class="swiper-button-prev" onclick="event.stopPropagation()"></div></div><h4 class="text-lg sm:text-xl font-bold mb-2">${p.nombre}</h4><p class="mb-2 text-sm sm:text-base text-gray-700">${acortarTexto(p.desc || '', 100)}...</p><a href="javascript:void(0)" onclick="mostrarModalKitProducto(${idx}, ${i})" class="text-blue-600 hover:text-blue-800 hover:underline mb-3 text-sm font-semibold inline-block">Ver detalles completos...</a><p class="mb-4 text-lg font-semibold text-green-600">${p.precio}</p><div class="flex flex-col gap-2 w-full mt-auto"><button onclick="comprarProductoKitWhatsApp('${p.nombre.replace(/'/g, "\\'")}', '${p.precio}')" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">Comprar por WhatsApp</button><button onclick="agregarAlCarritoSupabase(${p.id || i}, '${p.nombre.replace(/'/g, "\\'")}', ${p.precioNum || 0}, '${p.img?.[0] || ""}')" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">Agregar al carrito</button></div></div>`;
+    });
+    
+    html += `</div></div>`;
+    
+    // Actualizar contenido y OCULTAR LOADER cuando esté listo
+    if (content) {
+        content.innerHTML = html;
+    }
+    
+    // Inicializar Swipers después de que el HTML esté en el DOM
+    setTimeout(() => {
+        productos.forEach((_, i) => { 
+            const swiperElement = document.querySelector(`.swiper-producto-${i}`); 
+            if (swiperElement) { 
+                new Swiper(swiperElement, { 
+                    loop: true, 
+                    navigation: { 
+                        nextEl: `.swiper-producto-${i} .swiper-button-next`, 
+                        prevEl: `.swiper-producto-${i} .swiper-button-prev` 
+                    }, 
+                    preventClicks: true 
+                }); 
+            } 
+        });
+        
+        // OCULTAR LOADER
+        if (loader) {
+            loader.classList.add('hidden');
+            loader.style.display = 'none';
+        }
+    }, 50);
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
     
     function acortarTexto(texto, maxLength = 120) { return texto.length <= maxLength ? texto : texto.substring(0, maxLength) + '...'; }
     
