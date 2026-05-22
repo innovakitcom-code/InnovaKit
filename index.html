@@ -848,20 +848,29 @@
     const loader = document.getElementById('loader-componentes');
     const grid = document.getElementById('grid-componentes');
     
+    // Guardar tiempo de inicio
+    const startTime = Date.now();
+    
     if (loader) {
         loader.classList.remove('hidden');
         loader.style.display = 'flex';
     }
     if (grid) {
-        grid.innerHTML = ''; // Limpiar
-        grid.classList.add('hidden'); // Ocultar grid temporalmente
+        grid.innerHTML = '';
+        grid.classList.add('hidden');
     }
     
-    // Forzar a que se renderice (ya existe renderizarComponentesSueltos)
+    // Renderizar componentes
     if (typeof renderizarComponentesSueltos === 'function') {
-        // Pequeño retraso para que se vea el loader
+        renderizarComponentesSueltos();
+        
+        // Calcular tiempo transcurrido
+        const elapsed = Date.now() - startTime;
+        const minDisplayTime = 1500; // 1.5 segundos mínimo
+        const remainingTime = Math.max(0, minDisplayTime - elapsed);
+        
+        // Ocultar loader después del tiempo restante
         setTimeout(() => {
-            renderizarComponentesSueltos();
             if (loader) {
                 loader.classList.add('hidden');
                 loader.style.display = 'none';
@@ -869,9 +878,9 @@
             if (grid) {
                 grid.classList.remove('hidden');
             }
-        }, 100);
+        }, remainingTime);
     } else {
-        // Si no existe la función, ocultar loader después de un tiempo
+        // Fallback si no existe la función
         setTimeout(() => {
             if (loader) {
                 loader.classList.add('hidden');
@@ -880,7 +889,7 @@
             if (grid) {
                 grid.classList.remove('hidden');
             }
-        }, 2000);
+        }, 1500);
     }
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -916,16 +925,17 @@
     // MOSTRAR LOADER
     const loader = document.getElementById('loader-productoskit');
     const content = document.getElementById('productoskit-content');
+    
+    // Guardar tiempo de inicio
+    const startTime = Date.now();
+    
     if (loader) {
         loader.classList.remove('hidden');
         loader.style.display = 'flex';
     }
     if (content) {
-        content.innerHTML = ''; // Limpiar contenido anterior
+        content.innerHTML = '';
     }
-    
-    // Simular un pequeño retraso para que el loader se vea (opcional)
-    // En realidad, el loader se verá mientras se ejecuta el resto
     
     const productos = productosKits[idx - 1];
     const portadas = ["png/portada_kit1.webp", "png/portadados.webp", "png/portada_kit3.svg"];
@@ -948,12 +958,11 @@
     
     html += `</div></div>`;
     
-    // Actualizar contenido y OCULTAR LOADER cuando esté listo
     if (content) {
         content.innerHTML = html;
     }
     
-    // Inicializar Swipers después de que el HTML esté en el DOM
+    // Inicializar Swipers
     setTimeout(() => {
         productos.forEach((_, i) => { 
             const swiperElement = document.querySelector(`.swiper-producto-${i}`); 
@@ -969,11 +978,18 @@
             } 
         });
         
-        // OCULTAR LOADER
-        if (loader) {
-            loader.classList.add('hidden');
-            loader.style.display = 'none';
-        }
+        // Calcular tiempo transcurrido
+        const elapsed = Date.now() - startTime;
+        const minDisplayTime = 1500; // 1.5 segundos mínimo
+        const remainingTime = Math.max(0, minDisplayTime - elapsed);
+        
+        // Ocultar loader después del tiempo restante
+        setTimeout(() => {
+            if (loader) {
+                loader.classList.add('hidden');
+                loader.style.display = 'none';
+            }
+        }, remainingTime);
     }, 50);
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
