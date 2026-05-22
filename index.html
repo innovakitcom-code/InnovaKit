@@ -451,7 +451,15 @@
   <!-- ========================================== -->
   <!-- VISTAS OCULTAS -->
   <!-- ========================================== -->
-  
+  <section id="vista-productoskit" class="hidden p-6 sm:p-12 bg-gradient-to-br from-gray-50 to-white min-h-screen">
+    <!-- LOADER - se muestra mientras carga -->
+    <div id="loader-productoskit" class="flex flex-col items-center justify-center py-20 hidden">
+        <div class="loading-spinner mb-4"></div>
+        <p class="text-gray-600 font-medium">Cargando productos...</p>
+        <p class="text-gray-400 text-sm mt-1">Esto puede tomar unos segundos</p>
+    </div>
+    <!-- Contenido real -->
+    <div id="productoskit-content" class="max-w-7xl mx-auto"></div>
   <section id="vista-productoskit" class="hidden p-6 sm:p-12 bg-gradient-to-br from-gray-50 to-white min-h-screen">
     <div id="productoskit-content" class="max-w-7xl mx-auto"></div>
     <div class="mt-12 flex justify-center animate-fade-in-up">
