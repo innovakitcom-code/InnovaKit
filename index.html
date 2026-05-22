@@ -953,46 +953,54 @@
         return;
     }
     
-    const cuerpo = carritoGlobal.map((p, i) => `${i+1}. ${p.nombre} - ${p.precio.toLocaleString()} Gs.`).join('%0A');
     const total = carritoGlobal.reduce((s, p) => s + p.precio, 0);
+    
+    // Construir mensaje con mejor formato
+    let mensaje = "¡Hola! Quiero realizar mi compra:\n\n";
+    mensaje += "📋 *PRODUCTOS:*\n";
+    carritoGlobal.forEach((item, index) => {
+        mensaje += `${index + 1}. ${item.nombre} - ${item.precio.toLocaleString()} Gs.\n`;
+    });
+    mensaje += `\n💰 *TOTAL: ${total.toLocaleString()} Gs.*\n\n`;
+    mensaje += `👤 Cliente: ${usuarioActual.nombre || usuarioActual.email}\n`;
+    mensaje += `📅 Fecha: ${new Date().toLocaleDateString()}\n\n`;
+    mensaje += `✅ Espero su confirmación.`;
     
     // Guardar el pedido en Supabase ANTES de enviar WhatsApp
     try {
-        const { error } = await supabaseClient.from('pedidos').insert([{
-            usuario_id: usuarioActual.id,
-            productos: carritoGlobal.map(p => ({
-                id: p.producto_id,
-                nombre: p.nombre,
-                precio: p.precio,
-                cantidad: p.cantidad || 1
-            })),
-            total: total,
-            estado: 'pendiente',
-            whatsapp: '595972292392'
-        }]);
+        const { data: pedidoData, error: pedidoError } = await supabaseClient
+            .from('pedidos')
+            .insert([{
+                usuario_id: usuarioActual.id,
+                productos: carritoGlobal.map(p => ({
+                    id: p.producto_id,
+                    nombre: p.nombre,
+                    precio: p.precio,
+                    cantidad: p.cantidad || 1
+                })),
+                total: total,
+                estado: 'pendiente',
+                whatsapp: '595972292392'
+            }])
+            .select();
         
-        if (error) {
-            console.error('Error guardando pedido:', error);
+        if (pedidoError) {
+            console.error('Error guardando pedido:', pedidoError);
             mostrarNotificacion('Error al procesar el pedido', 'error');
             return;
         }
         
-       // Construir mensaje con mejor formato
-let mensaje = "¡Hola! Quiero realizar mi compra:\n\n";
-mensaje += "📋 *PRODUCTOS:*\n";
-carritoGlobal.forEach((item, index) => {
-    mensaje += `${index + 1}. ${item.nombre} - ${item.precio.toLocaleString()} Gs.\n`;
-});
-mensaje += `\n💰 *TOTAL: ${total.toLocaleString()} Gs.*\n\n`;
-mensaje += `👤 Cliente: ${usuarioActual.nombre || usuarioActual.email}\n`;
-mensaje += `📅 Fecha: ${new Date().toLocaleDateString()}\n\n`;
-mensaje += `✅ Espero su confirmación.`;
-
-// Abrir WhatsApp
-window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`, '_blank');
+        const pedidoId = pedidoData?.[0]?.id || 'N/A';
+        
+        // Agregar número de pedido al mensaje
+        const mensajeConPedido = mensaje.replace('✅ Espero su confirmación.', `📋 *N° de Pedido: #${pedidoId}*\n\n✅ Espero su confirmación.`);
+        
+        // Abrir WhatsApp
+        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensajeConPedido)}`, '_blank');
+        
         // Vaciar carrito
         await vaciarCarritoSupabase();
-        mostrarNotificacion('✅ Pedido enviado. Te contactaremos pronto.', 'success');
+        mostrarNotificacion(`✅ Pedido #${pedidoId} registrado. Te contactaremos pronto.`, 'success');
         
     } catch (error) {
         console.error('Error:', error);
