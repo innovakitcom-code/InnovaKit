@@ -101,6 +101,9 @@
                     <button onclick="cargarPedidos()" id="nav-pedidos" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 hover:bg-gray-700 transition">
                         <i class="fas fa-shopping-cart w-5"></i> Pedidos
                     </button>
+                    <button onclick="cargarRankingSorteo()" id="nav-sorteo" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 hover:bg-gray-700 transition">
+    <i class="fas fa-trophy w-5"></i> Ranking / Sorteo
+</button>
                     <button onclick="cargarUsuarios()" id="nav-usuarios" class="nav-item w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 hover:bg-gray-700 transition">
                         <i class="fas fa-users w-5"></i> Usuarios
                     </button>
@@ -488,7 +491,190 @@ async function rechazarReview(id) {
         cargarReviews(); 
     } 
 }
+async function cargarRankingSorteo() {
+    activarNav('sorteo');
+    
+    // Obtener solo pedidos COMPLETADOS
+    const { data: pedidosData } = await supabaseAdmin
+        .from('pedidos')
+        .select('usuario_id, total')
+        .eq('estado', 'completado');
+    
+    // Obtener nombres de usuarios
+    const { data: perfilesData } = await supabaseAdmin
+        .from('perfiles')
+        .select('id, nombre');
+    
+    // Calcular puntos por usuario
+    const mapaPuntos = {};
+    perfilesData?.forEach(perfil => {
+        mapaPuntos[perfil.id] = {
+            nombre: perfil.nombre || 'Usuario',
+            total_compras: 0,
+            total_gastado: 0,
+            puntos: 0
+        };
+    });
+    
+    pedidosData?.forEach(pedido => {
+        if (mapaPuntos[pedido.usuario_id]) {
+            mapaPuntos[pedido.usuario_id].total_compras++;
+            mapaPuntos[pedido.usuario_id].total_gastado += pedido.total || 0;
+        }
+    });
+    
+    // Calcular puntos: 1 punto por compra + 1 punto por cada 100,000 Gs.
+    const ranking = Object.values(mapaPuntos).map(u => ({
+        ...u,
+        puntos: u.total_compras + Math.floor(u.total_gastado / 100000)
+    })).filter(u => u.puntos > 0).sort((a, b) => b.puntos - a.puntos);
+    
+    // Calcular total de puntos para el sorteo
+    const totalPuntos = ranking.reduce((sum, u) => sum + u.puntos, 0);
+    
+    document.getElementById('contenido-principal').innerHTML = `
+        <h2 class="text-3xl font-bold mb-2">🏆 Ranking para Sorteo</h2>
+        <p class="text-gray-600 mb-6">Fórmula: 1 punto por compra + 1 punto por cada 100,000 Gs. gastados</p>
         
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl shadow p-6 text-white">
+                <p class="text-sm opacity-90">Total participantes</p>
+                <p class="text-4xl font-bold">${ranking.length}</p>
+            </div>
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow p-6 text-white">
+                <p class="text-sm opacity-90">Total de puntos</p>
+                <p class="text-4xl font-bold">${totalPuntos}</p>
+            </div>
+            <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-xl shadow p-6 text-white">
+                <p class="text-sm opacity-90">Total en ventas</p>
+                <p class="text-4xl font-bold">${pedidosData?.reduce((sum, p) => sum + (p.total || 0), 0).toLocaleString()} Gs.</p>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+            <table class="w-full">
+                <thead class="bg-gray-50 border-b">
+                    <tr>
+                        <th class="p-3 text-left">#</th>
+                        <th class="p-3 text-left">Usuario</th>
+                        <th class="p-3 text-left">Compras</th>
+                        <th class="p-3 text-left">Total gastado</th>
+                        <th class="p-3 text-left">Puntos</th>
+                        <th class="p-3 text-left">Probabilidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${ranking.map((u, i) => {
+                        const probabilidad = totalPuntos > 0 ? ((u.puntos / totalPuntos) * 100).toFixed(1) : 0;
+                        return `
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="p-3 font-bold">${i + 1}${i === 0 ? ' 👑' : i === 1 ? ' 🥈' : i === 2 ? ' 🥉' : ''}</td>
+                                <td class="p-3">${u.nombre}</td>
+                                <td class="p-3">${u.total_compras}</td>
+                                <td class="p-3 text-green-600">${u.total_gastado.toLocaleString()} Gs.</td>
+                                <td class="p-3 font-bold text-blue-600">${u.puntos}</td>
+                                <td class="p-3">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-32 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-blue-600 h-2 rounded-full" style="width: ${probabilidad}%"></div>
+                                        </div>
+                                        <span class="text-xs">${probabilidad}%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('')}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="mt-6 flex gap-4">
+            <button onclick="sortearGanador()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-semibold">
+                🎲 Realizar sorteo
+            </button>
+            <button onclick="exportarRanking()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold">
+                📥 Exportar a CSV
+            </button>
+        </div>
+    `;
+}
+
+// Función para realizar el sorteo
+async function sortearGanador() {
+    // Obtener datos actualizados
+    const { data: pedidosData } = await supabaseAdmin
+        .from('pedidos')
+        .select('usuario_id')
+        .eq('estado', 'completado');
+    
+    const { data: perfilesData } = await supabaseAdmin
+        .from('perfiles')
+        .select('id, nombre');
+    
+    // Calcular puntos igual que en el ranking
+    const mapaPuntos = {};
+    perfilesData?.forEach(perfil => {
+        mapaPuntos[perfil.id] = {
+            nombre: perfil.nombre || 'Usuario',
+            puntos: 0
+        };
+    });
+    
+    pedidosData?.forEach(pedido => {
+        if (mapaPuntos[pedido.usuario_id]) {
+            mapaPuntos[pedido.usuario_id].puntos++;
+        }
+    });
+    
+    // Crear array de participantes con sus puntos
+    const participantes = Object.values(mapaPuntos).filter(p => p.puntos > 0);
+    
+    if (participantes.length === 0) {
+        alert('No hay participantes para el sorteo');
+        return;
+    }
+    
+    // Simular sorteo ponderado por puntos
+    let totalPuntos = participantes.reduce((sum, p) => sum + p.puntos, 0);
+    let random = Math.random() * totalPuntos;
+    let acumulado = 0;
+    let ganador = null;
+    
+    for (const p of participantes) {
+        acumulado += p.puntos;
+        if (random <= acumulado) {
+            ganador = p;
+            break;
+        }
+    }
+    
+    if (ganador) {
+        alert(`🎉 ¡EL GANADOR ES!\n\n🏆 ${ganador.nombre}\n⭐ ${ganador.puntos} puntos\n\n¡Felicitaciones! 🎉`);
+    }
+}
+
+// Función para exportar ranking a CSV
+function exportarRanking() {
+    const tabla = document.querySelector('#contenido-principal table');
+    if (!tabla) return;
+    
+    let csv = [];
+    const filas = tabla.querySelectorAll('tr');
+    
+    filas.forEach(fila => {
+        const celdas = fila.querySelectorAll('th, td');
+        const filaCsv = Array.from(celdas).map(celda => celda.textContent.trim()).join(',');
+        csv.push(filaCsv);
+    });
+    
+    const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ranking_sorteo_${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+}        
         // ============================================
         // PEDIDOS
         // ============================================
@@ -567,9 +753,15 @@ async function cargarPedidos() {
                         <div class="flex justify-between items-center mt-3 pt-3 border-t">
                             <p class="font-bold text-lg">💰 Total: ${(p.total || 0).toLocaleString()} Gs.</p>
                             ${p.estado !== 'completado' ? `
-                                <button onclick="completarPedido(${p.id})" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
-                                    ✅ Marcar como completado
-                                </button>
+    <div class="flex gap-2 mt-3">
+        <button onclick="completarPedido(${p.id})" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+            ✅ Marcar como completado
+        </button>
+        <button onclick="cancelarPedido(${p.id})" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+            ❌ Cancelar pedido
+        </button>
+    </div>
+` : `<span class="inline-block mt-3 bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">✓ Completado</span>`}
                             ` : ''}
                         </div>
                     </div>
@@ -592,6 +784,21 @@ async function completarPedido(id) {
         } else {
             alert('✅ Pedido marcado como completado');
             cargarPedidos(); // Recargar la lista
+        }
+    }
+}
+async function cancelarPedido(id) {
+    if (confirm('¿Cancelar este pedido? El usuario no recibirá los puntos para el sorteo.')) {
+        const { error } = await supabaseAdmin
+            .from('pedidos')
+            .update({ estado: 'cancelado' })
+            .eq('id', id);
+        
+        if (error) {
+            alert('Error al cancelar: ' + error.message);
+        } else {
+            alert('❌ Pedido cancelado');
+            cargarPedidos();
         }
     }
 }
