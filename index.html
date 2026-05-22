@@ -956,7 +956,7 @@
     const total = carritoGlobal.reduce((s, p) => s + p.precio, 0);
     
     // Construir mensaje con mejor formato
-    let mensaje = "¡Hola! Quiero realizar mi compra:\n\n";
+    let mensaje = "¡Hola! Quiero más información sobre estos productos:\n\n";
     mensaje += "📋 *PRODUCTOS:*\n";
     carritoGlobal.forEach((item, index) => {
         mensaje += `${index + 1}. ${item.nombre} - ${item.precio.toLocaleString()} Gs.\n`;
