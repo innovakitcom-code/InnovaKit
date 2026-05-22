@@ -977,9 +977,19 @@
             return;
         }
         
-        // Abrir WhatsApp
-        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar:%0A%0A${cuerpo}%0A%0A*Total: ${total.toLocaleString()} Gs.*%0A%0AMi pedido # se generó automáticamente`)}`, '_blank');
-        
+       // Construir mensaje con mejor formato
+let mensaje = "¡Hola! Quiero realizar mi compra:\n\n";
+mensaje += "📋 *PRODUCTOS:*\n";
+carritoGlobal.forEach((item, index) => {
+    mensaje += `${index + 1}. ${item.nombre} - ${item.precio.toLocaleString()} Gs.\n`;
+});
+mensaje += `\n💰 *TOTAL: ${total.toLocaleString()} Gs.*\n\n`;
+mensaje += `👤 Cliente: ${usuarioActual.nombre || usuarioActual.email}\n`;
+mensaje += `📅 Fecha: ${new Date().toLocaleDateString()}\n\n`;
+mensaje += `✅ Espero su confirmación.`;
+
+// Abrir WhatsApp
+window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`, '_blank');
         // Vaciar carrito
         await vaciarCarritoSupabase();
         mostrarNotificacion('✅ Pedido enviado. Te contactaremos pronto.', 'success');
