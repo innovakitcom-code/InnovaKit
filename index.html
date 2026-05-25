@@ -798,6 +798,7 @@
                     desc: p.descripcion,
                     precio: `${p.precio.toLocaleString()} Gs.`, 
                     precioNum: p.precio, 
+                    componentes_lista: p componentes_lista || [],
                     documentos: p.documentos || [], 
                     especificaciones: p.especificaciones || []
                 }));
@@ -1010,18 +1011,21 @@
     const producto = productos[productoIndex];
     
     // ============================================
-    // Procesar descripción para separar introducción de componentes
+    // Procesar descripción: SOLO la introducción (sin componentes)
     // ============================================
-    let descripcionIntro = '';
-    let componentesLista = [];
+    let descripcionIntro = producto.desc || 'Sin descripción disponible.';
     
-    if (producto.desc) {
-        const descripcion = producto.desc;
+    // Si existe componentes_lista en la base de datos, la usamos
+    // Si no, intentamos extraer de la descripción (solo para compatibilidad)
+    let componentesLista = producto.componentes_lista || [];
+    
+    // Si no hay componentes_lista en la DB, intentamos extraer de la descripción (fallback)
+    if (componentesLista.length === 0 && producto.desc) {
         const keywords = ['componentes incluidos:', 'como:', 'incluye:', 'contiene:'];
         let idxInicio = -1;
         
         for (const kw of keywords) {
-            const idx = descripcion.toLowerCase().indexOf(kw);
+            const idx = producto.desc.toLowerCase().indexOf(kw);
             if (idx !== -1) {
                 idxInicio = idx;
                 break;
@@ -1029,19 +1033,19 @@
         }
         
         if (idxInicio !== -1) {
-            descripcionIntro = descripcion.substring(0, idxInicio).trim();
-            if (!descripcionIntro) descripcionIntro = 'Sin descripción disponible.';
-            
-            const parteComponentes = descripcion.substring(idxInicio).trim();
+            descripcionIntro = producto.desc.substring(0, idxInicio).trim();
+            const parteComponentes = producto.desc.substring(idxInicio).trim();
             const lineas = parteComponentes.split(/[-–—•*]\s*|\d+\.\s*/);
             for (let linea of lineas) {
                 linea = linea.trim();
-                if (linea.length > 2 && linea.length < 100 && !linea.toLowerCase().includes('componentes') && !linea.toLowerCase().includes('como:')) {
+                if (linea.length > 2 && linea.length < 100 && 
+                    !linea.toLowerCase().includes('componentes') && 
+                    !linea.toLowerCase().includes('como:')) {
                     componentesLista.push(linea);
                 }
             }
         } else {
-            descripcionIntro = descripcion;
+            descripcionIntro = producto.desc;
         }
     }
     
@@ -1068,7 +1072,7 @@
     }
     
     // ============================================
-    // Documentos disponibles (MANUALES desde Supabase)
+    // Documentos disponibles (MANUALES)
     // ============================================
     let documentosHTML = '';
     if (producto.documentos && producto.documentos.length > 0) {
@@ -1135,7 +1139,7 @@
                         <p class="text-gray-700 leading-relaxed">${descripcionIntro || 'Sin descripción disponible.'}</p>
                     </div>
                     
-                    <!-- Componentes incluidos -->
+                    <!-- Componentes incluidos (solo si hay) -->
                     ${componentesLista.length > 0 ? `
                     <div>
                         <h4 class="text-lg font-semibold text-gray-800 mb-2 flex items-center gap-2"><i class="fas fa-box-open text-green-500"></i> Componentes incluidos</h4>
@@ -1150,7 +1154,7 @@
                     <!-- Especificaciones técnicas -->
                     ${especificacionesHTML}
                     
-                    <!-- DOCUMENTOS (MANUALES) -->
+                    <!-- Documentos (manuales) -->
                     ${documentosHTML}
                     
                     <!-- Precio -->
