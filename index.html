@@ -798,7 +798,7 @@
                     desc: p.descripcion,
                     precio: `${p.precio.toLocaleString()} Gs.`, 
                     precioNum: p.precio, 
-                    documentos: [], 
+                    documentos: p.documentos || [], 
                     especificaciones: p.especificaciones || []
                 }));
             }
@@ -1002,19 +1002,192 @@
     // ============================================
     let productoDetalleActual = null;
     
-    function mostrarModalKitProducto(kitId, productoIndex) {
-        const kitIndex = kitId - 1;
-        const productos = productosKits[kitIndex];
-        if (!productos || !productos[productoIndex]) return;
-        const producto = productos[productoIndex];
-        const componentes = obtenerComponentesDeDescripcion(producto.desc);
-        const descripcionCorta = obtenerDescripcionSinComponentes(producto.desc);
-        const modalHTML = `<div class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-kit-detalle"><div class="absolute inset-0" onclick="cerrarModalKitDetalle()"></div><div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col relative z-10"><div class="flex justify-between items-center p-6 border-b"><h3 class="text-2xl font-bold text-gray-800">${producto.nombre}</h3><button onclick="cerrarModalKitDetalle()" class="text-gray-500 hover:text-gray-700 text-2xl p-2 hover:bg-gray-100 rounded-full transition">×</button></div><div class="flex-1 overflow-y-auto p-6"><div class="grid grid-cols-1 lg:grid-cols-2 gap-8"><div class="space-y-4"><div class="relative bg-gray-100 rounded-xl overflow-hidden" style="height: 400px;"><img id="imagen-principal-detalle" src="${producto.img && producto.img[0] ? producto.img[0] : 'png/placeholder.png'}" alt="${producto.nombre}" class="w-full h-full object-contain p-4 cursor-zoom-in" onclick="ampliarImagenDetalle(this.src)">${producto.img && producto.img.length > 1 ? `<button onclick="event.stopPropagation(); cambiarImagenDetalle(-1)" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20">←</button><button onclick="event.stopPropagation(); cambiarImagenDetalle(1)" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20">→</button><div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-full text-sm"><span id="contador-imagen-detalle">1</span> / <span id="total-imagenes-detalle">${producto.img.length}</span></div>` : ''}</div>${producto.img && producto.img.length > 1 ? `<div id="miniaturas-detalle" class="flex gap-2 overflow-x-auto py-2">${producto.img.map((imgSrc, imgIndex) => `<img src="${imgSrc}" alt="Miniatura ${imgIndex + 1}" class="w-20 h-20 object-cover rounded-lg border-2 ${imgIndex === 0 ? 'border-blue-500' : 'border-transparent hover:border-blue-300'} cursor-pointer transition-all" onclick="event.stopPropagation(); seleccionarImagenDetalle(${imgIndex})">`).join('')}</div>` : ''}</div><div class="space-y-6"><div><h4 class="text-lg font-semibold text-gray-800 mb-2">Descripción completa</h4><p class="text-gray-700 leading-relaxed">${descripcionCorta || 'Sin descripción disponible.'}</p></div>${componentes.length > 0 ? `<div><h4 class="text-lg font-semibold text-gray-800 mb-2">📦 Componentes incluidos</h4><div class="bg-blue-50 rounded-lg p-4 max-h-60 overflow-y-auto"><div class="grid grid-cols-1 md:grid-cols-2 gap-2">${componentes.map(comp => `<div class="flex items-start"><span class="text-blue-500 mr-2 mt-1">•</span><span class="text-gray-700 text-sm">${comp}</span></div>`).join('')}</div></div></div>` : ''}${producto.especificaciones && producto.especificaciones.length > 0 ? `<div><h4 class="text-lg font-semibold text-gray-800 mb-2">✨ Características técnicas</h4><ul class="space-y-2">${producto.especificaciones.map(spec => `<li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span class="text-gray-700">${spec}</span></li>`).join('')}</ul></div>` : ''}<div class="pt-4 border-t"><h4 class="text-lg font-semibold text-gray-800 mb-2">Precio</h4><p class="text-3xl font-bold text-green-600">${producto.precio || 'Consultar'}</p></div>${producto.documentos && producto.documentos.length > 0 ? `<div><h4 class="text-lg font-semibold text-gray-800 mb-2">📄 Documentos disponibles</h4><div class="space-y-2">${producto.documentos.map(doc => `<a href="${doc.archivo}" target="_blank" class="flex items-center text-blue-600 hover:text-blue-800 hover:underline"><i class="fas fa-file-download mr-2"></i>${doc.nombre}</a>`).join('')}</div></div>` : ''}</div></div></div><div class="border-t p-6 bg-gray-50"><div class="flex flex-col sm:flex-row gap-3"><button onclick="cerrarModalKitDetalle()" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition flex-1"><i class="fas fa-times mr-2"></i>Cerrar</button><a href="https://wa.me/595972292392?text=${encodeURIComponent('¡Hola! Quiero información sobre: ' + producto.nombre)}" target="_blank" class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition flex-1 text-center"><i class="fab fa-whatsapp mr-2"></i>Consultar por WhatsApp</a></div></div></div></div><div id="modal-zoom-detalle" class="hidden fixed inset-0 bg-black bg-opacity-90 z-[60] flex items-center justify-center p-4" onclick="cerrarZoomDetalle()"><div class="relative max-w-4xl w-full"><img id="imagen-zoom-detalle" src="" alt="Zoom" class="w-full h-auto max-h-[80vh] object-contain"><button onclick="cerrarZoomDetalle()" class="absolute top-4 right-4 text-white text-3xl bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center">×</button></div></div>`;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-        productoDetalleActual = { producto: producto, imagenIndex: 0, totalImagenes: producto.img ? producto.img.length : 0 };
-        if (producto.img && producto.img.length > 1) setTimeout(() => actualizarMiniaturasActivas(), 100);
-        document.body.style.overflow = 'hidden';
+   function mostrarModalKitProducto(kitId, productoIndex) {
+    const kitIndex = kitId - 1;
+    const productos = productosKits[kitIndex];
+    if (!productos || !productos[productoIndex]) return;
+    
+    const producto = productos[productoIndex];
+    
+    // ============================================
+    // Procesar descripción para separar introducción de componentes
+    // ============================================
+    let descripcionIntro = '';
+    let componentesLista = [];
+    
+    if (producto.desc) {
+        const descripcion = producto.desc;
+        const keywords = ['componentes incluidos:', 'como:', 'incluye:', 'contiene:'];
+        let idxInicio = -1;
+        
+        for (const kw of keywords) {
+            const idx = descripcion.toLowerCase().indexOf(kw);
+            if (idx !== -1) {
+                idxInicio = idx;
+                break;
+            }
+        }
+        
+        if (idxInicio !== -1) {
+            descripcionIntro = descripcion.substring(0, idxInicio).trim();
+            if (!descripcionIntro) descripcionIntro = 'Sin descripción disponible.';
+            
+            const parteComponentes = descripcion.substring(idxInicio).trim();
+            const lineas = parteComponentes.split(/[-–—•*]\s*|\d+\.\s*/);
+            for (let linea of lineas) {
+                linea = linea.trim();
+                if (linea.length > 2 && linea.length < 100 && !linea.toLowerCase().includes('componentes') && !linea.toLowerCase().includes('como:')) {
+                    componentesLista.push(linea);
+                }
+            }
+        } else {
+            descripcionIntro = descripcion;
+        }
     }
+    
+    // ============================================
+    // Especificaciones con fondo celeste
+    // ============================================
+    let especificacionesHTML = '';
+    if (producto.especificaciones && producto.especificaciones.length > 0) {
+        especificacionesHTML = `
+        <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h4 class="font-semibold text-blue-800 text-base flex items-center gap-2 mb-3">
+                <i class="fas fa-microchip"></i> Características técnicas
+            </h4>
+            <div class="space-y-2">
+                ${producto.especificaciones.map(spec => `
+                    <div class="flex items-start gap-2 text-sm">
+                        <span class="text-green-500 mt-0.5">✓</span>
+                        <span class="text-gray-700">${spec}</span>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        `;
+    }
+    
+    // ============================================
+    // Documentos disponibles (MANUALES desde Supabase)
+    // ============================================
+    let documentosHTML = '';
+    if (producto.documentos && producto.documentos.length > 0) {
+        documentosHTML = `
+        <div>
+            <h4 class="text-lg font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                <i class="fas fa-file-download text-blue-500"></i> Documentos disponibles
+            </h4>
+            <div class="space-y-2">
+                ${producto.documentos.map(doc => `
+                    <a href="${doc.archivo}" target="_blank" 
+                       class="flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline p-2 bg-blue-50 rounded-lg transition">
+                        <i class="fas ${doc.archivo.includes('.pdf') ? 'fa-file-pdf' : 'fa-file-download'}"></i>
+                        <span class="text-sm">${doc.nombre}</span>
+                        <i class="fas fa-external-link-alt text-xs ml-auto"></i>
+                    </a>
+                `).join('')}
+            </div>
+        </div>
+        `;
+    }
+    
+    // ============================================
+    // Generar el HTML del modal
+    // ============================================
+    const modalHTML = `
+<div class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 modal-kit-detalle">
+    <div class="absolute inset-0" onclick="cerrarModalKitDetalle()"></div>
+    
+    <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col relative z-10">
+        
+        <!-- HEADER -->
+        <div class="flex justify-between items-center p-6 border-b">
+            <h3 class="text-2xl font-bold text-gray-800">${producto.nombre}</h3>
+            <button onclick="cerrarModalKitDetalle()" class="text-gray-500 hover:text-gray-700 text-2xl p-2 hover:bg-gray-100 rounded-full transition">×</button>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL - 2 COLUMNAS -->
+        <div class="flex-1 overflow-y-auto p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- COLUMNA IZQUIERDA: CARRUSEL -->
+                <div class="space-y-4">
+                    <div class="relative bg-gray-100 rounded-xl overflow-hidden" style="height: 350px;">
+                        <img id="imagen-principal-detalle" src="${producto.img && producto.img[0] ? producto.img[0] : 'png/placeholder.png'}" alt="${producto.nombre}" class="w-full h-full object-contain p-4 cursor-zoom-in" onclick="ampliarImagenDetalle(this.src)">
+                        ${producto.img && producto.img.length > 1 ? `
+                        <button onclick="event.stopPropagation(); cambiarImagenDetalle(-1)" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20">←</button>
+                        <button onclick="event.stopPropagation(); cambiarImagenDetalle(1)" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-20">→</button>
+                        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-full text-sm"><span id="contador-imagen-detalle">1</span> / <span id="total-imagenes-detalle">${producto.img.length}</span></div>
+                        ` : ''}
+                    </div>
+                    ${producto.img && producto.img.length > 1 ? `
+                    <div id="miniaturas-detalle" class="flex gap-2 overflow-x-auto py-2">
+                        ${producto.img.map((imgSrc, imgIndex) => `<img src="${imgSrc}" alt="Miniatura ${imgIndex + 1}" class="w-20 h-20 object-cover rounded-lg border-2 ${imgIndex === 0 ? 'border-blue-500' : 'border-transparent hover:border-blue-300'} cursor-pointer transition-all" onclick="event.stopPropagation(); seleccionarImagenDetalle(${imgIndex})">`).join('')}
+                    </div>
+                    ` : ''}
+                </div>
+                
+                <!-- COLUMNA DERECHA: INFORMACIÓN -->
+                <div class="space-y-5">
+                    <!-- Descripción introductoria -->
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 flex items-center gap-2"><i class="fas fa-align-left text-blue-500"></i> Descripción completa</h4>
+                        <p class="text-gray-700 leading-relaxed">${descripcionIntro || 'Sin descripción disponible.'}</p>
+                    </div>
+                    
+                    <!-- Componentes incluidos -->
+                    ${componentesLista.length > 0 ? `
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 flex items-center gap-2"><i class="fas fa-box-open text-green-500"></i> Componentes incluidos</h4>
+                        <div class="bg-gray-50 rounded-lg p-4 max-h-48 overflow-y-auto">
+                            <ul class="space-y-1">
+                                ${componentesLista.map(comp => `<li class="flex items-start gap-2 text-sm"><span class="text-green-500 mt-0.5">•</span><span class="text-gray-700">${comp}</span></li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    ` : ''}
+                    
+                    <!-- Especificaciones técnicas -->
+                    ${especificacionesHTML}
+                    
+                    <!-- DOCUMENTOS (MANUALES) -->
+                    ${documentosHTML}
+                    
+                    <!-- Precio -->
+                    <div class="pt-2">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">💰 Precio</h4>
+                        <p class="text-3xl font-bold text-green-600">${producto.precio || 'Consultar'}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FOOTER CON 3 BOTONES -->
+        <div class="border-t p-6 bg-gray-50">
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="cerrarModalKitDetalle()" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold transition flex-1">
+                    <i class="fas fa-times mr-2"></i>Cerrar
+                </button>
+                <button onclick="agregarAlCarritoSupabase(${producto.id || 0}, '${producto.nombre.replace(/'/g, "\\'")}', ${producto.precioNum || 0}, '${producto.img?.[0] || ''}'); cerrarModalKitDetalle();" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition flex-1 text-center">
+                    <i class="fas fa-cart-plus mr-2"></i>Agregar al carrito
+                </button>
+                <a href="https://wa.me/595972292392?text=${encodeURIComponent('¡Hola! Quiero información sobre: ' + producto.nombre + ' - ' + (producto.precio || 'Kit Innovakit'))}" target="_blank" class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold transition flex-1 text-center">
+                    <i class="fab fa-whatsapp mr-2"></i>Consultar por WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-zoom-detalle" class="hidden fixed inset-0 bg-black bg-opacity-90 z-[60] flex items-center justify-center p-4" onclick="cerrarZoomDetalle()">
+    <div class="relative max-w-4xl w-full"><img id="imagen-zoom-detalle" src="" alt="Zoom" class="w-full h-auto max-h-[80vh] object-contain"><button onclick="cerrarZoomDetalle()" class="absolute top-4 right-4 text-white text-3xl bg-black/50 hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center">×</button></div>
+</div>`;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    productoDetalleActual = { producto: producto, imagenIndex: 0, totalImagenes: producto.img ? producto.img.length : 0 };
+    if (producto.img && producto.img.length > 1) setTimeout(() => actualizarMiniaturasActivas(), 100);
+    document.body.style.overflow = 'hidden';
+}
     
     function obtenerDescripcionSinComponentes(descripcion) { if (!descripcion) return ''; const idxComponentes = descripcion.toLowerCase().indexOf('como:'); return idxComponentes !== -1 ? descripcion.substring(0, idxComponentes + 5).trim() : descripcion; }
     function obtenerComponentesDeDescripcion(descripcion) { if (!descripcion) return []; const componentes = []; const idxComo = descripcion.toLowerCase().indexOf('como:'); if (idxComo === -1) return []; const seccionComponentes = descripcion.substring(idxComo + 5).trim(); const separadores = /[-–—•]|\d+\./; const partes = seccionComponentes.split(separadores); partes.forEach(parte => { const componente = parte.replace(/^[\s:;,.]*/, '').replace(/[\s:;,.]*$/, '').trim(); if (componente && componente.length > 2 && !componente.match(/^\d+$/)) componentes.push(componente); }); return componentes; }
