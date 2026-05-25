@@ -34,6 +34,18 @@
         .badge-pending { background: #fef3c7; color: #d97706; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
         .badge-approved { background: #d1fae5; color: #059669; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
         .badge-pendiente { background: #fed7aa; color: #c2410c; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
+        
+        /* Estilos para documentos */
+        .doc-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+        }
+        .doc-item input {
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -135,9 +147,9 @@
         </div>
     </div>
     
-    <!-- Modal para producto -->
+    <!-- Modal para producto (MEJORADO) -->
     <div id="modal-producto" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 id="modal-titulo" class="text-2xl font-bold">Agregar Producto</h3>
@@ -152,7 +164,31 @@
                         <div><label class="block text-sm font-semibold mb-1">Categoría</label><input type="text" id="prod-categoria" class="w-full"></div>
                     </div>
                     <div class="mb-4"><label class="block text-sm font-semibold mb-1">Imagen principal</label><input type="text" id="prod-imagen" placeholder="comp/producto.webp" class="w-full"></div>
-                    <div class="mb-4"><label class="block text-sm font-semibold mb-1">Especificaciones (una por línea)</label><textarea id="prod-especificaciones" rows="5" class="w-full"></textarea></div>
+                    
+                    <!-- Especificaciones (Características técnicas) -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-1">Especificaciones (una por línea)</label>
+                        <textarea id="prod-especificaciones" rows="4" class="w-full"></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Ej: "Compatible con Arduino UNO R3", "Incluye manual completo"</p>
+                    </div>
+                    
+                    <!-- Componentes incluidos (solo para productos de kit) -->
+                    <div id="componentes-container" style="display:none;" class="mb-4">
+                        <label class="block text-sm font-semibold mb-1">Componentes incluidos (uno por línea)</label>
+                        <textarea id="prod-componentes" rows="6" class="w-full"></textarea>
+                        <p class="text-xs text-gray-500 mt-1">Cada línea será un componente individual (ej: "Sensor de temperatura DS18B20")</p>
+                    </div>
+                    
+                    <!-- Documentos (Manuales) -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-1">Documentos / Manuales</label>
+                        <div id="documentos-lista-admin" class="space-y-2 mb-2"></div>
+                        <button type="button" onclick="agregarCampoDocumento()" class="text-blue-600 text-sm hover:text-blue-800">
+                            <i class="fas fa-plus"></i> Agregar manual
+                        </button>
+                        <p class="text-xs text-gray-500 mt-1">Cada manual tendrá un nombre y un enlace (Google Drive)</p>
+                    </div>
+                    
                     <div class="mb-4"><label class="flex items-center gap-2"><input type="checkbox" id="prod-stock" checked> <span class="text-sm font-semibold">Producto disponible</span></label></div>
                     <div class="mb-4"><label class="block text-sm font-semibold mb-1">Tipo</label><select id="prod-tipo" class="w-full"><option value="componente">Componente suelto</option><option value="kit">Producto de kit</option></select></div>
                     <div class="mb-4" id="kit-id-container" style="display:none;"><label class="block text-sm font-semibold mb-1">Kit ID</label><select id="prod-kit-id" class="w-full"><option value="1">Kit 1 - Electrónica Básico</option><option value="2">Kit 2 - Electrónica Make</option><option value="3">Kit 3 - Robótica Acebott</option></select></div>
@@ -190,13 +226,69 @@
         let usuarioAdmin = null;
         let productos = [];
         let kits = [];
+        let documentosTemp = []; // Para almacenar documentos temporalmente en el modal
         
         // Mostrar/ocultar campo kit_id según tipo
         document.getElementById('prod-tipo')?.addEventListener('change', function() {
             const container = document.getElementById('kit-id-container');
-            if (this.value === 'kit') container.style.display = 'block';
-            else container.style.display = 'none';
+            const componentesContainer = document.getElementById('componentes-container');
+            if (this.value === 'kit') {
+                container.style.display = 'block';
+                componentesContainer.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+                componentesContainer.style.display = 'none';
+            }
         });
+        
+        // ============================================
+        // FUNCIONES PARA DOCUMENTOS (MANUALES)
+        // ============================================
+        function agregarCampoDocumento(nombre = '', archivo = '') {
+            const index = documentosTemp.length;
+            documentosTemp.push({ index, nombre, archivo });
+            
+            const html = `
+                <div id="doc-${index}" class="doc-item">
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <input type="text" placeholder="Nombre del manual" value="${nombre.replace(/"/g, '&quot;')}" 
+                               onchange="actualizarDocumento(${index}, 'nombre', this.value)" class="w-full">
+                        <input type="text" placeholder="URL del archivo (Google Drive)" value="${archivo.replace(/"/g, '&quot;')}" 
+                               onchange="actualizarDocumento(${index}, 'archivo', this.value)" class="w-full">
+                    </div>
+                    <button type="button" onclick="eliminarDocumento(${index})" class="text-red-500 text-sm">
+                        <i class="fas fa-trash"></i> Eliminar manual
+                    </button>
+                </div>
+            `;
+            document.getElementById('documentos-lista-admin').insertAdjacentHTML('beforeend', html);
+        }
+        
+        function actualizarDocumento(index, campo, valor) {
+            const doc = documentosTemp.find(d => d.index === index);
+            if (doc) {
+                doc[campo] = valor;
+            }
+        }
+        
+        function eliminarDocumento(index) {
+            document.getElementById(`doc-${index}`)?.remove();
+            documentosTemp = documentosTemp.filter(d => d.index !== index);
+        }
+        
+        function limpiarDocumentos() {
+            documentosTemp = [];
+            document.getElementById('documentos-lista-admin').innerHTML = '';
+        }
+        
+        function cargarDocumentosAlModal(documentos) {
+            limpiarDocumentos();
+            if (documentos && documentos.length > 0) {
+                documentos.forEach(doc => {
+                    agregarCampoDocumento(doc.nombre || '', doc.archivo || '');
+                });
+            }
+        }
         
         // ============================================
         // LOGIN ADMIN
@@ -259,25 +351,25 @@
             const { count: kitsCount } = await supabaseAdmin.from('kits').select('*', { count: 'exact', head: true });
             const { count: pedidosCount } = await supabaseAdmin.from('pedidos').select('*', { count: 'exact', head: true });
             const { count: reviewsPendientes } = await supabaseAdmin.from('reviews').select('*', { count: 'exact', head: true }).eq('aprobada', false);
-             const { count: pedidosCancelados } = await supabaseAdmin.from('pedidos').select('*', { count: 'exact', head: true }).eq('estado', 'cancelado');
+            const { count: pedidosCancelados } = await supabaseAdmin.from('pedidos').select('*', { count: 'exact', head: true }).eq('estado', 'cancelado');
             const { count: usuariosCount } = await supabaseAdmin.from('perfiles').select('*', { count: 'exact', head: true });
             
             document.getElementById('contenido-principal').innerHTML = `
-    <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
-    <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
-        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-microchip text-3xl text-blue-600"></i><p class="text-2xl font-bold mt-2">${productosCount || 0}</p><p class="text-gray-600">Productos</p></div>
-        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-box text-3xl text-green-600"></i><p class="text-2xl font-bold mt-2">${kitsCount || 0}</p><p class="text-gray-600">Kits</p></div>
-        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-shopping-cart text-3xl text-orange-600"></i><p class="text-2xl font-bold mt-2">${pedidosCount || 0}</p><p class="text-gray-600">Pedidos totales</p></div>
-        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-check-circle text-3xl text-green-500"></i><p class="text-2xl font-bold mt-2">${(pedidosCount || 0) - (pedidosCancelados || 0)}</p><p class="text-gray-600">Pedidos activos</p></div>
-        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-ban text-3xl text-red-600"></i><p class="text-2xl font-bold mt-2">${pedidosCancelados || 0}</p><p class="text-gray-600">Pedidos cancelados</p></div>
-        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-star text-3xl text-yellow-500"></i><p class="text-2xl font-bold mt-2">${reviewsPendientes || 0}</p><p class="text-gray-600">Reviews pendientes</p></div>
-        <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-users text-3xl text-purple-600"></i><p class="text-2xl font-bold mt-2">${usuariosCount || 0}</p><p class="text-gray-600">Usuarios</p></div>
-    </div>
-`;
+                <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
+                <div class="grid grid-cols-1 md:grid-cols-7 gap-6">
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-microchip text-3xl text-blue-600"></i><p class="text-2xl font-bold mt-2">${productosCount || 0}</p><p class="text-gray-600">Productos</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-box text-3xl text-green-600"></i><p class="text-2xl font-bold mt-2">${kitsCount || 0}</p><p class="text-gray-600">Kits</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-shopping-cart text-3xl text-orange-600"></i><p class="text-2xl font-bold mt-2">${pedidosCount || 0}</p><p class="text-gray-600">Pedidos totales</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-check-circle text-3xl text-green-500"></i><p class="text-2xl font-bold mt-2">${(pedidosCount || 0) - (pedidosCancelados || 0)}</p><p class="text-gray-600">Pedidos activos</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-ban text-3xl text-red-600"></i><p class="text-2xl font-bold mt-2">${pedidosCancelados || 0}</p><p class="text-gray-600">Pedidos cancelados</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-star text-3xl text-yellow-500"></i><p class="text-2xl font-bold mt-2">${reviewsPendientes || 0}</p><p class="text-gray-600">Reviews pendientes</p></div>
+                    <div class="card bg-white p-6 rounded-xl shadow"><i class="fas fa-users text-3xl text-purple-600"></i><p class="text-2xl font-bold mt-2">${usuariosCount || 0}</p><p class="text-gray-600">Usuarios</p></div>
+                </div>
+            `;
         }
         
         // ============================================
-        // PRODUCTOS
+        // PRODUCTOS (MEJORADO)
         // ============================================
         async function cargarProductos() {
             activarNav('productos');
@@ -286,8 +378,8 @@
             
             document.getElementById('contenido-principal').innerHTML = `
                 <div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold">Productos</h2><button onclick="abrirModalProducto()" class="btn-primary"><i class="fas fa-plus"></i> Nuevo producto</button></div>
-                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="text-left p-3">ID</th><th class="text-left p-3">Nombre</th><th class="text-left p-3">Precio</th><th class="text-left p-3">Stock</th><th class="text-left p-3">Tipo</th><th class="text-left p-3">Acciones</th></tr></thead><tbody>
-                    ${productos.map(p => `<tr class="border-b hover:bg-gray-50"><td class="p-3">${p.id}</td><td class="p-3">${p.nombre}</td><td class="p-3 text-green-600">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '<span class="text-green-600">✔</span>' : '<span class="text-red-600">✖</span>'}</td><td class="p-3">${p.kit_id ? `Kit ${p.kit_id}` : 'Componente'}</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button><button onclick="eliminarProducto(${p.id})" class="text-red-600"><i class="fas fa-trash"></i></button></td></tr>`).join('')}
+                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="text-left p-3">ID</th><th class="text-left p-3">Nombre</th><th class="text-left p-3">Precio</th><th class="text-left p-3">Stock</th><th class="text-left p-3">Tipo</th><th class="text-left p-3">Componentes</th><th class="text-left p-3">Acciones</th></tr></thead><tbody>
+                    ${productos.map(p => `<tr class="border-b hover:bg-gray-50"><td class="p-3">${p.id}</td><td class="p-3">${p.nombre}</td><td class="p-3 text-green-600">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '<span class="text-green-600">✔</span>' : '<span class="text-red-600">✖</span>'}</td><td class="p-3">${p.kit_id ? `Kit ${p.kit_id}` : 'Componente'}</td><td class="p-3">${p.componentes_lista?.length || 0} comp.</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600 mr-2"><i class="fas fa-edit"></i></button><button onclick="eliminarProducto(${p.id})" class="text-red-600"><i class="fas fa-trash"></i></button></td></tr>`).join('')}
                 </tbody>追赶</div></div>
             `;
         }
@@ -301,10 +393,25 @@
             document.getElementById('prod-categoria').value = producto?.categoria || '';
             document.getElementById('prod-imagen').value = producto?.imagen_principal || '';
             document.getElementById('prod-especificaciones').value = (producto?.especificaciones || []).join('\n');
+            document.getElementById('prod-componentes').value = (producto?.componentes_lista || []).join('\n');
             document.getElementById('prod-stock').checked = producto?.stock !== false;
             document.getElementById('prod-tipo').value = producto?.kit_id ? 'kit' : 'componente';
             if (producto?.kit_id) document.getElementById('prod-kit-id').value = producto.kit_id;
-            document.getElementById('kit-id-container').style.display = producto?.kit_id ? 'block' : 'none';
+            
+            // Mostrar/ocultar campos según tipo
+            const kitIdContainer = document.getElementById('kit-id-container');
+            const componentesContainer = document.getElementById('componentes-container');
+            if (producto?.kit_id) {
+                kitIdContainer.style.display = 'block';
+                componentesContainer.style.display = 'block';
+            } else {
+                kitIdContainer.style.display = 'none';
+                componentesContainer.style.display = 'none';
+            }
+            
+            // Cargar documentos
+            cargarDocumentosAlModal(producto?.documentos || []);
+            
             document.getElementById('modal-producto').classList.remove('hidden');
             document.getElementById('modal-producto').style.display = 'flex';
         }
@@ -313,12 +420,19 @@
             document.getElementById('modal-producto').classList.add('hidden');
             document.getElementById('modal-producto').style.display = 'none';
             document.getElementById('form-producto').reset();
+            limpiarDocumentos();
         }
         
         document.getElementById('form-producto').addEventListener('submit', async (e) => {
             e.preventDefault();
             const id = document.getElementById('producto-id').value;
             const tipo = document.getElementById('prod-tipo').value;
+            
+            // Procesar documentos
+            const documentos = documentosTemp
+                .filter(d => d.nombre && d.nombre.trim() && d.archivo && d.archivo.trim())
+                .map(d => ({ nombre: d.nombre.trim(), archivo: d.archivo.trim() }));
+            
             const data = {
                 nombre: document.getElementById('prod-nombre').value,
                 descripcion: document.getElementById('prod-descripcion').value,
@@ -326,12 +440,16 @@
                 categoria: document.getElementById('prod-categoria').value,
                 imagen_principal: document.getElementById('prod-imagen').value,
                 especificaciones: document.getElementById('prod-especificaciones').value.split('\n').filter(s => s.trim()),
+                componentes_lista: document.getElementById('prod-componentes').value.split('\n').filter(s => s.trim()),
+                documentos: documentos,
                 stock: document.getElementById('prod-stock').checked,
                 activo: true,
                 kit_id: tipo === 'kit' ? parseInt(document.getElementById('prod-kit-id').value) : null
             };
+            
             if (id) await supabaseAdmin.from('productos').update(data).eq('id', id);
             else await supabaseAdmin.from('productos').insert([data]);
+            
             cerrarModalProducto();
             cargarProductos();
         });
@@ -406,8 +524,8 @@
             const { data } = await supabaseAdmin.from('productos').select('*').eq('kit_id', kitId).eq('activo', true);
             document.getElementById('contenido-principal').innerHTML = `
                 <div class="flex items-center gap-4 mb-6"><button onclick="cargarKits()" class="text-blue-600"><i class="fas fa-arrow-left"></i> Volver</button><h2 class="text-3xl font-bold">Productos del Kit ${kitId}</h2></div>
-                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="p-3">Nombre</th><th class="p-3">Precio</th><th class="p-3">Stock</th><th class="p-3">Acciones</th></tr></thead><tbody>
-                    ${data?.map(p => `<tr class="border-b"><td class="p-3">${p.nombre}</td><td class="p-3">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '✔' : '✖'}</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600"><i class="fas fa-edit"></i></button></td></tr>`).join('') || '<tr><td colspan="4" class="text-center p-8">No hay productos en este kit</td></tr>'}
+                <div class="bg-white rounded-xl shadow overflow-hidden"><div class="overflow-x-auto"><table class="w-full"><thead class="bg-gray-50 border-b"><tr><th class="p-3">Nombre</th><th class="p-3">Precio</th><th class="p-3">Stock</th><th class="p-3">Componentes</th><th class="p-3">Acciones</th></tr></thead><tbody>
+                    ${data?.map(p => `<tr class="border-b"><td class="p-3">${p.nombre}</td><td class="p-3">${p.precio.toLocaleString()} Gs.</td><td class="p-3">${p.stock ? '✔' : '✖'}</td><td class="p-3">${p.componentes_lista?.length || 0} comp.</td><td class="p-3"><button onclick="editarProducto(${p.id})" class="text-blue-600"><i class="fas fa-edit"></i></button></td></tr>`).join('') || '<tr><td colspan="5" class="text-center p-8">No hay productos en este kit</td></tr>'}
                 </tbody></table></div></div>
             `;
         }
