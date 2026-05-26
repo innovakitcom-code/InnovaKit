@@ -785,27 +785,56 @@
         } catch (error) { console.error('Error cargando productos:', error); mostrarNotificacion('Error cargando productos', 'error'); }
     }
     
-    async function cargarKitsSupabase() {
-        try {
-            console.log('🔄 Cargando productos de kits desde Supabase...');
-            for (let kitId = 1; kitId <= 3; kitId++) {
-                const { data, error } = await supabaseClient.from('productos').select('*').eq('kit_id', kitId).eq('activo', true);
-                if (error) throw error;
-                productosKits[kitId - 1] = data.map(p => ({
-                    id: p.id,
-                    img: p.imagenes || [p.imagen_principal], 
-                    nombre: p.nombre, 
-                    desc: p.descripcion,
-                    precio: `${p.precio.toLocaleString()} Gs.`, 
-                    precioNum: p.precio, 
-                    componentes_lista: p.componentes_lista || [],
-                    documentos: p.documentos || [], 
-                    especificaciones: p.especificaciones || []
-                }));
+async function cargarProductosSupabase() {
+    try {
+        console.log('🔄 Cargando productos desde Supabase...');
+        const { data, error } = await supabaseClient
+            .from('productos')
+            .select('*')
+            .eq('activo', true)
+            .order('id');
+        
+        if (error) throw error;
+        
+        // ✅ Crear un Map para eliminar duplicados por nombre (case insensitive)
+        const productosUnicos = new Map();
+        
+        data.forEach(prod => {
+            const nombreKey = prod.nombre.trim().toLowerCase();
+            // Si ya existe un producto con este nombre, comparar por ID (guardar el más antiguo o el que tenga stock)
+            if (!productosUnicos.has(nombreKey)) {
+                productosUnicos.set(nombreKey, prod);
+            } else {
+                console.warn(`⚠️ Producto duplicado detectado: "${prod.nombre}" (ID: ${prod.id}) - Será ignorado`);
             }
-            console.log(`✅ Kits cargados: Kit1: ${productosKits[0].length}, Kit2: ${productosKits[1].length}, Kit3: ${productosKits[2].length}`);
-        } catch (error) { console.error('Error cargando kits:', error); }
+        });
+        
+        const productosSinDuplicados = Array.from(productosUnicos.values());
+        
+        componentesSueltos = productosSinDuplicados.map(comp => ({
+            id: comp.id,
+            nombre: comp.nombre,
+            categoria: comp.categoria,
+            precio: `${comp.precio.toLocaleString()} Gs.`,
+            precioNum: comp.precio,
+            imagen: comp.imagen_principal || 'img/placeholder.png',
+            imagenes: comp.imagenes || [comp.imagen_principal || 'img/placeholder.png'],
+            descripcion: comp.descripcion || 'Sin descripción',
+            stock: comp.stock ? 'disponible' : 'sin stock',
+            especificaciones: comp.especificaciones || []
+        }));
+        
+        const duplicadosEliminados = data.length - productosSinDuplicados.length;
+        console.log(`✅ Cargados ${componentesSueltos.length} productos únicos (${duplicadosEliminados} duplicados eliminados)`);
+        
+        if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) {
+            renderizarComponentesSueltos();
+        }
+    } catch (error) {
+        console.error('Error cargando productos:', error);
+        mostrarNotificacion('Error cargando productos', 'error');
     }
+}
     
     function renderizarComponentesSueltos() {
         const grid = document.getElementById('grid-componentes');
