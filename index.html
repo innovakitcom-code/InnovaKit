@@ -747,7 +747,7 @@
   <!-- ========================================== -->
   <!-- SCRIPTS -->
   <!-- ========================================== -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js_config.js"></script>
   <script src="js_supabase-auth.js"></script>
@@ -887,20 +887,8 @@ async function cargarProductosSupabase() {
     }
     
     function cambiarPagina(nueva) { paginaActual = nueva; renderizarComponentesSueltos(); document.getElementById('grid-componentes').scrollIntoView({ behavior: 'smooth' }); }
-    function limpiarFiltros() {
-    paginaActual = 1;
-    const input = document.getElementById('buscar-componente');
-    if (input) input.value = '';
-    const precio = document.getElementById('filtro-precio');
-    if (precio) precio.value = 'todos';
-    renderizarComponentesSueltos();
-    mostrarNotificacion('✅ Filtros limpiados');
+    function limpiarFiltros() { paginaActual = 1; const input = document.getElementById('buscar-componente'); if (input) input.value = ''; const precio = document.getElementById('filtro-precio'); if (precio) precio.value = 'todos'; renderizarComponentesSueltos(); mostrarNotificacion('Filtros limpiados ✅'); }
     
-    // ✅ LIMPIAR URL
-    const url = new URL(window.location);
-    url.searchParams.delete('categoria');
-    window.history.pushState({}, '', url);
-}
     function verComponentesSueltos() {
         navegarA('componentes');
         
@@ -1257,10 +1245,6 @@ async function cargarProductosSupabase() {
     function aplicarFiltroCategoria(categoria) {
         console.log('Filtrando por:', categoria);
         mostrarNotificacion(`Filtrando por: ${categoria}`);
-      // ✅ GUARDAR EN URL
-    const url = new URL(window.location);
-    url.searchParams.set('categoria', categoria);
-    window.history.pushState({}, '', url);
         const dropdowns = document.querySelectorAll('.subcategory-panel');
         dropdowns.forEach(panel => { panel.classList.add('opacity-0', 'invisible', 'scale-95'); });
         paginaActual = 1;
@@ -1546,16 +1530,7 @@ async function cargarProductosSupabase() {
         await cargarProductosSupabase();
         await cargarCarritoSupabase();
         cargarTestimoniosReales();
-        / ✅ LEER FILTRO DE URL
-const urlParams = new URLSearchParams(window.location.search);
-const categoriaFiltro = urlParams.get('categoria');
-if (categoriaFiltro) {
-    console.log(`📌 Filtro desde URL: ${categoriaFiltro}`);
-    // Pequeño delay para asegurar que los productos ya están cargados
-    setTimeout(() => {
-        aplicarFiltroCategoria(categoriaFiltro);
-    }, 100);
-}
+        
         const buscar = document.getElementById('buscar-componente');
         if (buscar) { let timeout; buscar.addEventListener('input', () => { clearTimeout(timeout); timeout = setTimeout(() => { paginaActual = 1; renderizarComponentesSueltos(); }, 300); }); }
         const precioFiltro = document.getElementById('filtro-precio');
