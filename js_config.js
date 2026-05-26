@@ -1,22 +1,26 @@
 // ============================================
-// CONFIGURACIÓN DE SUPABASE
-// ⚠️ REEMPLAZA CON TUS DATOS ⚠️
+// CONFIGURACIÓN DE SUPABASE (ofuscada básicamente)
 // ============================================
 
-const SUPABASE_URL = 'https://lvdjczfblanbadikccxo.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_O9oR1xmyeAy1ludJJlo3Rw_2gW9XZ_F';
+// URL ofuscada (base64 simple)
+const _SUPABASE_URL = 'aHR0cHM6Ly9sdmRqY3pmYmxhbmJhZGlrY2N4by5zdXBhYmFzZS5jby8=';
+const _SUPABASE_ANON_KEY = 'c2JfcHVibGlzaGFibGVfTzlvUjF4bXllQXkxbHVkSkpsbzNSd18yZ1c5WFpfRg==';
 
-// ✅ CAMBIA esta línea:
+// Decodificar
+const SUPABASE_URL = atob(_SUPABASE_URL);
+const SUPABASE_ANON_KEY = atob(_SUPABASE_ANON_KEY);
+
+// Crear cliente
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Variables globales
 let usuarioActual = null;
 let productosGlobal = [];
 
-
 // ============================================
 // NOTIFICACIONES
 // ============================================
+
 function mostrarNotificacion(mensaje, tipo = 'success') {
     const notification = document.createElement('div');
     notification.className = `fixed top-20 right-4 z-50 px-5 py-3 rounded-xl shadow-lg text-white font-medium transition-all duration-300 transform translate-x-full ${
@@ -32,10 +36,7 @@ function mostrarNotificacion(mensaje, tipo = 'success') {
     `;
     document.body.appendChild(notification);
     
-    setTimeout(() => {
-        notification.classList.remove('translate-x-full');
-    }, 100);
-    
+    setTimeout(() => notification.classList.remove('translate-x-full'), 100);
     setTimeout(() => {
         notification.classList.add('translate-x-full');
         setTimeout(() => notification.remove(), 300);
