@@ -767,24 +767,7 @@
     // ============================================
     // FUNCIONES DE CARGA DESDE SUPABASE
     // ============================================
-    
-    async function cargarProductosSupabase() {
-        try {
-            console.log('🔄 Cargando productos desde Supabase...');
-            const { data, error } = await supabaseClient.from('productos').select('*').eq('activo', true).order('id');
-            if (error) throw error;
-            componentesSueltos = data.map(comp => ({
-                id: comp.id, nombre: comp.nombre, categoria: comp.categoria, precio: `${comp.precio.toLocaleString()} Gs.`,
-                precioNum: comp.precio, imagen: comp.imagen_principal || 'img/placeholder.png',
-                imagenes: comp.imagenes || [comp.imagen_principal || 'img/placeholder.png'],
-                descripcion: comp.descripcion || 'Sin descripción', stock: comp.stock ? 'disponible' : 'sin stock',
-                especificaciones: comp.especificaciones || []
-            }));
-            console.log(`✅ Cargados ${componentesSueltos.length} productos`);
-            if (!document.getElementById('vista-componentes-sueltos').classList.contains('hidden')) renderizarComponentesSueltos();
-        } catch (error) { console.error('Error cargando productos:', error); mostrarNotificacion('Error cargando productos', 'error'); }
-    }
-    
+
 async function cargarProductosSupabase() {
     try {
         console.log('🔄 Cargando productos desde Supabase...');
