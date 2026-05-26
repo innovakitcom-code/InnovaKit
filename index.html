@@ -975,12 +975,35 @@ async function cargarProductosSupabase() {
     function comprarProductoWhatsApp() { const nombre = document.getElementById('modal-producto-nombre').textContent; const precio = document.getElementById('modal-producto-precio').textContent; window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${nombre} - ${precio}`)}`, '_blank'); toggleModalProducto(); }
     
     function verProductosKit(idx) {
-        navegarA('productoskit', { kitId: idx });
-        
-        const loader = document.getElementById('loader-productoskit');
-        const content = document.getElementById('productoskit-content');
-        
-        const startTime = Date.now();
+    navegarA('productoskit', { kitId: idx });
+    
+    const loader = document.getElementById('loader-productoskit');
+    const content = document.getElementById('productoskit-content');
+    
+    const startTime = Date.now();
+    
+    // ✅ MOSTRAR SKELETON en lugar de loader spinner
+    if (content) {
+        content.innerHTML = `
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                ${Array(6).fill(0).map(() => `
+                    <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
+                        <div class="skeleton-image w-full h-48"></div>
+                        <div class="skeleton-title w-3/4 h-6 mt-4 skeleton-card"></div>
+                        <div class="skeleton-price w-1/2 h-8 mt-3 skeleton-card"></div>
+                        <div class="skeleton-button h-10 w-full mt-4 skeleton-card"></div>
+                        <div class="skeleton-button h-10 w-full mt-2 skeleton-card"></div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        content.style.display = 'block';
+    }
+    
+    if (loader) {
+        loader.classList.add('hidden');
+        loader.style.display = 'none';
+    }
         
         if (loader) {
             loader.classList.remove('hidden');
