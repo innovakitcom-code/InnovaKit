@@ -1245,7 +1245,12 @@ async function cargarProductosSupabase() {
     function aplicarFiltroCategoria(categoria) {
         console.log('Filtrando por:', categoria);
         mostrarNotificacion(`Filtrando por: ${categoria}`);
-        const dropdowns = document.querySelectorAll('.subcategory-panel');
+       // ✅ GUARDAR EN URL
+    const url = new URL(window.location);
+    url.searchParams.set('categoria', categoria);
+    window.history.pushState({}, '', url);
+      
+      const dropdowns = document.querySelectorAll('.subcategory-panel');
         dropdowns.forEach(panel => { panel.classList.add('opacity-0', 'invisible', 'scale-95'); });
         paginaActual = 1;
         const categoriasMap = { 'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20'], 'Humedad': ['humedad', 'dht11', 'dht22'], 'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio'], 'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible'], 'Servo Motores': ['servo', 'sg90'], 'Stepper': ['stepper', 'paso a paso'], 'DC Motors': ['motor dc', 'motor corriente continua'], 'LCD 16x2': ['lcd', '16x2', 'pantalla lcd'], 'Matriz LED': ['matriz led', 'max7219', '8x8'], 'OLED': ['oled', 'pantalla oled', 'display oled'], 'Módulos': ['módulo', 'module', 'shield'], 'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266'], 'Raspberry Pi': ['raspberry', 'pi', 'rpi'], 'Sensores': ['sensor', 'detector', 'medidor'], 'Motores': ['motor', 'servo', 'stepper'], 'Displays': ['display', 'pantalla', 'lcd', 'oled', 'led'] };
