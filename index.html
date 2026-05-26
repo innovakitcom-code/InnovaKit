@@ -902,47 +902,53 @@ async function cargarProductosSupabase() {
     window.history.pushState({}, '', url);
 }
     function verComponentesSueltos() {
-        navegarA('componentes');
-        
-        const loader = document.getElementById('loader-componentes');
-        const container = document.getElementById('componentes-container');
-        const grid = document.getElementById('grid-componentes');
-        
-        const startTime = Date.now();
-        
-        if (loader) {
-            loader.classList.remove('hidden');
-            loader.style.display = 'flex';
-        }
-        if (container) {
-            container.style.display = 'none';
-        }
-        if (grid) {
-            grid.innerHTML = '';
-        }
-        
-        if (typeof renderizarComponentesSueltos === 'function') {
-            renderizarComponentesSueltos();
-        }
-        
-        const minDisplayTime = 1500;
-        setTimeout(() => {
-            const elapsed = Date.now() - startTime;
-            const remainingTime = Math.max(0, minDisplayTime - elapsed);
-            setTimeout(() => {
-                if (loader) {
-                    loader.classList.add('hidden');
-                    loader.style.display = 'none';
-                }
-                if (container) {
-                    container.style.display = 'block';
-                }
-            }, remainingTime);
-        }, 10);
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    navegarA('componentes');
+    
+    const loader = document.getElementById('loader-componentes');
+    const container = document.getElementById('componentes-container');
+    const grid = document.getElementById('grid-componentes');
+    
+    const startTime = Date.now();
+    
+    // ✅ MOSTRAR SKELETON CARDS en lugar de texto genérico
+    if (grid) {
+        grid.innerHTML = Array(8).fill(0).map(() => `
+            <div class="bg-white rounded-lg shadow-sm border p-3 flex flex-col h-full">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-title skeleton-card"></div>
+                <div class="skeleton-price skeleton-card mt-2"></div>
+                <div class="skeleton-button skeleton-card mt-3"></div>
+            </div>
+        `).join('');
     }
     
+    if (loader) {
+        loader.classList.add('hidden');
+        loader.style.display = 'none';
+    }
+    if (container) {
+        container.style.display = 'none';
+    }
+    
+    if (typeof renderizarComponentesSueltos === 'function') {
+        setTimeout(() => {
+            renderizarComponentesSueltos();
+        }, 100);
+    }
+    
+    const minDisplayTime = 800; // Reducido de 1500 a 800ms
+    setTimeout(() => {
+        const elapsed = Date.now() - startTime;
+        const remainingTime = Math.max(0, minDisplayTime - elapsed);
+        setTimeout(() => {
+            if (container) {
+                container.style.display = 'block';
+            }
+        }, remainingTime);
+    }, 10);
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}    
     function mostrarModalProducto(id) {
         const producto = componentesSueltos.find(c => c.id === id);
         if (!producto) { mostrarNotificacion('Producto no encontrado', 'error'); return; }
