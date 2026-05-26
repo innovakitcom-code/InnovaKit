@@ -887,68 +887,50 @@ async function cargarProductosSupabase() {
     }
     
     function cambiarPagina(nueva) { paginaActual = nueva; renderizarComponentesSueltos(); document.getElementById('grid-componentes').scrollIntoView({ behavior: 'smooth' }); }
-    function limpiarFiltros() {
-    paginaActual = 1;
-    const input = document.getElementById('buscar-componente');
-    if (input) input.value = '';
-    const precio = document.getElementById('filtro-precio');
-    if (precio) precio.value = 'todos';
-    renderizarComponentesSueltos();
-    mostrarNotificacion('✅ Filtros limpiados');
+    function limpiarFiltros() { paginaActual = 1; const input = document.getElementById('buscar-componente'); if (input) input.value = ''; const precio = document.getElementById('filtro-precio'); if (precio) precio.value = 'todos'; renderizarComponentesSueltos(); mostrarNotificacion('Filtros limpiados ✅'); }
     
-    // ✅ LIMPIAR URL
-    const url = new URL(window.location);
-    url.searchParams.delete('categoria');
-    window.history.pushState({}, '', url);
-}
     function verComponentesSueltos() {
-    navegarA('componentes');
-    
-    const loader = document.getElementById('loader-componentes');
-    const container = document.getElementById('componentes-container');
-    const grid = document.getElementById('grid-componentes');
-    
-    const startTime = Date.now();
-    
-    // ✅ MOSTRAR SKELETON CARDS en lugar de texto genérico
-    if (grid) {
-        grid.innerHTML = Array(8).fill(0).map(() => `
-            <div class="bg-white rounded-lg shadow-sm border p-3 flex flex-col h-full">
-                <div class="skeleton-image"></div>
-                <div class="skeleton-title skeleton-card"></div>
-                <div class="skeleton-price skeleton-card mt-2"></div>
-                <div class="skeleton-button skeleton-card mt-3"></div>
-            </div>
-        `).join('');
-    }
-    
-    if (loader) {
-        loader.classList.add('hidden');
-        loader.style.display = 'none';
-    }
-    if (container) {
-        container.style.display = 'none';
-    }
-    
-    if (typeof renderizarComponentesSueltos === 'function') {
-        setTimeout(() => {
+        navegarA('componentes');
+        
+        const loader = document.getElementById('loader-componentes');
+        const container = document.getElementById('componentes-container');
+        const grid = document.getElementById('grid-componentes');
+        
+        const startTime = Date.now();
+        
+        if (loader) {
+            loader.classList.remove('hidden');
+            loader.style.display = 'flex';
+        }
+        if (container) {
+            container.style.display = 'none';
+        }
+        if (grid) {
+            grid.innerHTML = '';
+        }
+        
+        if (typeof renderizarComponentesSueltos === 'function') {
             renderizarComponentesSueltos();
-        }, 100);
+        }
+        
+        const minDisplayTime = 1500;
+        setTimeout(() => {
+            const elapsed = Date.now() - startTime;
+            const remainingTime = Math.max(0, minDisplayTime - elapsed);
+            setTimeout(() => {
+                if (loader) {
+                    loader.classList.add('hidden');
+                    loader.style.display = 'none';
+                }
+                if (container) {
+                    container.style.display = 'block';
+                }
+            }, remainingTime);
+        }, 10);
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    const minDisplayTime = 800; // Reducido de 1500 a 800ms
-    setTimeout(() => {
-        const elapsed = Date.now() - startTime;
-        const remainingTime = Math.max(0, minDisplayTime - elapsed);
-        setTimeout(() => {
-            if (container) {
-                container.style.display = 'block';
-            }
-        }, remainingTime);
-    }, 10);
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}    
     function mostrarModalProducto(id) {
         const producto = componentesSueltos.find(c => c.id === id);
         if (!producto) { mostrarNotificacion('Producto no encontrado', 'error'); return; }
@@ -975,35 +957,12 @@ async function cargarProductosSupabase() {
     function comprarProductoWhatsApp() { const nombre = document.getElementById('modal-producto-nombre').textContent; const precio = document.getElementById('modal-producto-precio').textContent; window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Quiero comprar: ${nombre} - ${precio}`)}`, '_blank'); toggleModalProducto(); }
     
     function verProductosKit(idx) {
-    navegarA('productoskit', { kitId: idx });
-    
-    const loader = document.getElementById('loader-productoskit');
-    const content = document.getElementById('productoskit-content');
-    
-    const startTime = Date.now();
-    
-    // ✅ MOSTRAR SKELETON en lugar de loader spinner
-    if (content) {
-        content.innerHTML = `
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                ${Array(6).fill(0).map(() => `
-                    <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center">
-                        <div class="skeleton-image w-full h-48"></div>
-                        <div class="skeleton-title w-3/4 h-6 mt-4 skeleton-card"></div>
-                        <div class="skeleton-price w-1/2 h-8 mt-3 skeleton-card"></div>
-                        <div class="skeleton-button h-10 w-full mt-4 skeleton-card"></div>
-                        <div class="skeleton-button h-10 w-full mt-2 skeleton-card"></div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-        content.style.display = 'block';
-    }
-    
-    if (loader) {
-        loader.classList.add('hidden');
-        loader.style.display = 'none';
-    }
+        navegarA('productoskit', { kitId: idx });
+        
+        const loader = document.getElementById('loader-productoskit');
+        const content = document.getElementById('productoskit-content');
+        
+        const startTime = Date.now();
         
         if (loader) {
             loader.classList.remove('hidden');
@@ -1286,12 +1245,7 @@ async function cargarProductosSupabase() {
     function aplicarFiltroCategoria(categoria) {
         console.log('Filtrando por:', categoria);
         mostrarNotificacion(`Filtrando por: ${categoria}`);
-       // ✅ GUARDAR EN URL
-    const url = new URL(window.location);
-    url.searchParams.set('categoria', categoria);
-    window.history.pushState({}, '', url);
-      
-      const dropdowns = document.querySelectorAll('.subcategory-panel');
+        const dropdowns = document.querySelectorAll('.subcategory-panel');
         dropdowns.forEach(panel => { panel.classList.add('opacity-0', 'invisible', 'scale-95'); });
         paginaActual = 1;
         const categoriasMap = { 'Temperatura': ['temperatura', 'termistor', 'lm35', 'dht11', 'dht22', 'ds18b20'], 'Humedad': ['humedad', 'dht11', 'dht22'], 'Movimiento': ['movimiento', 'pir', 'acelerómetro', 'giroscopio'], 'Luz': ['luz', 'fotorresistencia', 'ldr', 'fotosensible'], 'Servo Motores': ['servo', 'sg90'], 'Stepper': ['stepper', 'paso a paso'], 'DC Motors': ['motor dc', 'motor corriente continua'], 'LCD 16x2': ['lcd', '16x2', 'pantalla lcd'], 'Matriz LED': ['matriz led', 'max7219', '8x8'], 'OLED': ['oled', 'pantalla oled', 'display oled'], 'Módulos': ['módulo', 'module', 'shield'], 'Placas': ['placa', 'board', 'arduino', 'esp32', 'esp8266'], 'Raspberry Pi': ['raspberry', 'pi', 'rpi'], 'Sensores': ['sensor', 'detector', 'medidor'], 'Motores': ['motor', 'servo', 'stepper'], 'Displays': ['display', 'pantalla', 'lcd', 'oled', 'led'] };
@@ -1576,16 +1530,7 @@ async function cargarProductosSupabase() {
         await cargarProductosSupabase();
         await cargarCarritoSupabase();
         cargarTestimoniosReales();
-        // ✅ LEER FILTRO DE URL
-const urlParams = new URLSearchParams(window.location.search);
-const categoriaFiltro = urlParams.get('categoria');
-if (categoriaFiltro) {
-    console.log(`📌 Filtro desde URL: ${categoriaFiltro}`);
-    // Pequeño delay para asegurar que los productos ya están cargados
-    setTimeout(() => {
-        aplicarFiltroCategoria(categoriaFiltro);
-    }, 100);
-}
+        
         const buscar = document.getElementById('buscar-componente');
         if (buscar) { let timeout; buscar.addEventListener('input', () => { clearTimeout(timeout); timeout = setTimeout(() => { paginaActual = 1; renderizarComponentesSueltos(); }, 300); }); }
         const precioFiltro = document.getElementById('filtro-precio');
