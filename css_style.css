@@ -592,7 +592,6 @@ img {
     max-width: 750px;
     z-index: 5;
     object-fit: contain;
-    filter: drop-shadow(0 33px 33px rgba(0,0,0,0.12));
     transition: transform .5s ease;
 }
 
