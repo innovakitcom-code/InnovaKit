@@ -561,17 +561,6 @@ img {
     justify-content: center;
 }
 
-/* Círculo */
-
-.product-circle {
-    position: absolute;
-    width: 310px;
-    height: 282px;
-    border-radius: 30%;
-    background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0.45));
-    z-index: 1;
-}
-
 /* Plataforma */
 
 .product-platform {
@@ -793,10 +782,6 @@ img {
         min-height: 563px;
     }
 
-    .product-circle {
-        width: 563px;
-        height: 563px;
-    }
 
     .product-title {
         font-size: 40px;
@@ -825,11 +810,6 @@ img {
 
     .product-side {
         min-height: 394px;
-    }
-
-    .product-circle {
-        width: 357px;
-        height: 357px;
     }
 
     .product-platform {
