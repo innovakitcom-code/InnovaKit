@@ -507,7 +507,9 @@ img {
     position: relative;
     overflow: hidden;
     padding: 17px 8px;
-    background: #FFFFFF
+    background: 
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 40%),
+        linear-gradient(135deg, #eef2ff 0%, #dfe7ff 100%);
      
 }
 
