@@ -506,7 +506,7 @@ img {
 #impresora-destacada {
     position: relative;
     overflow: hidden;
-    padding: 17px 8px;
+    padding: 15px 8px;
     background: 
         radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 40%),
         linear-gradient(135deg, #eef2ff 0%, #dfe7ff 100%);
@@ -818,11 +818,11 @@ img {
     }
 
     .product-title {
-        font-size: 32px;
+        font-size: 27px;
     }
 
     .product-description {
-        font-size: 15px;
+        font-size: 10px;
     }
 
     .feature-card {
