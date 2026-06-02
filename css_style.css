@@ -510,11 +510,9 @@ img {
     background: 
         radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 40%),
         linear-gradient(135deg, #eef2ff 0%, #dfe7ff 100%);
-     
 }
 
 /* Container */
-
 .impresora-container {
     max-width: 1265px;
     margin: auto;
@@ -523,7 +521,6 @@ img {
 }
 
 /* Layout */
-
 .impresora-layout {
     display: flex;
     align-items: center;
@@ -534,7 +531,6 @@ img {
 /* ============================================
    BADGE SUPERIOR
 ============================================ */
-
 .top-badge {
     width: fit-content;
     margin: 0 auto 15px;
@@ -551,7 +547,6 @@ img {
 /* ============================================
    PRODUCT SIDE
 ============================================ */
-
 .product-side {
     position: relative;
     width: 58%;
@@ -562,7 +557,6 @@ img {
 }
 
 /* Plataforma */
-
 .product-platform {
     position: absolute;
     bottom: 56px;
@@ -576,7 +570,7 @@ img {
     z-index: 2;
 }
 
-/* Imagen producto - TAMAÑO PROPORCIONAL */
+/* Imagen producto */
 .product-image {
     position: relative;
     width: 88%;
@@ -590,8 +584,7 @@ img {
     transform: translateY(-7px) scale(1.018);
 }
 
-/* Badge */
-
+/* Badge NUEVO */
 .nuevo-badge {
     position: absolute;
     top: 38px;
@@ -609,7 +602,6 @@ img {
 /* ============================================
    CONTENT SIDE
 ============================================ */
-
 .content-side {
     width: 42%;
 }
@@ -638,7 +630,6 @@ img {
 /* ============================================
    FEATURES
 ============================================ */
-
 .features-list {
     display: flex;
     flex-direction: column;
@@ -676,7 +667,6 @@ img {
 /* ============================================
    BOTONES - TAMAÑO PROPORCIONAL
 ============================================ */
-
 .buttons-row {
     display: flex;
     gap: 20px;
@@ -721,14 +711,13 @@ img {
 /* ============================================
    FOOTER INFO
 ============================================ */
-
 .bottom-info {
     display: flex;
     gap: 28px;
     flex-wrap: wrap;
     color: #8a94a7;
     font-size: 15px;
-    justify-content: flex-start; /* Esto fuerza a la izquierda */
+    justify-content: flex-start;
 }
 
 .bottom-info div {
@@ -738,96 +727,8 @@ img {
 }
 
 /* ============================================
-   RESPONSIVE
-============================================ */
-
-@media (max-width: 1100px) {
-
-    .impresora-layout {
-        flex-direction: column;
-    }
-
-    .product-side,
-    .content-side {
-        width: 100%;
-    }
-
-    .product-side {
-        min-height: 563px;
-    }
-
-
-    .product-title {
-        font-size: 40px;
-        text-align: center;
-    }
-
-    .product-description {
-        text-align: center;
-    }
-
-    .buttons-row {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .bottom-info {
-        justify-content: center;
-    }
-}
-
-@media (max-width: 768px) {
-
-    #impresora-destacada {
-        padding: 65px 18px;
-    }
-
-    .product-side {
-        min-height: 394px;
-    }
-
-    .product-platform {
-        height: 65px;
-        bottom: 38px;
-    }
-
-    .product-title {
-        font-size: 27px;
-    }
-
-    .product-description {
-        font-size: 10px;
-    }
-
-    .feature-card {
-        padding: 15px;
-    }
-
-    .feature-card span {
-        font-size: 15px;
-    }
-
-    .buttons-row {
-        flex-direction: column;
-    }
-
-    .btn-primary,
-    .btn-whatsapp {
-        width: 100%;
-        justify-content: center;
-        padding: 12px 20px;
-        font-size: 14px;
-    }
-
-    .btn-primary i,
-    .btn-whatsapp i {
-        font-size: 14px;
-    }
-}
-/* ============================================
    BOTONES DENTRO DE PRODUCT-SIDE
 ============================================ */
-
 .buttons-row-product {
     position: absolute;
     bottom: 5px;
@@ -963,14 +864,12 @@ img {
         align-items: center;
     }
 
-    /* Imagen */
     .product-image {
         width: 80%;
         max-width: 280px;
         margin: 0 auto;
     }
 
-    /* Badge NUEVO */
     .nuevo-badge {
         top: -10px;
         right: 10px;
@@ -978,7 +877,6 @@ img {
         padding: 5px 10px;
     }
 
-    /* Botones */
     .buttons-row-product {
         position: relative;
         bottom: auto;
@@ -1000,14 +898,12 @@ img {
         font-size: 13px;
     }
 
-    /* Título */
     .product-title {
         font-size: 28px;
         text-align: center;
         margin-bottom: 10px;
     }
 
-    /* Descripción */
     .product-description {
         font-size: 14px;
         text-align: center;
@@ -1015,7 +911,6 @@ img {
         padding: 0 10px;
     }
 
-    /* Features lista */
     .features-list {
         gap: 8px;
         margin-bottom: 15px;
@@ -1036,7 +931,6 @@ img {
         font-size: 12px;
     }
 
-    /* Envíos y Garantía */
     .bottom-info {
         justify-content: center;
         gap: 15px;
