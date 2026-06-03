@@ -500,6 +500,139 @@ img {
     100% { background-position: -200% 0; }
 }
 /* ============================================
+   RESPONSIVE ASESORÍA - MÓVIL MEJORADO
+============================================ */
+
+@media (max-width: 768px) {
+    /* Contenedor principal */
+    #vista-asesorias {
+        padding: 15px !important;
+    }
+    
+    #vista-asesorias .bg-white.bg-opacity-90 {
+        padding: 20px 15px !important;
+        border-radius: 20px;
+    }
+    
+    /* Títulos */
+    #vista-asesorias h3,
+    #vista-asesorias .text-3xl,
+    #vista-asesorias .text-4xl {
+        font-size: 1.6rem !important;
+        text-align: center;
+    }
+    
+    #vista-asesorias h4 {
+        font-size: 1.3rem !important;
+        margin-bottom: 20px !important;
+    }
+    
+    /* Botón volver */
+    #vista-asesorias .bg-blue-600 {
+        padding: 6px 16px !important;
+        font-size: 12px !important;
+    }
+    
+    /* Grid de asesores - una columna en móvil */
+    #vista-asesorias .grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    /* Tarjetas de asesores */
+    #vista-asesorias .card-elevated {
+        padding: 15px !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    /* Imagen de asesores */
+    #vista-asesorias .rounded-full {
+        width: 80px !important;
+        height: 80px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    /* Nombre del asesor */
+    #vista-asesorias .card-elevated h5 {
+        font-size: 1.1rem !important;
+        margin-bottom: 4px !important;
+    }
+    
+    /* Especialidad */
+    #vista-asesorias .card-elevated .text-sm {
+        font-size: 0.7rem !important;
+        margin-bottom: 8px !important;
+    }
+    
+    /* Descripción */
+    #vista-asesorias .card-elevated .text-readable {
+        font-size: 0.75rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 12px !important;
+    }
+    
+    /* Etiquetas */
+    #vista-asesorias .flex.justify-center.space-x-3 span {
+        padding: 3px 8px !important;
+        font-size: 0.6rem !important;
+    }
+    
+    /* Formulario */
+    #vista-asesorias form {
+        padding: 20px 15px !important;
+        margin-top: 20px !important;
+    }
+    
+    /* Campos del formulario */
+    #vista-asesorias .form-input-enhanced {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+    }
+    
+    /* Grid dentro del formulario (una columna) */
+    #vista-asesorias form .grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    
+    /* Etiquetas */
+    #vista-asesorias label {
+        font-size: 12px !important;
+        margin-bottom: 4px !important;
+    }
+    
+    /* Botones del formulario */
+    #vista-asesorias button[type="submit"],
+    #vista-asesorias button[onclick*="enviarPorWhatsApp"] {
+        padding: 10px 16px !important;
+        font-size: 13px !important;
+        width: 100% !important;
+    }
+    
+    /* Stack vertical de botones */
+    #vista-asesorias form .flex {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    /* Reducir márgenes */
+    #vista-asesorias .mb-16 {
+        margin-bottom: 20px !important;
+    }
+    
+    #vista-asesorias .mb-12 {
+        margin-bottom: 15px !important;
+    }
+    
+    /* Texto descriptivo */
+    #vista-asesorias .text-xs {
+        font-size: 11px !important;
+    }
+}
+/* ============================================
    IMPRESORA DESTACADA PREMIUM - VERSIÓN FINAL (+17% sobre reducida)
 ============================================ */
 
