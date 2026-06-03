@@ -178,7 +178,7 @@
     <!-- MÓVIL -->
     <div class="md:hidden flex justify-between items-center">
         <a href="#" onclick="volverAlInicio(); return false;">
-            <h1 class="text-2xl font-bold">
+            <h1 class="text-3xl font-bold">
                 <span style="color:#7eb74a">Inn</span><span style="color:#fdc344">o</span><span style="color:#7eb74a">va</span><span class="text-blue-600">kit</span>
             </h1>
         </a>
@@ -1666,7 +1666,40 @@ async function cargarProductosSupabase() {
     
     document.getElementById('form-login-supabase')?.addEventListener('submit', async (e) => { e.preventDefault(); const email = document.getElementById('login-email').value; const password = document.getElementById('login-password').value; if (typeof iniciarSesionSupabase === 'function') { if (await iniciarSesionSupabase(email, password)) { cerrarModalLogin(); } } });
     document.getElementById('form-registro-supabase')?.addEventListener('submit', async (e) => { e.preventDefault(); const nombre = document.getElementById('reg-nombre').value; const telefono = document.getElementById('reg-telefono').value; const email = document.getElementById('reg-email').value; const password = document.getElementById('reg-password').value; if (typeof registrarUsuarioSupabase === 'function') { if (await registrarUsuarioSupabase(email, password, nombre, telefono)) { cerrarModalRegistro(); mostrarModalLogin(); } } });
-    
+    // ============================================
+// MENÚ HAMBURGUESA - FUNCIONES FALTANTES
+// ============================================
+function abrirMenuMovil() {
+    const overlay = document.getElementById('menu-overlay');
+    const panel = document.getElementById('menu-panel');
+    if (overlay) overlay.classList.add('active');
+    if (panel) panel.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function cerrarMenuMovil() {
+    const overlay = document.getElementById('menu-overlay');
+    const panel = document.getElementById('menu-panel');
+    if (overlay) overlay.classList.remove('active');
+    if (panel) panel.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Event listeners
+const menuBtn = document.getElementById('menu-hamburguesa-btn');
+const cerrarBtn = document.getElementById('menu-cerrar-btn');
+const overlay = document.getElementById('menu-overlay');
+
+if (menuBtn) menuBtn.addEventListener('click', abrirMenuMovil);
+if (cerrarBtn) cerrarBtn.addEventListener('click', cerrarMenuMovil);
+if (overlay) overlay.addEventListener('click', cerrarMenuMovil);
+
+// Cerrar menú al redimensionar a desktop
+window.addEventListener('resize', function() {
+    if (window.innerWidth >= 768) {
+        cerrarMenuMovil();
+    }
+});
     // Funciones placeholder
     function instalarPWA() {}
     function mostrarModalFiltros() {}
