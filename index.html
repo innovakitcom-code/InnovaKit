@@ -1422,7 +1422,30 @@ async function cargarProductosSupabase() {
     function volverAlInicio() { navegarA('inicio'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function verAsesorias() { navegarA('asesorias'); }
     function toggleModal() { const modal = document.getElementById('modal-descripcion'); const isOpening = modal.classList.contains('opacity-0'); modal.classList.toggle('opacity-0'); modal.classList.toggle('pointer-events-none'); document.body.classList.toggle('modal-active', isOpening); if (window.innerWidth <= 768) document.body.style.overflow = isOpening ? 'hidden' : ''; }
-    function enviarPorWhatsApp() { const nombre = document.querySelector('input[name="nombre"]')?.value || ''; const institucion = document.querySelector('input[name="institucion"]')?.value || ''; const email = document.querySelector('input[name="email"]')?.value || ''; const telefono = document.querySelector('input[name="telefono"]')?.value || ''; const tipo = document.querySelector('select[name="tipo_proyecto"]')?.value || ''; const proyecto = document.querySelector('textarea[name="proyecto"]')?.value || ''; window.open(`https://wa.me/595972292392?text=${encodeURIComponent(`¡Hola! Solicito asesoría:%0A%0ANombre: ${nombre}%0AInstitución: ${institucion}%0AEmail: ${email}%0ATeléfono: ${telefono}%0ATipo: ${tipo}%0A%0ADescripción: ${proyecto}`)}`, '_blank'); }
+    function enviarPorWhatsApp() { 
+    const nombre = document.querySelector('input[name="nombre"]')?.value || ''; 
+    const institucion = document.querySelector('input[name="institucion"]')?.value || ''; 
+    const email = document.querySelector('input[name="email"]')?.value || ''; 
+    const telefono = document.querySelector('input[name="telefono"]')?.value || ''; 
+    const tipo = document.querySelector('select[name="tipo_proyecto"]')?.value || ''; 
+    const proyecto = document.querySelector('textarea[name="proyecto"]')?.value || ''; 
+    
+    // Mensaje formateado correctamente para WhatsApp
+    let mensaje = "📋 *SOLICITUD DE ASESORÍA* 📋\n\n";
+    mensaje += "👤 *Nombre:* " + nombre + "\n";
+    mensaje += "🏫 *Institución:* " + institucion + "\n";
+    mensaje += "📧 *Email:* " + email + "\n";
+    mensaje += "📞 *Teléfono:* " + telefono + "\n";
+    mensaje += "🎯 *Tipo de proyecto:* " + tipo + "\n\n";
+    mensaje += "📝 *Descripción del proyecto:*\n";
+    mensaje += "─────────────────────\n";
+    mensaje += proyecto + "\n\n";
+    mensaje += "─────────────────────\n";
+    mensaje += "📅 *Fecha:* " + new Date().toLocaleDateString('es-PY') + "\n";
+    mensaje += "⏰ *Hora:* " + new Date().toLocaleTimeString('es-PY');
+    
+    window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`, '_blank');
+}
     function trackEvent(categoria, accion, etiqueta = '') { if (typeof gtag !== 'undefined') gtag('event', accion, { 'event_category': categoria, 'event_label': etiqueta }); }
     
     function navegarA(vista, data = {}) {
