@@ -614,25 +614,23 @@ img {
 }
 
 /* ============================================
-   ETIQUETAS DE ESPECIALIDAD (REDUCIDAS)
+   ETIQUETAS DE ESPECIALIDAD - TAMAÑO REDUCIDO
+   (Manteniendo los colores originales)
 ============================================ */
 
 /* Desktop */
 #vista-asesorias .flex.justify-center.space-x-3 span {
-    padding: 4px 10px !important;
-    font-size: 0.7rem !important;
-    font-weight: 500 !important;
-    border-radius: 30px !important;
-    background: #f1f5f9 !important;
-    color: #334155 !important;
-    border: none !important;
+    padding: 3px 8px !important;
+    font-size: 0.65rem !important;
+    font-weight: 600 !important;
+    border-radius: 20px !important;
 }
 
 /* Móvil */
 @media (max-width: 768px) {
     #vista-asesorias .flex.justify-center.space-x-3 span {
-        padding: 3px 8px !important;
-        font-size: 0.6rem !important;
+        padding: 2px 6px !important;
+        font-size: 0.55rem !important;
     }
 }
 /* Formulario */
