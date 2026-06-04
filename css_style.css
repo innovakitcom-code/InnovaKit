@@ -613,13 +613,16 @@ img {
     margin-bottom: 15px;
 }
 
-/* Etiquetas de especialidad */
+/* Etiquetas de especialidad - Tamaño normal */
 #vista-asesorias .flex.justify-center.space-x-3 span {
-    padding: 4px 10px;
-    font-size: 0.65rem;
-    border-radius: 30px;
+    padding: 3px 8px !important;
+    font-size: 0.65rem !important;
+    font-weight: 500 !important;
+    border-radius: 20px !important;
+    background: #f1f5f9 !important;
+    color: #1e2937 !important;
+    border: none !important;
 }
-
 /* Formulario */
 #vista-asesorias form {
     border-radius: 24px;
@@ -748,13 +751,7 @@ img {
         line-height: 1.4 !important;
         margin-bottom: 12px !important;
     }
-    
-    /* Etiquetas más pequeñas */
-    #vista-asesorias .flex.justify-center.space-x-3 span {
-        padding: 3px 8px !important;
-        font-size: 0.6rem !important;
-    }
-    
+        
     /* Formulario compacto */
     #vista-asesorias form {
         padding: 20px 15px !important;
