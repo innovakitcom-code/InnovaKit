@@ -613,15 +613,27 @@ img {
     margin-bottom: 15px;
 }
 
-/* Etiquetas de especialidad - Tamaño normal */
+/* ============================================
+   ETIQUETAS DE ESPECIALIDAD (REDUCIDAS)
+============================================ */
+
+/* Desktop */
 #vista-asesorias .flex.justify-center.space-x-3 span {
-    padding: 3px 8px !important;
-    font-size: 0.65rem !important;
+    padding: 4px 10px !important;
+    font-size: 0.7rem !important;
     font-weight: 500 !important;
-    border-radius: 20px !important;
+    border-radius: 30px !important;
     background: #f1f5f9 !important;
-    color: #1e2937 !important;
+    color: #334155 !important;
     border: none !important;
+}
+
+/* Móvil */
+@media (max-width: 768px) {
+    #vista-asesorias .flex.justify-center.space-x-3 span {
+        padding: 3px 8px !important;
+        font-size: 0.6rem !important;
+    }
 }
 /* Formulario */
 #vista-asesorias form {
