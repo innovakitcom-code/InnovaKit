@@ -1524,3 +1524,124 @@ img {
 html {
     scroll-padding-top: 80px;
 }
+/* ============================================
+   MEJORAS SOLO PARA MÓVIL
+   (No afecta desktop)
+============================================ */
+
+@media (max-width: 768px) {
+    
+    /* Misión y Visión */
+    #mision, #vision {
+        padding: 20px 15px !important;
+        margin: 15px !important;
+        border-radius: 24px;
+    }
+    
+    #mision h3, #vision h3 {
+        font-size: 1.3rem !important;
+        margin-bottom: 8px !important;
+    }
+    
+    #mision p, #vision p {
+        font-size: 0.85rem !important;
+        line-height: 1.5 !important;
+    }
+    
+    #mision i, #vision i {
+        font-size: 2rem !important;
+        margin-bottom: 10px !important;
+    }
+    
+    /* Beneficios */
+    section:has(.grid-cols-1.md:grid-cols-3) {
+        padding: 15px !important;
+    }
+    
+    section:has(.grid-cols-1.md:grid-cols-3) h3 {
+        font-size: 1.4rem !important;
+        margin-bottom: 20px !important;
+    }
+    
+    section:has(.grid-cols-1.md:grid-cols-3) .card-elevated {
+        padding: 15px !important;
+    }
+    
+    section:has(.grid-cols-1.md:grid-cols-3) .card-elevated i {
+        font-size: 1.8rem !important;
+        margin-bottom: 8px !important;
+    }
+    
+    section:has(.grid-cols-1.md:grid-cols-3) .card-elevated h4 {
+        font-size: 1rem !important;
+        margin-bottom: 6px !important;
+    }
+    
+    section:has(.grid-cols-1.md:grid-cols-3) .card-elevated p {
+        font-size: 0.75rem !important;
+    }
+    
+    /* Productos (kits) */
+    #productos {
+        padding: 20px 15px !important;
+        margin: 15px 10px !important;
+        border-radius: 24px;
+    }
+    
+    #productos h3 {
+        font-size: 1.4rem !important;
+        margin-bottom: 20px !important;
+    }
+    
+    #productos .bg-white.rounded-xl {
+        padding: 15px !important;
+        min-height: 280px !important;
+    }
+    
+    #productos img {
+        width: 80px !important;
+        height: 80px !important;
+        margin-bottom: 10px !important;
+    }
+    
+    #productos h4 {
+        font-size: 0.9rem !important;
+    }
+    
+    #productos p {
+        font-size: 0.7rem !important;
+    }
+    
+    #productos button {
+        padding: 6px 12px !important;
+        font-size: 0.65rem !important;
+    }
+    
+    /* Testimonios */
+    #testimonios {
+        padding: 20px 15px !important;
+        margin: 15px 10px !important;
+        border-radius: 24px;
+    }
+    
+    #testimonios h3 {
+        font-size: 1.4rem !important;
+    }
+    
+    /* Contacto */
+    #contacto {
+        padding: 20px 15px !important;
+        margin: 15px 10px 30px !important;
+        border-radius: 24px;
+    }
+    
+    #contacto h3 {
+        font-size: 1.4rem !important;
+        margin-bottom: 15px !important;
+    }
+    
+    #contacto p {
+        font-size: 0.85rem !important;
+        margin-bottom: 20px !important;
+    }
+}
