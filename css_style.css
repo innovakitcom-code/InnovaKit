@@ -1304,7 +1304,7 @@ img {
     }
 }
 /* ============================================
-   MENÚ HAMBURGUESA PROFESIONAL - VERSIÓN ÚNICA
+   MENÚ HAMBURGUESA - DISEÑO INNOVAKIT
 ============================================ */
 
 /* Botón hamburguesa */
@@ -1312,25 +1312,15 @@ img {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
+    padding: 10px;
+    border-radius: 12px;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
-.menu-hamburguesa:hover {
-    background-color: #f3f4f6;
-}
-
-.menu-hamburguesa svg {
-    width: 24px;
-    height: 24px;
-    stroke: #1f2937;
-    stroke-width: 2;
-    fill: none;
-}
+.menu-hamburguesa:hover { background-color: #f3f4f6; }
+.menu-hamburguesa svg { width: 24px; height: 24px; stroke: #1f2937; stroke-width: 2; fill: none; }
 
 /* Overlay */
 .menu-overlay {
@@ -1339,147 +1329,102 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 998;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
 }
+.menu-overlay.active { opacity: 1; visibility: visible; }
 
-.menu-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Panel lateral */
+/* Panel lateral - con gradiente de marca */
 .menu-panel {
     position: fixed;
     top: 0;
     right: -300px;
     width: 280px;
     height: 100%;
-    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.12);
+    background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
     z-index: 999;
     transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
 }
+.menu-panel.active { right: 0; }
 
-.menu-panel.active {
-    right: 0;
-}
-
-/* Header del menú */
+/* Header con colores de marca */
 .menu-header {
-    padding: 24px 20px 16px 20px;
+    padding: 25px 20px;
     border-bottom: 2px solid #eef2ff;
     display: flex;
-    justify-content: flex-end;
-    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff, #f1f5f9);
 }
 
-.menu-header::before {
-    content: "Innovakit";
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+.menu-header .brand {
+    font-size: 1.4rem;
     font-weight: 800;
-    font-size: 18px;
-    background: linear-gradient(135deg, #7eb74a 0%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
 }
+.menu-header .brand span:nth-child(1) { color: #7eb74a; }
+.menu-header .brand span:nth-child(2) { color: #fdc344; }
+.menu-header .brand span:nth-child(3) { color: #7eb74a; }
+.menu-header .brand span:nth-child(4) { color: #3b82f6; }
 
-/* Botón cerrar */
+/* Botón cerrar mejorado */
 .menu-cerrar {
-    background: #f1f5f9;
+    background: #eef2ff;
     border: none;
     cursor: pointer;
-    padding: 10px;
+    padding: 8px;
     border-radius: 50%;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 18px;
+    color: #475569;
+    width: 34px;
+    height: 34px;
 }
+.menu-cerrar:hover { background: #7eb74a; color: white; transform: rotate(90deg); }
 
-.menu-cerrar:hover {
-    background: #e2e8f0;
-    transform: rotate(90deg);
-}
-
-.menu-cerrar svg {
-    width: 18px;
-    height: 18px;
-    stroke: #475569;
-    stroke-width: 2;
-    fill: none;
-}
-
-/* Navegación */
+/* Navegación con estilo */
 .menu-nav {
     flex: 1;
-    padding: 24px 16px;
+    padding: 20px 16px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 }
 
 .menu-nav a {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     padding: 12px 16px;
     color: #334155;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
-    border-radius: 14px;
+    border-radius: 12px;
     transition: all 0.25s ease;
 }
 
-/* Iconos */
-.menu-nav a::before {
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 400;
-    font-size: 18px;
-    width: 24px;
-    text-align: center;
-}
+/* Emojis como iconos */
+.menu-nav a .emoji { font-size: 1.2rem; width: 28px; }
 
-.menu-nav a[href="#mision"]::before { content: "\f0e4"; }
-.menu-nav a[href="#vision"]::before { content: "\f0eb"; }
-.menu-nav a[href="#productos"]::before { content: "\f1b3"; }
-.menu-nav a[href="#impresora-destacada"]::before { content: "\f5b2"; }
-.menu-nav a[href="#asesorias-preview"]::before { content: "\f4e1"; }
-.menu-nav a[href="#contacto"]::before { content: "\f0e0"; }
-
-/* Hover */
+/* Hover con colores de marca */
 .menu-nav a:hover {
-    background: linear-gradient(90deg, #eff6ff 0%, #dbeafe 100%);
+    background: linear-gradient(90deg, #eef2ff 0%, #e0e7ff 100%);
     color: #2563eb;
-    transform: translateX(4px);
+    transform: translateX(6px);
 }
+.menu-nav a:hover .emoji { transform: scale(1.1); }
 
-.menu-nav a:hover::before {
-    color: #2563eb;
-    transform: scale(1.1);
-}
-
-/* Separador */
-.menu-nav a:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 16px;
-    right: 16px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
-}
-
-/* Footer */
+/* Footer con información de contacto */
 .menu-footer {
     padding: 20px;
     border-top: 1px solid #e2e8f0;
@@ -1487,44 +1432,50 @@ img {
     text-align: center;
 }
 
-.menu-footer p {
+.menu-footer .contacto {
     font-size: 11px;
-    color: #94a3b8;
-    margin: 4px 0;
+    color: #64748b;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
+.menu-footer .contacto div { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.menu-footer .contacto i { color: #7eb74a; font-size: 12px; }
 
 .menu-footer .social-icons {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 24px;
     margin-top: 12px;
 }
-
 .menu-footer .social-icons a {
     color: #94a3b8;
-    font-size: 18px;
+    font-size: 20px;
     transition: all 0.2s ease;
 }
-
 .menu-footer .social-icons a:hover {
-    color: #2563eb;
-    transform: translateY(-2px);
+    color: #7eb74a;
+    transform: translateY(-3px);
 }
 
-/* Desktop: ocultar menú hamburguesa */
+/* Marca en footer */
+.menu-footer .brand-footer {
+    font-size: 10px;
+    color: #94a3b8;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #eef2ff;
+}
+.menu-footer .brand-footer span:nth-child(1) { color: #7eb74a; }
+.menu-footer .brand-footer span:nth-child(2) { color: #fdc344; }
+.menu-footer .brand-footer span:nth-child(3) { color: #7eb74a; }
+.menu-footer .brand-footer span:nth-child(4) { color: #3b82f6; }
+
+/* Desktop: ocultar */
 @media (min-width: 769px) {
-    .menu-hamburguesa,
-    .menu-overlay,
-    .menu-panel {
-        display: none !important;
-    }
-}
-
-/* Scroll compensado */
-html {
-    scroll-padding-top: 80px;
-}
-/* ============================================
+    .menu-hamburguesa, .menu-overlay, .menu-panel { display: none !important; }
+}/* ============================================
    MEJORAS SOLO PARA MÓVIL
    (No afecta desktop)
 ============================================ */
