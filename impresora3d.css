@@ -1,0 +1,381 @@
+/* ============================================
+   ESTILOS EXCLUSIVOS PARA IMPRESORA 3D
+   OPCIÓN 2: Verde + Negro (Industrial elegante)
+   CON MEJORAS: títulos blancos + animación gradiente en hero
+============================================ */
+
+body {
+    background: #121826;
+}
+
+.impresora-exclusiva-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Botón volver */
+.btn-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #00AE42;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 40px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    margin-bottom: 30px;
+}
+.btn-volver:hover {
+    transform: translateX(-5px);
+    background: #008a35;
+}
+
+/* Hero con animación de gradiente al hover */
+.hero-impresora {
+    background: #2D2D2D;
+    border-radius: 32px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+/* Efecto de gradiente plateado que se mueve al hacer hover */
+.hero-impresora::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.03),
+        rgba(200, 200, 200, 0.08),
+        rgba(255, 255, 255, 0.03),
+        transparent
+    );
+    transition: left 0.8s ease;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.hero-impresora:hover::before {
+    left: 100%;
+}
+
+.hero-impresora h1, .hero-impresora p {
+    color: #E5E5E5;
+}
+.hero-impresora .text-blue-600 {
+    color: #00AE42 !important;
+}
+.hero-image {
+    transition: transform 0.5s ease;
+    position: relative;
+    z-index: 2;
+}
+.hero-image:hover {
+    transform: scale(1.02);
+}
+
+/* Títulos principales en blanco (arreglado) */
+h2:not(.product-title):not(.modelo-texto h3) {
+    color: #FFFFFF !important;
+}
+
+/* Título "Impresión 3D Educativa por Horas" en blanco */
+.text-2xl.md\:text-3xl.font-bold.text-center.mb-12.scroll-animate {
+    color: #FFFFFF !important;
+}
+
+/* Título "¿Por qué elegir este modelo?" en blanco */
+.bg-gradient-to-br.from-blue-50.to-indigo-100 h2 {
+    color: #FFFFFF !important;
+}
+
+/* Especificaciones técnicas */
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+.spec-card {
+    background: #2D2D2D;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #404040;
+}
+.spec-card:hover {
+    transform: translateY(-5px);
+    border-color: #00AE42;
+}
+.spec-card i {
+    font-size: 2.5rem;
+    color: #00AE42;
+    margin-bottom: 15px;
+}
+.spec-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #FFFFFF;
+}
+.spec-card p {
+    font-size: 0.85rem;
+    color: #ADB5BD;
+}
+
+@media (max-width: 768px) {
+    .specs-grid { gap: 12px; margin: 20px 0; }
+    .spec-card { padding: 12px 10px; }
+    .spec-card i { font-size: 1.8rem; margin-bottom: 8px; }
+    .spec-card h3 { font-size: 0.9rem; }
+    .spec-card p { font-size: 0.7rem; }
+}
+
+/* ========================================== */
+/* MODELO DE NEGOCIO */
+/* ========================================== */
+
+.modelo-section {
+    margin-bottom: 60px;
+    border-radius: 32px;
+    overflow: hidden;
+}
+
+.modelo-row {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .modelo-row {
+        flex-direction: row;
+        gap: 50px;
+    }
+    .modelo-row.reverse {
+        flex-direction: row-reverse;
+    }
+}
+
+.modelo-imagen {
+    flex: 1;
+    text-align: center;
+}
+
+.modelo-imagen .icon-circle {
+    width: 100px;
+    height: 100px;
+    background: #2D2D2D;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border: 1px solid #404040;
+}
+
+.modelo-imagen i {
+    font-size: 3rem;
+    color: #00AE42;
+}
+
+.modelo-texto {
+    flex: 1;
+}
+
+.modelo-texto h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+}
+
+.modelo-texto p {
+    color: #ADB5BD;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.modelo-texto ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.modelo-texto li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: #ADB5BD;
+}
+
+.modelo-texto li i {
+    color: #00AE42;
+    font-size: 1.1rem;
+    width: 24px;
+}
+
+/* Tarifas destacadas */
+.tarifas-section {
+    background: #2D2D2D;
+    border-radius: 32px;
+    padding: 50px 40px;
+    text-align: center;
+    margin: 40px 0;
+    border: 1px solid #404040;
+}
+.tarifas-section h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 15px;
+}
+.tarifas-section .precio {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #00AE42;
+    margin: 25px 0;
+}
+.tarifas-section .precio span {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #ADB5BD;
+}
+.tarifas-section p {
+    color: #ADB5BD;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Mantenimiento */
+.mantenimiento-section {
+    background: #2D2D2D;
+    border-radius: 32px;
+    padding: 40px;
+    margin: 40px 0;
+    border: 1px solid #404040;
+}
+.mantenimiento-section h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+}
+.mantenimiento-section p {
+    color: #ADB5BD;
+    line-height: 1.6;
+}
+
+/* Botón WhatsApp */
+.btn-whatsapp-large {
+    background: #00AE42;
+    color: white;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.btn-whatsapp-large:hover {
+    background: #008a35;
+    transform: scale(1.02);
+}
+
+/* Beneficios extra */
+.bg-gradient-to-br.from-blue-50.to-indigo-100 {
+    background: #2D2D2D !important;
+    border: 1px solid #404040;
+}
+.bg-gradient-to-br.from-blue-50.to-indigo-100 i {
+    color: #00AE42 !important;
+}
+.bg-gradient-to-br.from-blue-50.to-indigo-100 h3,
+.bg-gradient-to-br.from-blue-50.to-indigo-100 p {
+    color: #E5E5E5 !important;
+}
+
+/* Animaciones */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.fade-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.fade-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+body {
+    background: linear-gradient(135deg, #0F1217 0%, #1A1D24 100%);
+}
+
+.spec-card,
+.modelo-imagen .icon-circle,
+.tarifas-section,
+.mantenimiento-section,
+.bg-gradient-to-br.from-blue-50.to-indigo-100 {
+    background: #1C2128 !important;
+    border: 1px solid rgba(0, 174, 66, 0.1);
+}
+
+.spec-card:hover,
+.tarifas-section:hover,
+.mantenimiento-section:hover {
+    border-color: rgba(0, 174, 66, 0.3);
+    box-shadow: 0 0 25px rgba(0, 174, 66, 0.08);
+}
+
+.modelo-texto p,
+.modelo-texto li,
+.spec-card p,
+.tarifas-section p {
+    color: #9CA3AF;
+}
+/* Responsive */
+@media (max-width: 768px) {
+    .impresora-exclusiva-container { padding: 20px 15px; }
+    .hero-impresora { padding: 25px; }
+    .btn-whatsapp-large { padding: 12px 24px; font-size: 0.9rem; }
+    .modelo-texto h3 { font-size: 1.4rem; text-align: center; }
+    .modelo-texto p, .modelo-texto li { text-align: center; justify-content: center; }
+    .tarifas-section { padding: 30px 20px; }
+    .tarifas-section h2 { font-size: 1.5rem; }
+    .tarifas-section .precio { font-size: 2rem; }
+    .mantenimiento-section { padding: 25px; }
+}
