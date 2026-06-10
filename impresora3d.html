@@ -28,27 +28,17 @@
         <i class="fas fa-arrow-left"></i> Volver a Innovakit
     </a>
     
-  <!-- Hero con video de fondo -->
+<!-- Hero con video en lugar de imagen -->
 <div class="hero-impresora scroll-animate">
-    <!-- Video de fondo (se difumina con gradiente) -->
-    <div class="hero-video-bg">
-        <video autoplay loop muted playsinline>
-            <source src="video/0608.mp4" type="video/mp4">
-            
-            <!-- Fallback: imagen si no carga el video -->
-            <img src="asesores/3DPORTADAA.svg" alt="Impresora 3D">
-        </video>
-    </div>
-    
     <div class="flex flex-col md:flex-row gap-8 items-center">
         <div class="md:w-1/2 text-center md:text-left">
             <div class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-green-500/5 border border-green-500/30 px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
                 <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="text-green-400">NUEVO</span>
+                <span class="text-green-400">✨ NUEVO</span>
                 <span class="text-gray-400">| Impresión 3D para instituciones</span>
             </div>
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4">
-                Impresora 3D <span class="text-blue-600">Bambu Lab A1</span>
+                Impresora 3D <p><span class="text-green-500">Bambu Lab A1</span></p>
             </h1>
             <p class="text-gray-300 mb-6 leading-relaxed">
                 Experimenta la impresión 3D como nunca antes. Velocidad, precisión y facilidad de uso 
@@ -60,7 +50,15 @@
             </a>
         </div>
         <div class="md:w-1/2">
-            <img src="asesores/3DPORTADAA.svg" alt="Impresora 3D Bambu Lab A1" class="hero-image w-full max-w-md mx-auto">
+            <!-- VIDEO en lugar de imagen -->
+            <div class="hero-video-container">
+                <video autoplay loop muted playsinline>
+                    <source src="video/0608.mp4" type="video/mp4">
+                    <!-- Fallback: imagen si no carga el video -->
+                    <img src="asesores/3DPORTADAA.svg" alt="Impresora 3D Bambu Lab A1">
+                </video>
+                <div class="hero-video-bottom"></div>
+            </div>
         </div>
     </div>
 </div>
