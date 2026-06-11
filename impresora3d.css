@@ -613,3 +613,14 @@ body {
         font-size: 0.85rem;
     }
 }
+/* Ajuste de tamaño para imagen testimonial */
+.modelo-section .modelo-imagen img {
+    max-width: 85%;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .modelo-section .modelo-imagen img {
+        max-width: 100%;
+    }
+}
