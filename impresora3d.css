@@ -464,3 +464,152 @@ body {
         filter: blur(6px);
     }
 }
+/* ============================================
+   MEJORAS RESPONSIVE - ALINEACIÓN IZQUIERDA
+============================================ */
+
+@media (max-width: 768px) {
+    /* Hero: texto alineado a la izquierda, no centrado */
+    .hero-impresora .text-center.md\:text-left {
+        text-align: left !important;
+    }
+    
+    /* Títulos de secciones alineados a la izquierda */
+    .modelo-texto h3 {
+        text-align: left !important;
+    }
+    
+    /* Párrafos y listas alineados a la izquierda */
+    .modelo-texto p,
+    .modelo-texto ul,
+    .modelo-texto li {
+        text-align: left !important;
+        justify-content: flex-start !important;
+    }
+    
+    /* Iconos de lista alineados correctamente */
+    .modelo-texto li {
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+    
+    .modelo-texto li i {
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+    
+    /* Tarifas y mantenimiento: texto alineado a la izquierda */
+    .tarifas-section,
+    .mantenimiento-section {
+        text-align: left !important;
+    }
+    
+    .tarifas-section .precio,
+    .tarifas-section h2,
+    .tarifas-section p {
+        text-align: left !important;
+    }
+    
+    /* Beneficios extra: mantener centrado pero más compacto */
+    .bg-gradient-to-br.from-blue-50.to-indigo-100 .grid {
+        gap: 20px;
+    }
+    
+    /* Cobertura nacional: centrado en móvil */
+    .bg-gradient-to-br.from-gray-800\/50.to-gray-900\/50 {
+        text-align: center;
+    }
+    
+    .bg-gradient-to-br.from-gray-800\/50.to-gray-900\/50 .flex.items-center {
+        justify-content: center;
+    }
+    
+    /* Cierre: centrado normal */
+    .text-center.scroll-animate {
+        text-align: center !important;
+    }
+}
+
+/* ============================================
+   PREGUNTAS FRECUENTES (FAQ)
+============================================ */
+
+.faq-section {
+    margin: 60px 0 40px;
+}
+
+.faq-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.faq-item {
+    background: #1C2128;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 174, 66, 0.15);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: rgba(0, 174, 66, 0.4);
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.faq-question:hover {
+    background: rgba(0, 174, 66, 0.05);
+}
+
+.faq-question h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.faq-question i {
+    color: #00AE42;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    padding: 0 24px;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    color: #9CA3AF;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 300px;
+    padding: 0 24px 20px 24px;
+}
+
+@media (max-width: 768px) {
+    .faq-question {
+        padding: 16px 18px;
+    }
+    .faq-question h3 {
+        font-size: 0.95rem;
+    }
+    .faq-answer {
+        font-size: 0.85rem;
+    }
+}
