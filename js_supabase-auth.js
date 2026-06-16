@@ -49,8 +49,22 @@ async function iniciarSesionSupabase(email, password) {
         });
         if (error) throw error;
         
+        // 1. Cargar usuario actual
         await cargarUsuarioActualSupabase();
-        actualizarUIUsuario();  // ← ACTUALIZAR UI DESPUÉS DEL LOGIN
+        
+        // 2. ACTUALIZAR UI
+        actualizarUIUsuario();
+        
+        // 3. ⭐ CARGAR CARRITO DESDE SUPABASE ⭐
+        if (typeof cargarCarritoSupabase === 'function') {
+            await cargarCarritoSupabase();
+        }
+        
+        // 4. ⭐ RENDERIZAR CARRITO ⭐
+        if (typeof renderizarCarritoModal === 'function') {
+            renderizarCarritoModal();
+        }
+        
         mostrarNotificacion(`✅ ¡Bienvenido, ${usuarioActual?.nombre || email}!`, 'success');
         return true;
     } catch (error) {
@@ -58,7 +72,6 @@ async function iniciarSesionSupabase(email, password) {
         return false;
     }
 }
-
 async function cerrarSesionSupabase() {
     if (!supabaseClient) return;
     await supabaseClient.auth.signOut();
@@ -87,9 +100,13 @@ async function cargarUsuarioActualSupabase() {
         es_admin: perfil?.es_admin || false
     };
     
+    // ⭐ CARGAR CARRITO SI EL USUARIO ESTÁ LOGUEADO ⭐
+    if (usuarioActual && typeof cargarCarritoSupabase === 'function') {
+        await cargarCarritoSupabase();
+    }
+    
     return usuarioActual;
 }
-
 function actualizarUIUsuario() {
     console.log('🔄 Actualizando UI de usuario:', usuarioActual);
     
