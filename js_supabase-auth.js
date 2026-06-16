@@ -51,7 +51,44 @@ async function iniciarSesionSupabase(email, password) {
         
         // 1. Cargar usuario actual
         await cargarUsuarioActualSupabase();
+async function iniciarSesionSupabase(email, password) {
+    if (!supabaseClient) {
+        console.error('❌ supabaseClient no está definido');
+        mostrarNotificacion('Error de conexión', 'error');
+        return false;
+    }
+    
+    try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ 
+            email: email, 
+            password: password 
+        });
+        if (error) throw error;
         
+        // 1. Cargar usuario actual
+        await cargarUsuarioActualSupabase();
+        
+        // 2. Actualizar UI (nombre, botones)
+        actualizarUIUsuario();
+        
+        // 3. ⭐ CARGAR EL CARRITO DESDE SUPABASE ⭐
+        if (typeof cargarCarritoSupabase === 'function') {
+            await cargarCarritoSupabase();
+        }
+        
+        // 4. ⭐ ACTUALIZAR EL MODAL DEL CARRITO (si está abierto) ⭐
+        if (typeof renderizarCarritoModal === 'function') {
+            renderizarCarritoModal();
+        }
+        
+        mostrarNotificacion(`✅ ¡Bienvenido, ${usuarioActual?.nombre || email}!`, 'success');
+        return true;
+    } catch (error) {
+        console.error('Error en login:', error);
+        mostrarNotificacion('Email o contraseña incorrectos', 'error');
+        return false;
+    }
+}        
         // 2. ACTUALIZAR UI
         actualizarUIUsuario();
         
