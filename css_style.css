@@ -731,3 +731,21 @@ img { max-width: 100%; height: auto; transition: opacity 0.3s ease; }
 
 /* Scroll compensado */
 html { scroll-padding-top: 80px; }
+/* ============================================
+   ESTILOS PARA VALIDACIÓN DE FORMULARIOS
+   ============================================ */
+
+.border-red-500 {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.border-red-500:focus {
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.border-green-500 {
+    border-color: #22c55e !important;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
