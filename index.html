@@ -1832,6 +1832,94 @@ function validarFormularioRegistro(event) {
 
 document.getElementById('form-registro-supabase')?.addEventListener('submit', validarFormularioRegistro);
     // ============================================
+// VALIDACIÓN - ASESORÍA
+// ============================================
+
+function validarFormularioAsesoria(event) {
+    event.preventDefault();
+    
+    const nombre = document.querySelector('input[name="nombre"]');
+    const institucion = document.querySelector('input[name="institucion"]');
+    const email = document.querySelector('input[name="email"]');
+    const telefono = document.querySelector('input[name="telefono"]');
+    const proyecto = document.querySelector('textarea[name="proyecto"]');
+    
+    // Limpiar estilos anteriores
+    [nombre, institucion, email, telefono, proyecto].forEach(el => {
+        if (el) {
+            el.classList.remove('border-red-500', 'border-green-500');
+        }
+    });
+    
+    const errores = [];
+    
+    // 1. Nombre (obligatorio)
+    if (!nombre?.value.trim() || nombre.value.trim().length < 3) {
+        errores.push('Nombre completo (mínimo 3 caracteres)');
+        if (nombre) nombre.classList.add('border-red-500');
+    } else {
+        if (nombre) nombre.classList.add('border-green-500');
+    }
+    
+    // 2. Institución (opcional)
+    if (institucion?.value.trim() && institucion.value.trim().length < 3) {
+        errores.push('Institución inválida (mínimo 3 caracteres)');
+        institucion.classList.add('border-red-500');
+    } else if (institucion?.value.trim()) {
+        institucion.classList.add('border-green-500');
+    }
+    
+    // 3. Email (obligatorio)
+    if (!email?.value.trim()) {
+        errores.push('El email es obligatorio');
+        if (email) email.classList.add('border-red-500');
+    } else if (!email.value.includes('@') || !email.value.includes('.')) {
+        errores.push('Email inválido');
+        if (email) email.classList.add('border-red-500');
+    } else {
+        if (email) email.classList.add('border-green-500');
+    }
+    
+    // 4. Teléfono (obligatorio)
+    if (!telefono?.value.trim()) {
+        errores.push('El teléfono es obligatorio');
+        if (telefono) telefono.classList.add('border-red-500');
+    } else if (!/^[0-9+\s-]{8,15}$/.test(telefono.value.trim())) {
+        errores.push('Teléfono inválido (ej: 0972 292392)');
+        if (telefono) telefono.classList.add('border-red-500');
+    } else {
+        if (telefono) telefono.classList.add('border-green-500');
+    }
+    
+    // 5. Proyecto (obligatorio, mínimo 20 caracteres)
+    if (!proyecto?.value.trim()) {
+        errores.push('Describe tu proyecto');
+        if (proyecto) proyecto.classList.add('border-red-500');
+    } else if (proyecto.value.trim().length < 20) {
+        errores.push('Descripción del proyecto (mínimo 20 caracteres)');
+        if (proyecto) proyecto.classList.add('border-red-500');
+    } else {
+        if (proyecto) proyecto.classList.add('border-green-500');
+    }
+    
+    // Mostrar errores
+    if (errores.length > 0) {
+        mostrarNotificacion('❌ ' + errores.join(' • '), 'error');
+        return false;
+    }
+    
+    // Si todo está bien, enviar el formulario
+    event.target.submit();
+    return true;
+}
+
+// Asignar al formulario de asesoría
+const formAsesoria = document.querySelector('#vista-asesorias form');
+if (formAsesoria) {
+    formAsesoria.removeEventListener('submit', validarFormularioAsesoria);
+    formAsesoria.addEventListener('submit', validarFormularioAsesoria);
+}
+    // ============================================
 // MENÚ HAMBURGUESA - FUNCIONES FALTANTES
 // ============================================
 function abrirMenuMovil() {
