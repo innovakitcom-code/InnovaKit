@@ -471,7 +471,7 @@
             <h3 class="text-2xl font-bold">📸 Comparte tu Proyecto</h3>
             <button onclick="cerrarModalProyecto()" class="text-2xl">&times;</button>
           </div>
-          <form id="form-proyecto" onsubmit="enviarProyecto(event)">
+<form id="form-proyecto">
             <div class="mb-4">
               <label class="block text-sm font-semibold mb-1">Foto de tu proyecto *</label>
               <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-blue-400 transition"
@@ -1616,31 +1616,67 @@ setTimeout(() => {window.scrollTo({ top: 0, behavior: 'smooth' });}, 100);}
         } 
     }
     
-    async function enviarProyecto(event) {
-        event.preventDefault();
-        const nombre = document.getElementById('proyecto-nombre').value.trim();
-        const titulo = document.getElementById('proyecto-titulo').value.trim();
-        const rating = parseInt(document.getElementById('proyecto-rating').value);
-        const comentario = document.getElementById('proyecto-comentario').value.trim();
-        const fotoInput = document.getElementById('foto-proyecto');
-        if (rating === 0 || !fotoInput.files[0] || nombre.length < 2 || comentario.length < 20) { mostrarNotificacion('Complete todos los campos', 'error'); return; }
-        const submitBtn = event.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Enviando...';
-        submitBtn.disabled = true;
-        try {
-            const file = fotoInput.files[0];
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                const fotoBase64 = e.target.result;
-                const { error } = await supabaseClient.from('reviews').insert([{ usuario_id: usuarioActual?.id || null, producto_id: null, rating: rating, comentario: comentario, foto: fotoBase64, tipo: 'proyecto', aprobada: false }]);
-                if (error) { mostrarNotificacion('Error al guardar. Intenta de nuevo.', 'error'); } else { mostrarNotificacion('¡Gracias por compartir tu proyecto! Lo revisaremos pronto.', 'success'); cerrarModalProyecto(); setTimeout(() => cargarTestimoniosReales(), 1000); }
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            };
-            reader.readAsDataURL(file);
-        } catch (error) { console.error('Error:', error); mostrarNotificacion('Error al enviar', 'error'); submitBtn.textContent = originalText; submitBtn.disabled = false; }
+   // ============================================
+// VALIDACIÓN - COMPARTIR PROYECTO
+// ============================================
+
+function validarFormularioProyecto(event) {
+    event.preventDefault();
+    
+    const nombre = document.getElementById('proyecto-nombre');
+    const titulo = document.getElementById('proyecto-titulo');
+    const foto = document.getElementById('foto-proyecto');
+    const comentario = document.getElementById('proyecto-comentario');
+    const rating = parseInt(document.getElementById('proyecto-rating').value);
+    
+    [nombre, titulo, comentario].forEach(el => {
+        el?.classList.remove('border-red-500', 'border-green-500');
+    });
+    
+    const errores = [];
+    
+    if (!nombre.value.trim() || nombre.value.trim().length < 3) {
+        errores.push('Nombre completo (mínimo 3 caracteres)');
+        nombre.classList.add('border-red-500');
+    } else {
+        nombre.classList.add('border-green-500');
     }
+    
+    if (!titulo.value.trim() || titulo.value.trim().length < 5) {
+        errores.push('Título del proyecto (mínimo 5 caracteres)');
+        titulo.classList.add('border-red-500');
+    } else {
+        titulo.classList.add('border-green-500');
+    }
+    
+    if (!foto.files || foto.files.length === 0) {
+        errores.push('Debes subir una foto de tu proyecto');
+    } else if (foto.files[0].size > 5 * 1024 * 1024) {
+        errores.push('La foto no debe superar los 5MB');
+    }
+    
+    if (rating < 1 || rating > 5) {
+        errores.push('Selecciona una calificación (1 a 5 estrellas)');
+    }
+    
+    if (!comentario.value.trim() || comentario.value.trim().length < 20) {
+        errores.push('Descripción del proyecto (mínimo 20 caracteres)');
+        comentario.classList.add('border-red-500');
+    } else {
+        comentario.classList.add('border-green-500');
+    }
+    
+    if (errores.length > 0) {
+        mostrarNotificacion('❌ ' + errores.join(' • '), 'error');
+        return false;
+    }
+    
+    enviarProyecto(event);
+    return true;
+}
+
+// Asignar al formulario
+document.getElementById('form-proyecto')?.addEventListener('submit', validarFormularioProyecto);
     
     // ============================================
     // CARGAR TESTIMONIOS REALES
@@ -1693,8 +1729,107 @@ setTimeout(() => {window.scrollTo({ top: 0, behavior: 'smooth' });}, 100);}
         console.log('✅ Innovakit inicializado');
     });
     
-    document.getElementById('form-login-supabase')?.addEventListener('submit', async (e) => { e.preventDefault(); const email = document.getElementById('login-email').value; const password = document.getElementById('login-password').value; if (typeof iniciarSesionSupabase === 'function') { if (await iniciarSesionSupabase(email, password)) { cerrarModalLogin(); } } });
-    document.getElementById('form-registro-supabase')?.addEventListener('submit', async (e) => { e.preventDefault(); const nombre = document.getElementById('reg-nombre').value; const telefono = document.getElementById('reg-telefono').value; const email = document.getElementById('reg-email').value; const password = document.getElementById('reg-password').value; if (typeof registrarUsuarioSupabase === 'function') { if (await registrarUsuarioSupabase(email, password, nombre, telefono)) { cerrarModalRegistro(); mostrarModalLogin(); } } });
+   // ============================================
+// VALIDACIÓN - LOGIN
+// ============================================
+
+function validarFormularioLogin(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('login-email');
+    const password = document.getElementById('login-password');
+    
+    email.classList.remove('border-red-500', 'border-green-500');
+    password.classList.remove('border-red-500', 'border-green-500');
+    
+    const errores = [];
+    
+    if (!email.value.trim()) {
+        errores.push('El email es obligatorio');
+        email.classList.add('border-red-500');
+    } else if (!email.value.includes('@') || !email.value.includes('.')) {
+        errores.push('Email inválido');
+        email.classList.add('border-red-500');
+    } else {
+        email.classList.add('border-green-500');
+    }
+    
+    if (!password.value) {
+        errores.push('La contraseña es obligatoria');
+        password.classList.add('border-red-500');
+    } else if (password.value.length < 6) {
+        errores.push('La contraseña debe tener al menos 6 caracteres');
+        password.classList.add('border-red-500');
+    } else {
+        password.classList.add('border-green-500');
+    }
+    
+    if (errores.length > 0) {
+        mostrarNotificacion('❌ ' + errores.join(' • '), 'error');
+        return false;
+    }
+    
+    iniciarSesionSupabase(email.value, password.value);
+    return true;
+}
+
+document.getElementById('form-login-supabase')?.addEventListener('submit', validarFormularioLogin);
+   // ============================================
+// VALIDACIÓN - REGISTRO
+// ============================================
+
+function validarFormularioRegistro(event) {
+    event.preventDefault();
+    
+    const nombre = document.getElementById('reg-nombre');
+    const telefono = document.getElementById('reg-telefono');
+    const email = document.getElementById('reg-email');
+    const password = document.getElementById('reg-password');
+    
+    [nombre, telefono, email, password].forEach(el => {
+        el?.classList.remove('border-red-500', 'border-green-500');
+    });
+    
+    const errores = [];
+    
+    if (!nombre.value.trim() || nombre.value.trim().length < 3) {
+        errores.push('El nombre debe tener al menos 3 caracteres');
+        nombre.classList.add('border-red-500');
+    } else {
+        nombre.classList.add('border-green-500');
+    }
+    
+    if (telefono.value.trim() && !/^[0-9+\s-]{8,15}$/.test(telefono.value.trim())) {
+        errores.push('Teléfono inválido (ej: 0972 292392)');
+        telefono.classList.add('border-red-500');
+    } else if (telefono.value.trim()) {
+        telefono.classList.add('border-green-500');
+    }
+    
+    if (!email.value.trim() || !email.value.includes('@') || !email.value.includes('.')) {
+        errores.push('Email inválido');
+        email.classList.add('border-red-500');
+    } else {
+        email.classList.add('border-green-500');
+    }
+    
+    if (password.value.length < 6) {
+        errores.push('La contraseña debe tener al menos 6 caracteres');
+        password.classList.add('border-red-500');
+    } else {
+        password.classList.add('border-green-500');
+    }
+    
+    if (errores.length > 0) {
+        mostrarNotificacion('❌ ' + errores.join(' • '), 'error');
+        return false;
+    }
+    
+    registrarUsuarioSupabase(email.value, password.value, nombre.value.trim(), telefono.value.trim());
+    return true;
+}
+
+document.getElementById('form-registro-supabase')?.addEventListener('submit', validarFormularioRegistro);
     // ============================================
 // MENÚ HAMBURGUESA - FUNCIONES FALTANTES
 // ============================================
