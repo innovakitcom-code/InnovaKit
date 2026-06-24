@@ -124,12 +124,11 @@ async function cargarUsuarioActualSupabase() {
     const { data: { user } } = await supabaseClient.auth.getUser();
     if (!user) return null;
     
-    const { data: perfil } = await supabaseClient
+const { data: perfil } = await supabaseClient
     .from('perfiles')
-    .select('nombre, telefono, es_admin') 
+    .select('*')
     .eq('id', user.id)
     .single();
-    
     usuarioActual = {
         id: user.id,
         email: user.email,
