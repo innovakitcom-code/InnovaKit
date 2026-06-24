@@ -8,16 +8,16 @@ async function registrarUsuarioSupabase(email, password, nombre, telefono) {
         mostrarNotificacion('Error de conexión', 'error');
         return false;
     }
-    
+
     try {
         const { data, error } = await supabaseClient.auth.signUp({
             email: email,
             password: password,
             options: { data: { nombre, telefono } }
         });
-        
+
         if (error) throw error;
-        
+
         if (data.user) {
             await supabaseClient.from('perfiles').insert([{
                 id: data.user.id,
@@ -26,7 +26,7 @@ async function registrarUsuarioSupabase(email, password, nombre, telefono) {
                 es_admin: false
             }]);
         }
-        
+
         mostrarNotificacion('✅ Registro exitoso. Ya puedes iniciar sesión.', 'success');
         return true;
     } catch (error) {
@@ -41,14 +41,14 @@ async function iniciarSesionSupabase(email, password) {
         mostrarNotificacion('Error de conexión', 'error');
         return false;
     }
-    
+
     try {
         const { data, error } = await supabaseClient.auth.signInWithPassword({ 
             email: email, 
             password: password 
         });
         if (error) throw error;
-        
+
         // 1. Cargar usuario actual
         await cargarUsuarioActualSupabase();
 async function iniciarSesionSupabase(email, password) {
@@ -57,30 +57,30 @@ async function iniciarSesionSupabase(email, password) {
         mostrarNotificacion('Error de conexión', 'error');
         return false;
     }
-    
+
     try {
         const { data, error } = await supabaseClient.auth.signInWithPassword({ 
             email: email, 
             password: password 
         });
         if (error) throw error;
-        
+
         // 1. Cargar usuario actual
         await cargarUsuarioActualSupabase();
-        
+
         // 2. Actualizar UI (nombre, botones)
         actualizarUIUsuario();
-        
+
         // 3. ⭐ CARGAR EL CARRITO DESDE SUPABASE ⭐
         if (typeof cargarCarritoSupabase === 'function') {
             await cargarCarritoSupabase();
         }
-        
+
         // 4. ⭐ ACTUALIZAR EL MODAL DEL CARRITO (si está abierto) ⭐
         if (typeof renderizarCarritoModal === 'function') {
             renderizarCarritoModal();
         }
-        
+
         mostrarNotificacion(`✅ ¡Bienvenido, ${usuarioActual?.nombre || email}!`, 'success');
         return true;
     } catch (error) {
@@ -91,17 +91,17 @@ async function iniciarSesionSupabase(email, password) {
 }        
         // 2. ACTUALIZAR UI
         actualizarUIUsuario();
-        
+
         // 3. ⭐ CARGAR CARRITO DESDE SUPABASE ⭐
         if (typeof cargarCarritoSupabase === 'function') {
             await cargarCarritoSupabase();
         }
-        
+
         // 4. ⭐ RENDERIZAR CARRITO ⭐
         if (typeof renderizarCarritoModal === 'function') {
             renderizarCarritoModal();
         }
-        
+
         mostrarNotificacion(`✅ ¡Bienvenido, ${usuarioActual?.nombre || email}!`, 'success');
         return true;
     } catch (error) {
@@ -125,33 +125,34 @@ async function cargarUsuarioActualSupabase() {
     if (!user) return null;
 
     const { data: perfil } = await supabaseClient
-        .from('perfiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
+    .from('perfiles')
+    .select('*')
+    .eq('id', user.id)
+    .single();
+    
     usuarioActual = {
         id: user.id,
         email: user.email,
         nombre: perfil?.nombre || user.email.split('@')[0],
         es_admin: perfil?.es_admin || false
     };
+
     // ⭐ CARGAR CARRITO SI EL USUARIO ESTÁ LOGUEADO ⭐
     if (usuarioActual && typeof cargarCarritoSupabase === 'function') {
         await cargarCarritoSupabase();
     }
-    
+
     return usuarioActual;
 }
 function actualizarUIUsuario() {
     console.log('🔄 Actualizando UI de usuario:', usuarioActual);
-    
+
     const userDesktop = document.getElementById('user-desktop');
     if (!userDesktop) {
         console.warn('⚠️ user-desktop no encontrado');
         return;
     }
-    
+
     if (usuarioActual) {
         userDesktop.innerHTML = `
             <div class="flex items-center gap-2 ml-4">
@@ -166,7 +167,7 @@ function actualizarUIUsuario() {
             </button>
         `;
     }
-    
+
     // También actualizar móvil
     const mobileContainer = document.querySelector('.sm\\:hidden .flex.justify-between');
     if (mobileContainer) {
