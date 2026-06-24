@@ -1,19 +1,12 @@
-// ============================================
-// CONFIGURACIÓN DE SUPABASE (ofuscada básicamente)
-// ============================================
-
-// ============================================
 // CONFIGURACIÓN DE SUPABASE (VÍA CLOUDFLARE WORKER)
 // ============================================
-// URL del Worker
-const WORKER_URL = 'https://dark-scene-fbe3.innovakit-com.workers.dev';
 
-// Crear cliente de Supabase apuntando al Worker
-const supabaseClient = supabase.createClient(
-    WORKER_URL + '/api/supabase',
-    'dummy-key'  // Ya no se usa, el Worker la agrega automáticamente
-);
-
+// Comentar el Worker y volver a la configuración directa
+const _SUPABASE_URL = 'aHR0cHM6Ly9sdmRqY3pmYmxhbmJhZGlrY2N4by5zdXBhYmFzZS5jby8=';
+const _SUPABASE_ANON_KEY = 'c2JfcHVibGlzaGFibGVfTzlvUjF4bXllQXkxbHVkSkpsbzNSd18yZ1c5WFpfRg==';
+const SUPABASE_URL = atob(_SUPABASE_URL);
+const SUPABASE_ANON_KEY = atob(_SUPABASE_ANON_KEY);
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // Variables globales
 let usuarioActual = null;
 let productosGlobal = [];
