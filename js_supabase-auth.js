@@ -120,22 +120,22 @@ async function cerrarSesionSupabase() {
 
 async function cargarUsuarioActualSupabase() {
     if (!supabaseClient) return null;
-    
+
     const { data: { user } } = await supabaseClient.auth.getUser();
     if (!user) return null;
-    
-const { data: perfil } = await supabaseClient
-    .from('perfiles')
-    .select('*')
-    .eq('id', user.id)
-    .single();
+
+    const { data: perfil } = await supabaseClient
+        .from('perfiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+
     usuarioActual = {
         id: user.id,
         email: user.email,
         nombre: perfil?.nombre || user.email.split('@')[0],
         es_admin: perfil?.es_admin || false
     };
-    
     // ⭐ CARGAR CARRITO SI EL USUARIO ESTÁ LOGUEADO ⭐
     if (usuarioActual && typeof cargarCarritoSupabase === 'function') {
         await cargarCarritoSupabase();
