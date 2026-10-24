@@ -11,7 +11,7 @@
   top: 0;
   z-index: 100;
   box-shadow: var(--shadow-sm);
-  padding: 0 32px; /* Márgenes laterales fijos */
+  padding: 0 32px;
 }
 
 .site-header__inner {
@@ -34,7 +34,7 @@
 }
 
 .site-header__logo img {
-  height: 55px; /* Ajustá este número si querés que el logo sea más grande o chico */
+  height: 55px;
   width: auto;
   object-fit: contain;
 }
@@ -75,9 +75,9 @@
   flex-shrink: 0;
 }
 
-/* Botón Carrito IDÉNTICO AL ORIGINAL */
+/* Botón Carrito */
 .btn-cart {
-  background: #fde047; /* Amarillo original */
+  background: #fde047;
   color: #111827;
   font-weight: 600;
   padding: 8px 16px;
@@ -93,7 +93,7 @@
 }
 
 .btn-cart:hover {
-  background: #facc15; /* Amarillo más oscuro al pasar el mouse */
+  background: #facc15;
 }
 
 .btn-login {
@@ -377,21 +377,49 @@
   }
 }
 
+/* ============================================
+   AJUSTES ESPECÍFICOS PARA CELULARES
+   ============================================ */
 @media (max-width: 560px) {
   .site-header {
-    padding: 0 16px;
+    padding: 0 10px; /* Menos margen a los costados */
   }
 
- .site-header__logo:hover {
-  opacity: 0.85;
-}
+  .site-header__inner {
+    height: 60px; /* Header más bajo */
+    gap: 8px; /* Menos espacio entre logo y botones */
+  }
 
+  .site-header__logo img {
+    height: 35px; /* Logo más chico */
+  }
+
+  .site-actions {
+    gap: 6px; /* Botones más pegados */
+  }
+
+  /* Botón Carrito: Solo emoji y número */
+  .btn-cart {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
   .btn-cart span:not(.btn-cart__count) {
-    display: none; /* En móvil mostramos solo el emoji y el número */
+    display: none; 
   }
   
+  /* Botón Login: Solo ícono de usuario */
+  .btn-login {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
   .btn-login span {
-    display: none; /* Ocultamos el texto de Ingresar */
+    display: none; 
+  }
+
+  .btn-menu-mobile {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
   }
 
   .site-footer__grid {
