@@ -233,3 +233,8 @@ strong {
 .logo-innovakit--dark .logo-innovakit__kit {
   color: #60a5fa;
 }
+@media (max-width: 768px) {
+  body {
+    background: #fff; /* En celular, fondo blanco para no notar cortes */
+  }
+}
