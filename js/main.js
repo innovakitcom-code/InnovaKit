@@ -127,21 +127,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.scroll-animate, .fade-left, .fade-right').forEach(el => observer.observe(el));
-    // 7. TRANSICIÓN SUAVE ENTRE PÁGINAS (Solo para enlaces externos)
+    // 7. TRANSICIÓN SUAVE ENTRE PÁGINAS (Con soporte para botón atrás)
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             const paginaActual = window.location.pathname.split('/').pop() || 'index.html';
-            
-            // Verificamos si es un enlace interno (ancla en la misma página)
-            // Ejemplo: "#mision" o "index.html#mision"
             const esAnclaMismaPagina = href.startsWith('#') || href.includes(paginaActual + '#');
             
-            // Solo aplicamos el fade si:
-            // - No es un ancla
-            // - No es un enlace externo (http)
-            // - No es mailto o tel
-            // - No abre en pestaña nueva (target="_blank")
             if (
                 href && 
                 !esAnclaMismaPagina &&
@@ -151,6 +143,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 !this.hasAttribute('target')
             ) {
                 e.preventDefault();
+                
+                // Guardamos que estamos navegando internamente
+                sessionStorage.setItem('navegando_interno', 'true');
+                
                 document.body.style.transition = 'opacity 0.4s ease';
                 document.body.style.opacity = '0';
                 setTimeout(() => {
@@ -159,4 +155,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
     });
-});
+
+    // SOLUCIÓN BOTÓN ATRÁS: Si volvemos a la página (via caché o botón atrás)
+    window.addEventListener('pageshow', function(event) {
+        // Si la página viene del caché (botón atrás/adelante)
+        if (event.persisted || sessionStorage.getItem('navegando_interno')) {
+            document.body.style.opacity = '1';
+            document.body.style.transition = '';
+            sessionStorage.removeItem('navegando_interno');
+        }
+    });
