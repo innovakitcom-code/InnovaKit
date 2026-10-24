@@ -1,10 +1,8 @@
 /* ============================================================
-   INNOVAKIT — IMPRESORA 3D (Estilo Oscuro)
+   INNOVAKIT — IMPRESORA 3D (Estilo Pastel Innovakit)
    ============================================================ */
 
-body {
-  background: #0F1217;
-}
+/* Fondo general claro con un toque celeste */
 
 .impresora-container {
   max-width: 1200px;
@@ -16,31 +14,36 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #00AE42;
-  color: white;
+  background: #ffffff;
+  color: #1e293b;
   padding: 10px 24px;
   border-radius: 40px;
   font-weight: 600;
   transition: all 0.3s ease;
   text-decoration: none;
   margin-bottom: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
 }
 .btn-volver:hover {
   transform: translateX(-5px);
-  background: #008a35;
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
 }
 
 /* Hero */
 .hero-impresora {
-  background: #2D2D2D;
+  background: #ffffff;
   border-radius: 32px;
   padding: 40px;
   margin-bottom: 40px;
-  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
   gap: 32px;
   align-items: center;
+  border: 1px solid #e2e8f0;
 }
 
 @media (min-width: 768px) {
@@ -51,20 +54,29 @@ body {
 
 .hero-impresora__text {
   flex: 1;
-  color: #E5E5E5;
+  color: #1e293b;
 }
 
 .hero-impresora__text h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 800;
-  color: #fff;
+  line-height: 1.1;
   margin-bottom: 16px;
+  font-family: var(--font-head);
 }
+
+/* El multicolor del logo para "Bambu Lab A1" */
 .hero-impresora__text h1 span {
-  color: #00AE42;
+  background: linear-gradient(90deg, #22c55e, #2563eb); /* Tus colores exactos */
+  -webkit-background-clip: text;
+  background-clip: text; /* Importante para Firefox y otros */
+  -webkit-text-fill-color: transparent;
+  display: inline-block; /* Para que el degradado no se corte */
 }
+
 .hero-impresora__text p {
-  color: #ADB5BD;
+  color: #64748b;
+  font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 24px;
 }
@@ -75,8 +87,8 @@ body {
   max-width: 500px;
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  background: #000;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  background: #f8fafc;
 }
 
 .hero-video-container video {
@@ -92,78 +104,95 @@ body {
   gap: 20px;
   margin: 40px 0;
 }
+
 .spec-card {
-  background: #1C2128;
+  background: #ffffff;
   border-radius: 20px;
-  padding: 24px;
+  padding: 30px 24px;
   text-align: center;
-  border: 1px solid rgba(0, 174, 66, 0.1);
+  border: 1px solid #e2e8f0;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
 }
+
 .spec-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(0, 174, 66, 0.3);
+  box-shadow: 0 15px 25px -5px rgba(59, 130, 246, 0.15);
+  border-color: #bfdbfe;
 }
+
 .spec-card i {
   font-size: 2.5rem;
-  color: #00AE42;
-  margin-bottom: 15px;
+  color: var(--blue); /* Azul Innovakit */
+  margin-bottom: 16px;
 }
+
 .spec-card h3 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #fff;
+  color: #1e293b;
   margin-bottom: 8px;
 }
+
 .spec-card p {
-  font-size: 0.85rem;
-  color: #9CA3AF;
+  font-size: 0.9rem;
+  color: #64748b;
 }
 
 /* Beneficios / Tarifas */
 .info-block {
-  background: #1C2128;
+  background: #ffffff;
   border-radius: 32px;
   padding: 40px;
   margin-bottom: 40px;
-  border: 1px solid rgba(0, 174, 66, 0.1);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
 }
+
 .info-block h2 {
-  color: #fff;
+  color: #1e293b;
   text-align: center;
   margin-bottom: 32px;
   font-size: 2rem;
+  font-family: var(--font-head);
 }
+
 .info-block ul {
   list-style: none;
   padding: 0;
   max-width: 800px;
   margin: 0 auto;
 }
+
 .info-block li {
-  color: #9CA3AF;
+  color: #475569;
   margin-bottom: 16px;
   display: flex;
   align-items: flex-start;
   gap: 12px;
   font-size: 1.05rem;
 }
+
 .info-block li i {
-  color: #00AE42;
+  color: var(--green); /* Verde Innovakit */
   margin-top: 4px;
+  font-size: 1.2rem;
 }
 
 /* FAQ */
 .faq-section {
   margin: 60px 0;
 }
+
 .faq-item {
-  background: #1C2128;
-  border-radius: 20px;
-  border: 1px solid rgba(0, 174, 66, 0.15);
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
   margin-bottom: 16px;
   overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
+
 .faq-question {
   padding: 20px 24px;
   display: flex;
@@ -172,27 +201,41 @@ body {
   cursor: pointer;
   transition: background 0.2s;
 }
-.faq-question:hover { background: rgba(0, 174, 66, 0.05); }
-.faq-question h3 { color: #fff; font-size: 1.1rem; margin: 0; }
-.faq-question i { color: #00AE42; transition: transform 0.3s; }
+
+.faq-question:hover { background: #f8fafc; }
+
+.faq-question h3 { 
+  color: #1e293b; 
+  font-size: 1.1rem; 
+  margin: 0; 
+  font-weight: 600;
+}
+
+.faq-question i { 
+  color: var(--blue); 
+  transition: transform 0.3s; 
+}
+
 .faq-item.active .faq-question i { transform: rotate(180deg); }
+
 .faq-answer {
   max-height: 0;
   padding: 0 24px;
   overflow: hidden;
   transition: all 0.4s ease;
-  color: #9CA3AF;
+  color: #64748b;
   line-height: 1.6;
 }
+
 .faq-item.active .faq-answer {
   max-height: 300px;
   padding: 0 24px 20px 24px;
 }
 
 .btn-whatsapp-large {
-  background: #00AE42;
+  background: #22c55e;
   color: white;
-  padding: 14px 32px;
+  padding: 16px 36px;
   border-radius: 50px;
   font-weight: 700;
   font-size: 1.1rem;
@@ -202,8 +245,60 @@ body {
   transition: all 0.3s ease;
   text-decoration: none;
   margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(34, 197, 94, 0.2);
 }
+
 .btn-whatsapp-large:hover {
-  background: #008a35;
+  background: #16a34a;
   transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(34, 197, 94, 0.3);
+}
+
+/* Ajustes para los bloques de información recuperados */
+.info-block h3 {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.info-block p strong {
+  color: #1e293b;
+}
+
+.info-block ul li {
+  align-items: flex-start;
+}
+
+.info-block ul li div {
+  line-height: 1.6;
+  color: #475569;
+}
+/* Animaciones de scroll */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.fade-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.fade-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-right.visible {
+    opacity: 1;
+    transform: translateX(0);
 }
