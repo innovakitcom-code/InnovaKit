@@ -26,7 +26,7 @@ async function cargarDetalleKit() {
     
     if (!grid) return;
 
-    // 1. Leemos la marca desde la URL
+    // 1. Leemos la marca desde la URL (ej: ?marca=acebott)
     const urlParams = new URLSearchParams(window.location.search);
     let marca = urlParams.get('marca') || 'kuongshun';
     marca = marca.toLowerCase();
@@ -35,7 +35,7 @@ async function cargarDetalleKit() {
     let busquedaNombre = marca === 'acebott' ? 'Acebott' : 'Kuongshun';
 
     try {
-        // 2. Buscamos el kit
+        // 2. Buscamos el kit en la base de datos
         const { data: kitData } = await supabaseClient
             .from('kits')
             .select('*')
@@ -47,25 +47,30 @@ async function cargarDetalleKit() {
             tituloEl.textContent = kitData.nombre;
             descEl.textContent = kitData.descripcion || 'Componentes y proyectos para armar y aprender.';
             
-            // Forzamos la imagen si es Kuongshun y no tiene
+            // 3. LA MAGIA: Si el kit tiene imagen en la BD, la usamos.
+            // Si no, pero es Kuongshun, le ponemos la imagen de la carpeta png.
             let imagenFondo = kitData.imagen_portada;
             
-            if (busquedaNombre === 'Kuongshun' && !imagenFondo) {
-                imagenFondo = 'png/portada_kit1.webp'; // O .png, según tu archivo
+            if (!imagenFondo && busquedaNombre === 'Kuongshun') {
+                // ACÁ PONÉ EL NOMBRE EXACTO DE TU ARCHIVO DE PORTADA DE KUONGSHUN
+                // Si es .png, cambialo. Si está en otra carpeta, cambiale la ruta.
+                imagenFondo = 'png/portada_kit1.webp'; // O 'png/portada_kit1.png'
             }
 
             if (imagenFondo && heroEl) {
                 const rutaImagen = imagenFondo.replace(/\\/g, '/');
                 heroEl.style.backgroundImage = `url('${rutaImagen}')`;
+            } else if (heroEl) {
+                // Si no hay imagen, ponemos el degradado verde/azul de Innovakit
+                heroEl.style.background = 'linear-gradient(135deg, #1e3a8a, #7eb74a, #3b82f6)';
             }
         } else {
-            // Si no encuentra el kit en la BD, usamos los datos por defecto
             kitId = marca === 'acebott' ? 2 : 1;
             tituloEl.textContent = marca === 'acebott' ? 'Línea Acebott' : 'Línea Kuongshun';
             descEl.textContent = "Componentes y proyectos para armar y aprender.";
         }
 
-        // 3. Traemos los productos
+        // 4. Traemos los productos...
         const { data: productos, error } = await supabaseClient
             .from('productos')
             .select('*')
@@ -80,11 +85,12 @@ async function cargarDetalleKit() {
             grid.innerHTML = `<p class="text-muted" style="text-align: center; padding: 40px;">No se encontraron productos para la línea ${busquedaNombre}.</p>`;
             return;
         }
-
+        
         // 4. Dibujar las tarjetas
         grid.innerHTML = productosKitActuales.map((prod, index) => {
             const precio = prod.precio ? prod.precio.toLocaleString('es-PY') : '0';
             
+            // Manejo de imágenes (usa el array si existe, si no, la principal)
             let imagenes = Array.isArray(prod.imagenes) && prod.imagenes.length > 0 
                 ? prod.imagenes 
                 : [prod.imagen_principal || 'assets/img/placeholder.png'];
@@ -123,6 +129,7 @@ async function cargarDetalleKit() {
             `;
         }).join('');
 
+        // 5. Iniciar los carruseles
         setTimeout(() => {
             productosKitActuales.forEach((_, index) => {
                 const swiperEl = document.querySelector(`.producto-swiper-${index}`);
@@ -136,6 +143,9 @@ async function cargarDetalleKit() {
     }
 }
 
+// ============================================
+// FUNCIÓN PARA ABRIR EL MODAL DE DETALLE
+// ============================================
 window.abrirModalDetalle = function(index) {
     const prod = productosKitActuales[index];
     if (!prod) return;
