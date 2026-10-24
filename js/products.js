@@ -1,5 +1,5 @@
 // ============================================
-// GESTIÓN DE PRODUCTOS Y REVIEWS
+// GESTIÓN DE PRODUCTOS
 // ============================================
 
 async function cargarProductosDestacados() {
@@ -52,11 +52,15 @@ async function cargarProductosDestacados() {
     }
 }
 
+// Función temporal para el botón "Ver detalles" (luego haremos el modal)
 window.verDetalleProducto = function(id) {
     mostrarNotificacion('El modal de detalle estará listo pronto 🚧', 'warning');
 };
 
-// LÓGICA DE REVIEWS EN EL HOME
+// ============================================
+// LÓGICA DE REVIEWS EN EL HOME (Filtros y Azar)
+// ============================================
+
 let todasLasReviews = [];
 
 async function cargarReviews() {
@@ -81,6 +85,7 @@ async function cargarReviews() {
     }
 }
 
+// --- FILTRO DE REVIEWS Y ESTILOS DE BOTONES ---
 window.filtrarReviews = function(categoria) {
     const container = document.getElementById('reviews-home-container');
     const btnComponentes = document.getElementById('btn-rev-componentes');
@@ -132,6 +137,7 @@ window.filtrarReviews = function(categoria) {
                     "${r.comentario || 'Sin comentario'}"
                 </p>
                 
+                <!-- MOSTRAR LA FOTO SI EXISTE -->
                 ${r.foto ? `<img src="${r.foto}" alt="Foto de la reseña" style="width: 100%; max-height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 16px; border: 1px solid #e2e8f0;">` : ''}
                 
                 <div style="display: flex; align-items: center; gap: 12px; border-top: 1px solid #f1f5f9; padding-top: 16px;">
@@ -148,6 +154,9 @@ window.filtrarReviews = function(categoria) {
     }).join('');
 }
 
+// ============================================
+// MODAL PARA DEJAR UNA NUEVA OPINIÓN
+// ============================================
 window.abrirModalNuevaReview = function() {
     if (!window.usuarioActual) {
         mostrarNotificacion('Inicia sesión para dejar tu opinión', 'warning');
@@ -190,6 +199,7 @@ window.abrirModalNuevaReview = function() {
                             <textarea id="review-comentario" class="form-input" rows="4" required placeholder="Contanos tu experiencia..."></textarea>
                         </div>
 
+                        <!-- NUEVO CAMPO DE FOTO -->
                         <div class="form-group">
                             <label class="form-label">Foto de tu proyecto (Opcional)</label>
                             <input type="file" id="review-foto" class="form-input" accept="image/*" style="padding: 10px; background: #f8fafc;">
@@ -215,12 +225,13 @@ window.abrirModalNuevaReview = function() {
         let urlFoto = null;
         const fileInput = document.getElementById('review-foto');
 
+        // 1. Si el usuario subió una foto, la guardamos en Supabase Storage
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
             const nombreArchivo = `review-${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
             
             const { data: uploadData, error: uploadError } = await supabaseClient.storage
-                .from('imagenes')
+                .from('imagenes') // Usamos el mismo bucket que creamos para los productos
                 .upload(nombreArchivo, file);
 
             if (uploadError) {
@@ -230,6 +241,7 @@ window.abrirModalNuevaReview = function() {
                 return;
             }
 
+            // Obtenemos la URL pública de la imagen
             const { data: urlData } = supabaseClient.storage
                 .from('imagenes')
                 .getPublicUrl(nombreArchivo);
@@ -237,12 +249,13 @@ window.abrirModalNuevaReview = function() {
             urlFoto = urlData.publicUrl;
         }
 
+        // 2. Guardamos la review en la base de datos (con o sin foto)
         const { error } = await supabaseClient.from('reviews').insert([{
             usuario_id: window.usuarioActual.id,
             tipo: document.getElementById('review-tipo').value,
             rating: parseInt(document.getElementById('review-rating').value),
             comentario: document.getElementById('review-comentario').value,
-            foto: urlFoto,
+            foto: urlFoto, // Acá guardamos la URL de la foto
             aprobada: false 
         }]);
 
@@ -267,4 +280,5 @@ window.cerrarModalReview = function(event) {
     }
 }
 
+// Ejecutar al cargar el Home
 document.addEventListener('DOMContentLoaded', cargarReviews);
