@@ -106,12 +106,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 6. ANIMACIÓN DE SCROLL GLOBAL
     const animatedElements = document.querySelectorAll('.scroll-animate, .fade-left, .fade-right, .section, .info-block, .spec-card, .product-card');
     
+    // Primero, aseguramos que todos tengan la clase scroll-animate
     animatedElements.forEach(el => {
         if (!el.classList.contains('scroll-animate') && !el.classList.contains('fade-left') && !el.classList.contains('fade-right')) {
             el.classList.add('scroll-animate');
         }
     });
 
+    // Luego, creamos el observer para activarlos al scrollear
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -122,11 +124,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.scroll-animate, .fade-left, .fade-right').forEach(el => observer.observe(el));
-
-    // 7. TRANSICIÓN SUAVE ENTRE PÁGINAS
+    // 8. TRANSICIÓN SUAVE ENTRE PÁGINAS
+    // Interceptamos los enlaces internos para hacer un fade-out antes de navegar
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
+            
+            // Solo aplicamos a enlaces internos (no anclas #, no externos, no nueva pestaña)
             if (
                 href && 
                 !href.startsWith('#') && 
@@ -136,11 +140,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 !this.hasAttribute('target')
             ) {
                 e.preventDefault();
+                
+                // Hacemos un fade-out suave en el body
                 document.body.style.transition = 'opacity 0.4s ease';
                 document.body.style.opacity = '0';
+                
+                // Redirigimos después de que termine la animación
                 setTimeout(() => {
                     window.location.href = href;
-                }, 400);
+                }, 300);
             }
         });
     });
