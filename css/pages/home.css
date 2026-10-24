@@ -125,6 +125,8 @@
   box-shadow: 0 10px 30px -10px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
+  align-items: center; /* Centra todo el contenido horizontalmente */
+  text-align: center;  /* Centra el texto también */
 }
 
 .service-card:hover {
@@ -137,6 +139,10 @@
   color: #3b82f6;
   margin-bottom: 20px;
   animation: bounceSubtle 2s infinite;
+  /* Para que el ícono quede perfectamente centrado */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes bounceSubtle {
@@ -165,7 +171,6 @@
   gap: 6px;
   font-size: 0.95rem;
   border-bottom: 2px solid #fdc344;
-  align-self: flex-start;
   padding-bottom: 2px;
   transition: all 0.2s ease;
 }
@@ -305,4 +310,39 @@
     padding: 16px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
+}
+ 
+  /* --- GRILLA DE REVIEWS EN EL HOME --- */
+.reviews-home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+/* ============================================================
+   INNOVAKIT — IMPRESORA 3D (Usando clases globales)
+   ============================================================ */
+
+/* Solo para el Hero que no está en components.css */
+.hero-impresora {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .hero-impresora {
+    flex-direction: row;
+  }
+}
+
+/* Para que el FAQ se abra y cierre bien */
+.d-none {
+  display: none !important;
+}
+
+/* Ajustes para que el video no se desborde */
+.hero-video-container video {
+  width: 100%;
+  height: auto;
+  display: block;
 }
