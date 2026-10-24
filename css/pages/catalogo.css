@@ -1,5 +1,5 @@
 /* ============================================================
-   INNOVAKIT — CATÁLOGO (4 columnas en PC)
+   INNOVAKIT — CATÁLOGO
    ============================================================ */
 
 .catalogo-header {
@@ -10,9 +10,9 @@
 }
 
 .catalogo-header .container {
-  max-width: 1400px; /* Mismo ancho que el buscador */
+  max-width: 1400px; 
   margin: 0 auto;
-  padding: 0 20px; /* Respiro a los costados */
+  padding: 0 20px; 
 }
 
 .catalogo-header h1 {
@@ -38,7 +38,6 @@
   box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
 }
 
-/* El buscador se estira al máximo */
 .catalogo-filters__search {
   flex: 1;
   min-width: 400px;
@@ -145,7 +144,7 @@
 /* --- TARJETAS DE PRODUCTO --- */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columnas exactas en PC */
+  grid-template-columns: repeat(4, 1fr); 
   gap: 20px;
 }
 
@@ -268,30 +267,7 @@
   border-radius: 8px;
 }
 
-/* --- RESPONSIVE (Tablets y Celulares) --- */
-@media (max-width: 1024px) {
-  .products-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas en tablets */
-  }
-}
-
-@media (max-width: 768px) {
-  .catalogo-filters__search {
-    min-width: 100%;
-  }
-  
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas en celular */
-    gap: 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .products-grid {
-    grid-template-columns: 1fr; /* 1 columna en celulares muy chicos */
-  }
-}
-/* --- ESTILOS PARA EL MODAL --- */
+/* --- MODAL BASE --- */
 .modal-detalle {
     position: fixed;
     inset: 0;
@@ -321,54 +297,117 @@
     transform: translateY(0) scale(1);
 }
 
-/* Ocultar en móviles el grid doble del modal */
-@media (max-width: 768px) {
-    .modal-detalle__content > div:nth-child(2) {
-        grid-template-columns: 1fr !important;
-    }
+/* Botones del modal en Computadora */
+.modal-detalle__footer {
+    padding: 24px;
+    background: #f8fafc;
+    display: flex;
+    gap: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+.modal-detalle__footer .btn {
+    flex: 1;
+    padding: 14px;
 }
 
 /* ============================================
-   AJUSTES EXCLUSIVOS PARA CELULARES (Catálogo)
+   RESPONSIVE (Tablets y Celulares)
    ============================================ */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
-  
-  /* La barra de filtros se vuelve una columna */
+  /* Grilla y filtros */
   .catalogo-filters {
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
     padding: 16px;
   }
-
-  /* El buscador ocupa todo el ancho */
   .catalogo-filters__search {
-    min-width: 100%; /* Quita el límite de 400px */
+    min-width: 100%;
     width: 100%;
   }
-
-  /* Los selectores de categoría y precio ocupan todo el ancho */
   .catalogo-filters__select {
     width: 100%;
     padding: 12px;
   }
-
-  /* El botón de categorías azul ocupa todo el ancho */
-  .dropdown {
-    width: 100%;
-  }
-  
+  .dropdown { width: 100%; }
   .btn-dropdown {
     width: 100%;
-    justify-content: space-between; /* El texto a la izquierda y la flechita a la derecha */
+    justify-content: space-between;
     padding: 12px 16px;
   }
-
-  /* El menú desplegable ocupa todo el ancho de la pantalla */
   .dropdown-menu {
     width: 100%;
-    position: static; /* Se despliega empujando el contenido hacia abajo */
+    position: static;
     margin-top: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  /* Modal en celular */
+  .modal-detalle__content {
+    max-width: 95% !important;
+    max-height: 90vh !important;
+    border-radius: 16px !important;
+    margin: 0 auto;
+  }
+
+  .modal-detalle__content > div:nth-child(2) {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 16px !important;
+    max-height: 55vh !important;
+  }
+
+  .modal-detalle__content div[style*="height: 300px"] {
+    height: 150px !important; 
+    padding: 10px !important;
+  }
+
+  .modal-detalle__content h2 {
+    font-size: 1.3rem !important;
+    margin-bottom: 8px !important;
+  }
+
+  .modal-detalle__content div[style*="font-size: 2rem"] {
+    font-size: 1.4rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Botones del modal en celular */
+  .modal-detalle__footer {
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 12px 16px !important;
+  }
+
+  .modal-detalle__footer .btn {
+    width: 100% !important;
+    padding: 10px 12px !important; 
+    font-size: 0.85rem !important; 
+    flex: none !important;
+    white-space: nowrap !important; 
+    min-height: 38px !important; 
+    height: 38px !important; 
+  }
+
+  .modal-detalle__footer .btn i {
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
   }
 }
