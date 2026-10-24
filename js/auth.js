@@ -16,7 +16,7 @@ async function registrarUsuarioSupabase(email, password, nombre, telefono = '') 
             await supabaseClient.from('perfiles').insert([{
                 id: data.user.id,
                 nombre: nombre || email.split('@')[0],
-                telefono: telefono,
+                telefono: telefono, // <-- AGREGADO
                 es_admin: false
             }]);
         }
@@ -69,7 +69,7 @@ async function cargarUsuarioActualSupabase() {
         id: user.id,
         email: user.email,
         nombre: perfil?.nombre || user.email.split('@')[0],
-        telefono: perfil?.telefono || '',
+        telefono: perfil?.telefono || '', // <-- AGREGADO
         es_admin: perfil?.es_admin || false
     };
 
@@ -92,7 +92,7 @@ function actualizarUIUsuario() {
         btnLogin.onclick = null;
         btnLogin.addEventListener('click', (e) => {
             e.preventDefault();
-            abrirPanelUsuario();
+            abrirPanelUsuario(); // <-- ABRE EL PANEL
         });
     } else {
         btnLogin.innerHTML = `<i class="fas fa-user"></i> <span>Ingresar</span>`;
@@ -108,6 +108,9 @@ function actualizarUIUsuario() {
     }
 }
 
+// ============================================
+// MODALES
+// ============================================
 function abrirModalLogin() {
     document.getElementById('modal-login').classList.add('is-open');
     document.body.style.overflow = 'hidden';
@@ -131,7 +134,11 @@ function cerrarModalRegistro(event) {
     document.body.style.overflow = '';
 }
 
+// ============================================
+// EVENTOS DE LOS FORMULARIOS
+// ============================================
 document.addEventListener('DOMContentLoaded', () => {
+    // Login Form
     document.getElementById('form-login')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('login-email').value;
@@ -139,10 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
         await iniciarSesionSupabase(email, pass);
     });
 
+    // Registro Form
     document.getElementById('form-registro')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const nombre = document.getElementById('reg-nombre').value;
-        const telefono = document.getElementById('reg-telefono').value;
+        const telefono = document.getElementById('reg-telefono').value; // <-- AGREGADO
         const email = document.getElementById('reg-email').value;
         const pass = document.getElementById('reg-password').value;
         const exito = await registrarUsuarioSupabase(email, pass, nombre, telefono);
