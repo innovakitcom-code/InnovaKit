@@ -39,6 +39,7 @@ window.abrirModalDetalleProducto = function(id) {
         especificacionesHTML = '<li>No hay especificaciones técnicas cargadas.</li>';
     }
 
+    // 4. Documentos (Manuales) - MOVIDO ACÁ
     let documentosHTML = '';
     if (Array.isArray(prod.documentos) && prod.documentos.length > 0) {
         documentosHTML = `
@@ -92,7 +93,7 @@ window.abrirModalDetalleProducto = function(id) {
                         </div>
                         ` : ''}
 
-                        ${documentosHTML}
+                        ${documentosHTML} <!-- ACÁ SE MUESTRAN LOS MANUALES -->
                     </div>
                 </div>
 
@@ -130,16 +131,22 @@ async function inicializarCatalogo() {
             .select('*')
             .eq('activo', true)
             .is('kit_id', null)
+        //    .order('id'); //
 
         if (error) throw error;
+
+        let productosMezclados = data || [];
+        productosMezclados.sort(() => Math.random() - 0.5);
 
         todosLosProductos = data || [];
         productosFiltrados = [...todosLosProductos];
 
+        // Leer parámetros de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const q = urlParams.get('q');
         const cat = urlParams.get('cat');
 
+        // Si hay búsqueda, llenar el input y mostrar el banner
         if (q) {
             const searchInput = document.getElementById('search-input');
             if (searchInput) {
@@ -152,6 +159,7 @@ async function inicializarCatalogo() {
             }
         }
 
+        // Si hay categoría, activar el botón del dropdown
         if (cat) {
             const catItem = document.querySelector(`.dropdown-item[data-cat="${cat}"]`);
             if (catItem) {
@@ -162,6 +170,7 @@ async function inicializarCatalogo() {
             }
         }
 
+        // Si hay filtros desde la URL, aplicarlos
         if (q || cat) {
             aplicarFiltros();
         } else {
@@ -197,6 +206,7 @@ function renderizarPagina() {
     document.getElementById('btn-prev').disabled = paginaActual === 1;
     document.getElementById('btn-next').disabled = paginaActual === totalPaginas;
 
+    // Dibujar tarjetas
     grid.innerHTML = productosPagina.map(prod => {
         const precio = prod.precio ? prod.precio.toLocaleString('es-PY') : '0';
         const imagen = prod.imagen_principal || 'assets/img/placeholder.png';
