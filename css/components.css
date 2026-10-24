@@ -113,7 +113,7 @@
 
 .product-card__image-wrapper {
   position: relative;
-  background: var(--paper);
+  background: var(--white);
   padding: 20px;
   height: 200px;
   display: flex;
@@ -148,6 +148,7 @@
 }
 
 .product-card__content {
+  background: var(--paper);
   padding: 20px;
   display: flex;
   flex-direction: column;
