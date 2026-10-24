@@ -309,45 +309,66 @@
     }
 
     // PRODUCTOS
-    async function cargarProductos() {
-      activarNav('productos');
-      const { data } = await supabaseClient.from('productos').select('*').order('id', { ascending: false });
-      productosAdmin = data || [];
-      
-      document.getElementById('contenido-principal').innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-          <h2 class="page-title" style="margin: 0;">Gestión de Productos</h2>
-          <button onclick="abrirModalProducto()" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo producto</button>
-        </div>
-        
-        <!-- BUSCADOR DE PRODUCTOS -->
-        <div style="margin-bottom: 24px; position: relative;">
-          <i class="fas fa-search" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
-          <input type="text" id="search-admin-prod" class="form-input" placeholder="Buscar producto por nombre o categoría..." style="padding-left: 44px; font-size: 1rem;" oninput="filtrarTablaProductos()">
-        </div>
+async function cargarProductos() {
+  activarNav('productos');
+  const { data } = await supabaseClient.from('productos').select('*').order('id', { ascending: false });
+  productosAdmin = data || [];
+  
+  document.getElementById('contenido-principal').innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <h2 class="page-title" style="margin: 0;">Gestión de Productos</h2>
+      <button onclick="abrirModalProducto()" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo producto</button>
+    </div>
+    
+    <!-- BUSCADOR DE PRODUCTOS -->
+    <div style="margin-bottom: 24px; position: relative;">
+      <i class="fas fa-search" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+      <input type="text" id="search-admin-prod" class="form-input" placeholder="Buscar producto por nombre o categoría..." style="padding-left: 44px; font-size: 1rem;" oninput="filtrarTablaProductos()">
+    </div>
 
-        <div class="table-container">
-          <table>
-            <thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Tipo</th><th style="text-align: right;">Acciones</th></tr></thead>
-            <tbody id="tabla-productos">
-              ${productosAdmin.map(p => `
-                <tr class="fila-producto" data-nombre="${p.nombre.toLowerCase()}" data-categoria="${(p.categoria || '').toLowerCase()}">
-                  <td style="color: #64748b;">#${p.id}</td>
-                  <td style="font-weight: 600;">${p.nombre}</td>
-                  <td style="color: #16a34a; font-weight: 600;">${p.precio ? p.precio.toLocaleString('es-PY') : 0} Gs.</td>
-                  <td>${p.stock ? '<span style="color: #16a34a;"><i class="fas fa-check-circle"></i> Sí</span>' : '<span style="color: #dc2626;"><i class="fas fa-times-circle"></i> No</span>'}</td>
-                  <td>${p.kit_id ? `<span style="background:#e0e7ff; color:#4338ca; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Kit ${p.kit_id}</span>` : '<span style="background:#f1f5f9; color:#475569; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Suelto</span>'}</td>
-                  <td style="text-align: right;">
-                    <button onclick="editarProducto(${p.id})" class="btn btn-sm btn-edit" title="Editar"><i class="fas fa-pen"></i></button>
-                    <button onclick="eliminarProducto(${p.id})" class="btn btn-sm btn-delete" title="Eliminar"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        </div>
-      `;
-    }
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Tipo</th>
+            <th>Estado</th> <!-- NUEVA COLUMNA -->
+            <th style="text-align: right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-productos">
+          ${productosAdmin.map(p => `
+            <tr class="fila-producto" data-nombre="${p.nombre.toLowerCase()}" data-categoria="${(p.categoria || '').toLowerCase()}" style="${!p.activo ? 'background-color: #f8fafc; opacity: 0.7;' : ''}">
+              <td style="color: #64748b;">#${p.id}</td>
+              <td style="font-weight: 600;">${p.nombre}</td>
+              <td style="color: #16a34a; font-weight: 600;">${p.precio ? p.precio.toLocaleString('es-PY') : 0} Gs.</td>
+              <td>${p.stock ? '<span style="color: #16a34a;"><i class="fas fa-check-circle"></i> Sí</span>' : '<span style="color: #dc2626;"><i class="fas fa-times-circle"></i> No</span>'}</td>
+              <td>${p.kit_id ? `<span style="background:#e0e7ff; color:#4338ca; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Kit ${p.kit_id}</span>` : '<span style="background:#f1f5f9; color:#475569; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Suelto</span>'}</td>
+              
+              <!-- ESTADO (Activo / Oculto) -->
+              <td>
+                ${p.activo !== false 
+                  ? '<span style="color: #16a34a; font-weight: 600; font-size: 0.85rem; background: #dcfce7; padding: 4px 10px; border-radius: 99px;">Activo</span>' 
+                  : '<span style="color: #dc2626; font-weight: 600; font-size: 0.85rem; background: #fee2e2; padding: 4px 10px; border-radius: 99px;">Oculto</span>'}
+              </td>
+
+              <td style="text-align: right;">
+                <button onclick="editarProducto(${p.id})" class="btn btn-sm btn-edit" title="Editar"><i class="fas fa-pen"></i></button>
+                
+                ${p.activo !== false 
+                  ? `<button onclick="eliminarProducto(${p.id})" class="btn btn-sm btn-delete" title="Ocultar de la tienda"><i class="fas fa-eye-slash"></i></button>` 
+                  : `<button onclick="restaurarProducto(${p.id})" class="btn btn-sm btn-approve" title="Mostrar en la tienda"><i class="fas fa-eye"></i></button>`}
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
 
     // FUNCIÓN PARA FILTRAR LA TABLA EN TIEMPO REAL
     window.filtrarTablaProductos = function() {
