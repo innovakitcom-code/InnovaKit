@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Kit - Innovakit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Swiper CSS (para el carrusel) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/kit-detalle.css">
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="index.html" class="site-header__logo" title="Volver al inicio">
+        <img src="assets/img/logo-innovakit.png" alt="Innovakit - Inicio">
+      </a>
+      <nav class="site-nav">
+        <a href="catalogo.html" class="site-nav__link">Componentes</a>
+        <a href="kits.html" class="site-nav__link" style="color: var(--green); font-weight: 700;">Kits Armados</a>
+        <a href="asesorias.html" class="site-nav__link">Asesoría</a>
+        <a href="impresora3d.html" class="site-nav__link">Impresora 3D</a>
+        <a href="index.html#contacto" class="site-nav__link">Contacto</a>
+      </nav>
+      <div class="site-actions">
+        <button class="btn-cart" id="btn-carrito">
+          🛒 Carrito (<span id="carrito-count-desktop">0</span>)
+        </button>
+        <button class="btn-login" id="btn-login">
+          <i class="fas fa-user"></i> <span>Ingresar</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    
+    <!-- HERO DEL KIT -->
+    <section class="kit-hero">
+      <div class="kit-hero__overlay"></div>
+      <div class="container kit-hero__content animate-fade-in-up">
+        <a href="kits.html" class="kit-hero__back"><i class="fas fa-arrow-left"></i> Volver a Kits</a>
+        
+        <h1 id="kit-titulo">Cargando Kit...</h1>
+        <p id="kit-descripcion">Cargando descripción...</p>
+      </div>
+    </section>
+
+    <!-- PRODUCTOS DEL KIT -->
+    <div class="container" style="padding: 60px 20px;">
+      <div class="section-header">
+        <h2>Productos incluidos en este Kit</h2>
+      </div>
+      
+      <!-- Grilla con los productos y carruseles -->
+      <div class="products-grid" id="kit-products-grid">
+        <div style="text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px 0;">
+            <i class="fas fa-spinner fa-spin fa-2x text-muted"></i>
+            <p class="text-muted" style="margin-top: 10px;">Cargando productos...</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__bottom" style="border: none; padding-top: 0;">
+        <span>© 2026 Innovakit. Todos los derechos reservados.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Librerías y Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> <!-- Swiper JS -->
+  
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script> 
+
+  <!-- SCRIPT ESPECÍFICO DE LOS KITS (Faltaba) -->
+  <script src="js/kits.js"></script>
+</body>
+</html>

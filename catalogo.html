@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Componentes - Innovakit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/catalogo.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="index.html" class="site-header__logo" title="Volver al inicio">
+        <img src="assets/img/logo-innovakit.png" alt="Innovakit - Inicio">
+      </a>
+
+      <nav class="site-nav">
+        <a href="catalogo.html" class="site-nav__link" style="color: var(--green); font-weight: 700;">Componentes</a>
+        <a href="kits.html" class="site-nav__link">Kits Armados</a>
+        <a href="asesorias.html" class="site-nav__link">Asesoría</a>
+        <a href="impresora3d.html" class="site-nav__link">Impresora 3D</a>
+        <a href="index.html#contacto" class="site-nav__link">Contacto</a>
+      </nav>
+
+      <div class="site-actions">
+        <button class="btn-cart" id="btn-carrito">
+          🛒 Carrito (<span id="carrito-count-desktop">0</span>)
+        </button>
+        <button class="btn-login" id="btn-login">
+          <i class="fas fa-user"></i> <span>Ingresar</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main id="main">
+    
+    <div class="catalogo-header">
+      <div class="container"> 
+        <h1>Catálogo de Componentes</h1>
+        <p>Encontrá todo lo que necesitás para tus proyectos de electrónica y robótica.</p>
+      </div>
+    </div>
+
+    <div class="container" style="padding-bottom: 60px; max-width: 1400px;">
+      
+      <!-- BANNER DE BÚSQUEDA (Muestra el término buscado desde el Home) -->
+      <div id="resultado-busqueda" style="display: none; margin-bottom: 24px; padding: 16px 20px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; color: #1e3a8a; font-weight: 500;">
+        Mostrando resultados para: <strong id="texto-busqueda"></strong>
+      </div>
+
+      <!-- FILTROS -->
+      <div class="catalogo-filters">
+        <div class="catalogo-filters__search">
+          <input type="search" id="search-input" placeholder="🔍 Buscar componentes..." aria-label="Buscar productos">
+        </div>
+        
+        <div class="dropdown" id="dropdown-categorias">
+          <button class="btn-dropdown" id="btn-dropdown-cat">
+            <i class="fas fa-layer-group"></i> Categorías <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+          </button>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item" data-cat="todos"><i class="fas fa-th-large" style="color: #64748b;"></i> Todas las categorías</a>
+            <a href="#" class="dropdown-item" data-cat="Sensores"><i class="fas fa-microchip" style="color: #22c55e;"></i> Sensores</a>
+            <a href="#" class="dropdown-item" data-cat="Motores"><i class="fas fa-cog" style="color: #ef4444;"></i> Motores</a>
+            <a href="#" class="dropdown-item" data-cat="Displays"><i class="fas fa-tv" style="color: #a855f7;"></i> Displays</a>
+            <a href="#" class="dropdown-item" data-cat="Placas"><i class="fas fa-server" style="color: #3b82f6;"></i> Placas</a>
+          </div>
+        </div>
+
+        <select class="catalogo-filters__select" id="price-filter">
+          <option value="todos">💎 Todos los precios</option>
+          <option value="0-50000">💰 Hasta Gs. 50.000</option>
+          <option value="50000-100000">💵 Gs. 50.000 - 100.000</option>
+          <option value="100000-999999999">💳 Más de Gs. 100.000</option>
+        </select>
+      </div>
+
+      <!-- GRILLA DE PRODUCTOS -->
+      <div class="products-grid" id="catalogo-grid">
+        <!-- JS inyecta aquí -->
+      </div>
+
+      <!-- PAGINACIÓN -->
+      <div class="pagination" id="pagination-container" style="display: none;">
+        <button class="btn btn-secondary" id="btn-prev" style="background: #fde047; color: #111;"> <i class="fas fa-chevron-left"></i> Anterior</button>
+        <span id="page-info">Página 1</span>
+        <button class="btn btn-secondary" id="btn-next" style="background: #fde047; color: #111;">Siguiente <i class="fas fa-chevron-right"></i></button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__bottom" style="border: none; padding-top: 0;">
+        <span>© 2026 Innovakit. Todos los derechos reservados.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script> 
+
+  <script src="js/catalogo.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "name": "Innovakit - Kits de Electrónica en Paraguay",
+  "short_name": "Innovakit",
+  "description": "Kits de electrónica y robótica educativa en Paraguay. Aprende, crea y destaca con nuestros productos.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#7eb74a",
+  "background_color": "#ffffff",
+  "scope": "/",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["education", "technology", "electronics"],
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "png/screenshot-mobile.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Vista móvil de Innovakit"
+    },
+    {
+      "src": "png/screenshot-desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Vista de escritorio de Innovakit"
+    }
+  ]
+}

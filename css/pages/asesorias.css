@@ -1,0 +1,162 @@
+/* ============================================================
+   INNOVAKIT — ASESORÍAS
+   ============================================================ */
+
+/* HERO CON SOPORTE PARA IMAGEN DE FONDO */
+.asesorias-header {
+  /* Si querés poner una foto, cambiala en el HTML. Acá dejamos un gradiente oscuro por defecto */
+  background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), var(--ink);
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+  border-bottom: 4px solid var(--blue);
+}
+
+.asesorias-header h1 {
+  color: white;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 12px;
+}
+
+.asesorias-header p {
+  color: #cbd5e1;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Sección Asesores */
+.asesores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.asesor-card {
+  background: var(--white);
+  border-radius: var(--r-xl);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--line);
+  transition: var(--t-std);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.asesor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Foto redonda */
+.asesor-card__img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  background: var(--paper);
+  border: 4px solid var(--blue); /* Borde celeste como en tu original */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #cbd5e1;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.asesor-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.asesor-card h3 {
+  font-size: 1.35rem;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.asesor-card__rol {
+  color: var(--blue);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.asesor-card p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+/* LAS ETIQUETAS DE COLORES */
+.asesor-tags {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--r-full);
+  border: 1px solid transparent;
+}
+
+/* Colores de las etiquetas basados en tu foto */
+.tag-blue { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+.tag-green { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+.tag-purple { background: #f3e8ff; color: #7e22ce; border-color: #e9d5ff; }
+.tag-yellow { background: #fef9c3; color: #a16207; border-color: #fef08a; }
+.tag-red { background: #fee2e2; color: #b91c1c; border-color: #fecaca; }
+.tag-indigo { background: #e0e7ff; color: #4338ca; border-color: #c7d2fe; }
+
+/* Formulario (sin cambios) */
+.form-asesoria-container {
+  background: var(--white);
+  border-radius: var(--r-xl);
+  padding: 40px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-asesoria-container h2 {
+  text-align: center;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.form-asesoria-container > p {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 32px;
+  font-size: 0.95rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group-full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-asesoria-container { padding: 24px; }
+}

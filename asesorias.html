@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asesoría para Proyectos - Innovakit</title>
+  <meta name="description" content="Asesoría profesional para tu feria científica o proyecto técnico en Paraguay.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages/asesorias.css">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="index.html" class="site-header__logo" title="Volver al inicio">
+        <img src="assets/img/logo-innovakit.png" alt="Innovakit - Inicio">
+      </a>
+
+      <nav class="site-nav">
+        <a href="catalogo.html" class="site-nav__link">Componentes</a>
+        <a href="kits.html" class="site-nav__link">Kits Armados</a>
+        <a href="asesorias.html" class="site-nav__link" style="color: var(--green); font-weight: 700;">Asesoría</a>
+        <a href="impresora3d.html" class="site-nav__link">Impresora 3D</a>
+        <a href="index.html#contacto" class="site-nav__link">Contacto</a>
+      </nav>
+
+      <div class="site-actions">
+        <button class="btn-cart" id="btn-carrito">
+          🛒 Carrito (<span id="carrito-count-desktop">0</span>)
+        </button>
+        <button class="btn-login" id="btn-login">
+          <i class="fas fa-user"></i> <span>Ingresar</span>
+        </button>
+        <button class="btn-menu-mobile" id="btn-open-menu" aria-label="Abrir menú">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="mobile-menu-overlay" id="menu-overlay"></div>
+  <aside class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu__header">
+      <span class="logo-innovakit">
+        <span class="logo-innovakit__in">Inn</span><span class="logo-innovakit__no">o</span><span class="logo-innovakit__va">va</span><span class="logo-innovakit__kit">kit</span>
+      </span>
+      <button class="mobile-menu__close" id="btn-close-menu"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="mobile-menu__nav">
+      <a href="catalogo.html"><i class="fas fa-microchip"></i> Componentes</a>
+      <a href="kits.html"><i class="fas fa-box"></i> Kits Armados</a>
+      <a href="impresora3d.html"><i class="fas fa-cube"></i> Impresora 3D</a>
+      <a href="asesorias.html"><i class="fas fa-chalkboard-teacher"></i> Asesoría</a>
+      <a href="index.html#contacto"><i class="fas fa-envelope"></i> Contacto</a>
+    </nav>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main id="main">
+    
+    <!-- HERO: Si querés una foto de fondo, agregala en el style="background-image: ..." -->
+    <section class="asesorias-header animate-fade-in-up">
+      <div class="container">
+        <h1>Asesoría para Proyectos Técnicos</h1>
+        <p>¿Participás en una feria científica o expo técnica? Nuestros expertos te ayudan a desarrollar tu proyecto con Innovakit.</p>
+      </div>
+    </section>
+
+    <div class="container" style="padding: 60px 20px;">
+      
+      <!-- Nuestros Asesores -->
+      <h2 style="text-align: center; margin-bottom: 40px; font-size: 2rem; color: var(--ink);">Nuestros Asesores</h2>
+      
+      <div class="asesores-grid">
+        <!-- Asesor 1 -->
+        <div class="asesor-card animate-fade-in-up">
+          <div class="asesor-card__img">
+            <!-- Si la imagen no existe, el onerror pone un ícono -->
+            <img src="asesores/icono_hombre.jpg" alt="Ing. Carlos Mendoza" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-user-tie\'></i>';">
+          </div>
+          <h3>Ing. Carlos Mendoza</h3>
+          <span class="asesor-card__rol" style="color: #2563eb;">Especialista en Robótica Educativa</span>
+          <p>+5 años asesorando proyectos escolares. Experto en Arduino y automatización.</p>
+          <div class="asesor-tags">
+            <span class="tag tag-blue">Electrónica</span>
+            <span class="tag tag-green">Programación</span>
+          </div>
+        </div>
+
+        <!-- Asesor 2 -->
+        <div class="asesor-card animate-fade-in-up" style="animation-delay: 0.1s;">
+          <div class="asesor-card__img">
+            <img src="asesores/icono_mujer.jpg" alt="Lic. Ana Torres" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-user-graduate\'></i>';">
+          </div>
+          <h3>Lic. Ana Torres</h3>
+          <span class="asesor-card__rol" style="color: #9333ea;">Pedagoga Tecnológica</span>
+          <p>Especializada en metodologías de aprendizaje STEM para proyectos educativos.</p>
+          <div class="asesor-tags">
+            <span class="tag tag-purple">STEM</span>
+            <span class="tag tag-yellow">Metodología</span>
+          </div>
+        </div>
+
+        <!-- Asesor 3 -->
+        <div class="asesor-card animate-fade-in-up" style="animation-delay: 0.2s;">
+          <div class="asesor-card__img">
+            <img src="asesores/icono_hombre2.jpg" alt="Ing. Roberto Díaz" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-user-astronaut\'></i>';">
+          </div>
+          <h3>Ing. Roberto Díaz</h3>
+          <span class="asesor-card__rol" style="color: #dc2626;">Experto en IoT</span>
+          <p>Desarrollador de proyectos con sensores y aplicaciones IoT para ferias científicas.</p>
+          <div class="asesor-tags">
+            <span class="tag tag-red">IoT</span>
+            <span class="tag tag-indigo">Sensores</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="form-asesoria-container animate-fade-in-up" style="animation-delay: 0.3s;">
+        <h2>Contanos tu idea</h2>
+        <p>Completá el formulario y te contactamos a la brevedad.</p>
+
+        <form action="https://formsubmit.co/innovakit.com@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Nueva solicitud de asesoría - Innovakit">
+          <input type="hidden" name="_template" value="table">
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Nombre completo *</label>
+              <input type="text" name="nombre" class="form-input" required placeholder="Tu nombre">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Colegio / Institución</label>
+              <input type="text" name="institucion" class="form-input" placeholder="Nombre de tu colegio">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Correo electrónico *</label>
+              <input type="email" name="email" class="form-input" required placeholder="tu@email.com">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Teléfono *</label>
+              <input type="tel" name="telefono" class="form-input" required placeholder="0972 292392">
+            </div>
+
+            <div class="form-group form-group-full">
+              <label class="form-label">Tipo de proyecto</label>
+              <select name="tipo_proyecto" class="form-input">
+                <option>Feria científica</option>
+                <option>Expo técnica</option>
+                <option>Proyecto escolar</option>
+                <option>Competencia de robótica</option>
+                <option>Otro</option>
+              </select>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label class="form-label">Describe tu proyecto o idea *</label>
+              <textarea name="proyecto" rows="4" class="form-input" required placeholder="¿Qué querés hacer? ¿Qué materiales tenés? ¿Qué necesitás?"></textarea>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;">
+            <button type="submit" class="btn btn-primary" style="flex: 1; min-width: 200px; padding: 14px;">
+              <i class="fas fa-paper-plane"></i> Enviar solicitud
+            </button>
+            <button type="button" onclick="enviarAsesoriaWhatsApp()" class="btn btn-whatsapp" style="flex: 1; min-width: 200px; padding: 14px;">
+              <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="contacto">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <span class="logo-innovakit">
+            <span class="logo-innovakit__in">Inn</span><span class="logo-innovakit__no">o</span><span class="logo-innovakit__va">va</span><span class="logo-innovakit__kit">kit</span>
+          </span>
+          <p>Kits de electrónica y robótica educativa en Paraguay. Aprende, crea y destaca con nuestros productos.</p>
+        </div>
+        <div>
+          <h4>Productos</h4>
+          <ul>
+            <li><a href="kits.html">Kits de electrónica</a></li>
+            <li><a href="catalogo.html">Componentes</a></li>
+            <li><a href="impresora3d.html">Impresora 3D</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Servicios</h4>
+          <ul>
+            <li><a href="asesorias.html">Asesoría</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:innovakit.com@gmail.com"><i class="fas fa-envelope"></i> innovakit.com@gmail.com</a></li>
+            <li><a href="tel:+595972292392"><i class="fas fa-phone-alt"></i> +595 972 292392</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© 2026 Innovakit. Todos los derechos reservados.</span>
+        <div class="site-footer__social">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS GLOBALES -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script> 
+
+  <script>
+    function enviarAsesoriaWhatsApp() {
+        const nombre = document.querySelector('input[name="nombre"]').value;
+        const institucion = document.querySelector('input[name="institucion"]').value;
+        const tipo = document.querySelector('select[name="tipo_proyecto"]').value;
+        const proyecto = document.querySelector('textarea[name="proyecto"]').value;
+        
+        if (!nombre || !proyecto) {
+            mostrarNotificacion('Por favor, completa tu nombre y describe tu proyecto.', 'warning');
+            return;
+        }
+        
+        let mensaje = "📋 *SOLICITUD DE ASESORÍA* 📋\n\n";
+        mensaje += "👤 *Nombre:* " + nombre + "\n";
+        if(institucion) mensaje += "🏫 *Institución:* " + institucion + "\n";
+        mensaje += "🎯 *Tipo:* " + tipo + "\n\n";
+        mensaje += "📝 *Proyecto:*\n" + proyecto;
+        
+        window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`, '_blank');
+    }
+  </script>
+</body>
+</html>

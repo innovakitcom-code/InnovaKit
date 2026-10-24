@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Innovakit - Kits de Electrónica en Paraguay</title>
+  <meta name="description" content="🤖 Innovakit - Kits de electrónica en Paraguay ✅ Arduino, Motores, Sensores, robótica educativa ✅ Envíos a Asunción y todo el país.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/pages/home.css">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      
+      <a href="index.html" class="site-header__logo" title="Volver al inicio">
+        <img src="assets/img/logo-innovakit.png" alt="Innovakit - Inicio">
+      </a>
+
+      <nav class="site-nav" aria-label="Navegación principal">
+        <a href="index.html#mision" class="site-nav__link">Misión</a>
+        <span class="site-nav__separator">|</span>
+        <a href="index.html#vision" class="site-nav__link">Visión</a>
+        <span class="site-nav__separator">|</span>
+        <a href="catalogo.html" class="site-nav__link">Productos</a>
+        <span class="site-nav__separator">|</span>
+        <a href="kits.html" class="site-nav__link">Kits Armados</a>
+        <span class="site-nav__separator">|</span>
+        <a href="impresora3d.html" class="site-nav__link">Impresora 3D</a>
+        <span class="site-nav__separator">|</span>
+        <a href="asesorias.html" class="site-nav__link">Asesoría</a>
+        <span class="site-nav__separator">|</span>
+        <a href="index.html#contacto" class="site-nav__link">Contacto</a>
+      </nav>
+
+      <div class="site-actions">
+        <button class="btn-cart" id="btn-carrito">
+          🛒 Carrito (<span id="carrito-count-desktop">0</span>)
+        </button>
+        
+        <button class="btn-login" id="btn-login">
+          <i class="fas fa-user"></i> Ingresar
+        </button>
+        
+        <button class="btn-menu-mobile" id="btn-open-menu" aria-label="Abrir menú">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="mobile-menu-overlay" id="menu-overlay"></div>
+  <aside class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu__header">
+      <span class="logo-innovakit">
+        <span class="logo-innovakit__in">Inn</span><span class="logo-innovakit__no">o</span><span class="logo-innovakit__va">va</span><span class="logo-innovakit__kit">kit</span>
+      </span>
+      <button class="mobile-menu__close" id="btn-close-menu"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="mobile-menu__nav">
+      <a href="index.html#mision"><i class="fas fa-bullseye"></i> Misión</a>
+      <a href="index.html#vision"><i class="fas fa-lightbulb"></i> Visión</a>
+      <a href="catalogo.html"><i class="fas fa-microchip"></i> Productos</a>
+      <a href="kits.html"><i class="fas fa-box"></i> Kits Armados</a>
+      <a href="impresora3d.html"><i class="fas fa-cube"></i> Impresora 3D</a>
+      <a href="asesorias.html"><i class="fas fa-chalkboard-teacher"></i> Asesoría</a>
+      <a href="index.html#contacto"><i class="fas fa-envelope"></i> Contacto</a>
+    </nav>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main id="main">
+    
+    <!-- 1. HERO CON BUSCADOR -->
+    <section class="hero-search">
+      <div class="container animate-fade-in-up">
+        <h1>Electrónica y robótica para tus proyectos</h1>
+        <p>Buscá el componente que necesitás, o contanos tu idea y te ayudamos a armarla.</p>
+        
+        <form class="hero-search__form" action="catalogo.html" method="GET">
+          <input type="search" name="q" placeholder="Buscar Arduino, ESP32, sensores, protoboard..." aria-label="Buscar productos">
+          <button type="submit">Buscar</button>
+        </form>
+
+        <div class="chips-container animate-fade-in-up" style="animation-delay: 0.1s;">
+          <a href="catalogo.html" class="chip active">Todos</a>
+          <a href="catalogo.html?cat=Placas" class="chip">Placas</a>
+          <a href="catalogo.html?cat=Sensores" class="chip">Sensores</a>
+          <a href="catalogo.html?cat=Motores" class="chip">Motores</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. SERVICIOS -->
+    <section class="services-section">
+      <div class="container">
+        <div class="services-grid">
+          
+          <article class="service-card animate-fade-in-up" style="animation-delay: 0.2s;">
+            <div class="service-card__icon"><i class="fas fa-chalkboard-teacher"></i></div>
+            <h3>Asesoría para tu proyecto</h3>
+            <p>Te ayudamos a elegir componentes para tu feria científica o trabajo escolar.</p>
+            <a href="asesorias.html" class="service-card__link">Pedir asesoría <i class="fas fa-arrow-right"></i></a>
+          </article>
+
+          <article class="service-card animate-fade-in-up" style="animation-delay: 0.3s;">
+            <div class="service-card__icon"><i class="fas fa-cube"></i></div>
+            <h3>Impresión 3D</h3>
+            <p>Piezas, carcasas y soportes a medida para tus circuitos.</p>
+            <a href="impresora3d.html" class="service-card__link">Cotizar una pieza <i class="fas fa-arrow-right"></i></a>
+          </article>
+
+          <article class="service-card animate-fade-in-up" style="animation-delay: 0.4s;">
+            <div class="service-card__icon"><i class="fas fa-box-open"></i></div>
+            <h3>Kits armados</h3>
+            <p>Todo en una caja, con guía paso a paso para empezar.</p>
+            <a href="kits.html" class="service-card__link">Ver kits <i class="fas fa-arrow-right"></i></a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PRODUCTOS DESTACADOS -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Productos destacados</h2>
+          <a href="catalogo.html" class="section-link">Ver catálogo completo</a>
+        </div>
+        
+        <div class="products-grid" id="featured-products">
+          <div style="text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px 0;">
+            <i class="fas fa-spinner fa-spin fa-2x text-muted"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. FRANJA DE IMPRESIÓN 3D -->
+    <section class="section">
+      <div class="container">
+        <div class="banner-promo animate-fade-in-up">
+          <div>
+            <h2>¿No encontrás la pieza que necesitás?</h2>
+            <p>La diseñamos e imprimimos en 3D a medida para tu proyecto.</p>
+          </div>
+          <a href="impresora3d.html" class="btn btn-primary">Contanos tu idea</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. QUIÉNES SOMOS -->
+    <section class="section" id="mision" style="background: #fff;">
+      <div class="container">
+        <div class="section-header" id="vision">
+          <h2>Quiénes somos</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-card">
+            <h3>Misión</h3>
+            <p>Hacer que aprender electrónica sea accesible y emocionante, brindando herramientas prácticas que impulsen la creatividad.</p>
+          </div>
+          <div class="about-card">
+            <h3>Visión</h3>
+            <p>Ser referentes en educación tecnológica en Paraguay, inspirando a nuevas generaciones.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="contacto">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <span class="logo-innovakit">
+            <span class="logo-innovakit__in">Inn</span><span class="logo-innovakit__no">o</span><span class="logo-innovakit__va">va</span><span class="logo-innovakit__kit">kit</span>
+          </span>
+          <p>Kits de electrónica y robótica educativa en Paraguay. Aprende, crea y destaca con nuestros productos.</p>
+        </div>
+        <div>
+          <h4>Productos</h4>
+          <ul>
+            <li><a href="kits.html">Kits de electrónica</a></li>
+            <li><a href="catalogo.html">Componentes</a></li>
+            <li><a href="impresora3d.html">Impresora 3D</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Servicios</h4>
+          <ul>
+            <li><a href="asesorias.html">Asesoría</a></li>
+            <li><a href="#">Proyectos</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:innovakit.com@gmail.com"><i class="fas fa-envelope"></i> innovakit.com@gmail.com</a></li>
+            <li><a href="tel:+595972292392"><i class="fas fa-phone-alt"></i> +595 972 292392</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <span>© 2026 Innovakit. Todos los derechos reservados.</span>
+        <div class="site-footer__social">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- LIBRERÍAS EXTERNAS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- SCRIPTS GLOBALES -->
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- SCRIPTS ESPECÍFICOS DEL INDEX -->
+  <script src="js/products.js"></script>
+</body>
+</html>

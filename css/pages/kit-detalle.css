@@ -1,0 +1,381 @@
+/* ============================================================
+   INNOVAKIT — KIT DETALLE
+   ============================================================ */
+
+/* HERO DEL KIT CON PORTADA */
+.kit-hero {
+  position: relative;
+  /* La imagen de fondo se inyecta por JS, acá ponemos un color de respaldo */
+  background-color: #0f172a; 
+  background-size: cover;
+  background-position: center;
+  padding: 120px 0;
+  overflow: hidden;
+  border-bottom: 4px solid var(--green);
+}
+
+/* El filtro oscuro para que el texto blanco se lea bien */
+.kit-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 100%);
+  z-index: 1;
+}
+
+.kit-hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center; /* Centramos el texto como en tu web original */
+}
+
+.kit-hero__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-bottom: 24px;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.kit-hero__back:hover {
+  color: var(--green);
+}
+
+.kit-hero h1 {
+  color: white;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 16px;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.kit-hero p {
+  color: #e2e8f0;
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+/* ============================================================
+   ESTILOS EXTRA PARA EL CARRUSEL EN LAS TARJETAS
+   ============================================================ */
+
+.producto-swiper-0, .producto-swiper-1, .producto-swiper-2, .producto-swiper-3 {
+    width: 100%;
+    height: 180px; /* Ajusta la altura según necesites */
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: var(--blue);
+    background: rgba(255, 255, 255, 0.9);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.swiper-button-next:hover, .swiper-button-prev:hover {
+    background: var(--blue);
+    color: white;
+}
+
+.swiper-button-next::after, .swiper-button-prev::after {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--blue);
+}
+/* ============================================================
+   NUEVO DISEÑO DE TARJETAS DE KIT (Horizontales y compactas)
+   ============================================================ */
+
+/* Grilla en 1 columna para que ocupen el ancho y no sean largas verticalmente */
+.kit-products-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.kit-product-card {
+    display: flex;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--t-std);
+}
+
+.kit-product-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: #cbd5e1;
+}
+
+/* Lado izquierdo: Carrusel de imágenes */
+.kit-product-card__media {
+    width: 350px;
+    min-width: 350px;
+    background: #f8fafc;
+    position: relative;
+    border-right: 1px solid var(--line);
+}
+
+.kit-product-card__media .swiper {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+}
+
+.kit-product-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 20px;
+}
+
+/* Lado derecho: Información */
+.kit-product-card__info {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.kit-product-card__info h3 {
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+}
+
+.kit-product-card__desc {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.kit-product-card__price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--green);
+    margin-bottom: 16px;
+}
+
+/* El enlace azul de Ver detalles */
+.kit-product-card__link {
+    color: var(--blue);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    margin-bottom: 24px;
+    display: inline-block;
+    cursor: pointer;
+}
+.kit-product-card__link:hover {
+    text-decoration: underline;
+}
+
+/* Botones de Acción */
+.kit-product-card__actions {
+    display: flex;
+    gap: 12px;
+}
+
+.kit-product-card__actions .btn {
+    flex: 1;
+    padding: 12px;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .kit-product-card {
+        flex-direction: column;
+    }
+    .kit-product-card__media {
+        width: 100%;
+        min-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+    }
+}
+
+/* ============================================================
+   MODAL DE DETALLE DEL PRODUCTO
+   ============================================================ */
+.modal-detalle {
+    position: fixed;
+    inset: 0;
+    background: rgba(23, 33, 43, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--t-std);
+}
+
+.modal-detalle.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-detalle__content {
+    background: var(--white);
+    border-radius: var(--r-xl);
+    width: 100%;
+    max-width: 1000px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+}
+
+.modal-detalle__header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-detalle__header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.modal-detalle__body {
+    padding: 24px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+@media (max-width: 768px) {
+    .modal-detalle__body {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Columna Izquierda (Imagen + Miniaturas) */
+.modal-galeria {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.modal-galeria__main {
+    background: #f8fafc;
+    border-radius: var(--r-lg);
+    border: 1px solid var(--line);
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.modal-galeria__main img {
+    max-height: 100%;
+    object-fit: contain;
+}
+.modal-galeria__thumbs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+.modal-galeria__thumbs img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border: 2px solid transparent;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    background: #f8fafc;
+    padding: 4px;
+}
+.modal-galeria__thumbs img.active {
+    border-color: var(--blue);
+}
+
+/* Columna Derecha (Texto) */
+.modal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.modal-info h4 {
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.modal-info p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Lista de Componentes con Scroll Interno */
+.modal-componentes {
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 16px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.modal-componentes ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+.modal-componentes li {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+}
+
+/* Especificaciones */
+.modal-especificaciones {
+    background: #eff6ff; /* Fondo celesteito */
+    border: 1px solid #bfdbfe;
+    border-radius: var(--r-md);
+    padding: 16px;
+}
+.modal-especificaciones ul {
+    padding-left: 0;
+}
+.modal-especificaciones li {
+    font-size: 0.9rem;
+    color: #1e3a8a;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-detalle__footer {
+    padding: 20px 24px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 12px;
+    background: var(--paper);
+}
+.modal-detalle__footer .btn {
+    flex: 1;
+    padding: 14px;
+}

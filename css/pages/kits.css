@@ -1,0 +1,67 @@
+/* ============================================================
+   INNOVAKIT — KITS PAGE
+   ============================================================ */
+
+.kits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.kit-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: 1px solid var(--line);
+}
+
+.kit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2);
+  border-color: var(--green);
+}
+
+.kit-card__image {
+  height: 250px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  border-bottom: 4px solid var(--green);
+}
+
+.kit-card__image img {
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.kit-card:hover .kit-card__image img {
+  transform: scale(1.05);
+}
+
+.kit-card__content {
+  padding: 32px;
+  text-align: center;
+}
+
+.kit-card__content h3 {
+  font-size: 1.6rem;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.kit-card__content p {
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  flex: 1; 
+}

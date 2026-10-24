@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin - Innovakit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pages/admin.css">
+</head>
+<body>
+
+  <!-- ========================================== -->
+  <!-- PANTALLA DE LOGIN -->
+  <!-- ========================================== -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <h1>
+        <span class="logo-innovakit">
+          <span class="logo-innovakit__in">Inn</span><span class="logo-innovakit__no">o</span><span class="logo-innovakit__va">va</span><span class="logo-innovakit__kit">kit</span>
+        </span>
+      </h1>
+      <p style="text-align: center; color: #64748b; margin-bottom: 24px;">Panel de Administración</p>
+      
+      <div id="login-error" style="display: none; margin-bottom: 16px; padding: 12px; background: #fee2e2; color: #b91c1c; border-radius: 8px; font-size: 0.9rem;"></div>
+
+      <form id="admin-login-form">
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; color: #334155;">Email</label>
+          <input type="email" id="admin-email" class="form-input" placeholder="admin@innovakit.com" required style="width: 100%;">
+        </div>
+        <div style="margin-bottom: 24px;">
+          <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; color: #334155;">Contraseña</label>
+          <input type="password" id="admin-password" class="form-input" placeholder="••••••••" required style="width: 100%;">
+        </div>
+        <button type="submit" id="login-btn" class="btn btn-primary btn-block" style="padding: 14px;">Ingresar al Panel</button>
+      </form>
+      
+      <p style="text-align: center; margin-top: 24px; font-size: 0.9rem;">
+        <a href="index.html" style="color: #64748b; text-decoration: none;">← Volver a la tienda</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- PANEL ADMIN -->
+  <!-- ========================================== -->
+  <div id="admin-panel" class="admin-layout" style="display: none;">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1 style="font-size: 1.5rem;">
+          <span class="logo-innovakit">
+            <span class="logo-innovakit__in">Inn</span><span class="logo-innovakit__no">o</span><span class="logo-innovakit__va">va</span><span class="logo-innovakit__kit">kit</span>
+          </span>
+        </h1>
+        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 4px;">Panel Admin</p>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <button onclick="cargarDashboard()" id="nav-dashboard" class="nav-item active"><i class="fas fa-chart-line"></i> Dashboard</button>
+        <button onclick="cargarProductos()" id="nav-productos" class="nav-item"><i class="fas fa-microchip"></i> Productos</button>
+        <button onclick="cargarKits()" id="nav-kits" class="nav-item"><i class="fas fa-box"></i> Kits</button>
+        <button onclick="cargarReviews()" id="nav-reviews" class="nav-item"><i class="fas fa-star"></i> Reviews</button>
+        <button onclick="cargarPedidos()" id="nav-pedidos" class="nav-item"><i class="fas fa-shopping-cart"></i> Pedidos</button>
+        <button onclick="cargarRankingSorteo()" id="nav-sorteo" class="nav-item"><i class="fas fa-trophy"></i> Ranking / Sorteo</button>
+        <button onclick="cargarUsuarios()" id="nav-usuarios" class="nav-item"><i class="fas fa-users"></i> Usuarios</button>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div style="margin-bottom: 12px;">
+          <p id="admin-nombre" style="font-weight: 600; color: #fff;">Administrador</p>
+          <p id="admin-email" style="font-size: 0.75rem; color: #94a3b8;"></p>
+        </div>
+        <button onclick="cerrarSesionAdmin()" class="btn btn-danger" style="width: 100%; padding: 10px; border-radius: 8px; background: #dc2626; color: white;">
+          <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+        </button>
+      </div>
+    </aside>
+    
+    <!-- CONTENIDO -->
+    <main class="main-content">
+      <div id="contenido-principal">
+        <div style="text-align: center; padding: 60px;">
+          <i class="fas fa-spinner fa-spin fa-3x" style="color: #3b82f6;"></i>
+          <p style="margin-top: 16px; color: #64748b;">Cargando...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL PRODUCTO -->
+  <!-- ========================================== -->
+  <div id="modal-producto" class="admin-modal">
+    <div class="admin-modal__content">
+      <div class="admin-modal__header">
+        <h2 id="modal-titulo">Agregar Producto</h2>
+        <button onclick="cerrarModalProducto()" style="background:none; border:none; font-size: 1.5rem; cursor:pointer; color: #64748b;">&times;</button>
+      </div>
+      
+      <form id="form-producto">
+        <input type="hidden" id="producto-id">
+        
+        <div class="form-group">
+          <label class="form-label">Nombre *</label>
+          <input type="text" id="prod-nombre" class="form-input" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Descripción</label>
+          <textarea id="prod-descripcion" class="form-input" rows="3"></textarea>
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Precio (Gs.) *</label>
+            <input type="number" id="prod-precio" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Categoría</label>
+            <input type="text" id="prod-categoria" class="form-input" placeholder="Ej: Sensores, Placas...">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Imagen principal (URL)</label>
+          <input type="text" id="prod-imagen" class="form-input" placeholder="assets/img/producto.webp">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Especificaciones (una por línea)</label>
+          <textarea id="prod-especificaciones" class="form-input" rows="3"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Componentes (uno por línea, solo si es Kit)</label>
+          <textarea id="prod-componentes" class="form-input" rows="4"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label style="display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="prod-stock" checked> <span style="font-weight: 600; font-size: 0.9rem;">Producto disponible (Stock)</span>
+          </label>
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Tipo</label>
+            <select id="prod-tipo" class="form-input">
+              <option value="componente">Componente suelto</option>
+              <option value="kit">Producto de Kit</option>
+            </select>
+          </div>
+          <div class="form-group" id="kit-id-container" style="display: none;">
+            <label class="form-label">ID del Kit</label>
+            <input type="number" id="prod-kit-id" class="form-input" placeholder="Ej: 1">
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Guardar</button>
+          <button type="button" onclick="cerrarModalProducto()" class="btn" style="flex: 1; background: #e2e8f0;">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+
+  <script>
+    // ============================================
+    // LÓGICA DEL PANEL ADMIN
+    // ============================================
+    let usuarioAdmin = null;
+    let productosAdmin = [];
+    let kitsAdmin = [];
+
+    // -- LOGIN --
+    document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('admin-email').value;
+      const password = document.getElementById('admin-password').value;
+      const loginBtn = document.getElementById('login-btn');
+      const errorDiv = document.getElementById('login-error');
+      
+      loginBtn.textContent = 'Verificando...';
+      loginBtn.disabled = true;
+      errorDiv.style.display = 'none';
+      
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        
+        const { data: perfil, error: perfilError } = await supabaseClient.from('perfiles').select('*').eq('id', data.user.id).single();
+        
+        if (perfilError || !perfil?.es_admin) {
+          await supabaseClient.auth.signOut();
+          throw new Error('No tienes permisos de administrador');
+        }
+        
+        usuarioAdmin = { id: data.user.id, email: data.user.email, nombre: perfil.nombre };
+        iniciarPanel();
+      } catch (error) {
+        errorDiv.textContent = error.message;
+        errorDiv.style.display = 'block';
+        loginBtn.textContent = 'Ingresar al Panel';
+        loginBtn.disabled = false;
+      }
+    });
+
+    function iniciarPanel() {
+      document.getElementById('admin-nombre').textContent = usuarioAdmin.nombre;
+      document.getElementById('admin-email').textContent = usuarioAdmin.email;
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'flex';
+      cargarDashboard();
+    }
+
+    function cerrarSesionAdmin() {
+      supabaseClient.auth.signOut();
+      location.reload();
+    }
+
+    function activarNav(seccion) {
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      document.getElementById(`nav-${seccion}`)?.classList.add('active');
+    }
+
+    // -- 1. DASHBOARD --
+    async function cargarDashboard() {
+      activarNav('dashboard');
+      const { count: prodCount } = await supabaseClient.from('productos').select('*', { count: 'exact', head: true });
+      const { count: pedidosCount } = await supabaseClient.from('pedidos').select('*', { count: 'exact', head: true });
+      const { count: reviewsCount } = await supabaseClient.from('reviews').select('*', { count: 'exact', head: true }).eq('aprobada', false);
+      const { count: usuariosCount } = await supabaseClient.from('perfiles').select('*', { count: 'exact', head: true });
+      
+      document.getElementById('contenido-principal').innerHTML = `
+        <h2 class="page-title">Dashboard</h2>
+        <div class="stats-grid">
+          <div class="stat-card"><i class="fas fa-microchip" style="color: #3b82f6;"></i><h3>${prodCount || 0}</h3><p>Productos totales</p></div>
+          <div class="stat-card"><i class="fas fa-shopping-cart" style="color: #f59e0b;"></i><h3>${pedidosCount || 0}</h3><p>Pedidos recibidos</p></div>
+          <div class="stat-card"><i class="fas fa-star" style="color: #eab308;"></i><h3>${reviewsCount || 0}</h3><p>Reviews pendientes</p></div>
+          <div class="stat-card"><i class="fas fa-users" style="color: #8b5cf6;"></i><h3>${usuariosCount || 0}</h3><p>Usuarios registrados</p></div>
+        </div>
+        <div style="background: #fff; padding: 24px; border-radius: 12px; text-align: center; color: #64748b;">
+          <i class="fas fa-smile fa-3x" style="color: #cbd5e1; margin-bottom: 16px;"></i>
+          <p>¡Bienvenido al panel, ${usuarioAdmin.nombre}! Usá el menú de la izquierda para gestionar tu tienda.</p>
+        </div>
+      `;
+    }
+
+    // -- 2. PRODUCTOS --
+    async function cargarProductos() {
+      activarNav('productos');
+      const { data } = await supabaseClient.from('productos').select('*').order('id', { ascending: false });
+      productosAdmin = data || [];
+      
+      document.getElementById('contenido-principal').innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <h2 class="page-title" style="margin: 0;">Productos</h2>
+          <button onclick="abrirModalProducto()" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo producto</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Tipo</th><th>Acciones</th></tr></thead>
+            <tbody>
+              ${productosAdmin.map(p => `
+                <tr>
+                  <td>${p.id}</td>
+                  <td>${p.nombre}</td>
+                  <td style="color: #16a34a; font-weight: 600;">${p.precio ? p.precio.toLocaleString('es-PY') : 0} Gs.</td>
+                  <td>${p.stock ? '<span style="color: #16a34a;">✔</span>' : '<span style="color: #dc2626;">✖</span>'}</td>
+                  <td>${p.kit_id ? `<span style="background:#e0e7ff; color:#4338ca; padding:2px 8px; border-radius:99px; font-size:0.8rem;">Kit ${p.kit_id}</span>` : 'Suelto'}</td>
+                  <td>
+                    <button onclick="editarProducto(${p.id})" class="btn-sm btn-edit"><i class="fas fa-edit"></i></button>
+                    <button onclick="eliminarProducto(${p.id})" class="btn-sm btn-delete"><i class="fas fa-trash"></i></button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function abrirModalProducto(producto = null) {
+      document.getElementById('modal-titulo').textContent = producto ? 'Editar Producto' : 'Agregar Producto';
+      document.getElementById('producto-id').value = producto?.id || '';
+      document.getElementById('prod-nombre').value = producto?.nombre || '';
+      document.getElementById('prod-descripcion').value = producto?.descripcion || '';
+      document.getElementById('prod-precio').value = producto?.precio || '';
+      document.getElementById('prod-categoria').value = producto?.categoria || '';
+      document.getElementById('prod-imagen').value = producto?.imagen_principal || '';
+      document.getElementById('prod-especificaciones').value = (producto?.especificaciones || []).join('\n');
+      document.getElementById('prod-componentes').value = (producto?.componentes_lista || []).join('\n');
+      document.getElementById('prod-stock').checked = producto?.stock !== false;
+      document.getElementById('prod-tipo').value = producto?.kit_id ? 'kit' : 'componente';
+      document.getElementById('prod-kit-id').value = producto?.kit_id || '';
+      
+      toggleKitId();
+      document.getElementById('modal-producto').classList.add('is-open');
+    }
+
+    function cerrarModalProducto() {
+      document.getElementById('modal-producto').classList.remove('is-open');
+      document.getElementById('form-producto').reset();
+    }
+
+    function toggleKitId() {
+      const tipo = document.getElementById('prod-tipo').value;
+      document.getElementById('kit-id-container').style.display = tipo === 'kit' ? 'block' : 'none';
+    }
+    document.getElementById('prod-tipo').addEventListener('change', toggleKitId);
+
+    document.getElementById('form-producto').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('producto-id').value;
+      const tipo = document.getElementById('prod-tipo').value;
+      
+      const data = {
+        nombre: document.getElementById('prod-nombre').value,
+        descripcion: document.getElementById('prod-descripcion').value,
+        precio: parseInt(document.getElementById('prod-precio').value),
+        categoria: document.getElementById('prod-categoria').value,
+        imagen_principal: document.getElementById('prod-imagen').value,
+        especificaciones: document.getElementById('prod-especificaciones').value.split('\n').filter(s => s.trim()),
+        componentes_lista: document.getElementById('prod-componentes').value.split('\n').filter(s => s.trim()),
+        stock: document.getElementById('prod-stock').checked,
+        activo: true,
+        kit_id: tipo === 'kit' ? parseInt(document.getElementById('prod-kit-id').value) : null
+      };
+      
+      if (id) await supabaseClient.from('productos').update(data).eq('id', id);
+      else await supabaseClient.from('productos').insert([data]);
+      
+      cerrarModalProducto();
+      cargarProductos();
+    });
+
+    async function editarProducto(id) { abrirModalProducto(productosAdmin.find(p => p.id === id)); }
+    async function eliminarProducto(id) { if (confirm('¿Eliminar producto?')) { await supabaseClient.from('productos').update({ activo: false }).eq('id', id); cargarProductos(); } }
+
+    // -- 3. KITS --
+    async function cargarKits() {
+      activarNav('kits');
+      // En tu DB original los kits se manejaban como productos con kit_id.
+      // Pero si tenés una tabla 'kits' separada, la traemos:
+      const { data } = await supabaseClient.from('kits').select('*');
+      kitsAdmin = data || [];
+      
+      document.getElementById('contenido-principal').innerHTML = `
+        <h2 class="page-title">Kits Base</h2>
+        <p style="color:#64748b; margin-bottom: 24px;">Estos son los contenedores de kits (Kuongshun, Acebott, etc.)</p>
+        <div class="table-container">
+          <table>
+            <thead><tr><th>ID</th><th>Nombre</th><th>Descripción</th></tr></thead>
+            <tbody>
+              ${kitsAdmin.map(k => `
+                <tr>
+                  <td>${k.id}</td>
+                  <td><strong>${k.nombre}</strong></td>
+                  <td>${k.descripcion || '-'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // -- 4. REVIEWS --
+    async function cargarReviews() {
+      activarNav('reviews');
+      const { data } = await supabaseClient.from('reviews').select('*').order('created_at', { ascending: false });
+      
+      document.getElementById('contenido-principal').innerHTML = `
+        <h2 class="page-title">Reviews Pendientes</h2>
+        <div class="table-container">
+          <table>
+            <thead><tr><th>ID</th><th>Rating</th><th>Comentario</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody>
+              ${(data || []).map(r => `
+                <tr>
+                  <td>${r.id}</td>
+                  <td>${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</td>
+                  <td>${r.comentario || 'Sin texto'}</td>
+                  <td>${r.aprobada ? '<span style="color:#16a34a;">Aprobada</span>' : '<span style="color:#eab308;">Pendiente</span>'}</td>
+                  <td>
+                    ${!r.aprobada ? `
+                      <button onclick="aprobarReview(${r.id})" class="btn-sm btn-approve"><i class="fas fa-check"></i></button>
+                      <button onclick="eliminarReview(${r.id})" class="btn-sm btn-delete"><i class="fas fa-trash"></i></button>
+                    ` : '-'}
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    async function aprobarReview(id) { await supabaseClient.from('reviews').update({ aprobada: true }).eq('id', id); cargarReviews(); }
+    async function eliminarReview(id) { if (confirm('¿Eliminar?')) { await supabaseClient.from('reviews').delete().eq('id', id); cargarReviews(); } }
+
+    // -- 5. PEDIDOS --
+    async function cargarPedidos() {
+      activarNav('pedidos');
+      const { data } = await supabaseClient.from('pedidos').select('*').order('created_at', { ascending: false });
+      
+      document.getElementById('contenido-principal').innerHTML = `
+        <h2 class="page-title">Pedidos</h2>
+        <div class="table-container">
+          <table>
+            <thead><tr><th>ID</th><th>Usuario ID</th><th>Total</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody>
+              ${(data || []).map(p => `
+                <tr>
+                  <td>#${p.id}</td>
+                  <td>${p.usuario_id.substring(0,8)}...</td>
+                  <td style="font-weight:600; color:#16a34a;">${(p.total || 0).toLocaleString('es-PY')} Gs.</td>
+                  <td>${p.estado === 'completado' ? '✅' : p.estado === 'cancelado' ? '❌' : '⏳'} ${p.estado}</td>
+                  <td>
+                    ${p.estado === 'pendiente' ? `
+                      <button onclick="cambiarEstadoPedido(${p.id}, 'completado')" class="btn-sm btn-approve">Completar</button>
+                      <button onclick="cambiarEstadoPedido(${p.id}, 'cancelado')" class="btn-sm btn-delete">Cancelar</button>
+                    ` : '-'}
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    async function cambiarEstadoPedido(id, estado) {
+      if (confirm(`¿Cambiar estado a ${estado}?`)) {
+        await supabaseClient.from('pedidos').update({ estado }).eq('id', id);
+        cargarPedidos();
+      }
+    }
+
+    // -- 6. SORTEO --
+    async function cargarRankingSorteo() {
+      activarNav('sorteo');
+      document.getElementById('contenido-principal').innerHTML = `
+        <h2 class="page-title">Ranking / Sorteo</h2>
+        <div style="background: #fff; padding: 24px; border-radius: 12px; text-align: center; color: #64748b;">
+          <i class="fas fa-trophy fa-3x" style="color: #fbbf24; margin-bottom: 16px;"></i>
+          <p>El módulo de sorteo leerá los pedidos completados para calcular los puntos por usuario.</p>
+          <p style="font-size: 0.9rem; margin-top: 8px;">(Podés agregar acá el botón de sortear y la tabla de posiciones).</p>
+        </div>
+      `;
+    }
+
+    // -- 7. USUARIOS --
+    async function cargarUsuarios() {
+      activarNav('usuarios');
+      const { data } = await supabaseClient.from('perfiles').select('*');
+      
+      document.getElementById('contenido-principal').innerHTML = `
+        <h2 class="page-title">Usuarios</h2>
+        <div class="table-container">
+          <table>
+            <thead><tr><th>Nombre</th><th>ID</th><th>Admin</th></tr></thead>
+            <tbody>
+              ${(data || []).map(u => `
+                <tr>
+                  <td>${u.nombre || '-'}</td>
+                  <td>${u.id.substring(0,8)}...</td>
+                  <td>${u.es_admin ? 'Sí' : 'No'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // -- AUTO LOGIN --
+    document.addEventListener('DOMContentLoaded', async () => {
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (user) {
+        const { data: perfil } = await supabaseClient.from('perfiles').select('*').eq('id', user.id).single();
+        if (perfil?.es_admin) {
+          usuarioAdmin = { id: user.id, email: user.email, nombre: perfil.nombre };
+          iniciarPanel();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
