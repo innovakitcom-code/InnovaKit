@@ -487,11 +487,19 @@
     });
 
     if (result.isConfirmed) {
-        await supabaseClient.from('productos').update({ activo: false }).eq('id', id);
-        cargarProductos();
+        const { error } = await supabaseClient
+            .from('productos')
+            .update({ activo: false })
+            .eq('id', id);
+
+        if (error) {
+            Swal.fire('Error', 'No se pudo eliminar: ' + error.message, 'error');
+        } else {
+            Swal.fire('Eliminado', 'El producto fue ocultado correctamente.', 'success');
+            cargarProductos();
+        }
     }
 }
-
     // ==========================================
     // KITS (CON BUSCADOR)
     // ==========================================
