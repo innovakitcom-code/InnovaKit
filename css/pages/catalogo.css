@@ -203,7 +203,7 @@
 .product-card__price {
   font-size: 1.2rem;
   font-weight: 800;
-  color: var(--green);
+  color: #7eb74a;
   margin-top: auto;
   margin-bottom: 16px;
 }
