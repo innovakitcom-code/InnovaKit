@@ -379,3 +379,77 @@
     flex: 1;
     padding: 14px;
 }
+@media (max-width: 768px) {
+  /* El modal ocupa el 95% de la pantalla */
+  .modal-detalle__content {
+    width: 95% !important;
+    max-height: 90vh !important;
+    border-radius: 16px !important;
+    margin: 0 auto;
+  }
+
+  /* Grilla en 1 columna y padding ajustado */
+  .modal-detalle__body {
+    grid-template-columns: 1fr !important;
+    padding: 16px !important;
+    gap: 16px !important;
+    max-height: 60vh !important; /* Scroll interno */
+  }
+
+  /* Imagen del kit más chica */
+  .modal-galeria__main {
+    height: 180px !important;
+    padding: 12px !important;
+  }
+
+  /* Título y textos más chicos */
+  .modal-info h4 {
+    font-size: 1rem !important;
+  }
+  .modal-info p {
+    font-size: 0.9rem !important;
+  }
+  
+  /* Listas de componentes más compactas */
+  .modal-componentes {
+    padding: 12px !important;
+    max-height: 150px !important;
+  }
+  .modal-componentes li {
+    font-size: 0.85rem !important;
+    margin-bottom: 4px !important;
+  }
+  .modal-especificaciones li {
+    font-size: 0.85rem !important;
+  }
+
+  /* Footer con botones más chicos */
+  .modal-detalle__footer {
+    flex-direction: column !important;
+    padding: 12px 16px !important;
+    gap: 8px !important;
+  }
+  
+  .modal-detalle__footer .btn {
+    padding: 10px !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Botones del modal de kits más pequeños y compactos */
+  .modal-detalle__footer {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 12px 16px !important;
+  }
+
+  .modal-detalle__footer .btn {
+    width: 100% !important;
+    padding: 10px 16px !important; 
+    font-size: 0.85rem !important; 
+    min-height: auto !important; 
+    flex: none !important; 
+  }
+}
