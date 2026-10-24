@@ -496,15 +496,18 @@ async function cargarProductos() {
     });
 
     async function editarProducto(id) { abrirModalProducto(productosAdmin.find(p => p.id === id)); }
-    async function eliminarProducto(id) {
+// ==========================================
+// ELIMINAR (Ocultar) PRODUCTO
+// ==========================================
+async function eliminarProducto(id) {
     const result = await Swal.fire({
-        title: '¿Eliminar producto?',
-        text: "El producto se ocultará de la tienda.",
+        title: '¿Ocultar producto?',
+        text: "El producto dejará de ser visible en la tienda, pero no se borrará de la base de datos.",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#ef4444',
         cancelButtonColor: '#64748b',
-        confirmButtonText: 'Sí, eliminar',
+        confirmButtonText: 'Sí, ocultar',
         cancelButtonText: 'Cancelar'
     });
 
@@ -515,14 +518,45 @@ async function cargarProductos() {
             .eq('id', id);
 
         if (error) {
-            Swal.fire('Error', 'No se pudo eliminar: ' + error.message, 'error');
+            Swal.fire('Error', 'No se pudo ocultar: ' + error.message, 'error');
+            console.error(error);
         } else {
-            Swal.fire('Eliminado', 'El producto fue ocultado correctamente.', 'success');
-            cargarProductos();
+            Swal.fire('Oculto', 'El producto ya no es visible en la tienda.', 'success');
+            cargarProductos(); // Recarga la tabla para ver el cambio de estado
         }
     }
 }
-    // ==========================================
+
+// ==========================================
+// RESTAURAR (Mostrar) PRODUCTO
+// ==========================================
+async function restaurarProducto(id) {
+    const result = await Swal.fire({
+        title: '¿Mostrar producto?',
+        text: "El producto volverá a ser visible en la tienda.",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#16a34a',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Sí, mostrar',
+        cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+        const { error } = await supabaseClient
+            .from('productos')
+            .update({ activo: true })
+            .eq('id', id);
+
+        if (error) {
+            Swal.fire('Error', 'No se pudo restaurar: ' + error.message, 'error');
+            console.error(error);
+        } else {
+            Swal.fire('Restaurado', 'El producto vuelve a estar visible.', 'success');
+            cargarProductos();
+        }
+    }
+}    // ==========================================
     // KITS (CON BUSCADOR)
     // ==========================================
     async function cargarKits() {
