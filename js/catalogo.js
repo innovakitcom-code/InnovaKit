@@ -39,7 +39,6 @@ window.abrirModalDetalleProducto = function(id) {
         especificacionesHTML = '<li>No hay especificaciones técnicas cargadas.</li>';
     }
 
-    // 4. Documentos (Manuales) - MOVIDO ACÁ
     let documentosHTML = '';
     if (Array.isArray(prod.documentos) && prod.documentos.length > 0) {
         documentosHTML = `
@@ -93,14 +92,20 @@ window.abrirModalDetalleProducto = function(id) {
                         </div>
                         ` : ''}
 
-                        ${documentosHTML} <!-- ACÁ SE MUESTRAN LOS MANUALES -->
+                        ${documentosHTML}
                     </div>
                 </div>
 
-                <div style="padding: 24px; background: #f8fafc; display: flex; gap: 12px; border-top: 1px solid #e2e8f0;">
-                    <button class="btn btn-whatsapp" onclick="window.open('https://wa.me/595972292392?text=Hola, quiero info de ${prod.nombre}', '_blank')" style="flex: 1; padding: 14px;"><i class="fab fa-whatsapp"></i> Comprar por WhatsApp</button>
-                    <button class="btn btn-primary" onclick="agregarAlCarrito(${prod.id}, '${prod.nombre.replace(/'/g, "\\'")}', ${prod.precio}, '${imagenPrincipal}'); cerrarModalDetalle();" style="flex: 1; padding: 14px;"><i class="fas fa-shopping-cart"></i> Agregar al carrito</button>
-                    <button class="btn btn-outline" onclick="cerrarModalDetalle()" style="flex: 1; padding: 14px;">Seguir viendo productos</button>
+                <div class="modal-detalle__footer">
+                    <button class="btn btn-whatsapp" onclick="window.open('https://wa.me/595972292392?text=Hola, quiero info de ${prod.nombre}', '_blank')">
+                        <i class="fab fa-whatsapp"></i> Comprar por WhatsApp
+                    </button>
+                    <button class="btn btn-primary" onclick="agregarAlCarrito(${prod.id}, '${prod.nombre.replace(/'/g, "\\'")}', ${prod.precio}, '${imagenPrincipal}'); cerrarModalDetalle();">
+                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                    </button>
+                    <button class="btn btn-outline" onclick="cerrarModalDetalle()">
+                        Seguir viendo productos
+                    </button>
                 </div>
 
             </div>
@@ -131,7 +136,6 @@ async function inicializarCatalogo() {
             .select('*')
             .eq('activo', true)
             .is('kit_id', null)
-        //    .order('id'); //
 
         if (error) throw error;
 
@@ -141,12 +145,10 @@ async function inicializarCatalogo() {
         todosLosProductos = data || [];
         productosFiltrados = [...todosLosProductos];
 
-        // Leer parámetros de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const q = urlParams.get('q');
         const cat = urlParams.get('cat');
 
-        // Si hay búsqueda, llenar el input y mostrar el banner
         if (q) {
             const searchInput = document.getElementById('search-input');
             if (searchInput) {
@@ -159,7 +161,6 @@ async function inicializarCatalogo() {
             }
         }
 
-        // Si hay categoría, activar el botón del dropdown
         if (cat) {
             const catItem = document.querySelector(`.dropdown-item[data-cat="${cat}"]`);
             if (catItem) {
@@ -170,7 +171,6 @@ async function inicializarCatalogo() {
             }
         }
 
-        // Si hay filtros desde la URL, aplicarlos
         if (q || cat) {
             aplicarFiltros();
         } else {
@@ -206,7 +206,6 @@ function renderizarPagina() {
     document.getElementById('btn-prev').disabled = paginaActual === 1;
     document.getElementById('btn-next').disabled = paginaActual === totalPaginas;
 
-    // Dibujar tarjetas
     grid.innerHTML = productosPagina.map(prod => {
         const precio = prod.precio ? prod.precio.toLocaleString('es-PY') : '0';
         const imagen = prod.imagen_principal || 'assets/img/placeholder.png';
