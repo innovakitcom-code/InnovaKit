@@ -10,13 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Cargamos los estilos globales y el específico -->
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/pages/impresora3d.css">
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="manifest" href="manifest.json">
 </head>
 <body>
 
@@ -24,7 +21,7 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a href="index.html" class="site-header__logo" title="Volver al inicio">
-        <img src="assets/img/logo-innovakit.png" alt="Innovakit - Inicio">
+        <img src="assets/img/logo-innovakit.png" alt="Innovakit" style="height: 45px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'logo-innovakit\' style=\'font-size:1.5rem; font-weight:bold; color:var(--green);\'>Innovakit</span>';">
       </a>
 
       <nav class="site-nav">
@@ -60,10 +57,10 @@
       <!-- Hero con Video -->
       <div class="hero-impresora">
         <div class="hero-impresora__text">
-          <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 174, 66, 0.1); border: 1px solid rgba(0, 174, 66, 0.3); padding: 6px 16px; border-radius: 99px; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px;">
-            <span style="width: 8px; height: 8px; background: #00AE42; border-radius: 50%;"></span>
-            <span style="color: #00AE42;">NUEVO</span>
-            <span style="color: #9CA3AF;">| Impresión 3D para instituciones</span>
+          <div style="display: inline-flex; align-items: center; gap: 8px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 6px 16px; border-radius: 99px; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px;">
+            <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%;"></span>
+            <span style="color: #16a34a;">NUEVO</span>
+            <span style="color: #64748b;">| Impresión 3D para instituciones</span>
           </div>
           <h1>Impresora 3D <br><span>Bambu Lab A1</span></h1>
           <p>Experimenta la impresión 3D como nunca antes. Velocidad, precisión y facilidad de uso en un solo equipo. Ideal para makers, educadores y profesionales.</p>
@@ -72,10 +69,8 @@
           </a>
         </div>
         <div class="hero-video-container">
-          <!-- Reemplazá 'video/0608.mp4' por tu video real -->
           <video autoplay loop muted playsinline>
             <source src="video/0608.mp4" type="video/mp4">
-            <!-- Si el video no carga, muestra esta imagen -->
             <img src="asesores/3DPORTADAA.svg" alt="Impresora 3D Bambu Lab A1">
           </video>
         </div>
@@ -91,20 +86,57 @@
         <div class="spec-card"><i class="fas fa-tachometer-alt"></i><h3>Alta velocidad</h3><p>Hasta 500mm/s de impresión</p></div>
       </div>
 
-      <!-- Beneficios (Modelo de negocio) -->
+      <!-- Modelo de Negocio -->
+      <h2 style="color: #1e293b; text-align: center; margin: 60px 0 40px; font-size: 2rem; font-family: var(--font-head);">🎓 Impresión 3D Educativa por Horas</h2>
+      
       <div class="info-block">
-        <h2>Impresión 3D Educativa por Horas</h2>
+        <h3 style="color: #1e293b; font-size: 1.5rem; margin-bottom: 16px;"><i class="fas fa-clock" style="color: var(--blue);"></i> ¿Cómo funciona?</h3>
+        <p style="color: #475569; line-height: 1.6;">El sistema es simple y transparente: el uso de la impresora se tarifa <strong>únicamente por hora de trabajo real</strong> en proyectos de impresión, permitiendo a cada institución controlar sus costos de forma eficiente y predecible.</p>
+        <p style="color: #475569; margin-top: 12px;"><strong>👉 No se paga por tener el equipo, sino por crear con él.</strong></p>
+      </div>
+
+      <div class="info-block">
+        <h3 style="color: #1e293b; font-size: 1.5rem; margin-bottom: 16px;"><i class="fas fa-gem" style="color: var(--yellow-dark);"></i> Beneficios para instituciones</h3>
         <ul>
-          <li><i class="fas fa-check-circle"></i> <div><strong>Acceso sin inversión inicial:</strong> El uso de la impresora se tarifa únicamente por hora de trabajo real.</div></li>
-          <li><i class="fas fa-check-circle"></i> <div><strong>Integración educativa:</strong> Ideal para proyectos de ciencia, tecnología, ingeniería y matemáticas (STEM).</div></li>
-          <li><i class="fas fa-check-circle"></i> <div><strong>Optimización de costos:</strong> Pagás por crear, no por tener el equipo guardado.</div></li>
-          <li><i class="fas fa-check-circle"></i> <div><strong>Tarifas preferenciales:</strong> Descuentos especiales si el filamento es adquirido a través de Innovakit.</div></li>
+          <li><i class="fas fa-check-circle"></i> <div>Acceso a tecnología de fabricación digital sin inversión inicial elevada.</div></li>
+          <li><i class="fas fa-check-circle"></i> <div>Integración directa en proyectos educativos, técnicos y creativos.</div></li>
+          <li><i class="fas fa-check-circle"></i> <div>Optimización de costos según el uso real del equipo.</div></li>
+          <li><i class="fas fa-check-circle"></i> <div>Acompañamiento y soporte técnico durante el proceso.</div></li>
         </ul>
+      </div>
+
+      <div class="info-block" style="background: #eff6ff; border-color: #bfdbfe;">
+        <h3 style="color: #1e293b; font-size: 1.5rem; margin-bottom: 16px;"><i class="fas fa-chart-line" style="color: var(--blue);"></i> Flexibilidad y ahorro</h3>
+        <p style="color: #475569; line-height: 1.6;">El costo por hora de impresión se adapta al nivel de uso del servicio, con valores estimados entre <strong>10.000 y 20.000 Gs por hora</strong>, dependiendo del tipo de proyecto y condiciones del material.</p>
+        <p style="color: #475569; margin-top: 12px;"><strong> Tarifas preferenciales</strong> cuando el filamento es adquirido directamente a través de Innovakit.</p>
+      </div>
+
+      <!-- Testimonio Visual -->
+      <div class="info-block" style="display: flex; flex-wrap: wrap; align-items: center; gap: 40px; padding: 48px;">
+        <div style="flex: 0 0 35%; min-width: 280px; display: flex; justify-content: center;">
+          <img src="video/3D.svg" alt="Impresora 3D en institución educativa" style="width: 100%; max-width: 300px; border-radius: 16px; opacity: 0.85; filter: grayscale(20%); box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+        </div>
+        <div style="flex: 1; min-width: 300px;">
+          <h3 style="color: #0f172a; font-size: 2.2rem; font-weight: 800; margin-bottom: 20px; font-family: var(--font-head); line-height: 1.2;">Transformando aulas</h3>
+          <p style="color: #1e293b; font-size: 1.15rem; line-height: 1.7; margin-bottom: 24px; font-weight: 500;">Instituciones educativas del área técnica ya están utilizando la impresora 3D para potenciar sus proyectos de ciencia, tecnología, ingeniería y matemáticas.</p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <span style="background: #ffffff; color: #166534; border: 2px solid #bbf7d0; padding: 8px 16px; border-radius: 99px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">Innovación</span>
+            <span style="background: #ffffff; color: #166534; border: 2px solid #bbf7d0; padding: 8px 16px; border-radius: 99px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">Adaptabilidad</span>
+            <span style="background: #ffffff; color: #166534; border: 2px solid #bbf7d0; padding: 8px 16px; border-radius: 99px; font-size: 0.9rem; font-weight: 700; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">Proyectos STEM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cobertura -->
+      <div class="info-block" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: var(--green); margin-bottom: 16px;"></i>
+        <h3 style="color: #1e293b; font-size: 1.5rem; margin-bottom: 8px;">Cobertura Central</h3>
+        <p style="color: #64748b;">Llegamos a Asunción, Central y todo el país.</p>
       </div>
 
       <!-- FAQ -->
       <div class="faq-section">
-        <h2 style="color: #fff; text-align: center; margin-bottom: 32px; font-size: 2rem;">Preguntas Frecuentes</h2>
+        <h2 style="color: #1e293b; text-align: center; margin-bottom: 32px; font-size: 2rem; font-family: var(--font-head);">Preguntas Frecuentes</h2>
         
         <div class="faq-item" onclick="this.classList.toggle('active')">
           <div class="faq-question">
@@ -147,7 +179,7 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="site-footer" style="margin-top: 0; background: #1A1D24;">
+  <footer class="site-footer" style="margin-top: 60px;">
     <div class="container">
       <div class="site-footer__bottom" style="border: none; padding-top: 0;">
         <span>© 2026 Innovakit. Todos los derechos reservados.</span>
@@ -155,11 +187,75 @@
     </div>
   </footer>
 
+  <!-- ========================================== -->
+  <!-- MODALES (Los que faltaban) -->
+  <!-- ========================================== -->
+  
+  <div id="modal-login" class="modal-overlay" onclick="cerrarModalLogin(event)">
+    <div class="modal" style="max-width: 420px;" onclick="event.stopPropagation()">
+      <div class="modal__header">
+        <h3 class="modal__title">Iniciar Sesión</h3>
+        <button class="modal__close" onclick="cerrarModalLogin()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal__body">
+        <form id="form-login">
+          <div class="form-group"><label class="form-label">Correo electrónico</label><input type="email" id="login-email" class="form-input" required placeholder="tu@email.com"></div>
+          <div class="form-group"><label class="form-label">Contraseña</label><input type="password" id="login-password" class="form-input" required placeholder="••••••••"></div>
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px;">Ingresar</button>
+        </form>
+        <p style="text-align:center; margin-top: 20px; font-size: 0.9rem; color: var(--muted);">¿No tienes cuenta? <a href="#" onclick="event.preventDefault(); abrirModalRegistro();" style="color: var(--blue); font-weight: 600;">Regístrate</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-registro" class="modal-overlay" onclick="cerrarModalRegistro(event)">
+    <div class="modal" style="max-width: 420px;" onclick="event.stopPropagation()">
+      <div class="modal__header">
+        <h3 class="modal__title">Crear Cuenta</h3>
+        <button class="modal__close" onclick="cerrarModalRegistro()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal__body">
+        <form id="form-registro">
+          <div class="form-group"><label class="form-label">Nombre completo</label><input type="text" id="reg-nombre" class="form-input" required placeholder="Tu nombre"></div>
+          <div class="form-group"><label class="form-label">Teléfono / WhatsApp</label><input type="tel" id="reg-telefono" class="form-input" placeholder="Ej: 0972 292392"></div>
+          <div class="form-group"><label class="form-label">Correo electrónico</label><input type="email" id="reg-email" class="form-input" required placeholder="tu@email.com"></div>
+          <div class="form-group"><label class="form-label">Contraseña</label><input type="password" id="reg-password" class="form-input" required placeholder="Mínimo 6 caracteres"></div>
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px;">Registrarse</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-carrito" class="modal-overlay" onclick="cerrarModalCarrito(event)">
+    <div class="modal" style="max-width: 500px;" onclick="event.stopPropagation()">
+      <div class="modal__header">
+        <h3 class="modal__title"><i class="fas fa-shopping-cart" style="color:var(--blue); margin-right:8px;"></i> Tu carrito</h3>
+        <button class="modal__close" onclick="cerrarModalCarrito()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal__body">
+        <div id="carrito-lista" style="max-height: 400px; overflow-y: auto;"><p class="text-center text-muted" style="padding: 20px;">Cargando carrito...</p></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--line);"><span style="font-weight: 600; font-size: 1.1rem; color: var(--ink);">Total:</span><span id="carrito-total" style="font-weight: 800; font-size: 1.4rem; color: var(--green);">Gs. 0</span></div>
+      </div>
+      <div class="modal__footer" style="display: flex; gap: 12px;">
+        <button onclick="vaciarCarrito()" class="btn btn-outline" style="flex: 1; border-color: var(--danger); color: var(--danger);"><i class="fas fa-trash"></i> Vaciar</button>
+        <button onclick="enviarPedidoWhatsApp()" class="btn btn-whatsapp" style="flex: 2;"><i class="fab fa-whatsapp"></i> Comprar por WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    window.addEventListener('load', checkScroll);
+    window.addEventListener('scroll', checkScroll);
+  </script>
+
   <!-- SCRIPTS GLOBALES -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="js/config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/main.js"></script> 
+  <script src="js/user-panel.js"></script>
 </body>
 </html>
