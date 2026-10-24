@@ -50,7 +50,7 @@ window.abrirPanelUsuario = async function() {
                     </div>
                 </div>
                 <div class="modal__footer">
-                    <button class="btn btn-outline" style="border-color: #ef4444; color: #ef4444; width: 100%;" onclick="cerrarSesionSupabase()">
+                    <button class="btn btn-outline" style="border-color: #ef4444; color: #ef4444; width: 100%;" onclick="cerrarSesionDesdePanel()">
                         <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                     </button>
                 </div>
@@ -70,3 +70,17 @@ window.cerrarPanelUsuario = function(event) {
         document.body.style.overflow = '';
     }
 }
+// ============================================
+// FUNCIÓN PARA CERRAR SESIÓN DESDE EL PANEL
+// ============================================
+window.cerrarSesionDesdePanel = async function() {
+    // 1. Cerramos la ventana modal inmediatamente
+    const modal = document.getElementById('modal-user-panel');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = '';
+    }
+
+    // 2. Cerramos la sesión en Supabase (y limpiamos la UI)
+    await cerrarSesionSupabase(); 
+};
