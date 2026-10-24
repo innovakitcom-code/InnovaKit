@@ -1,11 +1,12 @@
 // ============================================
-// MAIN.JS - Inicialización global
+// MAIN.JS - Inicialización global para todas las páginas
 // ============================================
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. INYECTAR MODALES
+    // 1. INYECTAR MODALES SI NO EXISTEN EN LA PÁGINA
     if (!document.getElementById('modal-carrito')) {
         const modalesHTML = `
+            <!-- Modal Carrito -->
             <div id="modal-carrito" class="modal-overlay" onclick="cerrarModalCarrito(event)">
                 <div class="modal" style="max-width: 500px;" onclick="event.stopPropagation()">
                     <div class="modal__header">
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             </div>
 
+            <!-- Modal Login -->
             <div id="modal-login" class="modal-overlay" onclick="cerrarModalLogin(event)">
                 <div class="modal" style="max-width: 420px;" onclick="event.stopPropagation()">
                     <div class="modal__header">
@@ -40,6 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             </div>
 
+            <!-- Modal Registro -->
             <div id="modal-registro" class="modal-overlay" onclick="cerrarModalRegistro(event)">
                 <div class="modal" style="max-width: 420px;" onclick="event.stopPropagation()">
                     <div class="modal__header">
@@ -87,27 +90,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('btn-carrito')?.addEventListener('click', (e) => { e.preventDefault(); abrirModalCarrito(); });
     document.getElementById('btn-login')?.addEventListener('click', (e) => {
         e.preventDefault();
-        if (window.usuarioActual) abrirPanelUsuario();
-        else abrirModalLogin();
+        if (window.usuarioActual) {
+            abrirPanelUsuario();
+        } else {
+            abrirModalLogin();
+        }
     });
 
     // 4. Cargar datos iniciales
     await cargarUsuarioActualSupabase();
     await cargarCarritoSupabase();
 
-    // 5. Cargar productos destacados
+    // 5. Si estamos en el index, cargar productos destacados
     if (document.getElementById('featured-products')) {
         await cargarProductosDestacados();
     }
 
-    // 6. ANIMACIÓN DE SCROLL
+    // 6. ANIMACIÓN DE SCROLL GLOBAL
     const animatedElements = document.querySelectorAll('.scroll-animate, .fade-left, .fade-right, .section, .info-block, .spec-card, .product-card');
+    
+    // Primero, aseguramos que todos tengan la clase scroll-animate
     animatedElements.forEach(el => {
         if (!el.classList.contains('scroll-animate') && !el.classList.contains('fade-left') && !el.classList.contains('fade-right')) {
             el.classList.add('scroll-animate');
         }
     });
 
+    // Luego, creamos el observer para activarlos al scrollear
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -118,30 +127,42 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.scroll-animate, .fade-left, .fade-right').forEach(el => observer.observe(el));
-
-    // 7. TRANSICIÓN SUAVE ENTRE PÁGINAS
+    // 7. TRANSICIÓN SUAVE ENTRE PÁGINAS (Con soporte para botón atrás)
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             const paginaActual = window.location.pathname.split('/').pop() || 'index.html';
             const esAnclaMismaPagina = href.startsWith('#') || href.includes(paginaActual + '#');
             
-            if (href && !esAnclaMismaPagina && !href.startsWith('http') && !href.startsWith('mailto') && !href.startsWith('tel') && !this.hasAttribute('target')) {
+            if (
+                href && 
+                !esAnclaMismaPagina &&
+                !href.startsWith('http') && 
+                !href.startsWith('mailto') && 
+                !href.startsWith('tel') && 
+                !this.hasAttribute('target')
+            ) {
                 e.preventDefault();
+                
+                // Guardamos que estamos navegando internamente
                 sessionStorage.setItem('navegando_interno', 'true');
+                
                 document.body.style.transition = 'opacity 0.4s ease';
                 document.body.style.opacity = '0';
-                setTimeout(() => { window.location.href = href; }, 400);
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 400);
             }
         });
     });
-}); // <-- ESTA LLAVE ES LA QUE FALTABA
+ });
 
-// SOLUCIÓN BOTÓN ATRÁS (Va FUERA del DOMContentLoaded)
-window.addEventListener('pageshow', function(event) {
-    if (event.persisted || sessionStorage.getItem('navegando_interno')) {
-        document.body.style.opacity = '1';
-        document.body.style.transition = '';
-        sessionStorage.removeItem('navegando_interno');
-    }
-});
+    // SOLUCIÓN BOTÓN ATRÁS: Si volvemos a la página (via caché o botón atrás)
+    window.addEventListener('pageshow', function(event) {
+        // Si la página viene del caché (botón atrás/adelante)
+        if (event.persisted || sessionStorage.getItem('navegando_interno')) {
+            document.body.style.opacity = '1';
+            document.body.style.transition = '';
+            sessionStorage.removeItem('navegando_interno');
+        }
+    });
