@@ -5,8 +5,8 @@
 /* HERO DEL KIT CON PORTADA */
 .kit-hero {
   position: relative;
-  /* La imagen de fondo se inyecta por JS, acá ponemos un color de respaldo */
-  background-color: #0f172a; 
+  /* Gradiente Innovakit por si falla la imagen */
+  background: linear-gradient(135deg, #1e3a8a, #7eb74a, #3b82f6);
   background-size: cover;
   background-position: center;
   padding: 120px 0;
