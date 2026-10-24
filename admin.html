@@ -59,6 +59,7 @@
         <button onclick="cargarDashboard()" id="nav-dashboard" class="nav-item active"><i class="fas fa-chart-pie"></i> Dashboard</button>
         <button onclick="cargarProductos()" id="nav-productos" class="nav-item"><i class="fas fa-microchip"></i> Productos</button>
         <button onclick="cargarKits()" id="nav-kits" class="nav-item"><i class="fas fa-box"></i> Kits</button>
+        <button onclick="cargarCategorias()" id="nav-categorias" class="nav-item"><i class="fas fa-tags"></i> Categorías</button>
         <button onclick="cargarReviews()" id="nav-reviews" class="nav-item"><i class="fas fa-star"></i> Reviews</button>
         <button onclick="cargarPedidos()" id="nav-pedidos" class="nav-item"><i class="fas fa-shopping-bag"></i> Pedidos</button>
         <button onclick="cargarRankingSorteo()" id="nav-sorteo" class="nav-item"><i class="fas fa-trophy"></i> Ranking / Sorteo</button>
@@ -691,7 +692,94 @@
         </div>
       `;
     }
+// ==========================================
+// GESTIÓN DE CATEGORÍAS
+// ==========================================
+async function cargarCategorias() {
+  activarNav('categorias');
+  const { data } = await supabaseClient.from('categorias').select('*').order('id');
+  
+  document.getElementById('contenido-principal').innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <h2 class="page-title" style="margin: 0;">Gestión de Categorías</h2>
+      <button onclick="abrirModalCategoria()" class="btn btn-primary"><i class="fas fa-plus"></i> Nueva Categoría</button>
+    </div>
+    
+    <div class="table-container">
+      <table>
+        <thead><tr><th>ID</th><th>Nombre</th><th>Icono</th><th style="text-align: right;">Acciones</th></tr></thead>
+        <tbody>
+          ${(data || []).map(c => `
+            <tr>
+              <td style="color: #64748b;">#${c.id}</td>
+              <td style="font-weight: 600;">${c.nombre}</td>
+              <td><i class="fas ${c.icono}" style="color: var(--blue);"></i> ${c.icono}</td>
+              <td style="text-align: right;">
+                <button onclick="editarCategoria(${c.id}, '${c.nombre}', '${c.icono}')" class="btn btn-sm btn-edit"><i class="fas fa-pen"></i></button>
+                <button onclick="eliminarCategoria(${c.id})" class="btn btn-sm btn-delete"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
 
+function abrirModalCategoria(id = null, nombre = '', icono = 'fa-tag') {
+  Swal.fire({
+    title: id ? 'Editar Categoría' : 'Nueva Categoría',
+    html: `
+      <input id="cat-nombre" class="swal2-input" placeholder="Nombre (Ej: Sensores)" value="${nombre}">
+      <input id="cat-icono" class="swal2-input" placeholder="Icono FontAwesome (Ej: fa-microchip)" value="${icono}">
+      <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">Buscá iconos en <a href="https://fontawesome.com/icons" target="_blank">fontawesome.com/icons</a></p>
+    `,
+    showCancelButton: true,
+    confirmButtonText: 'Guardar',
+    cancelButtonText: 'Cancelar',
+    confirmButtonColor: 'var(--blue)',
+    preConfirm: () => {
+      const nombre = document.getElementById('cat-nombre').value.trim();
+      const icono = document.getElementById('cat-icono').value.trim();
+      if (!nombre) {
+        Swal.showValidationMessage('El nombre es obligatorio');
+        return false;
+      }
+      return { nombre, icono };
+    }
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      const { nombre, icono } = result.value;
+      if (id) {
+        await supabaseClient.from('categorias').update({ nombre, icono }).eq('id', id);
+      } else {
+        await supabaseClient.from('categorias').insert([{ nombre, icono }]);
+      }
+      cargarCategorias();
+    }
+  });
+}
+
+function editarCategoria(id, nombre, icono) {
+  abrirModalCategoria(id, nombre, icono);
+}
+
+async function eliminarCategoria(id) {
+  const result = await Swal.fire({
+    title: '¿Eliminar categoría?',
+    text: 'Los productos de esta categoría no se eliminarán, pero quedarán sin categoría.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#ef4444',
+    cancelButtonColor: '#64748b',
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  });
+  if (result.isConfirmed) {
+    await supabaseClient.from('categorias').delete().eq('id', id);
+    cargarCategorias();
+  }
+}
     async function cargarUsuarios() {
       activarNav('usuarios');
       const { data } = await supabaseClient.from('perfiles').select('*');
