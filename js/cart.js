@@ -1,8 +1,7 @@
 // ============================================
-// LÓGICA DEL CARRITO (SUPABASE)
+// LÓGICA DEL CARRITO (SUPABASE) + SWEETALERT
 // ============================================
 
-// Variable global para almacenar los items
 window.carritoGlobal = [];
 
 async function cargarCarritoSupabase() {
@@ -34,16 +33,13 @@ async function agregarAlCarrito(productoId, nombre, precio, imagen) {
     }
 
     try {
-        // Verificar si el producto ya está en el carrito
         const itemExistente = window.carritoGlobal.find(item => item.producto_id === productoId);
 
         if (itemExistente) {
-            // Si existe, sumamos 1 a la cantidad
             await supabaseClient.from('carrito')
                 .update({ cantidad: itemExistente.cantidad + 1 })
                 .eq('id', itemExistente.id);
         } else {
-            // Si no existe, lo insertamos
             await supabaseClient.from('carrito').insert([{
                 usuario_id: window.usuarioActual.id,
                 producto_id: productoId,
@@ -52,7 +48,7 @@ async function agregarAlCarrito(productoId, nombre, precio, imagen) {
         }
 
         mostrarNotificacion(`📦 ${nombre} agregado al carrito`, 'success');
-        await cargarCarritoSupabase(); // Recargar para actualizar el número
+        await cargarCarritoSupabase();
     } catch (error) {
         console.error('Error al agregar:', error);
         mostrarNotificacion('Error al agregar al carrito', 'error');
@@ -60,18 +56,44 @@ async function agregarAlCarrito(productoId, nombre, precio, imagen) {
 }
 
 async function eliminarDelCarrito(itemId) {
-    try {
-        await supabaseClient.from('carrito').delete().eq('id', itemId);
-        await cargarCarritoSupabase();
-        renderizarCarritoModal(); // Actualizar la vista del modal
-    } catch (error) {
-        mostrarNotificacion('Error al eliminar', 'error');
+    const result = await Swal.fire({
+        title: '¿Eliminar producto?',
+        text: "Se quitará este producto de tu carrito.",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
+        try {
+            await supabaseClient.from('carrito').delete().eq('id', itemId);
+            await cargarCarritoSupabase();
+            renderizarCarritoModal();
+            mostrarNotificacion('Producto eliminado', 'info');
+        } catch (error) {
+            mostrarNotificacion('Error al eliminar', 'error');
+        }
     }
 }
 
 async function vaciarCarrito() {
     if (!window.usuarioActual || window.carritoGlobal.length === 0) return;
-    if (confirm('¿Estás seguro de vaciar el carrito?')) {
+
+    const result = await Swal.fire({
+        title: '¿Vaciar carrito?',
+        text: "Se eliminarán todos los productos de tu carrito.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Sí, vaciar',
+        cancelButtonText: 'Cancelar'
+    });
+
+    if (result.isConfirmed) {
         await supabaseClient.from('carrito').delete().eq('usuario_id', window.usuarioActual.id);
         await cargarCarritoSupabase();
         cerrarModalCarrito();
@@ -80,15 +102,11 @@ async function vaciarCarrito() {
 }
 
 function actualizarContadorCarrito() {
-    // Sumar todas las cantidades
     const totalItems = window.carritoGlobal.reduce((sum, item) => sum + item.cantidad, 0);
     const contador = document.getElementById('carrito-count-desktop');
     if (contador) contador.textContent = totalItems;
 }
 
-// ============================================
-// MODAL DEL CARRITO (Vista)
-// ============================================
 function abrirModalCarrito() {
     renderizarCarritoModal();
     document.getElementById('modal-carrito').classList.add('is-open');
@@ -142,9 +160,6 @@ function renderizarCarritoModal() {
     totalEl.textContent = `Gs. ${total.toLocaleString('es-PY')}`;
 }
 
-// ============================================
-// ENVIAR PEDIDO POR WHATSAPP
-// ============================================
 async function enviarPedidoWhatsApp() {
     if (!window.usuarioActual || window.carritoGlobal.length === 0) return;
 
@@ -158,7 +173,6 @@ async function enviarPedidoWhatsApp() {
     mensaje += `👤 Cliente: ${window.usuarioActual.nombre}\n`;
     
     try {
-        // Registrar el pedido en la base de datos antes de enviar a WhatsApp
         const { data, error } = await supabaseClient.from('pedidos').insert([{
             usuario_id: window.usuarioActual.id,
             productos: window.carritoGlobal.map(i => ({ id: i.producto_id, nombre: i.productos.nombre, precio: i.productos.precio, cantidad: i.cantidad })),
@@ -171,10 +185,8 @@ async function enviarPedidoWhatsApp() {
         
         mensaje += `📋 N° de Pedido: #${pedidoId}\n`;
         
-        // Abrir WhatsApp
         window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`, '_blank');
         
-        // Vaciar el carrito
         await supabaseClient.from('carrito').delete().eq('usuario_id', window.usuarioActual.id);
         await cargarCarritoSupabase();
         cerrarModalCarrito();
