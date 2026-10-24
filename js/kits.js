@@ -26,16 +26,14 @@ async function cargarDetalleKit() {
     
     if (!grid) return;
 
-    // 1. Leemos la marca desde la URL (ej: ?marca=acebott)
     const urlParams = new URLSearchParams(window.location.search);
-    let marca = urlParams.get('marca') || 'kuongshun'; // Por defecto Kuongshun
+    let marca = urlParams.get('marca') || 'kuongshun';
     marca = marca.toLowerCase();
 
-    let kitId = 1; // ID de respaldo
+    let kitId = 1;
     let busquedaNombre = marca === 'acebott' ? 'Acebott' : 'Kuongshun';
 
     try {
-        // 2. Buscamos el kit en la tabla 'kits' por su nombre
         const { data: kitData } = await supabaseClient
             .from('kits')
             .select('*')
@@ -43,23 +41,20 @@ async function cargarDetalleKit() {
             .single();
 
         if (kitData) {
-            kitId = kitData.id; // Obtenemos el ID real de tu BD
+            kitId = kitData.id;
             tituloEl.textContent = kitData.nombre;
             descEl.textContent = kitData.descripcion || 'Componentes y proyectos para armar y aprender.';
             
-            // Si el kit tiene imagen de portada, la ponemos en el Hero
             if (kitData.imagen_portada && heroEl) {
                 const rutaImagen = kitData.imagen_portada.replace(/\\/g, '/');
                 heroEl.style.backgroundImage = `url('${rutaImagen}')`;
             }
         } else {
-            // Si no encuentra el kit en la BD, usamos los datos por defecto
             kitId = marca === 'acebott' ? 2 : 1;
             tituloEl.textContent = marca === 'acebott' ? 'Línea Acebott' : 'Línea Kuongshun';
             descEl.textContent = "Componentes y proyectos para armar y aprender.";
         }
 
-        // 3. Traemos los productos que tengan el kit_id que encontramos
         const { data: productos, error } = await supabaseClient
             .from('productos')
             .select('*')
@@ -75,11 +70,9 @@ async function cargarDetalleKit() {
             return;
         }
 
-        // 4. Dibujar las tarjetas
         grid.innerHTML = productosKitActuales.map((prod, index) => {
             const precio = prod.precio ? prod.precio.toLocaleString('es-PY') : '0';
             
-            // Manejo de imágenes (usa el array si existe, si no, la principal)
             let imagenes = Array.isArray(prod.imagenes) && prod.imagenes.length > 0 
                 ? prod.imagenes 
                 : [prod.imagen_principal || 'assets/img/placeholder.png'];
@@ -118,7 +111,6 @@ async function cargarDetalleKit() {
             `;
         }).join('');
 
-        // 5. Iniciar los carruseles
         setTimeout(() => {
             productosKitActuales.forEach((_, index) => {
                 const swiperEl = document.querySelector(`.producto-swiper-${index}`);
@@ -132,9 +124,6 @@ async function cargarDetalleKit() {
     }
 }
 
-// ============================================
-// FUNCIÓN PARA ABRIR EL MODAL DE DETALLE
-// ============================================
 window.abrirModalDetalle = function(index) {
     const prod = productosKitActuales[index];
     if (!prod) return;
