@@ -75,7 +75,7 @@ body {
   font-size: 16px;
   line-height: 1.55;
   color: var(--ink);
-  background: var(--paper);
+  background: #dfe7ff; /* <--- Celeste pastel muy suave */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
@@ -206,9 +206,9 @@ strong {
   line-height: 1;
 }
 
-.logo-innovakit__in  { color: var(--green); }
+.logo-innovakit__in  { color: #7eb74a; }
 .logo-innovakit__no  { color: var(--yellow); }
-.logo-innovakit__va  { color: var(--green); }
+.logo-innovakit__va  { color: #7eb74a; }
 .logo-innovakit__kit { color: var(--blue); }
 
 .logo-innovakit--dark .logo-innovakit__kit {
