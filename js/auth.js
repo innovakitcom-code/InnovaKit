@@ -45,10 +45,27 @@ async function iniciarSesionSupabase(email, password) {
 }
 
 async function cerrarSesionSupabase() {
-    await supabaseClient.auth.signOut();
-    window.usuarioActual = null;
-    actualizarUIUsuario();
-    mostrarNotificacion('Sesión cerrada', 'info');
+    try {
+        await supabaseClient.auth.signOut();
+    } catch (error) {
+        console.error("Error al cerrar sesión en Supabase:", error);
+    } finally {
+        // Pase lo que pase, limpiamos la sesión local
+        window.usuarioActual = null;
+        window.carritoGlobal = [];
+        
+        // Actualizamos la interfaz (el botón vuelve a decir "Ingresar")
+        actualizarUIUsuario();
+        
+        // Por las dudas, forzamos el cierre de cualquier modal de usuario que haya quedado abierto
+        const modalPanel = document.getElementById('modal-user-panel');
+        if (modalPanel) modalPanel.remove();
+        
+        // Restauramos el scroll
+        document.body.style.overflow = '';
+        
+        mostrarNotificacion('Sesión cerrada correctamente', 'info');
+    }
 }
 
 async function cargarUsuarioActualSupabase() {
