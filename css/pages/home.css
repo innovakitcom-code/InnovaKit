@@ -10,6 +10,8 @@
   color: #fff;
   padding: 60px 0 100px;
   position: relative;
+  width: 100%; /* <--- ESTO FALTA */
+  overflow: hidden; /* <--- Para que nada se desborde */
 }
 
 @keyframes moveGradient {
