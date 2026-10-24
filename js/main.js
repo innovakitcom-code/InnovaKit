@@ -90,8 +90,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('btn-carrito')?.addEventListener('click', (e) => { e.preventDefault(); abrirModalCarrito(); });
     document.getElementById('btn-login')?.addEventListener('click', (e) => {
         e.preventDefault();
-        if (window.usuarioActual) abrirPanelUsuario();
-        else abrirModalLogin();
+        if (window.usuarioActual) {
+            abrirPanelUsuario();
+        } else {
+            abrirModalLogin();
+        }
     });
 
     // 4. Cargar datos iniciales
