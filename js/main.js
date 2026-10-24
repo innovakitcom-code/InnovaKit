@@ -155,7 +155,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
     });
-
+});
+    
     // SOLUCIÓN BOTÓN ATRÁS: Si volvemos a la página (via caché o botón atrás)
     window.addEventListener('pageshow', function(event) {
         // Si la página viene del caché (botón atrás/adelante)
