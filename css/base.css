@@ -55,6 +55,25 @@
   --header-h: 64px;
 }
 
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: #dfe7ff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  
+  /* ANIMACIÓN DE ENTRADA GLOBAL */
+  animation: fadeInPage 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeInPage {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 /* ---------- RESET ---------- */
 *,
 *::before,
