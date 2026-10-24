@@ -3,6 +3,10 @@
    ============================================================ */
 
 /* Fondo general claro con un toque celeste */
+body {
+  background: linear-gradient(135deg, #dfe7ff 10%, #dfe7ff 40%);
+  min-height: 100vh;
+}
 
 .impresora-container {
   max-width: 1200px;
@@ -67,11 +71,11 @@
 
 /* El multicolor del logo para "Bambu Lab A1" */
 .hero-impresora__text h1 span {
-  background: linear-gradient(90deg, #22c55e, #2563eb); /* Tus colores exactos */
+  background: linear-gradient(90deg, #22c55e, #2563eb);
   -webkit-background-clip: text;
-  background-clip: text; /* Importante para Firefox y otros */
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  display: inline-block; /* Para que el degradado no se corte */
+  display: inline-block;
 }
 
 .hero-impresora__text p {
@@ -123,7 +127,7 @@
 
 .spec-card i {
   font-size: 2.5rem;
-  color: var(--blue); /* Azul Innovakit */
+  color: var(--blue);
   margin-bottom: 16px;
 }
 
@@ -174,7 +178,7 @@
 }
 
 .info-block li i {
-  color: var(--green); /* Verde Innovakit */
+  color: var(--green);
   margin-top: 4px;
   font-size: 1.2rem;
 }
@@ -274,6 +278,7 @@
   line-height: 1.6;
   color: #475569;
 }
+
 /* Animaciones de scroll */
 .scroll-animate {
     opacity: 0;
@@ -301,4 +306,94 @@
 .fade-right.visible {
     opacity: 1;
     transform: translateX(0);
+}
+
+/* ============================================
+   AJUSTES EXCLUSIVOS PARA CELULARES
+   ============================================ */
+@media (max-width: 768px) {
+  .impresora-container { 
+    padding: 20px 12px; /* Menos margen a los costados */
+  }
+  
+  .hero-impresora { 
+    padding: 24px 16px; /* El hero más angosto y compacto */
+    border-radius: 24px;
+    gap: 20px;
+  }
+
+  .hero-impresora__text h1 {
+    font-size: 2.2rem; /* Título más chico */
+  }
+
+  .hero-impresora__text p {
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+
+  .btn-volver { 
+    padding: 8px 18px; 
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .btn-whatsapp-large { 
+    padding: 12px 24px; 
+    font-size: 0.95rem; 
+    width: 100%; /* Botón ocupa todo el ancho */
+    justify-content: center;
+  }
+
+  .specs-grid { 
+    gap: 12px; 
+    margin: 24px 0; 
+  }
+
+  .spec-card { 
+    padding: 20px 16px; 
+  }
+
+  .spec-card i { 
+    font-size: 2rem; 
+    margin-bottom: 10px; 
+  }
+
+  .spec-card h3 { 
+    font-size: 1rem; 
+  }
+
+  .info-block { 
+    padding: 24px 16px; 
+    border-radius: 24px;
+    margin-bottom: 24px;
+  }
+
+  .info-block h2 { 
+    font-size: 1.5rem; 
+    margin-bottom: 20px;
+  }
+
+  .info-block h3 {
+    font-size: 1.2rem !important; /* Forzamos el tamaño en subtítulos */
+  }
+
+  .info-block p, .info-block li { 
+    font-size: 0.95rem; 
+  }
+
+  .faq-section { 
+    margin: 40px 0; 
+  }
+
+  .faq-question { 
+    padding: 16px; 
+  }
+
+  .faq-question h3 { 
+    font-size: 0.95rem; 
+  }
+
+  .faq-answer { 
+    font-size: 0.85rem; 
+  }
 }
