@@ -327,3 +327,48 @@
         grid-template-columns: 1fr !important;
     }
 }
+
+/* ============================================
+   AJUSTES EXCLUSIVOS PARA CELULARES (Catálogo)
+   ============================================ */
+@media (max-width: 768px) {
+  
+  /* La barra de filtros se vuelve una columna */
+  .catalogo-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  /* El buscador ocupa todo el ancho */
+  .catalogo-filters__search {
+    min-width: 100%; /* Quita el límite de 400px */
+    width: 100%;
+  }
+
+  /* Los selectores de categoría y precio ocupan todo el ancho */
+  .catalogo-filters__select {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* El botón de categorías azul ocupa todo el ancho */
+  .dropdown {
+    width: 100%;
+  }
+  
+  .btn-dropdown {
+    width: 100%;
+    justify-content: space-between; /* El texto a la izquierda y la flechita a la derecha */
+    padding: 12px 16px;
+  }
+
+  /* El menú desplegable ocupa todo el ancho de la pantalla */
+  .dropdown-menu {
+    width: 100%;
+    position: static; /* Se despliega empujando el contenido hacia abajo */
+    margin-top: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+}
