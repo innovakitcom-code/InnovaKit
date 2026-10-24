@@ -124,32 +124,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.scroll-animate, .fade-left, .fade-right').forEach(el => observer.observe(el));
-    // 8. TRANSICIÓN SUAVE ENTRE PÁGINAS
-    // Interceptamos los enlaces internos para hacer un fade-out antes de navegar
+    // 7. TRANSICIÓN SUAVE ENTRE PÁGINAS (Solo para enlaces externos)
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
+            const paginaActual = window.location.pathname.split('/').pop() || 'index.html';
             
-            // Solo aplicamos a enlaces internos (no anclas #, no externos, no nueva pestaña)
+            // Verificamos si es un enlace interno (ancla en la misma página)
+            // Ejemplo: "#mision" o "index.html#mision"
+            const esAnclaMismaPagina = href.startsWith('#') || href.includes(paginaActual + '#');
+            
+            // Solo aplicamos el fade si:
+            // - No es un ancla
+            // - No es un enlace externo (http)
+            // - No es mailto o tel
+            // - No abre en pestaña nueva (target="_blank")
             if (
                 href && 
-                !href.startsWith('#') && 
+                !esAnclaMismaPagina &&
                 !href.startsWith('http') && 
                 !href.startsWith('mailto') && 
                 !href.startsWith('tel') && 
                 !this.hasAttribute('target')
             ) {
                 e.preventDefault();
-                
-                // Hacemos un fade-out suave en el body
                 document.body.style.transition = 'opacity 0.4s ease';
                 document.body.style.opacity = '0';
-                
-                // Redirigimos después de que termine la animación
                 setTimeout(() => {
                     window.location.href = href;
-                }, 300);
+                }, 400);
             }
         });
     });
-});
