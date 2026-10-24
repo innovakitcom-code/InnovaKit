@@ -15,70 +15,67 @@
 </head>
 <body>
 
-  <!-- ========================================== -->
   <!-- PANTALLA DE LOGIN -->
-  <!-- ========================================== -->
   <div id="login-screen" class="login-screen">
     <div class="login-card">
-      <h1>
-        <span class="logo-innovakit">
-          <span class="logo-innovakit__in">Inn</span><span class="logo-innovakit__no">o</span><span class="logo-innovakit__va">va</span><span class="logo-innovakit__kit">kit</span>
-        </span>
-      </h1>
-      <p style="text-align: center; color: #64748b; margin-bottom: 24px;">Panel de Administración</p>
+      <!-- LOGO DE IMAGEN AQUÍ -->
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src="assets/img/logo-innovakit.png" alt="Innovakit" style="height: 50px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'logo-innovakit\' style=\'font-size:2rem\'><span class=\'logo-innovakit__in\'>Inn</span><span class=\'logo-innovakit__no\'>o</span><span class=\'logo-innovakit__va\'>va</span><span class=\'logo-innovakit__kit\'>kit</span></span>';">
+      </div>
+      <p style="text-align: center; color: #64748b; margin-bottom: 32px;">Panel de Administración</p>
       
       <div id="login-error" style="display: none; margin-bottom: 16px; padding: 12px; background: #fee2e2; color: #b91c1c; border-radius: 8px; font-size: 0.9rem;"></div>
 
       <form id="admin-login-form">
-        <div style="margin-bottom: 16px;">
-          <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; color: #334155;">Email</label>
-          <input type="email" id="admin-email" class="form-input" placeholder="admin@innovakit.com" required style="width: 100%;">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" id="admin-email" class="form-input" placeholder="admin@innovakit.com" required>
         </div>
-        <div style="margin-bottom: 24px;">
-          <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; color: #334155;">Contraseña</label>
-          <input type="password" id="admin-password" class="form-input" placeholder="••••••••" required style="width: 100%;">
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input type="password" id="admin-password" class="form-input" placeholder="••••••••" required>
         </div>
-        <button type="submit" id="login-btn" class="btn btn-primary btn-block" style="padding: 14px;">Ingresar al Panel</button>
+        <button type="submit" id="login-btn" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1rem; margin-top: 8px;">Ingresar al Panel</button>
       </form>
       
-      <p style="text-align: center; margin-top: 24px; font-size: 0.9rem;">
-        <a href="index.html" style="color: #64748b; text-decoration: none;">← Volver a la tienda</a>
-      </p>
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="index.html" class="btn" style="background: #f1f5f9; color: #475569; width: 100%; padding: 12px;"><i class="fas fa-arrow-left"></i> Volver a la tienda</a>
+      </div>
     </div>
   </div>
 
-  <!-- ========================================== -->
   <!-- PANEL ADMIN -->
-  <!-- ========================================== -->
   <div id="admin-panel" class="admin-layout" style="display: none;">
     
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <h1 style="font-size: 1.5rem;">
-          <span class="logo-innovakit">
-            <span class="logo-innovakit__in">Inn</span><span class="logo-innovakit__no">o</span><span class="logo-innovakit__va">va</span><span class="logo-innovakit__kit">kit</span>
-          </span>
-        </h1>
-        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 4px;">Panel Admin</p>
+        <!-- LOGO DE IMAGEN AQUÍ TAMBIÉN -->
+        <img src="assets/img/logo-innovakit.png" alt="Innovakit" style="height: 40px; margin-bottom: 8px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<h1 class=\'logo-innovakit\' style=\'font-size:1.8rem\'><span class=\'logo-innovakit__in\'>Inn</span><span class=\'logo-innovakit__no\'>o</span><span class=\'logo-innovakit__va\'>va</span><span class=\'logo-innovakit__kit\'>kit</span></h1>';">
+        <p>Panel Admin</p>
       </div>
       
       <nav class="sidebar-nav">
-        <button onclick="cargarDashboard()" id="nav-dashboard" class="nav-item active"><i class="fas fa-chart-line"></i> Dashboard</button>
+        <button onclick="cargarDashboard()" id="nav-dashboard" class="nav-item active"><i class="fas fa-chart-pie"></i> Dashboard</button>
         <button onclick="cargarProductos()" id="nav-productos" class="nav-item"><i class="fas fa-microchip"></i> Productos</button>
         <button onclick="cargarKits()" id="nav-kits" class="nav-item"><i class="fas fa-box"></i> Kits</button>
         <button onclick="cargarReviews()" id="nav-reviews" class="nav-item"><i class="fas fa-star"></i> Reviews</button>
-        <button onclick="cargarPedidos()" id="nav-pedidos" class="nav-item"><i class="fas fa-shopping-cart"></i> Pedidos</button>
+        <button onclick="cargarPedidos()" id="nav-pedidos" class="nav-item"><i class="fas fa-shopping-bag"></i> Pedidos</button>
         <button onclick="cargarRankingSorteo()" id="nav-sorteo" class="nav-item"><i class="fas fa-trophy"></i> Ranking / Sorteo</button>
         <button onclick="cargarUsuarios()" id="nav-usuarios" class="nav-item"><i class="fas fa-users"></i> Usuarios</button>
       </nav>
       
       <div class="sidebar-footer">
-        <div style="margin-bottom: 12px;">
-          <p id="admin-nombre" style="font-weight: 600; color: #fff;">Administrador</p>
-          <p id="admin-email" style="font-size: 0.75rem; color: #94a3b8;"></p>
+        <div style="margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #64748b;">
+            <i class="fas fa-user"></i>
+          </div>
+          <div>
+            <p id="admin-nombre" style="font-weight: 600; color: #1e293b; margin: 0; font-size: 0.95rem;">Admin</p>
+            <p id="admin-email" style="font-size: 0.8rem; color: #64748b; margin: 0;"></p>
+          </div>
         </div>
-        <button onclick="cerrarSesionAdmin()" class="btn btn-danger" style="width: 100%; padding: 10px; border-radius: 8px; background: #dc2626; color: white;">
+        <button onclick="cerrarSesionAdmin()" class="btn" style="width: 100%; background: #fff; border: 1px solid #e2e8f0; color: #dc2626;">
           <i class="fas fa-sign-out-alt"></i> Cerrar sesión
         </button>
       </div>
@@ -88,69 +85,73 @@
     <main class="main-content">
       <div id="contenido-principal">
         <div style="text-align: center; padding: 60px;">
-          <i class="fas fa-spinner fa-spin fa-3x" style="color: #3b82f6;"></i>
-          <p style="margin-top: 16px; color: #64748b;">Cargando...</p>
+          <i class="fas fa-spinner fa-spin fa-3x" style="color: var(--blue);"></i>
         </div>
       </div>
     </main>
   </div>
 
   <!-- ========================================== -->
-  <!-- MODAL PRODUCTO -->
+  <!-- MODAL DE PRODUCTO -->
   <!-- ========================================== -->
   <div id="modal-producto" class="admin-modal">
     <div class="admin-modal__content">
       <div class="admin-modal__header">
         <h2 id="modal-titulo">Agregar Producto</h2>
-        <button onclick="cerrarModalProducto()" style="background:none; border:none; font-size: 1.5rem; cursor:pointer; color: #64748b;">&times;</button>
+        <button onclick="cerrarModalProducto()" style="background:#f1f5f9; border:none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor:pointer; color: #475569;"><i class="fas fa-times"></i></button>
       </div>
       
       <form id="form-producto">
         <input type="hidden" id="producto-id">
-        
         <div class="form-group">
-          <label class="form-label">Nombre *</label>
+          <label class="form-label">Nombre del producto *</label>
           <input type="text" id="prod-nombre" class="form-input" required>
         </div>
-        
         <div class="form-group">
           <label class="form-label">Descripción</label>
           <textarea id="prod-descripcion" class="form-input" rows="3"></textarea>
         </div>
-        
-        <div class="form-grid">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
           <div class="form-group">
             <label class="form-label">Precio (Gs.) *</label>
             <input type="number" id="prod-precio" class="form-input" required>
           </div>
           <div class="form-group">
             <label class="form-label">Categoría</label>
-            <input type="text" id="prod-categoria" class="form-input" placeholder="Ej: Sensores, Placas...">
+            <input type="text" id="prod-categoria" class="form-input" placeholder="Ej: Sensores">
           </div>
         </div>
-
-        <div class="form-group">
-          <label class="form-label">Imagen principal (URL)</label>
-          <input type="text" id="prod-imagen" class="form-input" placeholder="assets/img/producto.webp">
-        </div>
         
+        <!-- NUEVO BLOQUE DE IMAGEN -->
+        <div class="form-group">
+          <label class="form-label">Imagen del producto</label>
+          <!-- Input oculto donde se guarda la URL final -->
+          <input type="hidden" id="prod-imagen" value="">
+          
+          <!-- Input para subir el archivo -->
+          <input type="file" id="prod-imagen-file" class="form-input" accept="image/*" style="padding: 10px; background: #f8fafc;">
+          
+          <!-- Vista previa de la imagen actual o de la que se está subiendo -->
+          <div id="preview-imagen" style="display: none; margin-top: 12px; text-align: center;">
+            <img id="img-preview" src="" alt="Vista previa" style="max-height: 120px; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">Imagen actual</p>
+          </div>
+        </div>
+        <!-- FIN NUEVO BLOQUE -->
+
         <div class="form-group">
           <label class="form-label">Especificaciones (una por línea)</label>
           <textarea id="prod-especificaciones" class="form-input" rows="3"></textarea>
         </div>
-        
         <div class="form-group">
-          <label class="form-label">Componentes (uno por línea, solo si es Kit)</label>
-          <textarea id="prod-componentes" class="form-input" rows="4"></textarea>
+          <label class="form-label">Componentes (solo si es Kit, uno por línea)</label>
+          <textarea id="prod-componentes" class="form-input" rows="3"></textarea>
         </div>
-        
-        <div class="form-group">
-          <label style="display: flex; align-items: center; gap: 8px;">
-            <input type="checkbox" id="prod-stock" checked> <span style="font-weight: 600; font-size: 0.9rem;">Producto disponible (Stock)</span>
-          </label>
+        <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
+          <input type="checkbox" id="prod-stock" checked style="width: 18px; height: 18px;">
+          <label for="prod-stock" style="font-weight: 600; font-size: 0.95rem; color: #1e293b;">Producto disponible (Stock)</label>
         </div>
-        
-        <div class="form-grid">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
           <div class="form-group">
             <label class="form-label">Tipo</label>
             <select id="prod-tipo" class="form-input">
@@ -163,28 +164,62 @@
             <input type="number" id="prod-kit-id" class="form-input" placeholder="Ej: 1">
           </div>
         </div>
+        <div style="display: flex; gap: 12px; margin-top: 32px;">
+          <button type="submit" class="btn btn-primary" style="flex: 1; padding: 14px;">Guardar Producto</button>
+          <button type="button" onclick="cerrarModalProducto()" class="btn" style="flex: 1; padding: 14px; background: #f1f5f9; color: #475569;">Cancelar</button>
+        </div>
+      </form>
+
+  <!-- ========================================== -->
+  <!-- MODAL DE KIT (NUEVO) -->
+  <!-- ========================================== -->
+  <div id="modal-kit" class="admin-modal">
+    <div class="admin-modal__content">
+      <div class="admin-modal__header">
+        <h2 id="modal-kit-titulo">Agregar Kit</h2>
+        <button onclick="cerrarModalKit()" style="background:#f1f5f9; border:none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor:pointer; color: #475569;"><i class="fas fa-times"></i></button>
+      </div>
+      
+      <form id="form-kit">
+        <input type="hidden" id="kit-id">
         
-        <div style="display: flex; gap: 12px; margin-top: 24px;">
-          <button type="submit" class="btn btn-primary" style="flex: 1;">Guardar</button>
-          <button type="button" onclick="cerrarModalProducto()" class="btn" style="flex: 1; background: #e2e8f0;">Cancelar</button>
+        <div class="form-group">
+          <label class="form-label">Nombre del Kit *</label>
+          <input type="text" id="kit-nombre" class="form-input" required placeholder="Ej: Línea Acebott">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Descripción</label>
+          <textarea id="kit-descripcion" class="form-input" rows="4" placeholder="Describe de qué trata este kit..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Imagen de portada (URL/Ruta)</label>
+          <input type="text" id="kit-imagen" class="form-input" placeholder="png/Acebott.svg">
+        </div>
+        
+        <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
+          <input type="checkbox" id="kit-activo" checked style="width: 18px; height: 18px;">
+          <label for="kit-activo" style="font-weight: 600; font-size: 0.95rem; color: #1e293b;">Kit visible en la tienda</label>
+        </div>
+        
+        <div style="display: flex; gap: 12px; margin-top: 32px;">
+          <button type="submit" class="btn btn-primary" style="flex: 1; padding: 14px;">Guardar Kit</button>
+          <button type="button" onclick="cerrarModalKit()" class="btn" style="flex: 1; padding: 14px; background: #f1f5f9; color: #475569;">Cancelar</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/config.js"></script>
 
   <script>
-    // ============================================
-    // LÓGICA DEL PANEL ADMIN
-    // ============================================
     let usuarioAdmin = null;
     let productosAdmin = [];
     let kitsAdmin = [];
 
-    // -- LOGIN --
+    // LOGIN
     document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('admin-email').value;
@@ -235,7 +270,7 @@
       document.getElementById(`nav-${seccion}`)?.classList.add('active');
     }
 
-    // -- 1. DASHBOARD --
+    // DASHBOARD
     async function cargarDashboard() {
       activarNav('dashboard');
       const { count: prodCount } = await supabaseClient.from('productos').select('*', { count: 'exact', head: true });
@@ -244,21 +279,34 @@
       const { count: usuariosCount } = await supabaseClient.from('perfiles').select('*', { count: 'exact', head: true });
       
       document.getElementById('contenido-principal').innerHTML = `
-        <h2 class="page-title">Dashboard</h2>
+        <h2 class="page-title">Resumen General</h2>
         <div class="stats-grid">
-          <div class="stat-card"><i class="fas fa-microchip" style="color: #3b82f6;"></i><h3>${prodCount || 0}</h3><p>Productos totales</p></div>
-          <div class="stat-card"><i class="fas fa-shopping-cart" style="color: #f59e0b;"></i><h3>${pedidosCount || 0}</h3><p>Pedidos recibidos</p></div>
-          <div class="stat-card"><i class="fas fa-star" style="color: #eab308;"></i><h3>${reviewsCount || 0}</h3><p>Reviews pendientes</p></div>
-          <div class="stat-card"><i class="fas fa-users" style="color: #8b5cf6;"></i><h3>${usuariosCount || 0}</h3><p>Usuarios registrados</p></div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #eff6ff; color: #3b82f6;"><i class="fas fa-microchip"></i></div>
+            <div class="stat-info"><h3>${prodCount || 0}</h3><p>Productos totales</p></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #fef3c7; color: #d97706;"><i class="fas fa-shopping-bag"></i></div>
+            <div class="stat-info"><h3>${pedidosCount || 0}</h3><p>Pedidos recibidos</p></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #fef9c3; color: #ca8a04;"><i class="fas fa-star"></i></div>
+            <div class="stat-info"><h3>${reviewsCount || 0}</h3><p>Reviews pendientes</p></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: #f3e8ff; color: #9333ea;"><i class="fas fa-users"></i></div>
+            <div class="stat-info"><h3>${usuariosCount || 0}</h3><p>Usuarios registrados</p></div>
+          </div>
         </div>
-        <div style="background: #fff; padding: 24px; border-radius: 12px; text-align: center; color: #64748b;">
-          <i class="fas fa-smile fa-3x" style="color: #cbd5e1; margin-bottom: 16px;"></i>
-          <p>¡Bienvenido al panel, ${usuarioAdmin.nombre}! Usá el menú de la izquierda para gestionar tu tienda.</p>
+        <div style="background: #fff; padding: 40px; border-radius: 16px; text-align: center; border: 1px solid #e2e8f0;">
+          <i class="fas fa-chart-line fa-3x" style="color: #cbd5e1; margin-bottom: 16px;"></i>
+          <h3 style="color: #1e293b; margin-bottom: 8px;">¡Bienvenido, ${usuarioAdmin.nombre}!</h3>
+          <p style="color: #64748b;">Seleccioná una opción del menú lateral para comenzar a gestionar tu tienda.</p>
         </div>
       `;
     }
 
-    // -- 2. PRODUCTOS --
+    // PRODUCTOS
     async function cargarProductos() {
       activarNav('productos');
       const { data } = await supabaseClient.from('productos').select('*').order('id', { ascending: false });
@@ -266,23 +314,30 @@
       
       document.getElementById('contenido-principal').innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-          <h2 class="page-title" style="margin: 0;">Productos</h2>
+          <h2 class="page-title" style="margin: 0;">Gestión de Productos</h2>
           <button onclick="abrirModalProducto()" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo producto</button>
         </div>
+        
+        <!-- BUSCADOR DE PRODUCTOS -->
+        <div style="margin-bottom: 24px; position: relative;">
+          <i class="fas fa-search" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+          <input type="text" id="search-admin-prod" class="form-input" placeholder="Buscar producto por nombre o categoría..." style="padding-left: 44px; font-size: 1rem;" oninput="filtrarTablaProductos()">
+        </div>
+
         <div class="table-container">
           <table>
-            <thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Tipo</th><th>Acciones</th></tr></thead>
-            <tbody>
+            <thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Tipo</th><th style="text-align: right;">Acciones</th></tr></thead>
+            <tbody id="tabla-productos">
               ${productosAdmin.map(p => `
-                <tr>
-                  <td>${p.id}</td>
-                  <td>${p.nombre}</td>
+                <tr class="fila-producto" data-nombre="${p.nombre.toLowerCase()}" data-categoria="${(p.categoria || '').toLowerCase()}">
+                  <td style="color: #64748b;">#${p.id}</td>
+                  <td style="font-weight: 600;">${p.nombre}</td>
                   <td style="color: #16a34a; font-weight: 600;">${p.precio ? p.precio.toLocaleString('es-PY') : 0} Gs.</td>
-                  <td>${p.stock ? '<span style="color: #16a34a;">✔</span>' : '<span style="color: #dc2626;">✖</span>'}</td>
-                  <td>${p.kit_id ? `<span style="background:#e0e7ff; color:#4338ca; padding:2px 8px; border-radius:99px; font-size:0.8rem;">Kit ${p.kit_id}</span>` : 'Suelto'}</td>
-                  <td>
-                    <button onclick="editarProducto(${p.id})" class="btn-sm btn-edit"><i class="fas fa-edit"></i></button>
-                    <button onclick="eliminarProducto(${p.id})" class="btn-sm btn-delete"><i class="fas fa-trash"></i></button>
+                  <td>${p.stock ? '<span style="color: #16a34a;"><i class="fas fa-check-circle"></i> Sí</span>' : '<span style="color: #dc2626;"><i class="fas fa-times-circle"></i> No</span>'}</td>
+                  <td>${p.kit_id ? `<span style="background:#e0e7ff; color:#4338ca; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Kit ${p.kit_id}</span>` : '<span style="background:#f1f5f9; color:#475569; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Suelto</span>'}</td>
+                  <td style="text-align: right;">
+                    <button onclick="editarProducto(${p.id})" class="btn btn-sm btn-edit" title="Editar"><i class="fas fa-pen"></i></button>
+                    <button onclick="eliminarProducto(${p.id})" class="btn btn-sm btn-delete" title="Eliminar"><i class="fas fa-trash"></i></button>
                   </td>
                 </tr>
               `).join('')}
@@ -292,14 +347,44 @@
       `;
     }
 
+    // FUNCIÓN PARA FILTRAR LA TABLA EN TIEMPO REAL
+    window.filtrarTablaProductos = function() {
+      const texto = document.getElementById('search-admin-prod').value.toLowerCase();
+      const filas = document.querySelectorAll('.fila-producto');
+      
+      filas.forEach(fila => {
+        const nombre = fila.getAttribute('data-nombre');
+        const categoria = fila.getAttribute('data-categoria');
+        
+        if (nombre.includes(texto) || categoria.includes(texto)) {
+          fila.style.display = ''; // Mostrar
+        } else {
+          fila.style.display = 'none'; // Ocultar
+        }
+      });
+    }
+
     function abrirModalProducto(producto = null) {
-      document.getElementById('modal-titulo').textContent = producto ? 'Editar Producto' : 'Agregar Producto';
+      document.getElementById('modal-titulo').textContent = producto ? 'Editar Producto' : 'Nuevo Producto';
       document.getElementById('producto-id').value = producto?.id || '';
       document.getElementById('prod-nombre').value = producto?.nombre || '';
       document.getElementById('prod-descripcion').value = producto?.descripcion || '';
       document.getElementById('prod-precio').value = producto?.precio || '';
       document.getElementById('prod-categoria').value = producto?.categoria || '';
+      
+      // Manejo de la imagen
       document.getElementById('prod-imagen').value = producto?.imagen_principal || '';
+      document.getElementById('prod-imagen-file').value = ''; // Limpiamos el input de archivo
+      
+      const preview = document.getElementById('preview-imagen');
+      const imgPreview = document.getElementById('img-preview');
+      if (producto?.imagen_principal) {
+        imgPreview.src = producto.imagen_principal;
+        preview.style.display = 'block';
+      } else {
+        preview.style.display = 'none';
+      }
+
       document.getElementById('prod-especificaciones').value = (producto?.especificaciones || []).join('\n');
       document.getElementById('prod-componentes').value = (producto?.componentes_lista || []).join('\n');
       document.getElementById('prod-stock').checked = producto?.stock !== false;
@@ -321,17 +406,51 @@
     }
     document.getElementById('prod-tipo').addEventListener('change', toggleKitId);
 
-    document.getElementById('form-producto').addEventListener('submit', async (e) => {
+        document.getElementById('form-producto').addEventListener('submit', async (e) => {
       e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const textoOriginal = submitBtn.innerHTML;
+      
       const id = document.getElementById('producto-id').value;
       const tipo = document.getElementById('prod-tipo').value;
+      const fileInput = document.getElementById('prod-imagen-file');
+      let urlImagen = document.getElementById('prod-imagen').value; // URL actual
       
+      // 1. Si el usuario seleccionó un archivo nuevo, lo subimos a Supabase
+      if (fileInput.files.length > 0) {
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo imagen...';
+        submitBtn.disabled = true;
+        
+        const file = fileInput.files[0];
+        // Generamos un nombre único para evitar que se sobrescriban (ej: 1698765-arduino.webp)
+        const nombreArchivo = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+        
+        const { data, error } = await supabaseClient.storage
+          .from('imagenes')
+          .upload(nombreArchivo, file);
+          
+        if (error) {
+          alert('Error al subir imagen: ' + error.message);
+          submitBtn.innerHTML = textoOriginal;
+          submitBtn.disabled = false;
+          return;
+        }
+        
+        // Obtenemos la URL pública de la imagen recién subida
+        const { data: urlData } = supabaseClient.storage
+          .from('imagenes')
+          .getPublicUrl(nombreArchivo);
+          
+        urlImagen = urlData.publicUrl;
+      }
+
+      // 2. Preparamos los datos para guardar en la tabla
       const data = {
         nombre: document.getElementById('prod-nombre').value,
         descripcion: document.getElementById('prod-descripcion').value,
         precio: parseInt(document.getElementById('prod-precio').value),
         categoria: document.getElementById('prod-categoria').value,
-        imagen_principal: document.getElementById('prod-imagen').value,
+        imagen_principal: urlImagen,
         especificaciones: document.getElementById('prod-especificaciones').value.split('\n').filter(s => s.trim()),
         componentes_lista: document.getElementById('prod-componentes').value.split('\n').filter(s => s.trim()),
         stock: document.getElementById('prod-stock').checked,
@@ -339,36 +458,72 @@
         kit_id: tipo === 'kit' ? parseInt(document.getElementById('prod-kit-id').value) : null
       };
       
-      if (id) await supabaseClient.from('productos').update(data).eq('id', id);
-      else await supabaseClient.from('productos').insert([data]);
+      // 3. Guardamos o actualizamos
+      if (id) {
+        await supabaseClient.from('productos').update(data).eq('id', id);
+      } else {
+        await supabaseClient.from('productos').insert([data]);
+      }
       
+      // Restauramos el botón y recargamos la tabla
+      submitBtn.innerHTML = textoOriginal;
+      submitBtn.disabled = false;
       cerrarModalProducto();
       cargarProductos();
     });
 
     async function editarProducto(id) { abrirModalProducto(productosAdmin.find(p => p.id === id)); }
-    async function eliminarProducto(id) { if (confirm('¿Eliminar producto?')) { await supabaseClient.from('productos').update({ activo: false }).eq('id', id); cargarProductos(); } }
+    async function eliminarProducto(id) {
+    const result = await Swal.fire({
+        title: '¿Eliminar producto?',
+        text: "El producto se ocultará de la tienda.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    });
 
-    // -- 3. KITS --
+    if (result.isConfirmed) {
+        await supabaseClient.from('productos').update({ activo: false }).eq('id', id);
+        cargarProductos();
+    }
+}
+
+    // ==========================================
+    // KITS (CON BUSCADOR)
+    // ==========================================
     async function cargarKits() {
       activarNav('kits');
-      // En tu DB original los kits se manejaban como productos con kit_id.
-      // Pero si tenés una tabla 'kits' separada, la traemos:
-      const { data } = await supabaseClient.from('kits').select('*');
+      const { data } = await supabaseClient.from('kits').select('*').order('id');
       kitsAdmin = data || [];
       
       document.getElementById('contenido-principal').innerHTML = `
-        <h2 class="page-title">Kits Base</h2>
-        <p style="color:#64748b; margin-bottom: 24px;">Estos son los contenedores de kits (Kuongshun, Acebott, etc.)</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <h2 class="page-title" style="margin: 0;">Gestión de Kits</h2>
+          <button onclick="abrirModalKit()" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Kit</button>
+        </div>
+        
+        <!-- BUSCADOR DE KITS -->
+        <div style="margin-bottom: 24px; position: relative;">
+          <i class="fas fa-search" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+          <input type="text" id="search-admin-kit" class="form-input" placeholder="Buscar kit por nombre..." style="padding-left: 44px; font-size: 1rem;" oninput="filtrarTablaKits()">
+        </div>
+
         <div class="table-container">
           <table>
-            <thead><tr><th>ID</th><th>Nombre</th><th>Descripción</th></tr></thead>
-            <tbody>
+            <thead><tr><th>ID</th><th>Nombre del Kit</th><th>Descripción</th><th style="text-align: right;">Acciones</th></tr></thead>
+            <tbody id="tabla-kits">
               ${kitsAdmin.map(k => `
-                <tr>
-                  <td>${k.id}</td>
-                  <td><strong>${k.nombre}</strong></td>
-                  <td>${k.descripcion || '-'}</td>
+                <tr class="fila-kit" data-nombre="${k.nombre.toLowerCase()}">
+                  <td style="color: #64748b;">#${k.id}</td>
+                  <td style="font-weight: 600;">${k.nombre}</td>
+                  <td style="color: #64748b; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${k.descripcion || '-'}</td>
+                  <td style="text-align: right;">
+                    <button onclick="editarKit(${k.id})" class="btn btn-sm btn-edit" title="Editar"><i class="fas fa-pen"></i></button>
+                    <button onclick="eliminarKit(${k.id})" class="btn btn-sm btn-delete" title="Eliminar"><i class="fas fa-trash"></i></button>
+                  </td>
                 </tr>
               `).join('')}
             </tbody>
@@ -377,27 +532,91 @@
       `;
     }
 
-    // -- 4. REVIEWS --
+    // FUNCIÓN PARA FILTRAR LA TABLA DE KITS EN TIEMPO REAL
+    window.filtrarTablaKits = function() {
+      const texto = document.getElementById('search-admin-kit').value.toLowerCase();
+      const filas = document.querySelectorAll('.fila-kit');
+      
+      filas.forEach(fila => {
+        const nombre = fila.getAttribute('data-nombre');
+        
+        if (nombre.includes(texto)) {
+          fila.style.display = ''; // Mostrar
+        } else {
+          fila.style.display = 'none'; // Ocultar
+        }
+      });
+    }
+    
+    function abrirModalKit(kit = null) {
+      document.getElementById('modal-kit-titulo').textContent = kit ? 'Editar Kit' : 'Nuevo Kit';
+      document.getElementById('kit-id').value = kit?.id || '';
+      document.getElementById('kit-nombre').value = kit?.nombre || '';
+      document.getElementById('kit-descripcion').value = kit?.descripcion || '';
+      document.getElementById('kit-imagen').value = kit?.imagen_portada || '';
+      document.getElementById('kit-activo').checked = kit?.activo !== false;
+      
+      document.getElementById('modal-kit').classList.add('is-open');
+    }
+
+    function cerrarModalKit() {
+      document.getElementById('modal-kit').classList.remove('is-open');
+      document.getElementById('form-kit').reset();
+    }
+
+    document.getElementById('form-kit').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('kit-id').value;
+      
+      const data = {
+        nombre: document.getElementById('kit-nombre').value,
+        descripcion: document.getElementById('kit-descripcion').value,
+        imagen_portada: document.getElementById('kit-imagen').value,
+        activo: document.getElementById('kit-activo').checked
+      };
+      
+      if (id) {
+        await supabaseClient.from('kits').update(data).eq('id', id);
+      } else {
+        await supabaseClient.from('kits').insert([data]);
+      }
+      
+      cerrarModalKit();
+      cargarKits();
+    });
+
+    async function editarKit(id) { 
+      abrirModalKit(kitsAdmin.find(k => k.id === id)); 
+    }
+    
+    async function eliminarKit(id) { 
+      if (confirm('¿Eliminar este kit? (No borrará los productos, pero quedarán ocultos)')) { 
+        await supabaseClient.from('kits').update({ activo: false }).eq('id', id); 
+        cargarKits(); 
+      } 
+    }
+
+    // REVIEWS
     async function cargarReviews() {
       activarNav('reviews');
       const { data } = await supabaseClient.from('reviews').select('*').order('created_at', { ascending: false });
       
       document.getElementById('contenido-principal').innerHTML = `
-        <h2 class="page-title">Reviews Pendientes</h2>
+        <h2 class="page-title">Gestión de Reviews</h2>
         <div class="table-container">
           <table>
-            <thead><tr><th>ID</th><th>Rating</th><th>Comentario</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <thead><tr><th>ID</th><th>Rating</th><th>Comentario</th><th>Estado</th><th style="text-align: right;">Acciones</th></tr></thead>
             <tbody>
               ${(data || []).map(r => `
                 <tr>
-                  <td>${r.id}</td>
-                  <td>${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</td>
+                  <td style="color: #64748b;">#${r.id}</td>
+                  <td style="color: #eab308; font-size: 1.1rem;">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</td>
                   <td>${r.comentario || 'Sin texto'}</td>
-                  <td>${r.aprobada ? '<span style="color:#16a34a;">Aprobada</span>' : '<span style="color:#eab308;">Pendiente</span>'}</td>
-                  <td>
+                  <td>${r.aprobada ? '<span style="color:#16a34a; font-weight:600;">Aprobada</span>' : '<span style="color:#d97706; font-weight:600;">Pendiente</span>'}</td>
+                  <td style="text-align: right;">
                     ${!r.aprobada ? `
-                      <button onclick="aprobarReview(${r.id})" class="btn-sm btn-approve"><i class="fas fa-check"></i></button>
-                      <button onclick="eliminarReview(${r.id})" class="btn-sm btn-delete"><i class="fas fa-trash"></i></button>
+                      <button onclick="aprobarReview(${r.id})" class="btn btn-sm btn-approve"><i class="fas fa-check"></i> Aprobar</button>
+                      <button onclick="eliminarReview(${r.id})" class="btn btn-sm btn-delete"><i class="fas fa-trash"></i></button>
                     ` : '-'}
                   </td>
                 </tr>
@@ -411,27 +630,30 @@
     async function aprobarReview(id) { await supabaseClient.from('reviews').update({ aprobada: true }).eq('id', id); cargarReviews(); }
     async function eliminarReview(id) { if (confirm('¿Eliminar?')) { await supabaseClient.from('reviews').delete().eq('id', id); cargarReviews(); } }
 
-    // -- 5. PEDIDOS --
+    // PEDIDOS
     async function cargarPedidos() {
       activarNav('pedidos');
       const { data } = await supabaseClient.from('pedidos').select('*').order('created_at', { ascending: false });
       
       document.getElementById('contenido-principal').innerHTML = `
-        <h2 class="page-title">Pedidos</h2>
+        <h2 class="page-title">Pedidos Recibidos</h2>
         <div class="table-container">
           <table>
-            <thead><tr><th>ID</th><th>Usuario ID</th><th>Total</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <thead><tr><th>ID</th><th>Total</th><th>Estado</th><th style="text-align: right;">Acciones</th></tr></thead>
             <tbody>
               ${(data || []).map(p => `
                 <tr>
-                  <td>#${p.id}</td>
-                  <td>${p.usuario_id.substring(0,8)}...</td>
-                  <td style="font-weight:600; color:#16a34a;">${(p.total || 0).toLocaleString('es-PY')} Gs.</td>
-                  <td>${p.estado === 'completado' ? '✅' : p.estado === 'cancelado' ? '❌' : '⏳'} ${p.estado}</td>
+                  <td style="color: #64748b;">#${p.id}</td>
+                  <td style="font-weight:700; color:#16a34a;">${(p.total || 0).toLocaleString('es-PY')} Gs.</td>
                   <td>
+                    ${p.estado === 'completado' ? '<span style="background:#dcfce7; color:#16a34a; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Completado</span>' : 
+                      p.estado === 'cancelado' ? '<span style="background:#fee2e2; color:#dc2626; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Cancelado</span>' : 
+                      '<span style="background:#fef3c7; color:#d97706; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Pendiente</span>'}
+                  </td>
+                  <td style="text-align: right;">
                     ${p.estado === 'pendiente' ? `
-                      <button onclick="cambiarEstadoPedido(${p.id}, 'completado')" class="btn-sm btn-approve">Completar</button>
-                      <button onclick="cambiarEstadoPedido(${p.id}, 'cancelado')" class="btn-sm btn-delete">Cancelar</button>
+                      <button onclick="cambiarEstadoPedido(${p.id}, 'completado')" class="btn btn-sm btn-approve">Completar</button>
+                      <button onclick="cambiarEstadoPedido(${p.id}, 'cancelado')" class="btn btn-sm btn-delete">Cancelar</button>
                     ` : '-'}
                   </td>
                 </tr>
@@ -449,35 +671,32 @@
       }
     }
 
-    // -- 6. SORTEO --
+    // SORTEO Y USUARIOS
     async function cargarRankingSorteo() {
       activarNav('sorteo');
       document.getElementById('contenido-principal').innerHTML = `
         <h2 class="page-title">Ranking / Sorteo</h2>
-        <div style="background: #fff; padding: 24px; border-radius: 12px; text-align: center; color: #64748b;">
+        <div style="background: #fff; padding: 40px; border-radius: 16px; text-align: center; border: 1px solid #e2e8f0;">
           <i class="fas fa-trophy fa-3x" style="color: #fbbf24; margin-bottom: 16px;"></i>
-          <p>El módulo de sorteo leerá los pedidos completados para calcular los puntos por usuario.</p>
-          <p style="font-size: 0.9rem; margin-top: 8px;">(Podés agregar acá el botón de sortear y la tabla de posiciones).</p>
+          <p style="color: #64748b;">Módulo de sorteo en construcción.</p>
         </div>
       `;
     }
 
-    // -- 7. USUARIOS --
     async function cargarUsuarios() {
       activarNav('usuarios');
       const { data } = await supabaseClient.from('perfiles').select('*');
-      
       document.getElementById('contenido-principal').innerHTML = `
-        <h2 class="page-title">Usuarios</h2>
+        <h2 class="page-title">Usuarios Registrados</h2>
         <div class="table-container">
           <table>
-            <thead><tr><th>Nombre</th><th>ID</th><th>Admin</th></tr></thead>
+            <thead><tr><th>Nombre</th><th>ID</th><th>Rol</th></tr></thead>
             <tbody>
               ${(data || []).map(u => `
                 <tr>
-                  <td>${u.nombre || '-'}</td>
-                  <td>${u.id.substring(0,8)}...</td>
-                  <td>${u.es_admin ? 'Sí' : 'No'}</td>
+                  <td style="font-weight:600;">${u.nombre || '-'}</td>
+                  <td style="color: #64748b;">${u.id.substring(0,8)}...</td>
+                  <td>${u.es_admin ? '<span style="background:#e0e7ff; color:#4338ca; padding:4px 10px; border-radius:99px; font-size:0.8rem; font-weight:600;">Administrador</span>' : 'Cliente'}</td>
                 </tr>
               `).join('')}
             </tbody>
@@ -486,7 +705,7 @@
       `;
     }
 
-    // -- AUTO LOGIN --
+    // AUTO LOGIN
     document.addEventListener('DOMContentLoaded', async () => {
       const { data: { user } } = await supabaseClient.auth.getUser();
       if (user) {
