@@ -305,12 +305,23 @@
     border-radius: 12px;
     padding: 16px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    width: 100%; /* Para que ocupe todo el ancho */
   }
 
   .hero-search__form button {
     border-radius: 12px;
     padding: 16px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    width: 100%;
+  }
+
+  .chips-container {
+    justify-content: center; /* Centrar los chips */
+  }
+  
+  .chip {
+    padding: 6px 14px; /* Chips más chicos */
+    font-size: 0.85rem;
   }
 }
  
