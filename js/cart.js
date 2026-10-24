@@ -1,7 +1,8 @@
 // ============================================
-// LÓGICA DEL CARRITO (SUPABASE) + SWEETALERT
+// LÓGICA DEL CARRITO (SUPABASE)
 // ============================================
 
+// Variable global para almacenar los items
 window.carritoGlobal = [];
 
 async function cargarCarritoSupabase() {
@@ -33,13 +34,16 @@ async function agregarAlCarrito(productoId, nombre, precio, imagen) {
     }
 
     try {
+        // Verificar si el producto ya está en el carrito
         const itemExistente = window.carritoGlobal.find(item => item.producto_id === productoId);
 
         if (itemExistente) {
+            // Si existe, sumamos 1 a la cantidad
             await supabaseClient.from('carrito')
                 .update({ cantidad: itemExistente.cantidad + 1 })
                 .eq('id', itemExistente.id);
         } else {
+            // Si no existe, lo insertamos
             await supabaseClient.from('carrito').insert([{
                 usuario_id: window.usuarioActual.id,
                 producto_id: productoId,
@@ -48,7 +52,7 @@ async function agregarAlCarrito(productoId, nombre, precio, imagen) {
         }
 
         mostrarNotificacion(`📦 ${nombre} agregado al carrito`, 'success');
-        await cargarCarritoSupabase();
+        await cargarCarritoSupabase(); // Recargar para actualizar el número
     } catch (error) {
         console.error('Error al agregar:', error);
         mostrarNotificacion('Error al agregar al carrito', 'error');
@@ -87,8 +91,8 @@ async function vaciarCarrito() {
         text: "Se eliminarán todos los productos de tu carrito.",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#64748b',
+        confirmButtonColor: '#ef4444', // Rojo
+        cancelButtonColor: '#64748b',  // Gris
         confirmButtonText: 'Sí, vaciar',
         cancelButtonText: 'Cancelar'
     });
@@ -102,11 +106,15 @@ async function vaciarCarrito() {
 }
 
 function actualizarContadorCarrito() {
+    // Sumar todas las cantidades
     const totalItems = window.carritoGlobal.reduce((sum, item) => sum + item.cantidad, 0);
     const contador = document.getElementById('carrito-count-desktop');
     if (contador) contador.textContent = totalItems;
 }
 
+// ============================================
+// MODAL DEL CARRITO (Vista)
+// ============================================
 function abrirModalCarrito() {
     renderizarCarritoModal();
     document.getElementById('modal-carrito').classList.add('is-open');
@@ -160,6 +168,9 @@ function renderizarCarritoModal() {
     totalEl.textContent = `Gs. ${total.toLocaleString('es-PY')}`;
 }
 
+// ============================================
+// ENVIAR PEDIDO POR WHATSAPP
+// ============================================
 async function enviarPedidoWhatsApp() {
     if (!window.usuarioActual || window.carritoGlobal.length === 0) return;
 
@@ -173,6 +184,7 @@ async function enviarPedidoWhatsApp() {
     mensaje += `👤 Cliente: ${window.usuarioActual.nombre}\n`;
     
     try {
+        // Registrar el pedido en la base de datos antes de enviar a WhatsApp
         const { data, error } = await supabaseClient.from('pedidos').insert([{
             usuario_id: window.usuarioActual.id,
             productos: window.carritoGlobal.map(i => ({ id: i.producto_id, nombre: i.productos.nombre, precio: i.productos.precio, cantidad: i.cantidad })),
@@ -185,8 +197,10 @@ async function enviarPedidoWhatsApp() {
         
         mensaje += `📋 N° de Pedido: #${pedidoId}\n`;
         
+        // Abrir WhatsApp
         window.open(`https://wa.me/595972292392?text=${encodeURIComponent(mensaje)}`, '_blank');
         
+        // Vaciar el carrito
         await supabaseClient.from('carrito').delete().eq('usuario_id', window.usuarioActual.id);
         await cargarCarritoSupabase();
         cerrarModalCarrito();
