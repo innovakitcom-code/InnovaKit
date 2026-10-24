@@ -7,19 +7,17 @@ let productosFiltrados = [];
 let paginaActual = 1;
 const productosPorPagina = 8;
 
-// --- 1. FUNCIÓN DEL MODAL (La ponemos arriba para que siempre esté disponible) ---
+// --- 1. FUNCIÓN DEL MODAL ---
 window.abrirModalDetalleProducto = function(id) {
     const prod = todosLosProductos.find(p => p.id === id);
     if (!prod) return;
 
-    // 1. Manejo de múltiples imágenes
     let imagenes = Array.isArray(prod.imagenes) && prod.imagenes.length > 0 
         ? prod.imagenes 
         : [prod.imagen_principal || 'assets/img/placeholder.png'];
 
     let imagenPrincipal = imagenes[0];
     
-    // Generar las miniaturas si hay más de una foto
     let miniaturasHTML = '';
     if (imagenes.length > 1) {
         miniaturasHTML = `
@@ -34,7 +32,6 @@ window.abrirModalDetalleProducto = function(id) {
         `;
     }
 
-    // 2. Especificaciones
     let especificacionesHTML = '';
     if (Array.isArray(prod.especificaciones) && prod.especificaciones.length > 0) {
         especificacionesHTML = prod.especificaciones.map(e => `<li style="margin-bottom: 8px;"><i class="fas fa-check-circle" style="color: #22c55e; margin-right: 8px;"></i> ${e}</li>`).join('');
@@ -42,19 +39,32 @@ window.abrirModalDetalleProducto = function(id) {
         especificacionesHTML = '<li>No hay especificaciones técnicas cargadas.</li>';
     }
 
-    // 3. Armamos el HTML del modal
+    let documentosHTML = '';
+    if (Array.isArray(prod.documentos) && prod.documentos.length > 0) {
+        documentosHTML = `
+            <div style="margin-top: 16px;">
+                <h4 style="font-size: 0.95rem; color: #1e293b; margin-bottom: 8px;"><i class="fas fa-file-pdf" style="color: #ef4444;"></i> Manuales y Documentos</h4>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    ${prod.documentos.map(doc => `
+                        <a href="${doc.archivo}" target="_blank" style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; color: #3b82f6; text-decoration: none; font-size: 0.9rem; font-weight: 500;">
+                            <i class="fas fa-download"></i> ${doc.nombre}
+                        </a>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
     const modalHTML = `
         <div class="modal-detalle is-open" id="modal-detalle-overlay" onclick="cerrarModalDetalle(event)">
             <div class="modal-detalle__content" onclick="event.stopPropagation()" style="max-width: 900px; padding: 0; background: #fff; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;">
                 
-                <!-- Header solo con la X para cerrar -->
                 <div style="padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: flex-end; align-items: center;">
                     <button onclick="cerrarModalDetalle()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#64748b;"><i class="fas fa-times"></i></button>
                 </div>
 
                 <div style="padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; overflow-y: auto; max-height: 70vh;">
                     
-                    <!-- COLUMNA IZQUIERDA: Imagen Principal + Miniaturas -->
                     <div>
                         <div style="display: flex; align-items: center; justify-content: center; background: #f8fafc; border-radius: 12px; padding: 20px; height: 300px;">
                             <img id="modal-main-img" src="${imagenPrincipal}" alt="${prod.nombre}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
@@ -62,7 +72,6 @@ window.abrirModalDetalleProducto = function(id) {
                         ${miniaturasHTML}
                     </div>
 
-                    <!-- COLUMNA DERECHA: Título, Precio, Descripción y Especificaciones -->
                     <div>
                         <h2 style="font-size: 1.6rem; font-weight: 800; color: #1e293b; margin-bottom: 16px; line-height: 1.2;">${prod.nombre}</h2>
                         
@@ -82,10 +91,11 @@ window.abrirModalDetalleProducto = function(id) {
                             </ul>
                         </div>
                         ` : ''}
+
+                        ${documentosHTML}
                     </div>
                 </div>
 
-                <!-- Footer con los botones -->
                 <div style="padding: 24px; background: #f8fafc; display: flex; gap: 12px; border-top: 1px solid #e2e8f0;">
                     <button class="btn btn-whatsapp" onclick="window.open('https://wa.me/595972292392?text=Hola, quiero info de ${prod.nombre}', '_blank')" style="flex: 1; padding: 14px;"><i class="fab fa-whatsapp"></i> Comprar por WhatsApp</button>
                     <button class="btn btn-primary" onclick="agregarAlCarrito(${prod.id}, '${prod.nombre.replace(/'/g, "\\'")}', ${prod.precio}, '${imagenPrincipal}'); cerrarModalDetalle();" style="flex: 1; padding: 14px;"><i class="fas fa-shopping-cart"></i> Agregar al carrito</button>
@@ -120,19 +130,28 @@ async function inicializarCatalogo() {
             .select('*')
             .eq('activo', true)
             .is('kit_id', null)
-            .order('id');
 
         if (error) throw error;
 
         todosLosProductos = data || [];
         productosFiltrados = [...todosLosProductos];
 
-        // Leer búsqueda desde el Home
         const urlParams = new URLSearchParams(window.location.search);
         const q = urlParams.get('q');
         const cat = urlParams.get('cat');
 
-        if (q) document.getElementById('search-input').value = q;
+        if (q) {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.value = q;
+            }
+            const banner = document.getElementById('resultado-busqueda');
+            if (banner) {
+                banner.style.display = 'block';
+                document.getElementById('texto-busqueda').textContent = q;
+            }
+        }
+
         if (cat) {
             const catItem = document.querySelector(`.dropdown-item[data-cat="${cat}"]`);
             if (catItem) {
@@ -143,9 +162,12 @@ async function inicializarCatalogo() {
             }
         }
 
-        if (q || cat) aplicarFiltros();
+        if (q || cat) {
+            aplicarFiltros();
+        } else {
+            renderizarPagina();
+        }
         
-        renderizarPagina();
         configurarEventos();
 
     } catch (error) {
@@ -175,7 +197,6 @@ function renderizarPagina() {
     document.getElementById('btn-prev').disabled = paginaActual === 1;
     document.getElementById('btn-next').disabled = paginaActual === totalPaginas;
 
-    // Dibujar tarjetas
     grid.innerHTML = productosPagina.map(prod => {
         const precio = prod.precio ? prod.precio.toLocaleString('es-PY') : '0';
         const imagen = prod.imagen_principal || 'assets/img/placeholder.png';
