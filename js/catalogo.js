@@ -125,6 +125,43 @@ window.cerrarModalDetalle = function(event) {
     }
 }
 
+// Función para cargar las categorías desde Supabase
+async function cargarCategoriasFiltro() {
+    const dropdown = document.getElementById('dropdown-menu-dinamico');
+    if (!dropdown) return;
+
+    try {
+        const { data } = await supabaseClient.from('categorias').select('*').order('nombre');
+        
+        let html = `<a href="#" class="dropdown-item active" data-cat="todos"><i class="fas fa-th-large" style="color: #64748b;"></i> Todas las categorías</a>`;
+        
+        (data || []).forEach(cat => {
+            html += `<a href="#" class="dropdown-item" data-cat="${cat.nombre}"><i class="fas ${cat.icono}" style="color: var(--blue);"></i> ${cat.nombre}</a>`;
+        });
+        
+        dropdown.innerHTML = html;
+
+        // Reconectar eventos a los nuevos items
+        document.querySelectorAll('#dropdown-menu-dinamico .dropdown-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                const btnDropdown = document.getElementById('btn-dropdown-cat');
+                if (btnDropdown) btnDropdown.innerHTML = item.innerHTML + ' <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>';
+                
+                const dropdownContainer = document.getElementById('dropdown-categorias');
+                if (dropdownContainer) dropdownContainer.classList.remove('active');
+                
+                aplicarFiltros();
+            });
+        });
+
+    } catch (error) {
+        console.error('Error cargando categorías:', error);
+    }
+}
+
 // --- 2. LÓGICA DEL CATÁLOGO ---
 async function inicializarCatalogo() {
     const grid = document.getElementById('catalogo-grid');
@@ -145,6 +182,10 @@ async function inicializarCatalogo() {
         todosLosProductos = data || [];
         productosFiltrados = [...todosLosProductos];
 
+        // 1. PRIMERO cargamos las categorías en el HTML
+        await cargarCategoriasFiltro();
+
+        // 2. Leemos los parámetros de la URL
         const urlParams = new URLSearchParams(window.location.search);
         const q = urlParams.get('q');
         const cat = urlParams.get('cat');
@@ -161,6 +202,7 @@ async function inicializarCatalogo() {
             }
         }
 
+        // 3. Si hay categoría, activamos el botón
         if (cat) {
             const catItem = document.querySelector(`.dropdown-item[data-cat="${cat}"]`);
             if (catItem) {
@@ -171,12 +213,14 @@ async function inicializarCatalogo() {
             }
         }
 
+        // 4. Aplicamos filtros o renderizamos
         if (q || cat) {
             aplicarFiltros();
         } else {
             renderizarPagina();
         }
         
+        // 5. Configuramos los eventos finales
         configurarEventos();
 
     } catch (error) {
