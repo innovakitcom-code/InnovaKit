@@ -90,17 +90,16 @@
           <input type="search" id="search-input" placeholder="🔍 Buscar componentes..." aria-label="Buscar productos">
         </div>
         
-        <div class="dropdown" id="dropdown-categorias">
-          <button class="btn-dropdown" id="btn-dropdown-cat">
-            <i class="fas fa-layer-group"></i> Categorías <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
-          </button>
-          <div class="dropdown-menu">
-            <a href="#" class="dropdown-item" data-cat="todos"><i class="fas fa-th-large" style="color: #64748b;"></i> Todas las categorías</a>
-            <a href="#" class="dropdown-item" data-cat="Sensores"><i class="fas fa-microchip" style="color: #22c55e;"></i> Sensores</a>
-            <a href="#" class="dropdown-item" data-cat="Motores"><i class="fas fa-cog" style="color: #ef4444;"></i> Motores</a>
-            <a href="#" class="dropdown-item" data-cat="Displays"><i class="fas fa-tv" style="color: #a855f7;"></i> Displays</a>
-            <a href="#" class="dropdown-item" data-cat="Placas"><i class="fas fa-server" style="color: #3b82f6;"></i> Placas</a>
+<div class="dropdown" id="dropdown-categorias">
+  <button class="btn-dropdown" id="btn-dropdown-cat">
+    <i class="fas fa-layer-group"></i> Categorías <i class="fas fa-chevron-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+  </button>
+          
+          <!-- ACÁ VA EL MENÚ DINÁMICO -->
+          <div class="dropdown-menu" id="dropdown-menu-dinamico">
+            <!-- JS inyecta las categorías acá -->
           </div>
+          
         </div>
 
         <select class="catalogo-filters__select" id="price-filter">
