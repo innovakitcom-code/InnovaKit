@@ -19,7 +19,18 @@ async function cargarProductosDestacados() {
             grid.innerHTML = '<p class="text-muted">No hay productos destacados por ahora.</p>';
             return;
         }
-        
+
+        // ⭐ EL TRUCO: Guardamos los productos en la variable global que usa el modal
+        if (typeof todosLosProductos !== 'undefined') {
+            // Si la variable ya existe (porque cargamos catalogo.js), le agregamos estos productos
+            // (Evitamos duplicados)
+            data.forEach(prod => {
+                if (!todosLosProductos.find(p => p.id === prod.id)) {
+                    todosLosProductos.push(prod);
+                }
+            });
+        }
+
         let productosMezclados = data.sort(() => Math.random() - 0.5);
         let productosAMostrar = productosMezclados.slice(0, 4);
 
