@@ -220,6 +220,20 @@ async function inicializarCatalogo() {
             renderizarPagina();
         }
         
+        // ⭐ NUEVO: Abrir modal si venimos desde el Home
+        const prodIdUrl = urlParams.get('producto');
+        if (prodIdUrl) {
+            // Buscamos el producto en la lista que acabamos de cargar
+            const productoAEncontrar = parseInt(prodIdUrl);
+            
+            // Esperamos un instante a que el HTML se dibuje y abrimos el modal
+            setTimeout(() => {
+                const productoExiste = todosLosProductos.some(p => p.id === productoAEncontrar);
+                if (productoExiste) {
+                    abrirModalDetalleProducto(productoAEncontrar);
+                }
+            }, 500);
+        }
         // 5. Configuramos los eventos finales
         configurarEventos();
 
