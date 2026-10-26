@@ -54,12 +54,9 @@ async function cargarProductosDestacados() {
 
 // Función temporal para el botón "Ver detalles" (luego haremos el modal)
 window.verDetalleProducto = function(id) {
-    // Si la función del catálogo está cargada en la página, la usamos
-    if (typeof abrirModalDetalleProducto === 'function') {
-        abrirModalDetalleProducto(id);
-    } else {
-        mostrarNotificacion('El modal de detalle estará listo pronto 🚧', 'warning');
-    }
+    // En lugar de abrir el modal (que requiere que los productos estén cargados en memoria),
+    // redirigimos al catálogo con el ID del producto, y el catálogo se encarga de abrir el modal.
+    window.location.href = `catalogo.html?producto=${id}`;
 };
 
 // ============================================
