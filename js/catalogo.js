@@ -164,6 +164,13 @@ async function cargarCategoriasFiltro() {
 
 // --- 2. LÓGICA DEL CATÁLOGO ---
 async function inicializarCatalogo() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.toString() !== '') {
+        const metaRobots = document.createElement('meta');
+        metaRobots.name = 'robots';
+        metaRobots.content = 'noindex, follow';
+        document.head.appendChild(metaRobots);
+    }
     const grid = document.getElementById('catalogo-grid');
     if (!grid) return;
 
